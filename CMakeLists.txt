@@ -3,4 +3,4 @@ project(bald_engine)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(bald_engine library.cpp library.h)
+add_library(bald_engine library.cpp library.h graphics/window.h)
