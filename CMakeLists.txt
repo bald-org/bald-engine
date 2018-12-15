@@ -1,10 +1,26 @@
 cmake_minimum_required(VERSION 3.12)
+
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
+include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
+
 project(bald_engine)
 
+add_compile_options(
+        -pedantic -Wall -Wextra
+        -Wnon-virtual-dtor
+        -Wold-style-cast -Wcast-align
+        -Wunused -Woverloaded-virtual
+        -Wpedantic -Wconversion -Wnull-dereference
+        -Wdouble-promotion -Wduplicated-cond
+        -Wduplicated-branches
+        -Wlogical-op
+)
+include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+
+#
 set(CMAKE_CXX_STANDARD 17)
 
-#add_library(bald_engine library.cpp library.h src/utils/file_manager.h src/utils/file_manager.cpp)
-add_executable(bald_engine main.cpp library.cpp library.h src/utils/file_manager.h src/utils/file_manager.cpp main.cpp)
 add_library(bald_engine library.cpp library.h)
 
 
