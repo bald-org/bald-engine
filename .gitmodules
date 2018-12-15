@@ -1,1 +1,4 @@
 
+[submodule "vendor/cotire"]
+	path = vendor/cotire
+	url = https://github.com/sakra/cotire.git
