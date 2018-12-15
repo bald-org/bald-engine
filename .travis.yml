@@ -2,6 +2,10 @@ language: cpp
 compiler: gcc
 dist: trusty
 
+branches:
+  only:
+    - master
+
 addons:
   apt:
     sources:
