@@ -11,18 +11,19 @@ add_compile_options(
         -Wnon-virtual-dtor
         -Wold-style-cast -Wcast-align
         -Wunused -Woverloaded-virtual
-        -Wpedantic -Wconversion
-        -Wsign-conversion -Wnull-dereference
+        -Wpedantic -Wconversion -Wnull-dereference
         -Wdouble-promotion -Wduplicated-cond
         -Wduplicated-branches
-        -Wlogical-op -Wuseless-cast
+        -Wlogical-op
 )
 include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/vendor)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+
 
 set(CMAKE_CXX_STANDARD 17)
 
 add_library(bald_engine library.cpp library.h)
+
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(bald_engine)
