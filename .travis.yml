@@ -1,0 +1,17 @@
+language: cpp
+compiler: gcc
+dist: trusty
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-6
+
+script:
+  - CXX=/usr/bin/g++-6 CC=/usr/bin/gcc-6
+  - mkdir build && cd build
+  - cmake ../
+  - cmake --build .
+  - ctest
