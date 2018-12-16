@@ -36,10 +36,3 @@ TEST(FileManager, WrongBigFileOpening) { //NOLINT
 
     EXPECT_EQ("Error!", file_result);
 }
-
-
-int main(int argc, char **argv) {
-    Bald::Log::Init();
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}

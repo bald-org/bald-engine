@@ -25,25 +25,24 @@ include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(bald_engine library.cpp library.h)
+add_library(bald_engine
+        library.cpp
+        library.h
+        src/utils/file_manager.cpp
+        )
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(bald_engine)
 
 enable_testing()
-#file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
+file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
+add_executable(runUnitTests ${TEST_SRC_FILES})
 
-message("-- TEST EXECUTALES: " ${TEST_SRC_FILES})
-#add_executable(runUnitTests ${TEST_SRC_FILES})
+set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+cotire(runUnitTests)
 
-add_executable(file_menager_test
-        ${PROJECT_SOURCE_DIR}/tests/test_file_manager.cpp
-        ${PROJECT_SOURCE_DIR}/src/Log.cpp
-        ${PROJECT_SOURCE_DIR}/src/utils/file_manager.cpp
-        )
-
-target_link_libraries(file_menager_test gtest gtest_main)
-target_link_libraries(file_menager_test bald_engine)
-add_test(UnitTests file_menager_test)
+target_link_libraries(runUnitTests gtest gtest_main)
+target_link_libraries(runUnitTests bald_engine)
+add_test(UnitTests runUnitTests)
 
 configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
