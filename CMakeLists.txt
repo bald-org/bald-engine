@@ -30,7 +30,6 @@ cotire(bald_engine)
 
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp)
-message("-- TEST EXECUTALES: " ${TEST_SRC_FILES})
 add_executable(runUnitTests ${TEST_SRC_FILES})
 target_link_libraries(runUnitTests gtest gtest_main)
 target_link_libraries(runUnitTests bald_engine)
