@@ -12,6 +12,7 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-8
+      - libglfw3
       - libglew-dev
       - freeglut3-dev
       - libxi-dev
