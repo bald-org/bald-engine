@@ -38,18 +38,20 @@ before_install:
 - export DEBIAN_FRONTEND=noninteractive
 - sudo apt-get -yq --force-yes install libgl1-mesa-dev libgl1-mesa-glx mesa-common-dev libglapi-mesa libgbm1 libgl1-mesa-dri libxatracker-dev xvfb
 
-before_script:
-  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
-  - export DISPLAY=:99
-  - export LIBGL_ALWAYS_SOFTWARE=1
-
-
-script:
+install:
   - cd vendor/glfw/
   - mkdir build && cd build
   - cmake ../
   - cmake --build .
   - sudo make install
+  - sh -e /etc/init.d/xvfb start
+
+before_script:
+  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
+  - export DISPLAY=:99
+  - export LIBGL_ALWAYS_SOFTWARE=1
+
+script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build && cd build
   - cmake ../
