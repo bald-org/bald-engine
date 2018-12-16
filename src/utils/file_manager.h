@@ -22,13 +22,13 @@ namespace Bald::Utils {
 
         /**
          * @fn FileManager
-         * @brief default constructor
+         * @brief default constructor deleted
          */
         FileManager() = delete;
 
         /**
          * @fn FileManager
-         * @brief default destructor
+         * @brief default destructor deleted
          */
 
         ~FileManager() = delete;
