@@ -13,7 +13,7 @@ namespace Bald::Utils {
         auto str = static_cast<std::string>(str_to_split);
         std::istringstream stream(str);
 
-        while (std::getline(stream, temp, splitter)) {
+        while (std::getline(stream, temp, delimiter)) {
             result.push_back(temp);
         }
         return result;
