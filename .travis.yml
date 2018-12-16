@@ -42,6 +42,7 @@ script:
   - cmake ../
   - cmake --build .
   - sudo make install
+  - cd $TRAVIS_BUILD_DIR
   - mkdir build && cd build
   - cmake ../
   - cmake --build .
