@@ -20,4 +20,4 @@ script:
   - mkdir build && cd build
   - cmake ../
   - cmake --build .
-  - ctest -v
+  - ctest -V
