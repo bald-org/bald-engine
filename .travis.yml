@@ -1,0 +1,23 @@
+language: cpp
+compiler: gcc
+dist: xenial
+
+branches:
+  only:
+    - master
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-8
+
+before_script:
+  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
+
+script:
+  - mkdir build && cd build
+  - cmake ../
+  - cmake --build .
+  - ctest -V
