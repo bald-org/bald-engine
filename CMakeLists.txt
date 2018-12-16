@@ -4,13 +4,15 @@ cmake_minimum_required(VERSION 3.12)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
-
-include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
-
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 
+include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/utils)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+
 #### END-LIBRARIES
+
+#### CONFIG/DEFINITIONS
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -27,7 +29,15 @@ add_compile_options(
         -Wlogical-op
 )
 
-add_library(bald_engine library.cpp library.h)
+add_definitions(-D_LINUX)
+
+add_library(bald_engine
+        library.cpp
+        library.h
+        src/utils/file_manager.cpp
+        )
+
+#### END CONFIG/DEFINITIONS
 
 #### PCH
 
@@ -46,6 +56,8 @@ cotire(runUnitTests)
 
 target_link_libraries(runUnitTests gtest gtest_main)
 target_link_libraries(runUnitTests bald_engine)
+
+configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
