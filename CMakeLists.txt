@@ -42,3 +42,5 @@ add_executable(runUnitTests
 target_link_libraries(runUnitTests gtest gtest_main)
 target_link_libraries(runUnitTests bald_engine)
 add_test(UnitTests runUnitTests)
+
+configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)

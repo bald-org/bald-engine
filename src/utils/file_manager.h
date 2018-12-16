@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "pch.h"
+#include <string>
 
 namespace Bald::Utils {
 
@@ -39,9 +39,9 @@ namespace Bald::Utils {
          * @return string
          */
 
-        static std::string ReadFile(const char* filePath, Size size);
+        [[nodiscard]] static std::string ReadFile(const char* filePath, Size size);
     private:
-        static std::string ReadSmallFile(const char* filePath); /** used to read small files, same implementation on windows and linux*/
-        static std::string ReadBigFile(const char* filePath); /** used to read big files, different implementation for windows and linux*/
+        [[nodiscard]] static std::string ReadSmallFile(const char* filePath); /** used to read small files, same implementation on windows and linux*/
+        [[nodiscard]] static std::string ReadBigFile(const char* filePath); /** used to read big files, different implementation for windows and linux*/
     };
 }

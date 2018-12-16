@@ -4,6 +4,7 @@
 
 #include "file_manager.h"
 
+#include "pch.h"
 #include <fstream>
 #include <sys/mman.h>
 
@@ -24,7 +25,7 @@ namespace Bald::Utils {
         FILE *file = fopen(filePath, "r");
 
         if (!file) {
-            CORE_LOG_WARN("Couldn't open the file at path: ", filePath);
+            CORE_LOG_WARN("Couldn't open the file at path: " + static_cast<std::string>(filePath));
             return std::string("Error!");
         }
 
@@ -53,7 +54,7 @@ namespace Bald::Utils {
         struct stat sb;
 
         if (fstat(fileDescriptor, &sb) == -1) {
-            CORE_LOG_WARN("Couldn't get size of the file. Check if the file exists at path: ", filePath);
+            CORE_LOG_WARN("Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath));
             return std::string("Error!");
         }
 
@@ -71,4 +72,3 @@ namespace Bald::Utils {
 #endif
     }
 }
-
