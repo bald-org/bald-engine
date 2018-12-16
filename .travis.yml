@@ -5,7 +5,7 @@ dist: xenial
 
 branches:
   only:
-- master
+    - master
 addons:
   apt:
     sources:
