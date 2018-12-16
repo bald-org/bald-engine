@@ -23,15 +23,23 @@ TEST(FileManager, GoodBigFileOpening) { //NOLINT
 }
 
 
-TEST(FileManager, WrongFileOpening) { //NOLINT
+TEST(FileManager, WrongSmallFileOpening) { //NOLINT
 
     std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::SMALL);
 
     EXPECT_EQ("Error!", file_result);
 }
 
+TEST(FileManager, WrongBigFileOpening) { //NOLINT
+
+    std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::BIG);
+
+    EXPECT_EQ("Error!", file_result);
+}
+
 
 int main(int argc, char **argv) {
+    Bald::Log::Init();
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();
 }

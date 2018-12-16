@@ -12,11 +12,9 @@ namespace Bald::Utils {
     std::string FileManager::ReadFile(const char *filePath, Size size) {
         if (size == SMALL) {
             return ReadSmallFile(filePath);
-        }
-        else if (size == BIG) {
+        } else if (size == BIG) {
             return ReadBigFile(filePath);
-        }
-        else {
+        } else {
             CORE_LOG_WARN("Specify size of your file! (SMALL/BIG)");
             return std::string("Error!");
         }
@@ -48,7 +46,7 @@ namespace Bald::Utils {
         return result;
     }
 
-    std::string FileManager::ReadBigFile(const char* filePath) {
+    std::string FileManager::ReadBigFile(const char *filePath) {
 #define _LINUX
 #ifdef _LINUX
         int fileDescriptor = open(filePath, O_RDONLY, S_IRUSR | S_IWUSR);
@@ -59,7 +57,7 @@ namespace Bald::Utils {
             return std::string("Error!");
         }
 
-        auto *buffer = static_cast<char*>(mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
+        auto *buffer = static_cast<char *>(mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
 
         std::string result(buffer);
 
@@ -68,8 +66,8 @@ namespace Bald::Utils {
         return result;
 
 #elif _WINDOWS
-        CORE_LOG_ERROR("Windows implementation is not done yet!");
-        return std::string("Error!");
+        CORE_LOG_ERROR("Windows implementation is not done yet! Using slower reading method!");
+        ReadSmallFile(filePath);
 #endif
     }
 }
