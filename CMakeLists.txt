@@ -9,6 +9,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 
 #### END-LIBRARIES
 
@@ -37,6 +38,8 @@ add_library(bald_engine
         src/utils/file_manager.cpp
         )
 
+target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+
 #### END CONFIG/DEFINITIONS
 
 #### PCH
@@ -50,7 +53,7 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES})
+add_executable(runUnitTests ${TEST_SRC_FILES} tests/glfw3_test.cpp)
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
