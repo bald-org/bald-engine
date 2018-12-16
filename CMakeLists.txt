@@ -35,6 +35,7 @@ add_library(bald_engine
         library.cpp
         library.h
         src/utils/file_manager.cpp
+        src/utils/split_string.cpp
         )
 
 #### END CONFIG/DEFINITIONS
@@ -54,7 +55,7 @@ add_executable(runUnitTests ${TEST_SRC_FILES})
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
-target_link_libraries(runUnitTests gtest gtest_main)
+target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
 
 configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
