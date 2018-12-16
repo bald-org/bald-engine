@@ -43,6 +43,8 @@ namespace Bald::Utils {
 
         delete[] buffer;
 
+        fclose(file);
+
         return result;
     }
 
