@@ -34,6 +34,10 @@ addons:
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
+  - sudo add-apt-repository -y ppa:oibaf/graphics-drivers
+  - export DEBIAN_FRONTEND=noninteractive
+  - export DISPLAY=:99
+  - export LIBGL_ALWAYS_SOFTWARE=1
   - sudo apt-get -yq --force-yes install libgl1-mesa-dev libgl1-mesa-glx mesa-common-dev libglapi-mesa libgbm1 libgl1-mesa-dri libxatracker-dev xvfb
 
 script:
