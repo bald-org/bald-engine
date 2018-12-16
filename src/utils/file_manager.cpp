@@ -11,7 +11,7 @@
 namespace Bald::Utils {
 
     std::string FileManager::ReadFile(const char *filePath, Size size) {
-        if (size == SMALL)
+        if (size == SMALL_FILE)
             return ReadSmallFile(filePath);
         return ReadBigFile(filePath);
     }

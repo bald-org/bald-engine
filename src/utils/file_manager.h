@@ -16,7 +16,7 @@ namespace Bald::Utils {
     class FileManager {
     public:
         enum Size : char {
-            SMALL, BIG
+            SMALL_FILE, BIG_FILE
         };
     public:
 
