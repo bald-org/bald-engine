@@ -18,7 +18,7 @@ TEST(FileManager, WrongFileOpening) { //NOLINT
 
     std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::SMALL);
 
-    EXPECT_EQ("Couldn't open the file at path: " , file_result);
+    EXPECT_EQ(std::string("Couldn't open the file at path: no_such_file.cpp") , file_result);
 }
 
 int main(int argc, char **argv) {

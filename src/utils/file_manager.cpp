@@ -57,7 +57,7 @@ namespace Bald::Utils {
             return std::string("Error!");
         }
 
-        auto *buffer = static_cast<char*>(mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
+        auto *buffer = static_cast<char*>(mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
 
         std::string result(buffer);
 
