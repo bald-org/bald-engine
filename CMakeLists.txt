@@ -9,6 +9,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 
 #### END-LIBRARIES
 
@@ -36,6 +37,8 @@ add_library(bald_engine
         library.h
         src/utils/file_manager.cpp
         )
+
+target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 
 #### END CONFIG/DEFINITIONS
 
