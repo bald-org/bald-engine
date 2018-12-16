@@ -7,7 +7,7 @@
 #include "pch.h"
 
 namespace Bald::Utils {
-    std::vector<std::string> split_string(const char* str_to_split, char splitter) {
+    std::vector<std::string> split_string(const char* str_to_split, char delimiter) {
         std::vector<std::string> result;
         std::string temp;
         auto str = static_cast<std::string>(str_to_split);
