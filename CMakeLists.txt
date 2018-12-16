@@ -53,7 +53,7 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES} tests/glfw3_test.cpp)
+add_executable(runUnitTests ${TEST_SRC_FILES})
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
