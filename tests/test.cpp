@@ -25,8 +25,3 @@ TEST(Division, CorrectDivision) { //NOLINT
     double division_result = divide(a, b);
     EXPECT_EQ(2.5, division_result);
 }
-
-int main(int argc, char **argv) {
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-}
