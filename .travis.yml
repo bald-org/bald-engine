@@ -21,10 +21,12 @@ install:
   - cmake ../
   - cmake --build .
   - sudo make install
-  - sh -e /etc/init.d/xvfb start
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
+  - export DISPLAY=:99.0
+  - sh -e /etc/init.d/xvfb start
+  - sleep 3
 
 script:
   - cd $TRAVIS_BUILD_DIR
