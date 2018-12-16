@@ -1,7 +1,18 @@
 cmake_minimum_required(VERSION 3.12)
 
+#### LIBRARIES
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
+
+include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
+
+#### END-LIBRARIES
+
+set(CMAKE_CXX_STANDARD 17)
 
 project(bald_engine)
 
@@ -15,14 +26,27 @@ add_compile_options(
         -Wduplicated-branches
         -Wlogical-op
 )
-include_directories(${CMAKE_SOURCE_DIR}/src)
-include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
-
-
-set(CMAKE_CXX_STANDARD 17)
 
 add_library(bald_engine library.cpp library.h)
 
+#### PCH
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(bald_engine)
+
+#### END-PCH
+
+#### TESTING
+enable_testing()
+file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
+
+add_executable(runUnitTests ${TEST_SRC_FILES})
+set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+cotire(runUnitTests)
+
+target_link_libraries(runUnitTests gtest gtest_main)
+target_link_libraries(runUnitTests bald_engine)
+
+add_test(UnitTests runUnitTests)
+
+#### END-TESTING
