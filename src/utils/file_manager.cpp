@@ -29,7 +29,7 @@ namespace Bald::Utils {
         }
 
         fseek(file, 0, SEEK_END);
-        auto stringSize = static_cast<unsigned long>(ftell(file));
+        auto stringSize = static_cast<const unsigned long>(ftell(file));
         fseek(file, 0, SEEK_SET);
 
         auto *buffer = new char[stringSize + 1];
