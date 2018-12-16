@@ -6,9 +6,9 @@
 
 int main() {
 
-    std::string file = ENGINE::UTILS::FileManager::ReadFile("/home/blinku/CLionProjects/BALD/bald-engine/main.cpp", ENGINE::UTILS::FileManager::SMALL);
+    std::string file = Bald::Utils::FileManager::ReadFile("/home/blinku/CLionProjects/BALD/bald-engine/main.cpp", Bald::Utils::FileManager::SMALL);
 
     std::cout << file << std::endl;
 
     return 0;
-};
+}

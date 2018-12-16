@@ -4,11 +4,9 @@
 
 #pragma once
 
-#include <iostream>
-#include <string>
-#include <fstream>
+#include "pch.h"
 
-namespace ENGINE::UTILS {
+namespace Bald::Utils {
 
     class FileManager {
     public:

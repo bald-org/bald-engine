@@ -4,7 +4,9 @@
 
 #include "file_manager.h"
 
-namespace ENGINE::UTILS {
+#include <fstream>
+
+namespace Bald::Utils {
 
     std::string FileManager::ReadFile(const char *filePath, Size size) {
         if (size == SMALL) {
@@ -15,7 +17,7 @@ namespace ENGINE::UTILS {
         }
         else {
             std::cout << "Specify size of your file! (SMALL/BIG)" << std::endl;
-            exit(1);
+            return std::string("Error!");
         }
     }
 
@@ -37,7 +39,7 @@ namespace ENGINE::UTILS {
 
         std::string result(buffer);
 
-        delete buffer;
+        delete[] buffer;
 
         return result;
     }
