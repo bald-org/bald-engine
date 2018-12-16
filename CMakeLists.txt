@@ -10,6 +10,9 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 
+include_directories(${CMAKE_SOURCE_DIR}/src/math)
+
+
 #### END-LIBRARIES
 
 #### CONFIG/DEFINITIONS
@@ -35,7 +38,7 @@ add_library(bald_engine
         library.cpp
         library.h
         src/utils/file_manager.cpp
-        )
+        src/math/vec2.cpp src/math/vec2.h)
 
 #### END CONFIG/DEFINITIONS
 
@@ -50,7 +53,7 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES})
+add_executable(runUnitTests ${TEST_SRC_FILES} tests/test_vector2.cpp)
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
