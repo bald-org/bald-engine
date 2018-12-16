@@ -29,7 +29,7 @@ namespace Bald::Utils {
         }
 
         fseek(file, 0, SEEK_END);
-        unsigned long stringSize = ftell(file);
+        auto stringSize = static_cast<unsigned long>(ftell(file));
         fseek(file, 0, SEEK_SET);
 
         auto *buffer = new char[stringSize + 1];
@@ -57,11 +57,11 @@ namespace Bald::Utils {
             return std::string("Error!");
         }
 
-        auto *buffer = static_cast<char *>(mmap(nullptr, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
+        auto *buffer = static_cast<char *>(mmap(nullptr, static_cast<unsigned long>(sb.st_size), PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
 
         std::string result(buffer);
 
-        munmap(buffer, sb.st_size);
+        munmap(buffer, static_cast<unsigned long>(sb.st_size));
 
         return result;
 
