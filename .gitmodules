@@ -1,6 +1,9 @@
 [submodule "vendor/cotire"]
 	path = vendor/cotire
 	url = https://github.com/sakra/cotire
+[submodule "vendor/google/googletest"]
+	path = vendor/google/googletest
+	url = https://github.com/google/googletest.git
 [submodule "vendor/spdlog"]
 	path = vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
