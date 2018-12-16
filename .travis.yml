@@ -37,6 +37,11 @@ before_script:
   - sudo apt-get -yq --force-yes install libgl1-mesa-dev libgl1-mesa-glx mesa-common-dev libglapi-mesa libgbm1 libgl1-mesa-dri libxatracker-dev xvfb
 
 script:
+  - cd vendor/glfw/
+  - mkdir build && cd build
+  - cmake ../
+  - cmake --build .
+  - sudo make install
   - mkdir build && cd build
   - cmake ../
   - cmake --build .
