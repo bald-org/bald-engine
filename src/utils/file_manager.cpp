@@ -28,18 +28,25 @@ namespace Bald::Utils {
         auto stringSize = static_cast<unsigned long>(ftell(file));
         fseek(file, 0, SEEK_SET);
 
-        auto *buffer = new char[stringSize + 1];
+        try
+        {
+            auto *buffer = new char[stringSize + 1];
+            fread(buffer, sizeof(char), stringSize, file);
+            buffer[stringSize] = 0;
 
-        fread(buffer, sizeof(char), stringSize, file);
-        buffer[stringSize] = 0;
+            std::string result(buffer);
 
-        std::string result(buffer);
+            delete[] buffer;
 
-        delete[] buffer;
+            fclose(file);
 
-        fclose(file);
-
-        return result;
+            return result;
+        }
+        catch (std::bad_alloc& ba)
+        {
+            CORE_LOG_ERROR("bad_alloc caught: " + static_cast<std::string>(ba.what()));
+            return std::string("Error!");
+        }
     }
 
     std::string FileManager::ReadBigFile(const char *filePath) {

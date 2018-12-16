@@ -41,7 +41,19 @@ namespace Bald::Utils {
 
         [[nodiscard]] static std::string ReadFile(const char* filePath, Size size);
     private:
-        [[nodiscard]] static std::string ReadSmallFile(const char* filePath); /** used to read small files, same implementation on windows and linux*/
-        [[nodiscard]] static std::string ReadBigFile(const char* filePath); /** used to read big files, different implementation for windows and linux*/
+
+        /**
+         * @fn ReadSmallFile
+         * @brief used by public function ReadFile to read smaller files, platform independent
+         * @return string
+         */
+        [[nodiscard]] static std::string ReadSmallFile(const char* filePath);
+
+        /**
+         * @fn ReadBigFile
+         * @brief used by public function ReadFile to read bigger files, platform dependant
+         * @return string
+         */
+        [[nodiscard]] static std::string ReadBigFile(const char* filePath);
     };
 }
