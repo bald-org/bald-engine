@@ -10,7 +10,7 @@ namespace Bald::Utils {
 
 /**
 * @class FileManager
-* @brief implementation of file manager system
+* @brief implementation of file manager system, if you are on Windows add -D_WINDOWS definition, if on Linux add -D_LINUX definition
 */
 
     class FileManager {

@@ -16,6 +16,9 @@ add_compile_options(
         -Wduplicated-branches
         -Wlogical-op
 )
+
+add_definitions(-D_LINUX)
+
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)

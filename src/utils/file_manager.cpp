@@ -29,7 +29,7 @@ namespace Bald::Utils {
         }
 
         fseek(file, 0, SEEK_END);
-        auto stringSize = static_cast<const unsigned long>(ftell(file));
+        auto stringSize = static_cast<unsigned long>(ftell(file));
         fseek(file, 0, SEEK_SET);
 
         auto *buffer = new char[stringSize + 1];
@@ -47,7 +47,6 @@ namespace Bald::Utils {
     }
 
     std::string FileManager::ReadBigFile(const char *filePath) {
-#define _LINUX
 #ifdef _LINUX
         int fileDescriptor = open(filePath, O_RDONLY, S_IRUSR | S_IWUSR);
         struct stat sb;
