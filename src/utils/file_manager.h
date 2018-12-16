@@ -24,14 +24,14 @@ namespace Bald::Utils {
          * @fn FileManager
          * @brief default constructor
          */
-        FileManager() = default;
+        FileManager() = delete;
 
         /**
          * @fn FileManager
          * @brief default destructor
          */
 
-        ~FileManager() = default;
+        ~FileManager() = delete;
 
         /**
          * @fn ReadFile

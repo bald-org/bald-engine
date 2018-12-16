@@ -33,14 +33,14 @@ enable_testing()
 message("-- TEST EXECUTALES: " ${TEST_SRC_FILES})
 #add_executable(runUnitTests ${TEST_SRC_FILES})
 
-add_executable(runUnitTests
+add_executable(file_menager_test
         ${PROJECT_SOURCE_DIR}/tests/test_file_manager.cpp
         ${PROJECT_SOURCE_DIR}/src/Log.cpp
         ${PROJECT_SOURCE_DIR}/src/utils/file_manager.cpp
         )
 
-target_link_libraries(runUnitTests gtest gtest_main)
-target_link_libraries(runUnitTests bald_engine)
-add_test(UnitTests runUnitTests)
+target_link_libraries(file_menager_test gtest gtest_main)
+target_link_libraries(file_menager_test bald_engine)
+add_test(UnitTests file_menager_test)
 
 configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
