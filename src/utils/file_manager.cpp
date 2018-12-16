@@ -5,6 +5,7 @@
 #include "file_manager.h"
 
 #include <fstream>
+#include <sys/mman.h>
 
 namespace Bald::Utils {
 
@@ -16,7 +17,7 @@ namespace Bald::Utils {
             return ReadBigFile(filePath);
         }
         else {
-            std::cout << "Specify size of your file! (SMALL/BIG)" << std::endl;
+            CORE_LOG_WARN("Specify size of your file! (SMALL/BIG)");
             return std::string("Error!");
         }
     }
@@ -25,14 +26,15 @@ namespace Bald::Utils {
         FILE *file = fopen(filePath, "r");
 
         if (!file) {
-            std::cout << "Couldn't open the file at path: " << filePath << std::endl;
+            CORE_LOG_WARN("Couldn't open the file at path: ", filePath);
+            return std::string("Error!");
         }
 
         fseek(file, 0, SEEK_END);
         unsigned long stringSize = ftell(file);
         fseek(file, 0, SEEK_SET);
 
-        char *buffer = new char[stringSize + 1];
+        auto *buffer = new char[stringSize + 1];
 
         fread(buffer, sizeof(char), stringSize, file);
         buffer[stringSize] = 0;
@@ -45,8 +47,28 @@ namespace Bald::Utils {
     }
 
     std::string FileManager::ReadBigFile(const char* filePath) {
-        // TODO: Implement reading huge files;
-        exit(1);
+#define _LINUX
+#ifdef _LINUX
+        int fileDescriptor = open(filePath, O_RDONLY, S_IRUSR | S_IWUSR);
+        struct stat sb;
+
+        if (fstat(fileDescriptor, &sb) == -1) {
+            CORE_LOG_WARN("Couldn't get size of the file. Check if the file exists at path: ", filePath);
+            return std::string("Error!");
+        }
+
+        auto *buffer = static_cast<char*>(mmap(NULL, sb.st_size, PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
+
+        std::string result(buffer);
+
+        munmap(buffer, sb.st_size);
+
+        return result;
+
+#elif _WINDOWS
+        CORE_LOG_ERROR("Windows implementation is not done yet!");
+        return std::string("Error!");
+#endif
     }
 }
 
