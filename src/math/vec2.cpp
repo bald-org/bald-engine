@@ -6,36 +6,56 @@
 
 namespace Bald::Math {
 
-
-    [[nodiscard]] constexpr Vec2 &Vec2::operator+(const Vec2 &other) noexcept {
-
-        this->m_x += other.m_x;
-        this->m_y += other.m_y;
-
-        return *this;
+    Vec2 Vec2::operator+(const Vec2& other)const noexcept{
+        return Vec2(m_x + other.m_x, m_y + other.m_y);
     }
 
-    [[nodiscard]] constexpr Vec2 &Vec2::operator*(double multiplier) noexcept {
+    Vec2 Vec2::operator*(float multiplier) const noexcept{
+        return Vec2(m_x * multiplier, m_y * multiplier);
+    }
 
-        if (multiplier != 0.0) {
-            this->m_y *= multiplier;
-            this->m_x *= multiplier;
+    Vec2& Vec2::operator=(const Vec2& other)noexcept{
+        if(this != &other){
+            m_x = other.m_x;
+            m_y = other.m_y;
         }
-
         return *this;
     }
 
-    double Vec2::Len() const {
-        double length = sqrt(pow(this->m_x, 2.0) + pow(this->m_y, 2.0));
+    bool Vec2::operator==(const Vec2& other) const noexcept{
+        if(m_x == other.m_x && m_y == other.m_y) return true;
+        return false;
+    }
 
-        return length;
+    float Vec2::Len() const noexcept{
+        return static_cast<float>(sqrt(pow(m_x, 2.0f) + pow(m_y, 2.0f)));
     }
 
 
-    double Vec2::ScalarProduct(const Vec2 &other) const {
-        double product = this->m_x * other.m_x + this->m_y * other.m_y;
-
-        return product;
+    float Vec2::DotProduct(const Vec2 &other) const noexcept{
+        return m_x * other.m_x + m_y * other.m_y;
     }
+
+
+
+
+    // FRIENDLY FUNCTIONS
+
+
+    std::ostream& operator<<(std::ostream& out, const Vec2& vec)noexcept{
+        out << "[" << vec.m_x << ", " << vec.m_y << "]" << std::endl;
+        return out;
+    }
+
+    float Vec2::AngleBetween(const Vec2& other)const noexcept{
+
+        float dot = DotProduct(other);
+        float len = Len() * other.Len();
+        float radians = static_cast<float> (acos(dot/len));
+        return ( radians * 180.0f ) / static_cast<float>(M_PI);
+    }
+
+    // END OF FRIENDLY FUNCTIONS
 
 }
+// END OF NAMESPACE Bald::Math

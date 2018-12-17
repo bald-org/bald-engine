@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include "pch.h"
 #include <cmath>
+#include <iostream>
 
 namespace Bald::Math{
 
@@ -13,10 +13,10 @@ namespace Bald::Math{
         /*
          * @fn Vec2
          * @brief constructor
-         * @param [int] x
-         * @param [int] y
+         * @param [float] x
+         * @param [float] y
         */
-        Vec2(double x = 0.0, double y = 0.0)
+        Vec2(float x = 0.0f, float y = 0.0f)
                 :m_x(x), m_y(y){}
         /*
          * @fn Vec2
@@ -29,66 +29,102 @@ namespace Bald::Math{
 
         /*
          * @fn GetX
-         * @brief returns member X variable
+         * @brief returns m_x variable
         */
-        [[nodiscard]] constexpr inline double GetX()const noexcept{return m_x;}
+        [[nodiscard]] constexpr inline float GetX()const noexcept{return m_x;}
         /*
          * @fn GetY
-         * @brief returns member Y variable
+         * @brief returns m_y variable
         */
-        [[nodiscard]] constexpr inline double GetY()const noexcept{return m_y;}
+        [[nodiscard]] constexpr inline float GetY()const noexcept{return m_y;}
 
         /*
          * @fn Print
          * @brief prints vec
         */
-        inline void Print()const  {
-            std::cout << "[" << m_x << ", " << m_y << "]" << std::endl;
-        }
+        inline void Print()const{std::cout << "[" << m_x << ", " << m_y << "]" << std::endl;}
+
+
+
+                 // OPERATORS
+
+        /*
+         * @fn operator<<
+         * @brief prints the vec2
+         * @param [std::ostream&] output stream
+         * @param [const Vec2&] vector object to be printed
+        */
+        [[nodiscard]] friend std::ostream& operator<<(std::ostream& out, const Vec2& vec)noexcept ;
 
         /*
          * @fn operator+
          * @brief adds another vector to the current vector
          * @param [const Vec2&] other vector
         */
-        [[nodiscard]] constexpr Vec2& operator+(const Vec2& other)noexcept;
+        [[nodiscard]] Vec2 operator+(const Vec2& other)const noexcept;
 
         /*
          * @fn operator*
          * @brief multiplies current vector by the passed multiplier
-         * @param [double] multiplier
+         * @param [float] multiplier
         */
-        [[nodiscard]] constexpr Vec2& operator*(double multiplier)noexcept;
+        [[nodiscard]] Vec2 operator*(float multiplier) const noexcept;
+
+        /*
+         * @fn operator=
+         * @brief copies the values of other Vec2 to current Vec2
+         * @param [const Vec&] other Vec2
+        */
+        [[nodiscard]] Vec2& operator=(const Vec2& other)noexcept;
+
+        /*
+         * @fn operator==
+         * @brief checks if the two vectors are the same
+         * @param [const Vec&] other Vec2
+        */
+        [[nodiscard]] bool operator==(const Vec2& other) const noexcept;
+
+
+        // END OF OPERATORS
+
+        /*
+         * @fn AngleBetween
+         * @brief returns angle between two vectors
+         * @param [const Vec&] other Vec2
+         * @return [float] angle
+        */
+        [[nodiscard]] float AngleBetween(const Vec2& other)const noexcept;
 
 
         /*
          * @fn Len
          * @brief returns length of the vector
-         * @return [double] length
+         * @return [float] length
         */
-        double Len()const;
+        [[nodiscard]] float Len()const noexcept;
+
         /*
-         * @fn ScalarProduct
+         * @fn DotProduct
          * @brief returns scalar product
          * @param [const Vec2&] other
-         * @return [double] scalar product
+         * @return [float] scalar product
         */
-        double ScalarProduct(const Vec2& other)const;
+        [[nodiscard]] float DotProduct(const Vec2& other)const noexcept;
 
 
-
-        // [[nodiscard]] constexpr Vec2 VectorProduct(const Vec2& other)noexcept;
 
     private:
-        double m_x;
-        double m_y;
+        float m_x;
+        float m_y;
     };
+    // END OF CLASS Vec2
 
 
 
 
 
 }
+// END OF NAMESPACE Bald::Math
 
 
 
