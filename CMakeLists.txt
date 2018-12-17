@@ -9,6 +9,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src/math)
 
@@ -38,7 +39,11 @@ add_library(bald_engine
         library.cpp
         library.h
         src/utils/file_manager.cpp
-        src/math/vec2.cpp src/math/vec2.h)
+        src/math/vec2.cpp src/math/vec2.h
+        src/utils/split_string.cpp
+        )
+
+target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 
 #### END CONFIG/DEFINITIONS
 
@@ -53,11 +58,11 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES} tests/test_vector2.cpp)
+add_executable(runUnitTests ${TEST_SRC_FILES})
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
-target_link_libraries(runUnitTests gtest gtest_main)
+target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
 
 configure_file(${PROJECT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
