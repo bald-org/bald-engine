@@ -18,6 +18,7 @@ namespace Bald::Math{
         */
         Vec2(float x = 0.0f, float y = 0.0f)
                 :m_x(x), m_y(y){}
+
         /*
          * @fn Vec2
          * @brief copy constructor
@@ -26,25 +27,48 @@ namespace Bald::Math{
         Vec2(const Vec2& other)
                 :m_x(other.m_x), m_y(other.m_y){}
 
+        /*
+         * @fn CreateUnitX
+         * @brief creates unit vector [1.0f, 0.0f]
+         * @return [Vec2] new Vector
+         * */
+        [[nodiscard]] static Vec2 CreateUnitX();
+
+        /*
+         * @fn CreateUnitY
+         * @brief creates unit vector [0.0f, 1.0f]
+         * @return [Vec2] new Vector
+         * */
+        [[nodiscard]] static Vec2 CreateUnitY();
+
 
         /*
          * @fn GetX
          * @brief returns m_x variable
+         * @return [float] m_x
         */
         [[nodiscard]] constexpr inline float GetX()const noexcept{return m_x;}
+
         /*
          * @fn GetY
          * @brief returns m_y variable
+         * @return [float] m_y
         */
         [[nodiscard]] constexpr inline float GetY()const noexcept{return m_y;}
 
         /*
          * @fn Print
          * @brief prints vec
-        */
+         */
         inline void Print()const{std::cout << "[" << m_x << ", " << m_y << "]" << std::endl;}
 
 
+        /*
+        * @fn Reverse
+        * @brief reverts vector
+        * @return [Vec2&] reversed vector
+        */
+        [[nodiscard]] Vec2& Reverse()noexcept;
 
                  // OPERATORS
 

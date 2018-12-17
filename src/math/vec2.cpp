@@ -27,6 +27,15 @@ namespace Bald::Math {
         return false;
     }
 
+
+    Vec2 Vec2::CreateUnitX(){
+        return Vec2(1.0f, 0.0f);
+    }
+
+    Vec2 Vec2::CreateUnitY(){
+        return Vec2(0.0f, 1.0f);
+    }
+
     float Vec2::Len() const noexcept{
         return static_cast<float>(sqrt(pow(m_x, 2.0f) + pow(m_y, 2.0f)));
     }
@@ -36,6 +45,12 @@ namespace Bald::Math {
         return m_x * other.m_x + m_y * other.m_y;
     }
 
+    Vec2& Vec2::Reverse()noexcept{
+        m_x *= -1.0f;
+        m_y *= -1.0f;
+        
+        return *this;
+    }
 
 
 

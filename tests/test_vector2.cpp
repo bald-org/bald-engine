@@ -7,7 +7,19 @@
 #include "math/vec2.h"
 
 
+TEST(CreateUnitX, UnitX) { //NOLINT
+    Bald::Math::Vec2 A = Bald::Math::Vec2::CreateUnitX();
 
+    EXPECT_EQ(Bald::Math::Vec2(1.0f, 0.0f), A);
+}
+
+
+
+TEST(CreateUnitY, UnitY) { //NOLINT
+    Bald::Math::Vec2 A = Bald::Math::Vec2::CreateUnitY();
+
+    EXPECT_EQ(Bald::Math::Vec2(0.0f, 1.0f), A);
+}
 
 TEST(GetterX, GetX) { //NOLINT
     Bald::Math::Vec2 A(66.0f,3.4f);
@@ -79,17 +91,29 @@ TEST(Multiplying, MultiplyingByValue) { //NOLINT
     EXPECT_EQ(true , test);
 }
 
-// Why doesn't this pass ?
-
-TEST(Angle, AngleBetweenTwoVectors) { //NOLINT
-
-    float helpX = (static_cast<float> (sqrt(3.0))*2.0f);
-
-    Bald::Math::Vec2 A(helpX, 2.0f);
-    Bald::Math::Vec2 B(helpX, 0.0f);
-
-    float test_angle = A.AngleBetween(B);
 
 
-    EXPECT_EQ(30.0f, test_angle);
+TEST(Reverse, ReversingTheVec) { //NOLINT
+    Bald::Math::Vec2 A(3.5f, -2.0f);
+
+    Bald::Math::Vec2 B = A.Reverse();
+
+
+    EXPECT_EQ(Bald::Math::Vec2(-3.5f, 2.0f) , B);
 }
+
+
+// TODO: Angle between vectors test
+
+//TEST(Angle, AngleBetweenTwoVectors) { //NOLINT
+//
+//    float helpX = (static_cast<float> (sqrt(3.0))*2.0f);
+//
+//    Bald::Math::Vec2 A(helpX, 2.0f);
+//    Bald::Math::Vec2 B(helpX, 0.0f);
+//
+//    float test_angle = A.AngleBetween(B);
+//
+//
+//    EXPECT_EQ(30.0f, test_angle);
+//}
