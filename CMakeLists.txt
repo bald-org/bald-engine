@@ -8,6 +8,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
+include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 
@@ -37,7 +38,7 @@ add_library(bald_engine
         library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
-        )
+        src/input/input_manager.cpp src/input/input_manager.h)
 
 target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 

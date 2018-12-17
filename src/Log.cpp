@@ -14,5 +14,4 @@ namespace Bald{
         spdlog::set_pattern("%^[%T] %n: %v%$"); /** < sets pattern %^ [start color range], %T [time HH::MM::SS], %n [logger name], %v [text to log] %$[ends color range]*/
     }
 
-
 }
