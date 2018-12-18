@@ -8,7 +8,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-TEST(GLFW, GLFW_Initialization){
+TEST(GLFW_GLAD, GLFW_GLAD_Initialization){
 
     EXPECT_EQ(glfwInit(), GLFW_TRUE);
 
@@ -16,7 +16,7 @@ TEST(GLFW, GLFW_Initialization){
     glfwMakeContextCurrent(window);
     EXPECT_FALSE(window == NULL);
 
-    EXPECT_EQ(gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress) ), true);
+    EXPECT_EQ(gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), true);
 
     glfwTerminate();
 
