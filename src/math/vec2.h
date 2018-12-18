@@ -19,27 +19,22 @@ namespace Bald::Math{
         Vec2(float x = 0.0f, float y = 0.0f)
                 :m_x(x), m_y(y){}
 
-        /*
-         * @fn Vec2
-         * @brief copy constructor
-         * @param [const Vec2&] other vector
-        */
-        Vec2(const Vec2& other)
-                :m_x(other.m_x), m_y(other.m_y){}
 
         /*
-         * @fn CreateUnitX
-         * @brief creates unit vector [1.0f, 0.0f]
-         * @return [Vec2] new Vector
+         * @fn MakeUnitVec
+         * @brief creates unit vector with the length of 1.0f
+         * @param [const Vec2&] vec -> current vector
+         * @return [Vec2] unit long vector
          * */
-        [[nodiscard]] static Vec2 CreateUnitX();
+        [[nodiscard]] static Vec2 MakeUnitVec(const Vec2& vec)noexcept;
+
 
         /*
-         * @fn CreateUnitY
-         * @brief creates unit vector [0.0f, 1.0f]
-         * @return [Vec2] new Vector
+         * @fn Normalize
+         * @brief normalizes the vector to the length of 1.0f
+         * @return [Vec2&] unit long vector
          * */
-        [[nodiscard]] static Vec2 CreateUnitY();
+        [[nodiscard]] Vec2& Normalize()noexcept;
 
 
         /*
@@ -49,6 +44,7 @@ namespace Bald::Math{
         */
         [[nodiscard]] constexpr inline float GetX()const noexcept{return m_x;}
 
+
         /*
          * @fn GetY
          * @brief returns m_y variable
@@ -56,19 +52,13 @@ namespace Bald::Math{
         */
         [[nodiscard]] constexpr inline float GetY()const noexcept{return m_y;}
 
-        /*
-         * @fn Print
-         * @brief prints vec
-         */
-        inline void Print()const{std::cout << "[" << m_x << ", " << m_y << "]" << std::endl;}
-
 
         /*
         * @fn Reverse
         * @brief reverts vector
         * @return [Vec2&] reversed vector
         */
-        [[nodiscard]] Vec2& Reverse()noexcept;
+        [[nodiscard]] Vec2 Reverse()const noexcept;
 
                  // OPERATORS
 
@@ -78,7 +68,8 @@ namespace Bald::Math{
          * @param [std::ostream&] output stream
          * @param [const Vec2&] vector object to be printed
         */
-        [[nodiscard]] friend std::ostream& operator<<(std::ostream& out, const Vec2& vec)noexcept ;
+        [[nodiscard]] friend std::ostream& operator<<(std::ostream& out, const Vec2& vec)noexcept;
+
 
         /*
          * @fn operator+
@@ -87,6 +78,15 @@ namespace Bald::Math{
         */
         [[nodiscard]] Vec2 operator+(const Vec2& other)const noexcept;
 
+
+        /*
+         * @fn operator-
+         * @brief adds another vector to the current vector
+         * @param [const Vec2&] other vector
+        */
+        [[nodiscard]] Vec2 operator-(const Vec2& other)const noexcept;
+
+
         /*
          * @fn operator*
          * @brief multiplies current vector by the passed multiplier
@@ -94,12 +94,30 @@ namespace Bald::Math{
         */
         [[nodiscard]] Vec2 operator*(float multiplier) const noexcept;
 
+
         /*
-         * @fn operator=
-         * @brief copies the values of other Vec2 to current Vec2
-         * @param [const Vec&] other Vec2
+         * @fn operator+=
+         * @brief adds another vector to the current vector
+         * @param [const Vec2&] other vector
         */
-        [[nodiscard]] Vec2& operator=(const Vec2& other)noexcept;
+        [[nodiscard]] Vec2& operator+=(const Vec2& other)noexcept;
+
+
+        /*
+         * @fn operator-=
+         * @brief adds reversed other vector to the current vector
+         * @param [const Vec2&] other vector
+        */
+        [[nodiscard]] Vec2& operator-=(const Vec2& other)noexcept;
+
+
+        /*
+         * @fn operator*=
+         * @brief multiplies current vector by the passed multiplier
+         * @param [const Vec2&] other vector
+        */
+        [[nodiscard]] Vec2& operator*=(float multiplier)noexcept;
+
 
         /*
          * @fn operator==
@@ -108,6 +126,13 @@ namespace Bald::Math{
         */
         [[nodiscard]] bool operator==(const Vec2& other) const noexcept;
 
+
+        /*
+         * @fn operator!=
+         * @brief checks if the two vectors are the same
+         * @param [const Vec&] other Vec2
+        */
+        [[nodiscard]] bool operator!=(const Vec2& other) const noexcept;
 
         // END OF OPERATORS
 
@@ -126,6 +151,7 @@ namespace Bald::Math{
          * @return [float] length
         */
         [[nodiscard]] float Len()const noexcept;
+
 
         /*
          * @fn DotProduct
