@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
@@ -38,10 +39,10 @@ add_library(bald_engine
         library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
-        vendor/glad/src/glad.c
         )
 
-target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
+target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl )
 
 #### END CONFIG/DEFINITIONS
 
