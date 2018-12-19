@@ -42,7 +42,18 @@ add_library(bald_engine
         )
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
-target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl )
+
+if (APPLE)
+    target_link_libraries(bald_engine
+            glad
+            glfw3
+            "-framework Cocoa"
+            "-framework OpenGL"
+            "-framework IOKit"
+            "-framework CoreVideo")
+else()
+    target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+endif()
 
 #### END CONFIG/DEFINITIONS
 
