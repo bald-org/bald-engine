@@ -89,27 +89,37 @@ TEST(Operator, MultiEqualsOperator) { //NOLINT
 }
 
 
-TEST(Operator, EqualsEqualsOperator) { //NOLINT
+TEST(Operator, EqualsEqualsOperatorTrue) { //NOLINT
     Bald::Math::Vec2 A(2.0f, -3.0f);
     Bald::Math::Vec2 B(2.0f, -3.0f);
 
-    ASSERT_EQ(true, A == B);
-
-    A += Bald::Math::Vec2(4.2f, 0.0f);
-
-    ASSERT_EQ(false, A == B);
+    ASSERT_TRUE(A == B);
 }
 
 
-TEST(Operator, NotEqualsOperator) { //NOLINT
+TEST(Operator, EqualsEqualsOperatorFalse) { //NOLINT
+    Bald::Math::Vec2 A(2.4f, -3.0f);
+    Bald::Math::Vec2 B(5.0f, -1.0f);
+
+
+    ASSERT_FALSE(A == B);
+}
+
+
+TEST(Operator, NotEqualsOperatorTrue) { //NOLINT
     Bald::Math::Vec2 A(2.0f, -3.2f);
     Bald::Math::Vec2 B(4.0f, -11.2f);
 
-    ASSERT_EQ(true, A != B);
+    ASSERT_TRUE(A != B);
+}
 
-    A += Bald::Math::Vec2(2.0f, -8.0f);
 
-    ASSERT_EQ(false, A != B);
+TEST(Operator, NotEqualsOperatorFalse) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -1.0f);
+    Bald::Math::Vec2 B(2.0f, -1.0f);
+
+
+    ASSERT_FALSE(A != B);
 }
 
 
@@ -117,6 +127,13 @@ TEST(Length, CalculateLength) { //NOLINT
     Bald::Math::Vec2 A(3.0f, 4.0f);
 
     ASSERT_FLOAT_EQ(5.0f, A.Len());
+}
+
+
+TEST(Length, CalculateLength2) { //NOLINT
+    Bald::Math::Vec2 A(-12.0f, -5.0f);
+
+    ASSERT_FLOAT_EQ(13.0f, A.Len());
 }
 
 

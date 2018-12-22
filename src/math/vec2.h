@@ -12,7 +12,7 @@ namespace Bald::Math {
     class Vec2 {
     public:
         /**
-         * @fn Vec2
+         * @fn                          Vec2
          * @brief                       constructor
          * @param [float]               x variable
          * @param [float]               y variable

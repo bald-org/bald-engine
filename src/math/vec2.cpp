@@ -91,11 +91,9 @@ namespace Bald::Math {
 
 
     float Vec2::AngleBetween(const Vec2 &other) const noexcept {
-
         float dot = DotProduct(other);
         float len = Len() * other.Len();
         float radians = static_cast<float> (acos(dot / len));
-
 
         return radians;
     }
