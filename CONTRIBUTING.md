@@ -1,11 +1,11 @@
 # Classes
 
-## Nameing of classes:
+## Naming of classes:
 First letter always big. Rest small.
 
 ex. `class Window`
 
-## Nameing of methods:
+## Naming of methods:
 First letter always big. Rest small. If needed other words also start from big letter.
 
 ex. `void TestMethod()`
