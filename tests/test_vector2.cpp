@@ -7,159 +7,137 @@
 #include "math/vec2.h"
 
 
+TEST(Getter, GetX) { //NOLINT
+    Bald::Math::Vec2 A(66.0f, 3.4f);
 
-TEST(GetterX, GetX) { //NOLINT
-    Bald::Math::Vec2 A(66.0f,3.4f);
-
-    EXPECT_EQ(66.0f, A.GetX());
+    ASSERT_FLOAT_EQ(66.0f, A.GetX());
 }
 
 
-
-TEST(GetterY, GetY) { //NOLINT
+TEST(Getter, GetY) { //NOLINT
     Bald::Math::Vec2 A(2.0f, -23.33f);
 
-    EXPECT_EQ(-23.33f, A.GetY());
+    ASSERT_FLOAT_EQ(-23.33f, A.GetY());
 }
 
 
-
-TEST(MakeUnitVec, StaticUnitVec) { //NOLINT
+TEST(NormalizeVector, StaticUnitVec) { //NOLINT
     Bald::Math::Vec2 A = Bald::Math::Vec2::MakeUnitVec(Bald::Math::Vec2(3.0f, 4.0f));
 
-    EXPECT_EQ(1.0f, A.Len());
+    EXPECT_EQ(Bald::Math::Vec2(0.6f, 0.8f), A);
 }
-
 
 
 TEST(NormalizeVector, UnitVecMethod) { //NOLINT
-    Bald::Math::Vec2 A(5.0f,12.0f);
+    Bald::Math::Vec2 A(5.0f, 12.0f);
 
     A.Normalize();
 
-    EXPECT_EQ(1.0f, A.Len());
+    ASSERT_FLOAT_EQ(1.0f, A.Len());
 }
 
 
-
-TEST(PlusOperator, AddingOperator) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-4.0f);
+TEST(Operator, AddingOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -4.0f);
     Bald::Math::Vec2 B(1.0f, 3.0f);
 
-    Bald::Math::Vec2 C(A+B);
-
-    EXPECT_EQ(Bald::Math::Vec2(3.0f,-1.0f), C);
+    EXPECT_EQ(Bald::Math::Vec2(3.0f, -1.0f), A + B);
 }
 
 
-
-TEST(MinusOperator, SubtractingOperator) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-4.0f);
+TEST(Operator, SubtractingOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -4.0f);
     Bald::Math::Vec2 B(1.0f, 3.0f);
 
-    Bald::Math::Vec2 C(A-B);
-
-    EXPECT_EQ(Bald::Math::Vec2(1.0f,-7.0f), C);
+    EXPECT_EQ(Bald::Math::Vec2(1.0f, -7.0f), A - B);
 }
 
 
+TEST(Operator, MultiplyingOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -4.0f);
 
-TEST(MultiplyOperator, MultiplyingOperator) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-4.0f);
-
-    Bald::Math::Vec2 C(A*3.0f);
-
-    EXPECT_EQ(Bald::Math::Vec2(6.0f,-12.0f), C);
+    EXPECT_EQ(Bald::Math::Vec2(6.0f, -12.0f), A * 3.0f);
 }
 
 
-
-TEST(PlusEqualsOperator, AddingOperator) { //NOLINT
+TEST(Operator, PlusEqualsOperator) { //NOLINT
     Bald::Math::Vec2 A(2.0f, 4.0f);
     Bald::Math::Vec2 B(1.0f, 1.0f);
 
     A += B;
 
-    EXPECT_EQ(Bald::Math::Vec2(3.0f,5.0f), A);
+    EXPECT_EQ(Bald::Math::Vec2(3.0f, 5.0f), A);
 }
 
 
-
-TEST(MinusEqualsOperator, SubtractingOperator) { //NOLINT
+TEST(Operator, MinusEqualsOperator) { //NOLINT
     Bald::Math::Vec2 A(2.0f, 4.0f);
     Bald::Math::Vec2 B(1.0f, 1.0f);
 
     A -= B;
 
-    EXPECT_EQ(Bald::Math::Vec2(1.0f,3.0f), A);
+    EXPECT_EQ(Bald::Math::Vec2(1.0f, 3.0f), A);
 }
 
 
-
-TEST(MultiEqualsOperator, MultiplyingOperator) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-3.0f);
+TEST(Operator, MultiEqualsOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -3.0f);
 
     A *= 4.0f;
 
-    EXPECT_EQ(Bald::Math::Vec2(8.0f,-12.0f), A);
+    EXPECT_EQ(Bald::Math::Vec2(8.0f, -12.0f), A);
 }
 
 
+TEST(Operator, EqualsEqualsOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -3.0f);
+    Bald::Math::Vec2 B(2.0f, -3.0f);
 
-TEST(EqualsEqualsOperator, ComparingOperator) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-3.0f);
-    Bald::Math::Vec2 B(2.0f,-3.0f);
+    ASSERT_EQ(true, A == B);
 
-    EXPECT_EQ(true, A == B);
+    A += Bald::Math::Vec2(4.2f, 0.0f);
+
+    ASSERT_EQ(false, A == B);
 }
 
 
+TEST(Operator, NotEqualsOperator) { //NOLINT
+    Bald::Math::Vec2 A(2.0f, -3.2f);
+    Bald::Math::Vec2 B(4.0f, -11.2f);
 
-TEST(NotEqualsOperator2, ComparingOperator2) { //NOLINT
-    Bald::Math::Vec2 A(2.0f,-3.0f);
-    Bald::Math::Vec2 B(4.0f,-11.2f);
+    ASSERT_EQ(true, A != B);
 
-    EXPECT_EQ(true, A != B);
+    A += Bald::Math::Vec2(2.0f, -8.0f);
+
+    ASSERT_EQ(false, A != B);
 }
-
 
 
 TEST(Length, CalculateLength) { //NOLINT
     Bald::Math::Vec2 A(3.0f, 4.0f);
 
-    EXPECT_EQ(5.0f, A.Len());
+    ASSERT_FLOAT_EQ(5.0f, A.Len());
 }
 
 
-
-TEST(DotProduct, CalculateScalarProduct) { //NOLINT
+TEST(DotProduct, CalculateDotProduct) { //NOLINT
     Bald::Math::Vec2 A(1.0f, 1.0f);
     Bald::Math::Vec2 B = Bald::Math::Vec2(2.0f, 2.0f);
 
-    EXPECT_EQ(4.0f, A.DotProduct(B));
+    ASSERT_FLOAT_EQ(4.0f, A.DotProduct(B));
 }
-
 
 
 TEST(Reverse, ReversingTheVec) { //NOLINT
     Bald::Math::Vec2 A(3.5f, -2.0f);
 
-    Bald::Math::Vec2 B = A.Reverse();
-
-    EXPECT_EQ(Bald::Math::Vec2(-3.5f, 2.0f) , B);
+    EXPECT_EQ(Bald::Math::Vec2(-3.5f, 2.0f), A.Reverse());
 }
 
 
+TEST(AngleBetweenTwoVectors, Radians) { //NOLINT
+    Bald::Math::Vec2 A(static_cast<float> (sqrt(3.0)) * 2.0f, 2.0f);
+    Bald::Math::Vec2 B(static_cast<float> (sqrt(3.0)) * 2.0f, 0.0f);
 
-TEST(Angle, AngleBetweenTwoVectors) { //NOLINT
-
-    float helpX = (static_cast<float> (sqrt(3.0))*2.0f);
-
-    Bald::Math::Vec2 A(helpX, 2.0f);
-    Bald::Math::Vec2 B(helpX, 0.0f);
-
-    float test_angle = A.AngleBetween(B);
-
-
-    ASSERT_FLOAT_EQ (static_cast<float> (M_PI / 6.0), test_angle);
+    ASSERT_FLOAT_EQ(static_cast<float> (M_PI / 6.0), A.AngleBetween(B));
 }
