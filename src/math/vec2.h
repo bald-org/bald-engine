@@ -26,7 +26,7 @@ namespace Bald::Math {
          * @brief                       creates unit vector with the length of 1.0f
          * @param [const Vec2&]         vec -> current vector
          * @return [Vec2]               unit long vector
-         * */
+        */
         [[nodiscard]] static Vec2 MakeUnitVec(const Vec2 &vec) noexcept;
 
 
@@ -35,7 +35,7 @@ namespace Bald::Math {
          * @brief                       normalizes vector to the length of 1.0f
          *                              (divides each component by the length of the vector)
          * @return [Vec2&]              unit long vector
-         * */
+        */
         [[nodiscard]] Vec2 &Normalize() noexcept;
 
 
