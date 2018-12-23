@@ -34,13 +34,6 @@ TEST(InputManager, callback){
     EXPECT_TRUE(glfwSetMouseButtonCallback(window, mouse_button_callback) == NULL);
     EXPECT_TRUE(glfwSetCursorPosCallback(window, cursor_position_callback) == NULL);
 
-    while (!glfwWindowShouldClose(window)){
-        if(InputManager::isKeyPressed(GLFW_KEY_SPACE)){
-            std::cout << "SPACE\n";
-        }
-        glfwSwapBuffers(window);
-        glfwPollEvents();
-    }
 
     glfwDestroyWindow(window);
     glfwTerminate();
