@@ -20,7 +20,7 @@ namespace Bald::Input{
 
     void InputManager::Update() {
 
-        for(int i = 0; i < MAX_KEYS; i++) m_KeysTyped[i] = m_Keys[i] && !m_KeysState[i];
+        for(int i = 0; i < MAX_KEYS; i++) m_KeysTyped[i] = !m_KeysState[i] && m_Keys[i];
         for(int i = 0; i < MAX_MOUSE_BUTTONS; i++) m_MouseButtonsTyped[i] = !m_MouseButtonsState[i] && m_MouseButtons[i];
 
         std::memcpy(m_KeysState, m_Keys, MAX_KEYS);

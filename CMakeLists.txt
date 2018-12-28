@@ -44,6 +44,13 @@ target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcurso
 
 #### END CONFIG/DEFINITIONS
 
+#### EXAMPLES
+
+add_executable(input_example examples/input_example.cpp)
+target_link_libraries(input_example bald_engine)
+
+#### END EXAMPLES
+
 #### PCH
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")

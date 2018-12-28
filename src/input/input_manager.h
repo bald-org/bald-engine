@@ -15,25 +15,82 @@
 namespace Bald::Input {
 
     class InputManager {
+
         friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
         friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
         friend void cursor_position_callback(GLFWwindow *window, double xpos, double ypos);
+
     public:
-        static void Update();
+
+        /**
+         * @fn constructor
+         * @brief deleted
+         */
+
+        InputManager() = delete;
+
+        /**
+         * @fn Update
+         * @brief function updating information about input events should be called every frame
+         */
+
+        static void Update(); //TODO: have to be called in Window class Update
+
+        /**
+         * @fn isKeyPressed
+         * @brief function that checks if key was pressed
+         * @param keycode GLFW macro e.g. GLfW_KEY_SPACE
+         * @return true if key was pressed otherwise false
+         */
+
         [[nodiscard]] inline static bool isKeyPressed(int keycode) noexcept;
+
+        /**
+         * @fn isKeyTyped
+         * @brief function that checks if key was typed
+         * @param keycode GLFW macro e.g. GLfW_KEY_SPACE
+         * @return true if key was typed otherwise false
+         */
+
         [[nodiscard]] inline static bool isKeyTyped(int keycode) noexcept;
+
+        /**
+         * @fn isMouseButtonPressed
+         * @brief function that checks if mouse button was pressed
+         * @param buttoncode GLFW macro e.g. GLFW_MOUSE_BUTTON_1
+         * @return true if button was pressed otherwise false
+         */
+
         [[nodiscard]] inline static bool isMouseButtonPressed(int buttoncode) noexcept;
+
+        /**
+         * @fn isMouseButtonTyped
+         * @brief function that checks if mouse button was typed
+         * @param buttoncode GLFW macro e.g. GLFW_MOUSE_BUTTON_1
+         * @return true if button was typed otherwise false
+         */
+
         [[nodiscard]] inline static bool isMouseButtonTyped(int buttoncode) noexcept;
+
+        /**
+         * @fn getMousePos
+         * @brief sets two variables on current mouse position
+         * @param xpos [double] x-coordinate
+         * @param ypos [double] y-coordinate
+         */
+
         inline static void getMousePos(double& xpos, double& ypos) noexcept;
+
     private:
-        static double m_MouseX;
-        static double m_MouseY;
-        static bool m_Keys[MAX_KEYS];
-        static bool m_KeysState[MAX_KEYS];
-        static bool m_KeysTyped[MAX_KEYS];
-        static bool m_MouseButtons[MAX_MOUSE_BUTTONS];
-        static bool m_MouseButtonsState[MAX_MOUSE_BUTTONS];
-        static bool m_MouseButtonsTyped[MAX_MOUSE_BUTTONS];
+
+        static double m_MouseX;                             /**< current mouse x - coordinate*/
+        static double m_MouseY;                             /**< current mouse y - coordinate*/
+        static bool m_Keys[MAX_KEYS];                       /**< current keys states*/
+        static bool m_KeysState[MAX_KEYS];                  /**< keys states in previous frame*/
+        static bool m_KeysTyped[MAX_KEYS];                  /**< keys witch were typed*/
+        static bool m_MouseButtons[MAX_MOUSE_BUTTONS];      /**< current mouse buttons states*/
+        static bool m_MouseButtonsState[MAX_MOUSE_BUTTONS]; /**< mouse buttons states in previous frame*/
+        static bool m_MouseButtonsTyped[MAX_MOUSE_BUTTONS]; /**< mouse buttons witch were typed*/
     };
 
     bool InputManager::isKeyPressed(int keycode) noexcept {
