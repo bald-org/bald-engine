@@ -38,7 +38,9 @@ add_library(bald_engine
         library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
-        src/input/input_manager.cpp src/input/input_manager.h)
+        src/input/input_manager.cpp src/input/input_manager.h
+        src/Log.cpp
+        )
 
 target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 
