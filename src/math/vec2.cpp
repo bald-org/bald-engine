@@ -70,7 +70,7 @@ namespace Bald::Math {
 
 
     float Vec2::Len() const noexcept {
-        return static_cast<float>(sqrt(pow(m_x, 2.0f) + pow(m_y, 2.0f)));
+        return static_cast<float>(sqrt(m_x * m_x + m_y * m_y));
     }
 
 

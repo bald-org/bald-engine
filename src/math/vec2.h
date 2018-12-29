@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <cmath>
 #include <iostream>
 
 namespace Bald::Math {
