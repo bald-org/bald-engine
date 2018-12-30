@@ -43,7 +43,7 @@ add_library(bald_engine
         src/utils/file_manager.cpp
         src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
-        )
+        src/math/vec3.cpp src/math/vec3.h)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
@@ -72,7 +72,7 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES})
+add_executable(runUnitTests ${TEST_SRC_FILES} tests/test_vector3.cpp)
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 
