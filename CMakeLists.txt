@@ -13,6 +13,9 @@ include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
 
+include_directories(${CMAKE_SOURCE_DIR}/src/math)
+
+
 #### END-LIBRARIES
 
 #### CONFIG/DEFINITIONS
@@ -38,6 +41,7 @@ add_library(bald_engine
         library.cpp
         library.h
         src/utils/file_manager.cpp
+        src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
         )
 
