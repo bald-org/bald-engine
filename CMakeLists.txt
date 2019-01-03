@@ -39,8 +39,7 @@ add_compile_options(
 add_definitions(-D_LINUX)
 
 add_library(bald_engine
-        library.cpp
-        library.h
+        library.cpp library.h
         src/utils/file_manager.cpp
         src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
