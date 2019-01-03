@@ -15,6 +15,9 @@ namespace Bald::Utils {
 
     class FileManager {
     public:
+        /**
+         * ENUM which determines size of file and therefor methods, which will be used to read it
+         */
         enum Size : char {
             SMALL_FILE, BIG_FILE
         };
@@ -36,6 +39,8 @@ namespace Bald::Utils {
         /**
          * @fn ReadFile
          * @brief use to read files
+         * @param filePath          Path to file
+         * @param size              Size of file
          * @return string
          */
 
@@ -45,6 +50,7 @@ namespace Bald::Utils {
         /**
          * @fn ReadSmallFile
          * @brief used by public function ReadFile to read smaller files, platform independent
+         * @param filePath          Path to file
          * @return string
          */
         [[nodiscard]] static std::string ReadSmallFile(const char* filePath);
@@ -52,6 +58,7 @@ namespace Bald::Utils {
         /**
          * @fn ReadBigFile
          * @brief used by public function ReadFile to read bigger files, platform dependant
+         * @param filePath          Path to file
          * @return string
          */
         [[nodiscard]] static std::string ReadBigFile(const char* filePath);
