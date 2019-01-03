@@ -5,12 +5,17 @@ cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
+
+include_directories(${CMAKE_SOURCE_DIR}/src/math)
+
 
 #### END-LIBRARIES
 
@@ -34,15 +39,27 @@ add_compile_options(
 add_definitions(-D_LINUX)
 
 add_library(bald_engine
-        library.cpp
-        library.h
+        library.cpp library.h
         src/utils/file_manager.cpp
+        src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
         src/input/input_manager.cpp src/input/input_manager.h
         src/Log.cpp
         )
 
-target_link_libraries(bald_engine glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
+
+if (APPLE)
+    target_link_libraries(bald_engine
+            glad
+            glfw3
+            "-framework Cocoa"
+            "-framework OpenGL"
+            "-framework IOKit"
+            "-framework CoreVideo")
+else()
+    target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+endif()
 
 #### END CONFIG/DEFINITIONS
 
