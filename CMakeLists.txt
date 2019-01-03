@@ -22,7 +22,7 @@ project(bald_engine)
 
 add_compile_options(
         -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor
+        -Wnon-virtual-dtor -Werror
         -Wold-style-cast -Wcast-align
         -Wunused -Woverloaded-virtual
         -Wpedantic -Wconversion -Wnull-dereference

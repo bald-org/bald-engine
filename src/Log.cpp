@@ -1,7 +1,7 @@
 //
 // Created by grzegorz on 15.12.18.
 //
-#include "pch.h"
+
 #include "Log.h"
 
 namespace Bald{

@@ -49,44 +49,44 @@ namespace Bald::Input {
         static void Update() noexcept; //TODO: have to be called in Window class Update
 
         /**
-         * @fn            isKeyPressed
-         * @brief         function that checks if key was pressed
-         * @param keycode GLFW macro e.g. GLfW_KEY_SPACE
-         * @return        true if key was pressed otherwise false
+         * @fn                   isKeyPressed
+         * @brief                function that checks if key was pressed
+         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
+         * @return        [bool] true if key was pressed otherwise false
          */
 
         [[nodiscard]] inline static bool isKeyPressed(int keycode) noexcept;
 
         /**
-         * @fn            isKeyTyped
-         * @brief         function that checks if key was typed
-         * @param keycode GLFW macro e.g. GLfW_KEY_SPACE
-         * @return        true if key was typed otherwise false
+         * @fn                   isKeyTyped
+         * @brief                function that checks if key was typed
+         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
+         * @return        [bool] true if key was typed otherwise false
          */
 
         [[nodiscard]] inline static bool isKeyTyped(int keycode) noexcept;
 
         /**
-         * @fn               isMouseButtonPressed
-         * @brief            function that checks if mouse button was pressed
-         * @param buttoncode GLFW macro e.g. GLFW_MOUSE_BUTTON_1
-         * @return           true if button was pressed otherwise false
+         * @fn                      isMouseButtonPressed
+         * @brief                   function that checks if mouse button was pressed
+         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
+         * @return           [bool] true if button was pressed otherwise false
          */
 
         [[nodiscard]] inline static bool isMouseButtonPressed(int buttoncode) noexcept;
 
         /**
-         * @fn               isMouseButtonTyped
-         * @brief            function that checks if mouse button was typed
-         * @param buttoncode GLFW macro e.g. GLFW_MOUSE_BUTTON_1
-         * @return           true if button was typed otherwise false
+         * @fn                      isMouseButtonTyped
+         * @brief                   function that checks if mouse button was typed
+         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
+         * @return           [bool] true if button was typed otherwise false
          */
 
         [[nodiscard]] inline static bool isMouseButtonTyped(int buttoncode) noexcept;
 
         /**
-         * @fn         getMousePos
-         * @brief      sets two variables on current mouse position
+         * @fn                  getMousePos
+         * @brief               sets two variables on current mouse position
          * @param xpos [double] x-coordinate
          * @param ypos [double] y-coordinate
          */
@@ -94,37 +94,37 @@ namespace Bald::Input {
         inline static void getMousePos(double& xpos, double& ypos) noexcept;
 
         /**
-         * @fn                    SetKeyPressedCallback
-         * @brief                 sets function which will be called on key pressed event
-         * @param keycode         GLFW key id
-         * @param fun [void(*)()] void function with no parameter
+         * @fn                                               SetKeyPressedCallback
+         * @brief                                            sets function which will be called on key pressed event
+         * @param keycode [int]                              GLFW key id
+         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
          */
 
         static void SetKeyPressedCallback(int keycode, callback fun) noexcept;
 
         /**
-         * @fn                    SetKeyTypedCallback
-         * @brief                 sets function which will be called on key typed event
-         * @param keycode         GLFW key id
-         * @param fun [void(*)()] void function with no parameter
+         * @fn                                               SetKeyTypedCallback
+         * @brief                                            sets function which will be called on key typed event
+         * @param keycode [int]                              GLFW key id
+         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
          */
 
         static void SetKeyTypedCallback(int keycode, callback fun) noexcept;
 
         /**
-         * @fn                    SetMouseButtonPressedCallback
-         * @brief                 sets function which will be called on mouse button pressed event
-         * @param buttoncode      GLFW mouse button id
-         * @param fun [void(*)()] void function with no parameter
+         * @fn                                               SetMouseButtonPressedCallback
+         * @brief                                            sets function which will be called on mouse button pressed event
+         * @param buttoncode [int]                           GLFW mouse button id
+         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
          */
 
         static void SetMouseButtonPressedCallback(int buttoncode, callback fun) noexcept;
 
         /**
-         * @fn                    SetMouseButtonTypedCallback
-         * @brief                 sets function which will be called on mouse button Typed event
-         * @param buttoncode      GLFW mouse button id
-         * @param fun [void(*)()] void function with no parameter
+         * @fn                                               SetMouseButtonTypedCallback
+         * @brief                                            sets function which will be called on mouse button Typed event
+         * @param buttoncode [int]                           GLFW mouse button id
+         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
          */
 
         static void SetMouseButtonTypedCallback(int buttoncode, callback fun) noexcept;
