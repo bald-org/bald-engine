@@ -4,6 +4,7 @@
 
 #include "pch.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
 
 #include "input_manager.h"
 
@@ -30,9 +31,9 @@ TEST(InputManager, callback){
     GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
     glfwMakeContextCurrent(window);
 
-    EXPECT_TRUE(glfwSetKeyCallback(window, key_callback) == NULL);
-    EXPECT_TRUE(glfwSetMouseButtonCallback(window, mouse_button_callback) == NULL);
-    EXPECT_TRUE(glfwSetCursorPosCallback(window, cursor_position_callback) == NULL);
+    EXPECT_THAT(glfwSetMouseButtonCallback(window, mouse_button_callback), nullptr);
+    EXPECT_THAT(glfwSetCursorPosCallback(window, cursor_position_callback), nullptr);
+    EXPECT_THAT(glfwSetKeyCallback(window, key_callback), nullptr);
 
 
     glfwDestroyWindow(window);

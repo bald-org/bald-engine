@@ -33,7 +33,7 @@ add_compile_options(
         -Wpedantic -Wconversion -Wnull-dereference
         -Wdouble-promotion -Wduplicated-cond
         -Wduplicated-branches
-        -Wlogical-op
+        -Wlogical-op -fsanitize=leak
 )
 
 add_definitions(-D_LINUX)
