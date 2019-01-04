@@ -31,11 +31,8 @@ TEST(Getter, Vec3_GetZ) { //NOLINT
 TEST(NormalizeVector, Vec3_StaticUnitVec) { //NOLINT
     Bald::Math::Vec3 A = Bald::Math::Vec3::MakeUnitVec(Bald::Math::Vec3(2.0f, 3.0f, 6.0f));
 
-    float x = 2.0f / 7.0f; // 0.28571
-    float y = 3.0f / 7.0f; // 0.42857
-    float z = 6.0f / 7.0f; // 0.85714
 
-    ASSERT_EQ(Bald::Math::Vec3(x, y, z), A);
+    ASSERT_EQ(Bald::Math::Vec3(2.0f / 7.0f, 3.0f / 7.0f, 6.0f / 7.0f), A);
 }
 
 

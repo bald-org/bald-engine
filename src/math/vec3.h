@@ -16,7 +16,7 @@ namespace Bald::Math {
          * @param [float]               y variable
          * @param [float]               z variable
          */
-        [[nodiscard]] constexpr Vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
+        constexpr Vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
                 : m_x(x), m_y(y), m_z(z) {}
 
 
@@ -26,7 +26,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         vec -> current vector
          * @return [Vec3]               unit long vector
          */
-        [[nodiscard]] static Vec3 MakeUnitVec(const Vec3 &vec) noexcept;
+        static Vec3 MakeUnitVec(const Vec3 &vec) noexcept;
 
 
         /**
@@ -35,7 +35,7 @@ namespace Bald::Math {
          *                              (divides each component by the length of the vector)
          * @return [Vec3&]              unit long vector
          */
-        [[nodiscard]] Vec3 &Normalize() noexcept;
+        Vec3 &Normalize() noexcept;
 
 
         /**
@@ -43,7 +43,7 @@ namespace Bald::Math {
          * @brief                       returns m_x variable
          * @return [float]              m_x
          */
-        [[nodiscard]] constexpr inline float GetX() const noexcept { return m_x; }
+        constexpr inline float GetX() const noexcept { return m_x; }
 
 
         /**
@@ -51,21 +51,21 @@ namespace Bald::Math {
          * @brief                       returns m_y variable
          * @return [float]              m_y
          */
-        [[nodiscard]] constexpr inline float GetY() const noexcept { return m_y; }
+        constexpr inline float GetY() const noexcept { return m_y; }
 
         /**
          * @fn                          GetZ
          * @brief                       returns m_z variable
          * @return [float]              m_z
          */
-        [[nodiscard]] constexpr inline float GetZ() const noexcept { return m_z; }
+        constexpr inline float GetZ() const noexcept { return m_z; }
 
         /**
          * @fn                           Reverse
          * @brief                        reverses the vector
          * @return [Vec3&]               reversed new vector
          */
-        [[nodiscard]] Vec3 Reverse() const noexcept;
+        Vec3 Reverse() const noexcept;
 
         // OPERATORS
 
@@ -94,7 +94,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3]               new vector
          */
-        [[nodiscard]] Vec3 operator-(const Vec3 &other) const noexcept;
+        Vec3 operator-(const Vec3 &other) const noexcept;
 
 
         /**
@@ -103,7 +103,7 @@ namespace Bald::Math {
          * @param [float]               multiplier
          * @return [Vec3]               new vector
          */
-        [[nodiscard]] Vec3 operator*(float multiplier) const noexcept;
+        Vec3 operator*(float multiplier) const noexcept;
 
 
         /**
@@ -112,7 +112,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3&]              current vector added with the passed vector
          */
-        [[nodiscard]] Vec3 &operator+=(const Vec3 &other) noexcept;
+        Vec3 &operator+=(const Vec3 &other) noexcept;
 
 
         /**
@@ -121,7 +121,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3&]              current vector subtracted with the passed vector
          */
-        [[nodiscard]] Vec3 &operator-=(const Vec3 &other) noexcept;
+        Vec3 &operator-=(const Vec3 &other) noexcept;
 
 
         /**
@@ -130,7 +130,7 @@ namespace Bald::Math {
          * @param [const Vec33&]         other vector
          * @return [Vec3&]              current vector multiplied by the passed multiplier
          */
-        [[nodiscard]] Vec3 &operator*=(float multiplier) noexcept;
+        Vec3 &operator*=(float multiplier) noexcept;
 
 
         /**
@@ -140,7 +140,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        [[nodiscard]] bool operator==(const Vec3 &other) const noexcept;
+        bool operator==(const Vec3 &other) const noexcept;
 
 
         /**
@@ -150,7 +150,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        [[nodiscard]] bool operator!=(const Vec3 &other) const noexcept;
+        bool operator!=(const Vec3 &other) const noexcept;
 
         // END OF OPERATORS
 
@@ -160,7 +160,7 @@ namespace Bald::Math {
          * @param [const Vec&]          other vector
          * @return [float]              angle in radians
          */
-        [[nodiscard]] float AngleBetween(const Vec3 &other) const noexcept;
+        float AngleBetween(const Vec3 &other) const noexcept;
 
 
         /**
@@ -168,7 +168,7 @@ namespace Bald::Math {
          * @brief                       calculates length of the vector
          * @return [float]              length of the vector
          */
-        [[nodiscard]] float Len() const noexcept;
+        float Len() const noexcept;
 
 
         /**
@@ -177,7 +177,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [float]              dot product of the vector passed in
          */
-        [[nodiscard]] float DotProduct(const Vec3 &other) const noexcept;
+        float DotProduct(const Vec3 &other) const noexcept;
 
 
         /**
@@ -186,7 +186,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3]               cross product (new vector) with the vector passed in
          */
-        [[nodiscard]] Vec3 CrossProduct(const Vec3 &other) const noexcept;
+        Vec3 CrossProduct(const Vec3 &other) const noexcept;
 
     private:
         float m_x;
