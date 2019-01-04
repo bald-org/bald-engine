@@ -51,6 +51,7 @@ namespace Bald {
     constexpr std::shared_ptr<spdlog::logger> &Log::GetGameLogger() noexcept { return m_GameLogger; }
 
 
+
 #define CORE_LOG_INFO(...) ::Bald::Log::GetCoreLogger()->info(__VA_ARGS__) /**< print info in Core Logger */
 #define CORE_LOG_WARN(...) ::Bald::Log::GetCoreLogger()->warn(__VA_ARGS__) /**< print warning in Core Logger */
 #define CORE_LOG_ERROR(...) ::Bald::Log::GetCoreLogger()->error(__VA_ARGS__) /**< print error in Core Logger */

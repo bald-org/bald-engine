@@ -16,7 +16,8 @@ namespace Bald::Math {
          * @param [float]               x variable
          * @param [float]               y variable
          */
-        [[nodiscard]] constexpr Vec2(float x = 0.0f, float y = 0.0f)
+
+        constexpr Vec2(float x = 0.0f, float y = 0.0f)
                 : m_x(x), m_y(y) {}
 
 
@@ -26,6 +27,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         vec -> current vector
          * @return [Vec2]               unit long vector
          */
+
         [[nodiscard]] static Vec2 MakeUnitVec(const Vec2 &vec) noexcept;
 
 
@@ -35,7 +37,8 @@ namespace Bald::Math {
          *                              (divides each component by the length of the vector)
          * @return [Vec2&]              unit long vector
          */
-        [[nodiscard]] Vec2 &Normalize() noexcept;
+
+        Vec2 &Normalize() noexcept;
 
 
         /**
@@ -105,7 +108,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector added with the passed vector
          */
-        [[nodiscard]] Vec2 &operator+=(const Vec2 &other) noexcept;
+        Vec2 &operator+=(const Vec2 &other) noexcept;
 
 
         /**
@@ -114,7 +117,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector subtracted with the passed vector
          */
-        [[nodiscard]] Vec2 &operator-=(const Vec2 &other) noexcept;
+        Vec2 &operator-=(const Vec2 &other) noexcept;
 
 
         /**
@@ -123,7 +126,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector multiplied by the passed multiplier
          */
-        [[nodiscard]] Vec2 &operator*=(float multiplier) noexcept;
+        Vec2 &operator*=(float multiplier) noexcept;
 
 
         /**

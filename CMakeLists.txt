@@ -9,6 +9,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
+include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
@@ -26,24 +27,26 @@ project(bald_engine)
 
 add_compile_options(
         -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor
+        -Wnon-virtual-dtor -Werror
         -Wold-style-cast -Wcast-align
         -Wunused -Woverloaded-virtual
         -Wpedantic -Wconversion -Wnull-dereference
         -Wdouble-promotion -Wduplicated-cond
         -Wduplicated-branches
-        -Wlogical-op
+        -Wlogical-op -fsanitize=leak
 )
 
 add_definitions(-D_LINUX)
 
 add_library(bald_engine
-        library.cpp
-        library.h
+        library.cpp library.h
         src/utils/file_manager.cpp
         src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
-        src/math/vec3.cpp src/math/vec3.h)
+        src/math/vec3.cpp src/math/vec3.h
+        src/input/input_manager.cpp src/input/input_manager.h
+        src/Log.cpp
+        )
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
@@ -61,6 +64,13 @@ endif()
 
 #### END CONFIG/DEFINITIONS
 
+#### EXAMPLES
+
+add_executable(input_example examples/input_example.cpp)
+target_link_libraries(input_example bald_engine)
+
+#### END EXAMPLES
+
 #### PCH
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
@@ -72,7 +82,7 @@ cotire(bald_engine)
 enable_testing()
 file(GLOB TEST_SRC_FILES ${PROJECT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
-add_executable(runUnitTests ${TEST_SRC_FILES} )
+add_executable(runUnitTests ${TEST_SRC_FILES})
 set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
 cotire(runUnitTests)
 

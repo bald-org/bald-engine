@@ -157,6 +157,6 @@ TEST(AngleBetweenTwoVectors, Vec3_Radians) { //NOLINT
     Bald::Math::Vec3 A(3.0f, 3.0f, -3.0f);
     Bald::Math::Vec3 B(2.0f, 1.0f, 3.0f);
 
-    ASSERT_FLOAT_EQ(static_cast<float>( M_PI / 2.0f), A.AngleBetween(B));
+    ASSERT_FLOAT_EQ((static_cast<float> (M_PI) / 2.0f), A.AngleBetween(B));
 
 }
