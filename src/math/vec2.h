@@ -15,7 +15,6 @@ namespace Bald::Math {
         * @brief                       constructor
         * @param [float]               x variable
         * @param [float]               y variable
-        * @param [float]               z variable
         */
         constexpr Vec2(float x = 0.0f, float y = 0.0f)
             : m_X(x), m_Y(y) {}

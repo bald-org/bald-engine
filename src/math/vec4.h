@@ -193,7 +193,7 @@ namespace Bald::Math {
 
         constexpr void Vec4::Normalize() noexcept {
                 float len = Length();
-                if (!len) {
+                if (len) {
                         m_X /= len;
                         m_Y /= len;
                         m_Z /= len;
