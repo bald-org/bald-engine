@@ -10,7 +10,7 @@ namespace Bald::Math {
     class Vec4 {
     public:
         /**
-     * @fn                          Vec3
+     * @fn                          Vec4
      * @brief                       constructor
      * @param [float]               x variable
      * @param [float]               y variable
@@ -32,7 +32,6 @@ namespace Bald::Math {
          * @fn                          Normalize
          * @brief                       normalizes vector to the length of 1.0f
          *                              (divides each component by the length of the vector)
-         * @return [Vec4&]              unit long vector
          */
         constexpr void Normalize() noexcept;
 
