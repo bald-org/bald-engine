@@ -24,8 +24,8 @@ install:
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
-  - export DISPLAY=:99.0
-  - sh -e /etc/init.d/xvfb start
+  - "export DISPLAY=:99.0"
+  - "sh -e /etc/init.d/xvfb start"
   - sleep 3
 
 script:
