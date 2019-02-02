@@ -25,9 +25,7 @@ install:
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
-  - "export DISPLAY=:99.0"
-  - "sudo sh -a /etc/init.d/xvfb start"
-  - sleep 3
+
 
 script:
   - cd $TRAVIS_BUILD_DIR
