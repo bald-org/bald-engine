@@ -25,7 +25,7 @@ install:
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
-  - xvfb-run make test
+  - sudo xvfb-run -a make test
   - sleep 3
 
 script:
