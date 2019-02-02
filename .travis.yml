@@ -14,7 +14,8 @@ addons:
       - libglfw3
       - libglew-dev
       - xorg-dev
-
+services:
+  - xvfb
 install:
   - cd vendor/glfw/
   - mkdir build && cd build
@@ -24,8 +25,7 @@ install:
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
-  - "export DISPLAY=:99.0"
-  - "sh -e /etc/init.d/xvfb start"
+  - xvfb-run make test
   - sleep 3
 
 script:
