@@ -17,17 +17,15 @@ namespace Bald::Math {
          * @param [float]               z variable
          */
         constexpr Vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
-                : m_x(x), m_y(y), m_z(z) {}
-
+                : m_X(x), m_Y(y), m_Z(z) {}
 
         /**
-         * @fn                          MakeUnitVec
-         * @brief                       creates unit vector with the length of 1.0f
-         * @param [const Vec3&]         vec -> current vector
-         * @return [Vec3]               unit long vector
-         */
-        static Vec3 MakeUnitVec(const Vec3 &vec) noexcept;
-
+        * @fn                          MakeUnitVec
+        * @brief                       creates unit vector with the length of 1.0f
+        * @param [const Vec3&]         vec -> vector which will be used to create unit vector
+        * @return [Vec3]               unit long vector
+        */
+        [[nodiscard]] static constexpr Vec3 MakeUnitVec(const Vec3& vec) noexcept;
 
         /**
          * @fn                          Normalize
@@ -35,49 +33,56 @@ namespace Bald::Math {
          *                              (divides each component by the length of the vector)
          * @return [Vec3&]              unit long vector
          */
-        Vec3 &Normalize() noexcept;
-
-
-        /**
-         * @fn                          GetX
-         * @brief                       returns m_x variable
-         * @return [float]              m_x
-         */
-        constexpr inline float GetX() const noexcept { return m_x; }
-
+        constexpr void Normalize() noexcept;
 
         /**
-         * @fn                          GetY
-         * @brief                       returns m_y variable
-         * @return [float]              m_y
-         */
-        constexpr inline float GetY() const noexcept { return m_y; }
+        * @fn                          MakeReverseVec
+        * @brief                       creates reverse vector of a given vector
+        * @param [const Vec3&]         vec -> vector which will be used to create reversed vector
+        * @return [Vec3]               new, reversed vector
+        */
+        [[nodiscard]] static constexpr Vec3 MakeReverseVec(const Vec3& vec) noexcept;
 
         /**
-         * @fn                          GetZ
-         * @brief                       returns m_z variable
-         * @return [float]              m_z
+         * @fn                         Reverse
+         * @brief                      reverses the current vector
+         * @return [void]
          */
-        constexpr inline float GetZ() const noexcept { return m_z; }
+        constexpr void Reverse() noexcept;
 
         /**
-         * @fn                           Reverse
-         * @brief                        reverses the vector
-         * @return [Vec3&]               reversed new vector
+         * @fn                          DotProduct
+         * @brief                       calculates dot product of two vectors
+         * @param [const Vec3&]         vec1 vector
+         * @param [const Vec3&]         vec2 vector
+         * @return [float]              dot product of the vector passed in
          */
-        Vec3 Reverse() const noexcept;
-
-        // OPERATORS
+        [[nodiscard]] static constexpr float DotProduct(const Vec3& vec1, const Vec3& vec2) noexcept;
 
         /**
-         * @fn                          operator<<
-         * @brief                       prints the Vec3
-         * @param [std::ostream&]       output stream
-         * @param [const Vec3&]         vector object to be printed
-         * @return [std::ostream&]      stream
+         * @fn                          CrossProduct
+         * @brief                       calculates cross product of two vectors
+         * @param [const Vec3&]         vec1 vector
+         * @param [const Vec3&]         vec2 vector
+         * @return [float]              cross of vectors passed in
          */
-        [[nodiscard]] friend std::ostream &operator<<(std::ostream &out, const Vec3 &vec) noexcept;
+        [[nodiscard]] static constexpr Vec3 CrossProduct(const Vec3& vec1, const Vec3& vec2) noexcept;
 
+        /**
+         * @fn                          AngleBetween
+         * @brief                       returns angle in RADIANS between two vectors
+         * @param [const Vec3&]         vec1 vector
+         * @param [const Vec3&]         vec2 vector
+         * @return [float]              angle in radians
+         */
+        [[nodiscard]] static constexpr float AngleBetween(const Vec3& vec1, const Vec3& vec2) noexcept;
+
+        /**
+         * @fn                          Length
+         * @brief                       calculates the length of the vector
+         * @return [float]              length of the vector
+         */
+        [[nodiscard]] constexpr float Length() const noexcept;
 
         /**
          * @fn                          operator+
@@ -85,7 +90,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3]               new vector
          */
-        [[nodiscard]] Vec3 operator+(const Vec3 &other) const noexcept;
+        [[nodiscard]] constexpr Vec3 operator+(const Vec3& other) const noexcept;
 
 
         /**
@@ -94,8 +99,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3]               new vector
          */
-        Vec3 operator-(const Vec3 &other) const noexcept;
-
+        [[nodiscard]] constexpr Vec3 operator-(const Vec3& other) const noexcept;
 
         /**
          * @fn                          operator*
@@ -103,8 +107,7 @@ namespace Bald::Math {
          * @param [float]               multiplier
          * @return [Vec3]               new vector
          */
-        Vec3 operator*(float multiplier) const noexcept;
-
+        [[nodiscard]] constexpr Vec3 operator*(float multiplier) const noexcept;
 
         /**
          * @fn                          operator+=
@@ -112,8 +115,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3&]              current vector added with the passed vector
          */
-        Vec3 &operator+=(const Vec3 &other) noexcept;
-
+        constexpr Vec3 &operator+=(const Vec3& other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -121,8 +123,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3&]              current vector subtracted with the passed vector
          */
-        Vec3 &operator-=(const Vec3 &other) noexcept;
-
+        constexpr Vec3& operator-=(const Vec3& other) noexcept;
 
         /**
          * @fn                          operator*=
@@ -130,8 +131,7 @@ namespace Bald::Math {
          * @param [const Vec33&]         other vector
          * @return [Vec3&]              current vector multiplied by the passed multiplier
          */
-        Vec3 &operator*=(float multiplier) noexcept;
-
+        constexpr Vec3& operator*=(float multiplier) noexcept;
 
         /**
          * @fn                          operator==
@@ -140,8 +140,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        bool operator==(const Vec3 &other) const noexcept;
-
+        constexpr bool operator==(const Vec3& other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -150,48 +149,133 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        bool operator!=(const Vec3 &other) const noexcept;
-
-        // END OF OPERATORS
+        constexpr bool operator!=(const Vec3& other) const noexcept;
 
         /**
-         * @fn                          AngleBetween
-         * @brief                       returns angle in RADIANS between two vectors
-         * @param [const Vec&]          other vector
-         * @return [float]              angle in radians
+         * @fn                          operator<<
+         * @brief                       prints the Vec3
+         * @param [std::ostream&]       output stream
+         * @param [const Vec3&]         vector object to be printed
+         * @return [std::ostream&]      stream
          */
-        float AngleBetween(const Vec3 &other) const noexcept;
-
+        [[nodiscard]] friend std::ostream &operator<<(std::ostream& out, const Vec3& vec) noexcept;
 
         /**
-         * @fn                          Len
-         * @brief                       calculates length of the vector
-         * @return [float]              length of the vector
+         * @fn                          GetX
+         * @brief                       returns m_X component
+         * @return [float]              m_X
          */
-        float Len() const noexcept;
-
+        [[nodiscard]] constexpr inline float GetX() const noexcept { return m_X; }
 
         /**
-         * @fn                          DotProduct
-         * @brief                       calculates dot product
-         * @param [const Vec3&]         other vector
-         * @return [float]              dot product of the vector passed in
+         * @fn                          GetY
+         * @brief                       returns m_Y component
+         * @return [float]              m_Y
          */
-        float DotProduct(const Vec3 &other) const noexcept;
-
+        [[nodiscard]] constexpr inline float GetY() const noexcept { return m_Y; }
 
         /**
-         * @fn                          CrossProduct
-         * @brief                       calculates cross product
-         * @param [const Vec3&]         other vector
-         * @return [Vec3]               cross product (new vector) with the vector passed in
+         * @fn                          GetZ
+         * @brief                       returns m_Z component
+         * @return [float]              m_Z
          */
-        Vec3 CrossProduct(const Vec3 &other) const noexcept;
+        [[nodiscard]] constexpr inline float GetZ() const noexcept { return m_Z; }
 
     private:
-        float m_x;
-        float m_y;
-        float m_z;
-
+        float m_X;
+        float m_Y;
+        float m_Z;
     }; // END OF CLASS VEC3
-} // END OF NAMESPACE BALD::MATH
+
+
+        constexpr Vec3 Vec3::MakeUnitVec(const Vec3& vec) noexcept {
+                float len = vec.Length();
+                return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
+        }
+
+        constexpr void Vec3::Normalize() noexcept {
+                float len = Length();
+                if (len) {
+                        m_X /= len;
+                        m_Y /= len;
+                        m_Z /= len;
+                }
+        }
+
+        constexpr Vec3 Vec3::MakeReverseVec(const Vec3& vec) noexcept {
+                return Vec3(-1.0f * vec.GetX(), -1.0f * vec.GetY(), -1.0f * vec.GetZ());
+        }
+
+        constexpr void Vec3::Reverse() noexcept {
+                m_X *= -1.0f;
+                m_Y *= -1.0f;
+                m_Z *= -1.0f;
+        }
+
+        constexpr float Vec3::DotProduct(const Vec3& vec1, const Vec3& vec2) noexcept {
+                return vec1.GetX() * vec2.GetX() + vec1.GetY() * vec2.GetY() + vec1.GetZ() * vec2.GetZ();
+        }
+
+        constexpr Vec3 Vec3::CrossProduct(const Vec3 &vec1, const Vec3 &vec2) noexcept {
+                return Vec3(vec1.m_Y * vec2.m_Z - vec1.m_Z * vec2.m_Y,
+                            vec1.m_Z * vec2.m_X - vec1.m_X * vec2.m_Z,
+                            vec1.m_X * vec2.m_Y - vec1.m_Y * vec2.m_X);
+        }
+
+        constexpr float Vec3::AngleBetween(const Vec3& vec1, const Vec3& vec2) noexcept {
+                float dot = DotProduct(vec1, vec2);
+                float len = vec1.Length() * vec2.Length();
+                return static_cast<float>(acos(dot / len));
+        }
+
+        constexpr float Vec3::Length() const noexcept {
+                return static_cast<float>(sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z));
+        }
+
+        constexpr Vec3 Vec3::operator+(const Vec3& other) const noexcept {
+                return Vec3(m_X + other.m_X, m_Y + other.m_Y, m_Z + other.m_Z);
+        }
+
+        constexpr Vec3 Vec3::operator-(const Vec3& other) const noexcept {
+                return Vec3(m_X - other.m_X, m_Y - other.m_Y, m_Z - other.m_Z);
+        }
+
+        constexpr Vec3 Vec3::operator*(float multiplier) const noexcept {
+                return Vec3(multiplier * m_X, multiplier * m_Y, multiplier * m_Z);
+        }
+
+        constexpr Vec3& Vec3::operator+=(const Vec3& other) noexcept {
+                m_X += other.m_X;
+                m_Y += other.m_Y;
+                m_Z += other.m_Z;
+                return *this;
+        }
+
+        constexpr Vec3& Vec3::operator-=(const Vec3& other) noexcept {
+                m_X -= other.m_X;
+                m_Y -= other.m_Y;
+                m_Z -= other.m_Z;
+                return *this;
+        }
+
+        constexpr Vec3 &Vec3::operator*=(float multiplier) noexcept {
+                m_X *= multiplier;
+                m_Y *= multiplier;
+                m_Z *= multiplier;
+                return *this;
+        }
+
+        constexpr bool Vec3::operator==(const Vec3& other) const noexcept {
+                return m_X == other.m_X && m_Y == other.m_Y && m_Z == other.m_Z;
+        }
+
+        constexpr bool Vec3::operator!=(const Vec3& other) const noexcept {
+                return !(*this == other);
+        }
+
+        std::ostream& operator<<(std::ostream& out, const Vec3& vec) noexcept {
+                out << "[" << vec.m_X << ", " << vec.m_Y << ", " << vec.m_Z << "]\n";
+                return out;
+        }
+
+} // END OF NAMESPACE Bald::Math

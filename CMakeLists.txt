@@ -10,12 +10,10 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
+include_directories(${CMAKE_SOURCE_DIR}/src/math)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
-
-include_directories(${CMAKE_SOURCE_DIR}/src/math)
-
 
 #### END-LIBRARIES
 
@@ -41,12 +39,9 @@ add_definitions(-D_LINUX)
 add_library(bald_engine
         library.cpp library.h
         src/utils/file_manager.cpp
-        src/math/vec2.cpp src/math/vec2.h
         src/utils/split_string.cpp
-        src/math/vec3.cpp src/math/vec3.h
-        src/input/input_manager.cpp src/input/input_manager.h
-        src/Log.cpp
-        )
+        src/input/input_manager.cpp
+        src/Log.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
