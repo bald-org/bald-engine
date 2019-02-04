@@ -174,6 +174,7 @@ namespace Bald::Math {
                 float len = vec.Length();
                 if(len != 0)
                     return Vec2(vec.GetX() / len, vec.GetY() / len);
+                CORE_LOG_WARN("[Vec2] Cannot make unit vector from zero vector!");
                 return Vec2(0.0f, 0.0f);
         }
 

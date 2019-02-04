@@ -200,6 +200,7 @@ namespace Bald::Math {
                 float len = vec.Length();
                 if(len != 0)
                     return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
+                CORE_LOG_WARN("[Vec3] Cannot make unit vector from zero vector!");
                 return Vec3(0.0f, 0.0f, 0.0f);
         }
 
