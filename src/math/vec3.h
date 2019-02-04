@@ -5,6 +5,7 @@
 #pragma once
 
 #include <iostream>
+#include "pch.h"
 
 namespace Bald::Math {
     class Vec3 {
@@ -25,7 +26,7 @@ namespace Bald::Math {
         * @param [const Vec3&]         vec -> vector which will be used to create unit vector
         * @return [Vec3]               unit long vector
         */
-        [[nodiscard]] static constexpr Vec3 MakeUnitVec(const Vec3& vec) noexcept;
+        [[nodiscard]] static Vec3 MakeUnitVec(const Vec3& vec) noexcept;
 
         /**
          * @fn                          Normalize
@@ -196,7 +197,7 @@ namespace Bald::Math {
     }; // END OF CLASS VEC3
 
 
-        constexpr Vec3 Vec3::MakeUnitVec(const Vec3& vec) noexcept {
+        Vec3 Vec3::MakeUnitVec(const Vec3& vec) noexcept {
                 float len = vec.Length();
                 if(len != 0)
                     return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
