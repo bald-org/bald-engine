@@ -30,6 +30,12 @@ TEST(NormalizeVector, Vec3_StaticUnitVec) { //NOLINT
     ASSERT_EQ(Bald::Math::Vec3(2.0f / 7.0f, 3.0f / 7.0f, 6.0f / 7.0f), A);
 }
 
+TEST(NormalizeVector, Vec3_StaticUnitZeroVec) { //NOLINT
+    Bald::Math::Vec3 A = Bald::Math::Vec3::MakeUnitVec(Bald::Math::Vec3(0.0f, 0.0f, 0.0f));
+
+    EXPECT_EQ(Bald::Math::Vec3(0.0f, 0.0f, 0.0f), A);
+}
+
 TEST(NormalizeVector, Vec3_UnitVecMethod) { //NOLINT
     Bald::Math::Vec3 A(5.0f, 12.0f, 1.0f);
 

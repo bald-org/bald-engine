@@ -39,6 +39,12 @@ TEST(NormalizeVector, Vec4_StaticUnitVec) { //NOLINT
     ASSERT_EQ(Bald::Math::Vec4(2.0f / len, 3.0f / len, 6.0f / len, 1.0f / len), A);
 }
 
+TEST(NormalizeVector, Vec4_StaticUnitZeroVec) { //NOLINT
+    Bald::Math::Vec4 A = Bald::Math::Vec4::MakeUnitVec(Bald::Math::Vec4(0.0f, 0.0f, 0.0f, 0.0f));
+
+    EXPECT_EQ(Bald::Math::Vec4(0.0f, 0.0f, 0.0f, 0.0f), A);
+}
+
 TEST(NormalizeVector, Vec4_Normalize) { //NOLINT
     Bald::Math::Vec4 A(5.0f, 12.0f, 1.0f, 16.0f);
 
