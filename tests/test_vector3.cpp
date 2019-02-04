@@ -126,6 +126,22 @@ TEST(DotProduct, Vec3_CalculateDotProduct) { //NOLINT
     ASSERT_FLOAT_EQ(9.0f, Bald::Math::Vec3::DotProduct(A,B));
 }
 
+TEST(CrossProduct, Vec3_CalculateCrossProduct) { //NOLINT
+    Bald::Math::Vec3 A(1.0f, 5.0f, 3.0f);
+    Bald::Math::Vec3 B = Bald::Math::Vec3(2.0f, 2.0f, -1.0f);
+
+    EXPECT_EQ(Bald::Math::Vec3(-11.0f, 7.0f, -8.0f), Bald::Math::Vec3::CrossProduct(A,B));
+}
+
+TEST(CrossProduct, Vec3_CalculateCrossProductUsingOperatorOverload) { //NOLINT
+    Bald::Math::Vec3 A(1.0f, 5.0f, 3.0f);
+    Bald::Math::Vec3 B = Bald::Math::Vec3(2.0f, 2.0f, -1.0f);
+
+    A *= B;
+
+    EXPECT_EQ(Bald::Math::Vec3(-11.0f, 7.0f, -8.0f), A);
+}
+
 TEST(Reverse, Vec3_ReversingTheVec) { //NOLINT
     Bald::Math::Vec3 A(3.5f, -2.0f, 0.01f);
 

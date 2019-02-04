@@ -16,7 +16,7 @@ namespace Bald::Math {
          * @param [float]               y variable
          * @param [float]               z variable
          */
-        constexpr Vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
+        explicit constexpr Vec3(float x = 0.0f, float y = 0.0f, float z = 0.0f)
                 : m_X(x), m_Y(y), m_Z(z) {}
 
         /**
@@ -115,7 +115,7 @@ namespace Bald::Math {
          * @param [const Vec3&]         other vector
          * @return [Vec3&]              current vector added with the passed vector
          */
-        constexpr Vec3 &operator+=(const Vec3& other) noexcept;
+        constexpr Vec3& operator+=(const Vec3& other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -128,10 +128,18 @@ namespace Bald::Math {
         /**
          * @fn                          operator*=
          * @brief                       multiplies current vector by the passed multiplier
-         * @param [const Vec33&]         other vector
+         * @param [float]               multiplier
          * @return [Vec3&]              current vector multiplied by the passed multiplier
          */
         constexpr Vec3& operator*=(float multiplier) noexcept;
+
+        /**
+         * @fn                          operator*=
+         * @brief                       multiplies current vector by the passed multiplier
+         * @param [const Vec3&]         other vector
+         * @return [Vec3&]              cross product of *this and other
+         */
+        constexpr Vec3& operator*=(const Vec3& other) noexcept;
 
         /**
          * @fn                          operator==
@@ -190,12 +198,14 @@ namespace Bald::Math {
 
         constexpr Vec3 Vec3::MakeUnitVec(const Vec3& vec) noexcept {
                 float len = vec.Length();
-                return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
+                if(len != 0)
+                    return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
+                return Vec3(0.0f, 0.0f, 0.0f);
         }
 
         constexpr void Vec3::Normalize() noexcept {
                 float len = Length();
-                if (len) {
+                if (len != 0) {
                         m_X /= len;
                         m_Y /= len;
                         m_Z /= len;
@@ -220,6 +230,11 @@ namespace Bald::Math {
                 return Vec3(vec1.m_Y * vec2.m_Z - vec1.m_Z * vec2.m_Y,
                             vec1.m_Z * vec2.m_X - vec1.m_X * vec2.m_Z,
                             vec1.m_X * vec2.m_Y - vec1.m_Y * vec2.m_X);
+        }
+
+        constexpr Vec3& Vec3::operator*=(const Vec3& other) noexcept {
+            *this = CrossProduct(*this, other);
+            return *this;
         }
 
         constexpr float Vec3::AngleBetween(const Vec3& vec1, const Vec3& vec2) noexcept {
@@ -258,7 +273,7 @@ namespace Bald::Math {
                 return *this;
         }
 
-        constexpr Vec3 &Vec3::operator*=(float multiplier) noexcept {
+        constexpr Vec3& Vec3::operator*=(float multiplier) noexcept {
                 m_X *= multiplier;
                 m_Y *= multiplier;
                 m_Z *= multiplier;

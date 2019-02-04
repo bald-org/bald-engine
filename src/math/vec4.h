@@ -10,14 +10,14 @@ namespace Bald::Math {
     class Vec4 {
     public:
         /**
-     * @fn                          Vec4
-     * @brief                       constructor
-     * @param [float]               x variable
-     * @param [float]               y variable
-     * @param [float]               z variable
-     * @param [float]               w variable
-     */
-        constexpr Vec4(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 0.0f)
+         * @fn                          Vec4
+         * @brief                       constructor
+         * @param [float]               x variable
+         * @param [float]               y variable
+         * @param [float]               z variable
+         * @param [float]               w variable
+         */
+        explicit constexpr Vec4(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 0.0f)
             : m_X(x), m_Y(y), m_Z(z), m_W(w) {}
 
         /**
@@ -106,7 +106,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         other vector
          * @return [Vec4&]              current vector added with the passed vector
          */
-        constexpr Vec4 &operator+=(const Vec4& other) noexcept;
+        constexpr Vec4& operator+=(const Vec4& other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -187,12 +187,14 @@ namespace Bald::Math {
 
         constexpr Vec4 Vec4::MakeUnitVec(const Vec4& vec) noexcept {
                 float len = vec.Length();
-                return Vec4(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len, vec.GetW() / len);
+                if(len != 0)
+                    return Vec4(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len, vec.GetW() / len);
+                return Vec4(0.0f, 0.0f, 0.0f, 0.0f);
         }
 
         constexpr void Vec4::Normalize() noexcept {
                 float len = Length();
-                if (len) {
+                if (len != 0) {
                         m_X /= len;
                         m_Y /= len;
                         m_Z /= len;
@@ -253,7 +255,7 @@ namespace Bald::Math {
                 return *this;
         }
 
-        constexpr Vec4 &Vec4::operator*=(float multiplier) noexcept {
+        constexpr Vec4& Vec4::operator*=(float multiplier) noexcept {
                 m_X *= multiplier;
                 m_Y *= multiplier;
                 m_Z *= multiplier;

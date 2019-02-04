@@ -16,7 +16,7 @@ namespace Bald::Math {
         * @param [float]               x variable
         * @param [float]               y variable
         */
-        constexpr Vec2(float x = 0.0f, float y = 0.0f)
+        explicit constexpr Vec2(float x = 0.0f, float y = 0.0f)
             : m_X(x), m_Y(y) {}
 
         /**
@@ -106,7 +106,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector added with the passed vector
          */
-        constexpr Vec2 &operator+=(const Vec2& other) noexcept;
+        constexpr Vec2& operator+=(const Vec2& other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -172,12 +172,14 @@ namespace Bald::Math {
 
         constexpr Vec2 Vec2::MakeUnitVec(const Vec2& vec) noexcept {
                 float len = vec.Length();
-                return Vec2(vec.GetX() / len, vec.GetY() / len);
+                if(len != 0)
+                    return Vec2(vec.GetX() / len, vec.GetY() / len);
+                return Vec2(0.0f, 0.0f);
         }
 
         constexpr void Vec2::Normalize() noexcept {
                 float len = Length();
-                if (len) {
+                if (len != 0) {
                         m_X /= len;
                         m_Y /= len;
                 }
@@ -230,7 +232,7 @@ namespace Bald::Math {
                 return *this;
         }
 
-        constexpr Vec2 &Vec2::operator*=(float multiplier) noexcept {
+        constexpr Vec2& Vec2::operator*=(float multiplier) noexcept {
                 m_X *= multiplier;
                 m_Y *= multiplier;
                 return *this;
