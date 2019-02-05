@@ -10,8 +10,8 @@
 using namespace Bald;
 using namespace Input;
 
-void key_pressed_call(){
-    std::cout << "key pressed callback called\n";
+void key_pressed_call(int i){
+    std::cout << "key pressed callback called " << i << "\n";
 }
 
 void key_typed_call(){
@@ -39,7 +39,7 @@ int main() {
     InputManager::Init();
     Log::Init();
 
-    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call);
+    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, 1);
     InputManager::SetKeyTypedCallback(GLFW_KEY_Q, key_typed_call);
     InputManager::SetMouseButtonPressedCallback(GLFW_MOUSE_BUTTON_3, mouse_button_pressed_call);
     InputManager::SetMouseButtonTypedCallback(GLFW_MOUSE_BUTTON_4, mouse_button_typed_call);
