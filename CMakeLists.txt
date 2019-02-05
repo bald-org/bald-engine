@@ -31,8 +31,7 @@ add_compile_options(
         -Wpedantic -Wconversion -Wnull-dereference
         -Wdouble-promotion -Wduplicated-cond
         -Wduplicated-branches
-        -Wlogical-op -fsanitize=leak
-)
+        -Wlogical-op -fsanitize=leak)
 
 add_definitions(-D_LINUX)
 
@@ -41,8 +40,7 @@ add_library(bald_engine
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
         src/input/input_manager.cpp
-        src/Log.cpp
-        src/math/mat4.cpp)
+        src/Log.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
@@ -54,9 +52,9 @@ if (APPLE)
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
-else()
+else ()
     target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
-endif()
+endif ()
 
 #### END CONFIG/DEFINITIONS
 
