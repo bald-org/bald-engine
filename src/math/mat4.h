@@ -24,9 +24,7 @@ namespace Bald::Math {
 
         [[nodiscard]] constexpr static Mat4 Identity() noexcept;
 
-        [[nodiscard]] constexpr static Mat4 Translation(float translationX, float translationY, float translationZ) noexcept;
         [[nodiscard]] constexpr static Mat4 Translation(const Vec3& translation) noexcept;
-        [[nodiscard]] constexpr static Mat4 Translation(float scaleX, float scaleY, float scaleZ) noexcept;
         [[nodiscard]] constexpr static Mat4 Scale(const Vec3& scale) noexcept;
         [[nodiscard]] constexpr static Mat4 Rotation(float angle, const Vec3& axis) noexcept;
         [[nodiscard]] constexpr static Mat4 Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept;
@@ -40,9 +38,13 @@ namespace Bald::Math {
         [[nodiscard]] constexpr Mat4 operator-(const Mat4& other) const noexcept;
         [[nodiscard]] constexpr Mat4 operator*(const Mat4& other) const noexcept;
 
-        [[nodiscard]] constexpr Mat4& operator+=(const Mat4& other) const noexcept;
-        [[nodiscard]] constexpr Mat4& operator-=(const Mat4& other) const noexcept;
-        // [[nodiscard]] constexpr Mat4& operator*=(const Mat4& other) const noexcept;
+        [[nodiscard]] constexpr Mat4& operator+=(const Mat4& other) noexcept;
+        [[nodiscard]] constexpr Mat4& operator-=(const Mat4& other) noexcept;
+        // [[nodiscard]] constexpr Mat4& operator*=(const Mat4& other) noexcept;
+
+        friend constexpr Mat4 operator+(const Mat4& first, const Mat4& second);
+        friend constexpr Mat4 operator-(const Mat4& first, const Mat4& second);
+        friend constexpr Mat4 operator*(const Mat4& first, const Mat4& second);
 
     private:
         float m_MatrixElements[16];
@@ -63,33 +65,33 @@ namespace Bald::Math {
     constexpr float Mat4::Det() const noexcept {
         float minors[4] = {0.0f, 0.0f, 0.0f, 0.0f};
 
-        minors[0] = m_MatrixElements[5] * m_MatrixElements[10] * m_MatrixElements[15] +
-                    m_MatrixElements[9] * m_MatrixElements[14] * m_MatrixElements[7] +
-                    m_MatrixElements[13] * m_MatrixElements[6] * m_MatrixElements[11] -
-                    m_MatrixElements[13] * m_MatrixElements[10] * m_MatrixElements[7] -
-                    m_MatrixElements[5] * m_MatrixElements[14] * m_MatrixElements[11] -
-                    m_MatrixElements[9] * m_MatrixElements[6] * m_MatrixElements[15];
+        minors[0] = m_MatrixElements[5]  * m_MatrixElements[10] * m_MatrixElements[15] +
+                    m_MatrixElements[9]  * m_MatrixElements[14] * m_MatrixElements[7]  +
+                    m_MatrixElements[13] * m_MatrixElements[6]  * m_MatrixElements[11] -
+                    m_MatrixElements[13] * m_MatrixElements[10] * m_MatrixElements[7]  -
+                    m_MatrixElements[5]  * m_MatrixElements[14] * m_MatrixElements[11] -
+                    m_MatrixElements[9]  * m_MatrixElements[6]  * m_MatrixElements[15];
 
-        minors[1] = m_MatrixElements[1] * m_MatrixElements[10] * m_MatrixElements[15] +
-                    m_MatrixElements[9] * m_MatrixElements[14] * m_MatrixElements[3] +
+        minors[1] = m_MatrixElements[1]  * m_MatrixElements[10] * m_MatrixElements[15] +
+                    m_MatrixElements[9]  * m_MatrixElements[14] * m_MatrixElements[3] +
                     m_MatrixElements[13] * m_MatrixElements[2] * m_MatrixElements[11] -
                     m_MatrixElements[13] * m_MatrixElements[10] * m_MatrixElements[3] -
-                    m_MatrixElements[1] * m_MatrixElements[14] * m_MatrixElements[11] -
-                    m_MatrixElements[9] * m_MatrixElements[2] * m_MatrixElements[15];
+                    m_MatrixElements[1]  * m_MatrixElements[14] * m_MatrixElements[11] -
+                    m_MatrixElements[9]  * m_MatrixElements[2] * m_MatrixElements[15];
 
-        minors[2] = m_MatrixElements[1] * m_MatrixElements[6] * m_MatrixElements[15] +
-                    m_MatrixElements[5] * m_MatrixElements[14] * m_MatrixElements[3] +
-                    m_MatrixElements[13] * m_MatrixElements[2] * m_MatrixElements[7] -
-                    m_MatrixElements[13] * m_MatrixElements[6] * m_MatrixElements[3] -
-                    m_MatrixElements[1] * m_MatrixElements[14] * m_MatrixElements[7] -
-                    m_MatrixElements[5] * m_MatrixElements[2] * m_MatrixElements[15];
+        minors[2] = m_MatrixElements[1]  * m_MatrixElements[6]  * m_MatrixElements[15] +
+                    m_MatrixElements[5]  * m_MatrixElements[14] * m_MatrixElements[3]  +
+                    m_MatrixElements[13] * m_MatrixElements[2]  * m_MatrixElements[7]  -
+                    m_MatrixElements[13] * m_MatrixElements[6]  * m_MatrixElements[3]  -
+                    m_MatrixElements[1]  * m_MatrixElements[14] * m_MatrixElements[7]  -
+                    m_MatrixElements[5]  * m_MatrixElements[2]  * m_MatrixElements[15];
 
-        minors[3] = m_MatrixElements[1] * m_MatrixElements[6] * m_MatrixElements[11] +
-                    m_MatrixElements[5] * m_MatrixElements[10] * m_MatrixElements[3] +
-                    m_MatrixElements[9] * m_MatrixElements[2] * m_MatrixElements[7] -
-                    m_MatrixElements[9] * m_MatrixElements[6] * m_MatrixElements[3] -
-                    m_MatrixElements[1] * m_MatrixElements[10] * m_MatrixElements[7] -
-                    m_MatrixElements[5] * m_MatrixElements[2] * m_MatrixElements[11];
+        minors[3] = m_MatrixElements[1] * m_MatrixElements[6]  * m_MatrixElements[11] +
+                    m_MatrixElements[5] * m_MatrixElements[10] * m_MatrixElements[3]  +
+                    m_MatrixElements[9] * m_MatrixElements[2]  * m_MatrixElements[7]  -
+                    m_MatrixElements[9] * m_MatrixElements[6]  * m_MatrixElements[3]  -
+                    m_MatrixElements[1] * m_MatrixElements[10] * m_MatrixElements[7]  -
+                    m_MatrixElements[5] * m_MatrixElements[2]  * m_MatrixElements[11];
 
         return m_MatrixElements[0] * minors[0] - m_MatrixElements[5] * minors[1] + m_MatrixElements[8] * minors[2] -
                m_MatrixElements[12] * minors[3];
@@ -104,21 +106,11 @@ namespace Bald::Math {
         std::swap(m_MatrixElements[11], m_MatrixElements[14]);
     }
 
-    Mat4 Mat4::Identity() noexcept {
+    constexpr Mat4 Mat4::Identity() noexcept {
         return Mat4(1.0f);
     }
 
-    Mat4 Mat4::Translation(float translationX, float translationY, float translationZ) noexcept {
-        Mat4 result(1.0f);
-
-        result.m_MatrixElements[0 + 3 * 4] = translationX;
-        result.m_MatrixElements[1 + 3 * 4] = translationX;
-        result.m_MatrixElements[2 + 3 * 4] = translationX;
-
-        return result;
-    }
-
-    Mat4 Mat4::Translation(const Vec3& translation) noexcept {
+    constexpr Mat4 Mat4::Translation(const Vec3& translation) noexcept {
         Mat4 result(1.0f);
 
         result.m_MatrixElements[0 + 3 * 4] = translation.GetX();
@@ -128,17 +120,7 @@ namespace Bald::Math {
         return result;
     }
 
-    Mat4 Mat4::Scale(float scaleX, float scaleY, float scaleZ) noexcept {
-        Mat4 result(1.0f);
-
-        result.m_MatrixElements[0 + 0 * 4] = scaleX;
-        result.m_MatrixElements[1 + 1 * 4] = scaleY;
-        result.m_MatrixElements[2 + 2 * 4] = scaleZ;
-
-        return result;
-    }
-
-    Mat4 Mat4::Scale(const Vec3& scale) noexcept {
+    constexpr Mat4 Mat4::Scale(const Vec3& scale) noexcept {
         Mat4 result(1.0f);
 
         result.m_MatrixElements[0 + 0 * 4] = scale.GetX();
@@ -148,7 +130,7 @@ namespace Bald::Math {
         return result;
     }
 
-    Mat4 Mat4::Rotation(float angle, const Vec3& axis) noexcept {
+    constexpr Mat4 Mat4::Rotation(float angle, const Vec3& axis) noexcept {
         Mat4 result(1.0f);
 
         float angleInRadians = angle / 180.0f * static_cast<float>(M_PI);
@@ -171,7 +153,7 @@ namespace Bald::Math {
         return result;
     }
 
-    Mat4 Mat4::Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept {
+    constexpr Mat4 Mat4::Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept {
         Mat4 result(1.0f);
 
         result.m_MatrixElements[0 + 0 * 4] = 2.0f / (right - left);
@@ -185,7 +167,7 @@ namespace Bald::Math {
         return result;
     }
 
-    Mat4 Mat4::Perspective(float fov, float aspectRatio, float near, float far) noexcept {
+    constexpr Mat4 Mat4::Perspective(float fov, float aspectRatio, float near, float far) noexcept {
         Mat4 result(0.0f);
 
         float fovInRadians = fov / 180.0f * static_cast<float>(M_PI);
@@ -245,20 +227,27 @@ namespace Bald::Math {
         return this->Multiply(other);
     }
 
-    constexpr Mat4& Mat4::operator+=(const Mat4& other) const noexcept {
+    constexpr Mat4& Mat4::operator+=(const Mat4& other) noexcept {
         for(int i = 0; i < 16; ++i)
             m_MatrixElements[i] += other.m_MatrixElements[i];
         return *this;
     }
 
-    constexpr Mat4& operator-=(const Mat4& other) const noexcept {
+    constexpr Mat4& Mat4::operator-=(const Mat4& other) noexcept {
         for(int i = 0; i < 16; ++i)
             m_MatrixElements[i] -= other.m_MatrixElements[i];
         return *this;
     }
 
-
-
+    constexpr Mat4 operator+(const Mat4& first, const Mat4& second) {
+        return first.Add(second);
+    }
+    constexpr Mat4 operator-(const Mat4& first, const Mat4& second) {
+        return first.Subtract(second);
+    }
+    constexpr Mat4 operator*(const Mat4& first, const Mat4& second) {
+        return first.Multiply(second);
+    }
 
 }
 // END OF NAMESPACE Bald::Math
