@@ -86,4 +86,24 @@ namespace Bald::Input {
         return result;
     }
 
+    void InputManager::EmitMouseButtonTypedEvent(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        else m_MouseButtonTypedCallbacks[buttoncode]();
+    }
+
+    void InputManager::EmitMouseButtonPressedEvent(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        else m_MouseButtonPressedCallbacks[buttoncode]();
+    }
+
+    void InputManager::EmitKeyTypedEvent(int keycode) noexcept {
+        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else m_KeyTypedCallbacks[keycode]();
+    }
+
+    void InputManager::EmitKeyPressedEvent(int keycode) noexcept {
+        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else m_KeyPressedCallbacks[keycode]();
+    }
+
 }

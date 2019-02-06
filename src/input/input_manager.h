@@ -126,6 +126,14 @@ namespace Bald::Input {
         static callback RemoveKeyPressedCallback(int keycode) noexcept;
 
         /**
+         * @fn                  EmitKeyPressedEvent
+         * @brief               simulate Key pressed event
+         * @param keycode [int] GLFW key id
+         */
+
+        static void EmitKeyPressedEvent(int keycode) noexcept;
+
+        /**
          * @fn                  SetKeyTypedCallback
          * @brief               sets function which will be called on key typed event
          * @param keycode [int] GLFW key id
@@ -153,6 +161,14 @@ namespace Bald::Input {
          */
 
         static callback RemoveKeyTypedCallback(int keycode) noexcept;
+
+        /**
+         * @fn                  EmitKeyTypedEvent
+         * @brief               simulate Key typed event
+         * @param keycode [int] GLFW key id
+         */
+
+        static void EmitKeyTypedEvent(int keycode) noexcept;
 
         /**
          * @fn                     SetMouseButtonPressedCallback
@@ -184,6 +200,14 @@ namespace Bald::Input {
         static callback RemoveMouseButtonPressedCallback(int buttoncode) noexcept;
 
         /**
+         * @fn                  EmitMouseButtonPressedEvent
+         * @brief               simulate Mouse Button Pressed event
+         * @param keycode [int] GLFW key id
+         */
+
+        static void EmitMouseButtonPressedEvent(int buttoncode) noexcept;
+
+        /**
          * @fn                     SetMouseButtonTypedCallback
          * @brief                  sets function which will be called on mouse button Typed event
          * @param buttoncode [int] GLFW mouse button id
@@ -211,6 +235,14 @@ namespace Bald::Input {
          */
 
         static callback RemoveMouseButtonTypedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                  EmitMouseButtonTypedEvent
+         * @brief               simulate Mouse Button Typed event
+         * @param buttoncode [int] GLFW key id
+         */
+
+        static void EmitMouseButtonTypedEvent(int buttoncode) noexcept;
 
 
     private:

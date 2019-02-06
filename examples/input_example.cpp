@@ -76,6 +76,11 @@ int main() {
     auto fun = InputManager::RemoveKeyPressedCallback(GLFW_KEY_A);
     fun();
 
+    InputManager::EmitKeyPressedEvent(GLFW_KEY_Q);
+    InputManager::EmitKeyTypedEvent(GLFW_KEY_Q);
+    InputManager::EmitMouseButtonPressedEvent(GLFW_MOUSE_BUTTON_3);
+    InputManager::EmitMouseButtonTypedEvent(GLFW_MOUSE_BUTTON_4);
+
     glfwDestroyWindow(window);
     glfwTerminate();
 
