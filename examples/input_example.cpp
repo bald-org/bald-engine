@@ -10,10 +10,6 @@
 using namespace Bald;
 using namespace Input;
 
-void key_pressed_call(int i){
-    std::cout << "key pressed callback called " << i << "\n";
-}
-
 void key_typed_call(){
     std::cout << "key typed callback called\n";
 }
@@ -26,11 +22,17 @@ void mouse_button_typed_call(){
     std::cout << "mouse button typed callback called\n";
 }
 
+void key_pressed_call(int i){
+    std::cout << "key pressed callback called " << i << "\n";
+}
+
 int main() {
     glfwInit();
 
     GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
     glfwMakeContextCurrent(window);
+
+
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
@@ -39,8 +41,9 @@ int main() {
     InputManager::Init();
     Log::Init();
 
-    int i = 1;
-    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, i);
+
+    int i = 0;
+    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, std::reference_wrapper(i));
     i++;
 
     InputManager::SetKeyTypedCallback(GLFW_KEY_Q, key_typed_call);

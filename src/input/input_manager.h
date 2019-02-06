@@ -105,7 +105,7 @@ namespace Bald::Input {
          */
 
         template <class F, class... Args>
-        static void SetKeyPressedCallback(int keycode, F&& fun, Args&... args) noexcept;
+        static void SetKeyPressedCallback(int keycode, F&& fun, Args&&... args) noexcept;
 
         /**
          * @fn                             GetKeyPressedCallback
@@ -142,7 +142,7 @@ namespace Bald::Input {
          */
 
         template<class F, class... Args>
-        static void SetKeyTypedCallback(int keycode, F&& fun, Args&... args) noexcept;
+        static void SetKeyTypedCallback(int keycode, F&& fun, Args&&... args) noexcept;
 
         /**
          * @fn                             GetKeyTypedCallback
@@ -179,7 +179,7 @@ namespace Bald::Input {
          */
 
         template<class F, class... Args>
-        static void SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&... args) noexcept;
+        static void SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&&... args) noexcept;
 
         /**
          * @fn                             GetMouseButtonPressedCallback
@@ -216,7 +216,7 @@ namespace Bald::Input {
          */
 
         template<class F, class... Args>
-        static void SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&... args) noexcept;
+        static void SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&&... args) noexcept;
 
         /**
          * @fn                             GetMouseButtonTypedCallback
@@ -301,11 +301,11 @@ namespace Bald::Input {
     }
 
     template<class F, class... Args>
-    void InputManager::SetKeyPressedCallback(int keycode, F&& fun, Args&... args) noexcept {
+    void InputManager::SetKeyPressedCallback(int keycode, F&& fun, Args&&... args) noexcept {
         if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
         else{
             auto prevfun = m_KeyPressedCallbacks[keycode];
-            m_KeyPressedCallbacks[keycode] = [prevfun, fun, &args...](){
+            m_KeyPressedCallbacks[keycode] = [prevfun, fun, args...](){
                 prevfun();
                 fun(args...);
             };
@@ -317,11 +317,11 @@ namespace Bald::Input {
     }
 
     template<class F, class... Args>
-    void InputManager::SetKeyTypedCallback(int keycode, F&& fun, Args&... args) noexcept{
+    void InputManager::SetKeyTypedCallback(int keycode, F&& fun, Args&&... args) noexcept{
         if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
         else{
             auto prevfun = m_KeyTypedCallbacks[keycode];
-            m_KeyTypedCallbacks[keycode] = [prevfun, fun, &args...](){
+            m_KeyTypedCallbacks[keycode] = [prevfun, fun, args...](){
                 prevfun();
                 fun(args...);
             };
@@ -333,11 +333,11 @@ namespace Bald::Input {
     }
 
     template<class F, class... Args>
-    void InputManager::SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&... args) noexcept{
+    void InputManager::SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&&... args) noexcept{
         if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else{
             auto prevfun = m_MouseButtonPressedCallbacks[buttoncode];
-            m_MouseButtonPressedCallbacks[buttoncode] = [prevfun, fun, &args...](){
+            m_MouseButtonPressedCallbacks[buttoncode] = [prevfun, fun, args...](){
                 prevfun();
                 fun(args...);
             };
@@ -349,11 +349,11 @@ namespace Bald::Input {
     }
 
     template<class F, class... Args>
-    void InputManager::SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&... args) noexcept{
+    void InputManager::SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&&... args) noexcept{
         if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else{
             auto prevfun = m_MouseButtonTypedCallbacks[buttoncode];
-            m_MouseButtonTypedCallbacks[buttoncode] = [prevfun, fun, &args...](){
+            m_MouseButtonTypedCallbacks[buttoncode] = [prevfun, fun, args...](){
                 prevfun();
                 fun(args...);
             };
