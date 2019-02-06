@@ -117,6 +117,15 @@ namespace Bald::Input {
         static inline callback GetKeyPressedCallback(int keycode) noexcept;
 
         /**
+         * @fn                             RemoveKeyPressedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveKeyPressedCallback(int keycode) noexcept;
+
+        /**
          * @fn                  SetKeyTypedCallback
          * @brief               sets function which will be called on key typed event
          * @param keycode [int] GLFW key id
@@ -135,6 +144,15 @@ namespace Bald::Input {
          */
 
         static inline callback GetKeyTypedCallback(int keycode) noexcept;
+
+        /**
+         * @fn                             RemoveKeyTypedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveKeyTypedCallback(int keycode) noexcept;
 
         /**
          * @fn                     SetMouseButtonPressedCallback
@@ -157,6 +175,15 @@ namespace Bald::Input {
         static inline callback GetMouseButtonPressedCallback(int buttoncode) noexcept;
 
         /**
+         * @fn                             RemoveMouseButtonPressedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveMouseButtonPressedCallback(int buttoncode) noexcept;
+
+        /**
          * @fn                     SetMouseButtonTypedCallback
          * @brief                  sets function which will be called on mouse button Typed event
          * @param buttoncode [int] GLFW mouse button id
@@ -175,6 +202,16 @@ namespace Bald::Input {
          */
 
         static inline callback GetMouseButtonTypedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                             RemoveMouseButtonTypedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveMouseButtonTypedCallback(int buttoncode) noexcept;
+
 
     private:
 

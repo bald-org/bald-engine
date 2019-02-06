@@ -46,4 +46,44 @@ namespace Bald::Input {
 
     }
 
+    callback InputManager::RemoveKeyPressedCallback(int keycode) noexcept {
+        if (keycode >= MAX_KEYS){
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            return [](){};
+        }
+        auto result = m_KeyPressedCallbacks[keycode];
+        m_KeyPressedCallbacks[keycode] = [](){};
+        return result;
+    }
+
+    callback InputManager::RemoveKeyTypedCallback(int keycode) noexcept {
+        if (keycode >= MAX_KEYS){
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            return [](){};
+        }
+        auto result = m_KeyTypedCallbacks[keycode];
+        m_KeyTypedCallbacks[keycode] = [](){};
+        return result;
+    }
+
+    callback InputManager::RemoveMouseButtonPressedCallback(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS){
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            return [](){};
+        }
+        auto result = m_MouseButtonPressedCallbacks[buttoncode];
+        m_MouseButtonPressedCallbacks[buttoncode] = [](){};
+        return result;
+    }
+
+    callback InputManager::RemoveMouseButtonTypedCallback(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS){
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            return [](){};
+        }
+        auto result = m_MouseButtonTypedCallbacks[buttoncode];
+        m_MouseButtonTypedCallbacks[buttoncode] = [](){};
+        return result;
+    }
+
 }

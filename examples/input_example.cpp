@@ -73,6 +73,9 @@ int main() {
         InputManager::Update();
     }
 
+    auto fun = InputManager::RemoveKeyPressedCallback(GLFW_KEY_A);
+    fun();
+
     glfwDestroyWindow(window);
     glfwTerminate();
 
