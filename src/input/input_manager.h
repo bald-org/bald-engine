@@ -237,8 +237,8 @@ namespace Bald::Input {
         static callback RemoveMouseButtonTypedCallback(int buttoncode) noexcept;
 
         /**
-         * @fn                  EmitMouseButtonTypedEvent
-         * @brief               simulate Mouse Button Typed event
+         * @fn                     EmitMouseButtonTypedEvent
+         * @brief                  simulate Mouse Button Typed event
          * @param buttoncode [int] GLFW key id
          */
 
