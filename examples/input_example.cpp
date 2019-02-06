@@ -39,7 +39,10 @@ int main() {
     InputManager::Init();
     Log::Init();
 
-    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, 1);
+    int i = 1;
+    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, i);
+    i++;
+
     InputManager::SetKeyTypedCallback(GLFW_KEY_Q, key_typed_call);
     InputManager::SetMouseButtonPressedCallback(GLFW_MOUSE_BUTTON_3, mouse_button_pressed_call);
     InputManager::SetMouseButtonTypedCallback(GLFW_MOUSE_BUTTON_4, mouse_button_typed_call);
