@@ -4,7 +4,7 @@
 
 #include "pch.h"
 #include "gtest/gtest.h"
-#include "math/vec2.h"
+#include "math.h"
 
 
 TEST(Getter, Vec2_GetX) { //NOLINT

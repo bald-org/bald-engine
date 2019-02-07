@@ -5,7 +5,7 @@
 #pragma once
 
 #include "pch.h"
-#include "vec3.h"
+#include "math.h"
 #include <cmath>
 
 namespace Bald::Math {

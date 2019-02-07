@@ -3,7 +3,7 @@
 //
 #include "pch.h"
 #include "gtest/gtest.h"
-#include "math/vec4.h"
+#include "math.h"
 
 TEST(Getter, Vec4_GetX) { //NOLINT
     Bald::Math::Vec4 A(66.0f, 3.4f, 1.0f, 17.0f);

@@ -4,7 +4,7 @@
 
 #include "pch.h"
 #include "gtest/gtest.h"
-#include "math/mat4.h"
+#include "math.h"
 
 TEST(Determinant, Mat4_Det) {
     Bald::Math::Mat4 A(1.0f);
