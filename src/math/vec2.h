@@ -7,6 +7,11 @@
 #include <iostream>
 #include "pch.h"
 
+/**
+ * @class Vec2
+ * @brief vector 2 class
+ */
+
 namespace Bald::Math {
 
     class Vec2 {
@@ -132,7 +137,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        constexpr bool operator==(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec2& other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -141,7 +146,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        constexpr bool operator!=(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec2& other) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -170,14 +175,6 @@ namespace Bald::Math {
         float m_X;
         float m_Y;
     }; // END OF CLASS Vec2
-
-        Vec2 Vec2::MakeUnitVec(const Vec2& vec) noexcept {
-                float len = vec.Length();
-                if(len != 0)
-                    return Vec2(vec.GetX() / len, vec.GetY() / len);
-                CORE_LOG_WARN("[Vec2] Cannot make unit vector from zero vector!");
-                return Vec2(0.0f, 0.0f);
-        }
 
         constexpr void Vec2::Normalize() noexcept {
                 float len = Length();
@@ -246,11 +243,6 @@ namespace Bald::Math {
 
         constexpr bool Vec2::operator!=(const Vec2& other) const noexcept {
                 return !(*this == other);
-        }
-
-        std::ostream& operator<<(std::ostream& out, const Vec2& vec) noexcept {
-                out << "[" << vec.m_X << ", " << vec.m_Y << "]\n";
-                return out;
         }
 
 }

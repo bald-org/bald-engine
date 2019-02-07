@@ -40,7 +40,11 @@ add_library(bald_engine
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
         src/input/input_manager.cpp
-        src/Log.cpp)
+        src/Log.cpp
+        src/math/vec2.cpp
+        src/math/vec3.cpp
+        src/math/vec4.cpp
+        src/math/mat4.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
