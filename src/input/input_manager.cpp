@@ -22,9 +22,9 @@ namespace Bald::Input {
 
     void InputManager::Init() {
         std::fill(m_KeyPressedCallbacks, m_KeyPressedCallbacks + MAX_KEYS - 1, []() {});
-        std::memcpy(m_KeyTypedCallbacks, m_KeyPressedCallbacks, MAX_KEYS);
+        std::memcpy(m_KeyTypedCallbacks, m_KeyPressedCallbacks, MAX_KEYS * sizeof(m_KeyPressedCallbacks[0]));
         std::fill(m_MouseButtonPressedCallbacks, m_MouseButtonPressedCallbacks + MAX_MOUSE_BUTTONS - 1, []() {});
-        std::memcpy(m_MouseButtonTypedCallbacks, m_MouseButtonPressedCallbacks, MAX_MOUSE_BUTTONS);
+        std::memcpy(m_MouseButtonTypedCallbacks, m_MouseButtonPressedCallbacks, MAX_MOUSE_BUTTONS * sizeof(m_MouseButtonPressedCallbacks[0]));
     }
 
     void InputManager::Update() noexcept {
@@ -41,29 +41,69 @@ namespace Bald::Input {
             if (m_MouseButtonsTyped[i]) m_MouseButtonTypedCallbacks[i]();
         }
 
-        std::memcpy(m_KeysState, m_Keys, MAX_KEYS);
-        std::memcpy(m_MouseButtonsState, m_MouseButtons, MAX_MOUSE_BUTTONS);
+        std::memcpy(m_KeysState, m_Keys, MAX_KEYS * sizeof(m_Keys[0]));
+        std::memcpy(m_MouseButtonsState, m_MouseButtons, MAX_MOUSE_BUTTONS * sizeof(m_MouseButtons[0]));
 
     }
 
-    void InputManager::SetKeyPressedCallback(int keycode, callback fun) noexcept {
-        if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
-        else m_KeyPressedCallbacks[keycode] = fun;
+    callback InputManager::RemoveKeyPressedCallback(int keycode) noexcept {
+        if (keycode >= MAX_KEYS){
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            return [](){};
+        }
+        auto result = m_KeyPressedCallbacks[keycode];
+        m_KeyPressedCallbacks[keycode] = [](){};
+        return result;
     }
 
-    void InputManager::SetKeyTypedCallback(int keycode, callback fun) noexcept {
-        if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
-        else m_KeyTypedCallbacks[keycode] = fun;
+    callback InputManager::RemoveKeyTypedCallback(int keycode) noexcept {
+        if (keycode >= MAX_KEYS){
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            return [](){};
+        }
+        auto result = m_KeyTypedCallbacks[keycode];
+        m_KeyTypedCallbacks[keycode] = [](){};
+        return result;
     }
 
-    void InputManager::SetMouseButtonPressedCallback(int buttoncode, callback fun) noexcept {
+    callback InputManager::RemoveMouseButtonPressedCallback(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS){
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            return [](){};
+        }
+        auto result = m_MouseButtonPressedCallbacks[buttoncode];
+        m_MouseButtonPressedCallbacks[buttoncode] = [](){};
+        return result;
+    }
+
+    callback InputManager::RemoveMouseButtonTypedCallback(int buttoncode) noexcept {
+        if (buttoncode >= MAX_MOUSE_BUTTONS){
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            return [](){};
+        }
+        auto result = m_MouseButtonTypedCallbacks[buttoncode];
+        m_MouseButtonTypedCallbacks[buttoncode] = [](){};
+        return result;
+    }
+
+    void InputManager::EmitMouseButtonTypedEvent(int buttoncode) noexcept {
         if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-        else m_MouseButtonPressedCallbacks[buttoncode] = fun;
+        else m_MouseButtonTypedCallbacks[buttoncode]();
     }
 
-    void InputManager::SetMouseButtonTypedCallback(int buttoncode, callback fun) noexcept {
+    void InputManager::EmitMouseButtonPressedEvent(int buttoncode) noexcept {
         if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-        else m_MouseButtonTypedCallbacks[buttoncode] = fun;
+        else m_MouseButtonPressedCallbacks[buttoncode]();
+    }
+
+    void InputManager::EmitKeyTypedEvent(int keycode) noexcept {
+        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else m_KeyTypedCallbacks[keycode]();
+    }
+
+    void InputManager::EmitKeyPressedEvent(int keycode) noexcept {
+        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else m_KeyPressedCallbacks[keycode]();
     }
 
 }
