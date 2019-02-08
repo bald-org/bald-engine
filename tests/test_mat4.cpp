@@ -83,6 +83,14 @@ TEST(Inverse, Mat4_StaticInverse) {
     EXPECT_EQ(Bald::Math::Mat4(inversedData), Bald::Math::Mat4::Inverse(A));
 }
 
+TEST(Inverse, Mat4_ZeroDetInverse) {
+    Bald::Math::Mat4 A(0.0f);
+
+    A.Inverse();
+
+    ASSERT_FLOAT_EQ(1.0f, A.Det());
+}
+
 TEST(Identity, Mat4_Identity) {
     float data[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
 

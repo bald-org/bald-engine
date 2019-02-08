@@ -8,6 +8,8 @@
 #include "math.h"
 #include <cmath>
 
+
+
 /**
  * @class Mat4
  * @brief 4x4 matrix class, column major implementation
@@ -47,7 +49,7 @@ namespace Bald::Math {
         * @fn               Transpose
         * @brief            transposes the matrix
         */
-        void Transpose() noexcept;
+        constexpr void Transpose() noexcept;
 
         /**
         * @fn                   Transpose
@@ -55,7 +57,7 @@ namespace Bald::Math {
         * @param [const Mat4&]  matrix -> const reference to Mat4
         * @return [Mat4]        transposed matrix
         */
-        [[nodiscard]] static Mat4 Transpose(const Mat4& matrix) noexcept;
+        [[nodiscard]] constexpr static Mat4 Transpose(const Mat4& matrix) noexcept;
 
         /**
         * @fn               Inverse
@@ -259,8 +261,7 @@ namespace Bald::Math {
     }
 
     constexpr Mat4::Mat4(float* data) : m_MatrixElements{0.0f} {
-        for (int i = 0; i < 16; ++i)
-            m_MatrixElements[i] = data[i];
+        std::memcpy(m_MatrixElements.begin(), data, 16 * sizeof(m_MatrixElements[0]));
     }
 
     constexpr float Mat4::Det() const noexcept {
@@ -295,6 +296,21 @@ namespace Bald::Math {
                      m_MatrixElements[12] * m_MatrixElements[6]  * m_MatrixElements[9];
 
         return m_MatrixElements[0] * minors[0] + m_MatrixElements[1] * minors[1] + m_MatrixElements[2] * minors[2] + m_MatrixElements[3] * minors[3];
+    }
+
+    constexpr void Mat4::Transpose() noexcept {
+        ConstexprSwap(m_MatrixElements[1],  m_MatrixElements[4]);
+        ConstexprSwap(m_MatrixElements[2],  m_MatrixElements[8]);
+        ConstexprSwap(m_MatrixElements[3],  m_MatrixElements[12]);
+        ConstexprSwap(m_MatrixElements[6],  m_MatrixElements[9]);
+        ConstexprSwap(m_MatrixElements[7],  m_MatrixElements[13]);
+        ConstexprSwap(m_MatrixElements[11], m_MatrixElements[14]);
+    }
+
+    constexpr Mat4 Mat4::Transpose(const Mat4& matrix) noexcept {
+        Mat4 copy = matrix;
+        copy.Transpose();
+        return copy;
     }
 
     constexpr Mat4 Mat4::Identity() noexcept {

@@ -6,21 +6,6 @@
 
 namespace Bald::Math {
 
-    void Mat4::Transpose() noexcept {
-        std::swap(m_MatrixElements[1], m_MatrixElements[4]);
-        std::swap(m_MatrixElements[2], m_MatrixElements[8]);
-        std::swap(m_MatrixElements[3], m_MatrixElements[12]);
-        std::swap(m_MatrixElements[6], m_MatrixElements[9]);
-        std::swap(m_MatrixElements[7], m_MatrixElements[13]);
-        std::swap(m_MatrixElements[11], m_MatrixElements[14]);
-    }
-
-    Mat4 Mat4::Transpose(const Mat4& matrix) noexcept {
-            Mat4 copy = matrix;
-            copy.Transpose();
-            return copy;
-    }
-
     void Mat4::Inverse() noexcept {
             Mat4 copy = *this;
 
@@ -142,8 +127,8 @@ namespace Bald::Math {
                         copy.m_MatrixElements[3] * m_MatrixElements[12];
 
             if(det == 0) {
-                    CORE_LOG_ERROR("Matrix determinant equals 0!");
-                    *this = copy;
+                    CORE_LOG_WARN("Matrix determinant equals 0! Returning identity matrix!");
+                    *this = Identity();
                     return;
             }
 
