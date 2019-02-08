@@ -10,7 +10,7 @@
 
 /**
  * @class Mat4
- * @brief 4x4 matrix class
+ * @brief 4x4 matrix class, column major implementation
  */
 
 namespace Bald::Math {
@@ -26,7 +26,7 @@ namespace Bald::Math {
         /**
         * @fn               Mat4
         * @brief            constructor
-        * @param [float*]   data -> pointer to an array of floats, which will be used to matrix
+        * @param [float*]   data -> pointer to an array of floats, which will be used to construct matrix
         */
         explicit constexpr Mat4(float* data);
 
@@ -155,7 +155,7 @@ namespace Bald::Math {
         * @fn                   Multiply
         * @brief                multiplies matrix by vector
         * @param [const Vec4&]  other -> vector by which we multiply the matrix
-        * @return [Vec4]        product of two matrices
+        * @return [Vec4]        product of matrix and vector
         */
         [[nodiscard]] constexpr Vec4 Multiply(const Vec4& other) const noexcept;
 
@@ -163,7 +163,7 @@ namespace Bald::Math {
         * @fn                   Multiply
         * @brief                multiplies matrix by vector
         * @param [const Vec3&]  other -> vector by which we multiply the matrix
-        * @return [Vec4]        product of two matrices
+        * @return [Vec4]        product of matrix and vector
         */
         [[nodiscard]] constexpr Vec4 Multiply(const Vec3& other) const noexcept;
 
@@ -190,6 +190,22 @@ namespace Bald::Math {
         * @return [Mat4]        product of two matrices
         */
         [[nodiscard]] constexpr Mat4 operator*(const Mat4& other) const noexcept;
+
+        /**
+        * @fn                   operator*
+        * @brief                multiplies matrix by vector
+        * @param [const Vec4&]  other -> vector by which we multiply the matrix
+        * @return [Vec4]        product of matrix and vector
+        */
+        [[nodiscard]] constexpr Vec4 operator*(const Vec4& other) const noexcept;
+
+        /**
+        * @fn                   operator*
+        * @brief                multiplies matrix by vector
+        * @param [const Vec3&]  other -> vector by which we multiply the matrix
+        * @return [Vec4]        product of matrix and vector
+        */
+        [[nodiscard]] constexpr Vec4 operator*(const Vec3& other) const noexcept;
 
         /**
         * @fn                   operator==
@@ -232,7 +248,7 @@ namespace Bald::Math {
         constexpr Mat4& operator*=(const Mat4& other) noexcept;
 
     private:
-        float m_MatrixElements[16]; /**< matrix elements are kept in an array of floats*/
+        std::array<float, 16> m_MatrixElements; /**< matrix elements are kept in an array of floats*/
     }; // END OF CLASS Mat4
 
     constexpr Mat4::Mat4(float diagonal) : m_MatrixElements{0.0f} {
@@ -309,21 +325,24 @@ namespace Bald::Math {
         Mat4 result(1.0f);
 
         float angleInRadians = angle / 180.0f * static_cast<float>(M_PI);
+        float x = axis.GetX();
+        float y = axis.GetY();
+        float z = axis.GetZ();
         float c = static_cast<float>(cos(angleInRadians));
         float s = static_cast<float>(sin(angleInRadians));
         float omc = 1 - c;
 
-        result.m_MatrixElements[0 + 0 * 4] = axis.GetX() * axis.GetX() * omc + c;
-        result.m_MatrixElements[1 + 0 * 4] = axis.GetX() * axis.GetY() * omc + axis.GetZ() * s;
-        result.m_MatrixElements[2 + 0 * 4] = axis.GetX() * axis.GetZ() * omc - axis.GetY() * s;
+        result.m_MatrixElements[0 + 0 * 4] = x * x * omc + c;
+        result.m_MatrixElements[1 + 0 * 4] = x * y * omc + z * s;
+        result.m_MatrixElements[2 + 0 * 4] = x * z * omc - y * s;
 
-        result.m_MatrixElements[0 + 1 * 4] = axis.GetX() * axis.GetY() * omc - axis.GetZ() * s;
-        result.m_MatrixElements[1 + 1 * 4] = axis.GetY() * axis.GetY() * omc + c;
-        result.m_MatrixElements[2 + 1 * 4] = axis.GetY() * axis.GetZ() * omc + axis.GetX() * s;
+        result.m_MatrixElements[0 + 1 * 4] = x * y * omc - z * s;
+        result.m_MatrixElements[1 + 1 * 4] = y * y * omc + c;
+        result.m_MatrixElements[2 + 1 * 4] = y * z * omc + x * s;
 
-        result.m_MatrixElements[0 + 2 * 4] = axis.GetX() * axis.GetZ() * omc + axis.GetY() * s;
-        result.m_MatrixElements[1 + 2 * 4] = axis.GetY() * axis.GetZ() * omc - axis.GetX() * s;
-        result.m_MatrixElements[2 + 2 * 4] = axis.GetZ() * axis.GetZ() * omc + c;
+        result.m_MatrixElements[0 + 2 * 4] = x * z * omc + y * s;
+        result.m_MatrixElements[1 + 2 * 4] = y * z * omc - x * s;
+        result.m_MatrixElements[2 + 2 * 4] = z * z * omc + c;
 
         return result;
     }
@@ -389,10 +408,14 @@ namespace Bald::Math {
     }
 
     constexpr Vec4 Mat4::Multiply(const Vec4& other) const noexcept {
-        float x = m_MatrixElements[0] * other.GetX() + m_MatrixElements[0 + 1 * 4] * other.GetY() + m_MatrixElements[0 + 2 * 4] * other.GetZ() + m_MatrixElements[0 + 3 * 4] * other.GetW();
-        float y = m_MatrixElements[1] * other.GetX() + m_MatrixElements[1 + 1 * 4] * other.GetY() + m_MatrixElements[1 + 2 * 4] * other.GetZ() + m_MatrixElements[1 + 3 * 4] * other.GetW();
-        float z = m_MatrixElements[2] * other.GetX() + m_MatrixElements[2 + 1 * 4] * other.GetY() + m_MatrixElements[2 + 2 * 4] * other.GetZ() + m_MatrixElements[2 + 3 * 4] * other.GetW();
-        float w = m_MatrixElements[3] * other.GetX() + m_MatrixElements[3 + 1 * 4] * other.GetY() + m_MatrixElements[3 + 2 * 4] * other.GetZ() + m_MatrixElements[3 + 3 * 4] * other.GetW();
+        float temp_x = other.GetX();
+        float temp_y = other.GetY();
+        float temp_z = other.GetZ();
+        float temp_w = other.GetW();
+        float x = m_MatrixElements[0] * temp_x + m_MatrixElements[0 + 1 * 4] * temp_y + m_MatrixElements[0 + 2 * 4] * temp_z + m_MatrixElements[0 + 3 * 4] * temp_w;
+        float y = m_MatrixElements[1] * temp_x + m_MatrixElements[1 + 1 * 4] * temp_y + m_MatrixElements[1 + 2 * 4] * temp_z + m_MatrixElements[1 + 3 * 4] * temp_w;
+        float z = m_MatrixElements[2] * temp_x + m_MatrixElements[2 + 1 * 4] * temp_y + m_MatrixElements[2 + 2 * 4] * temp_z + m_MatrixElements[2 + 3 * 4] * temp_w;
+        float w = m_MatrixElements[3] * temp_x + m_MatrixElements[3 + 1 * 4] * temp_y + m_MatrixElements[3 + 2 * 4] * temp_z + m_MatrixElements[3 + 3 * 4] * temp_w;
 
         return Vec4(x, y, z, w);
     }
@@ -413,11 +436,16 @@ namespace Bald::Math {
         return this->Multiply(other);
     }
 
+    constexpr Vec4 Mat4::operator*(const Vec4& other) const noexcept {
+        return this->Multiply(other);
+    }
+
+    constexpr Vec4 Mat4::operator*(const Vec3& other) const noexcept {
+        return this->Multiply(other);
+    }
+
     constexpr bool Mat4::operator==(const Mat4& other) const noexcept {
-        for(int i = 0; i < 16; ++i)
-            if(m_MatrixElements[i] != other.m_MatrixElements[i])
-                return false;
-        return true;
+        return std::memcmp(m_MatrixElements.begin(), other.m_MatrixElements.begin(), m_MatrixElements.size() * sizeof(m_MatrixElements[0])) == 0;
     }
 
     constexpr bool Mat4::operator!=(const Mat4& other) const noexcept {
@@ -425,20 +453,15 @@ namespace Bald::Math {
     }
 
     constexpr Mat4& Mat4::operator+=(const Mat4& other) noexcept {
-        for (int i = 0; i < 16; ++i)
-            m_MatrixElements[i] += other.m_MatrixElements[i];
-        return *this;
+        return *this = *this + other;
     }
 
     constexpr Mat4& Mat4::operator-=(const Mat4& other) noexcept {
-        for (int i = 0; i < 16; ++i)
-            m_MatrixElements[i] -= other.m_MatrixElements[i];
-        return *this;
+        return *this = *this - other;
     }
 
     constexpr Mat4& Mat4::operator*=(const Mat4& other) noexcept {
-        *this = this->Multiply(other);
-        return *this;
+        return *this = this->Multiply(other);
     }
 
 }

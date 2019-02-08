@@ -13,6 +13,36 @@ TEST(Determinant, Mat4_Det) {
     ASSERT_FLOAT_EQ(24.0f, A.Det());
 }
 
+TEST(Translation, Mat4_Translation) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Translation(Bald::Math::Vec3(2.0f, 3.0f, 1.0f));
+    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
+
+    Bald::Math::Vec4 translatedVec = A * vec;
+
+    EXPECT_EQ(Bald::Math::Vec4(3.0f, 4.0f, 2.0f, 1.0f), translatedVec);
+}
+
+TEST(Scale, Mat4_Scale) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Scale(Bald::Math::Vec3(3.0, 3.0f, 1.0f));
+    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
+
+    Bald::Math::Vec4 scaledVec = A * vec;
+
+    EXPECT_EQ(Bald::Math::Vec4(3.0f, 3.0f, 1.0f, 1.0f), scaledVec);
+}
+
+TEST(Rotation, Mat4_Rotation) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Rotation(90.0f, Bald::Math::Vec3(0.0f, 0.0f, 1.0f));
+    Bald::Math::Vec3 vec(5.0f, 1.0f, 0.0f);
+
+    Bald::Math::Vec4 rotatedVec = A * vec;
+
+    EXPECT_FLOAT_EQ(-1.0f, rotatedVec.GetX());
+    EXPECT_FLOAT_EQ( 5.0f, rotatedVec.GetY());
+    EXPECT_FLOAT_EQ( 0.0f, rotatedVec.GetZ());
+    EXPECT_FLOAT_EQ( 1.0f, rotatedVec.GetW());
+}
+
 TEST(Transpose, Mat4_Transpose) {
     float data[] = {3.0f, 4.0f, 3.0f, 9.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, 2.0f, 3.0f, 1.0f, 2.0f, 1.0f, 1.0f};
     float transposedData[] = {3.0f, 2.0f, 0.0f, 1.0f, 4.0f, 0.0f, 1.0f, 2.0f, 3.0f, 0.0f, 2.0f, 1.0f, 9.0f, 2.0f, 3.0f, 1.0f};
