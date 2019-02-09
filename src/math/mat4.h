@@ -147,6 +147,14 @@ namespace Bald::Math {
 
         /**
         * @fn                   Multiply
+        * @brief                multiplies matrix by a scalar
+        * @param [float]  scalar -> number by which the matrix will be multiplied
+        * @return [Mat4]        product of scalar and matrix
+        */
+        [[nodiscard]] constexpr Mat4 Multiply(float scalar) const noexcept;
+
+        /**
+        * @fn                   Multiply
         * @brief                multiplies two matrices
         * @param [const Mat4&]  other -> matrix by which we multiply our current matrix
         * @return [Mat4]        product of two matrices
@@ -184,6 +192,14 @@ namespace Bald::Math {
         * @return [Mat4]        difference of two matrices
         */
         [[nodiscard]] constexpr Mat4 operator-(const Mat4& other) const noexcept;
+
+        /**
+        * @fn                   operator*
+        * @brief                multiplies matrix by a scalar
+        * @param [float]        scalar -> number by which the matrix will be multiplied
+        * @return [Mat4]        product of scalar and matrix
+        */
+        [[nodiscard]] constexpr Mat4 operator*(float scalar) const noexcept;
 
         /**
         * @fn                   operator*
@@ -243,11 +259,28 @@ namespace Bald::Math {
 
         /**
         * @fn                   operator*=
+        * @brief                multiplies matrix by a scalar
+        * @param [float]        scalar -> number by which the matrix will be multiplied
+        * @return [Mat4]        product of scalar and matrix
+        */
+        constexpr Mat4& operator*=(float scalar) noexcept;
+
+        /**
+        * @fn                   operator*=
         * @brief                multiplies two matrices
         * @param [const Mat4&]  other -> matrix by which we multiply our current matrix
         * @return [Mat4&]       product of two matrices
         */
         constexpr Mat4& operator*=(const Mat4& other) noexcept;
+
+        /**
+        * @fn                   operator*
+        * @brief                multiplies matrix by a scalar
+        * @param [float]        scalar -> number by which the matrix will be multiplied
+        * @param [const Mat4&]  other -> matrix which we multiply
+        * @return [Mat4]        product of scalar and matrix
+        */
+        friend constexpr Mat4 operator*(float scalar, const Mat4& other) noexcept;
 
     private:
         std::array<float, 16> m_MatrixElements; /**< matrix elements are kept in an array of floats*/
@@ -403,11 +436,15 @@ namespace Bald::Math {
     }
 
     constexpr Mat4 Mat4::Subtract(const Mat4& other) const noexcept {
-        float newElements[16] = {};
-        for (int i = 0; i < 16; ++i) {
-            newElements[i] = m_MatrixElements[i] - other.m_MatrixElements[i];
-        }
-        return Mat4(newElements);
+        return *this + other.Multiply(-1.0f);
+    }
+    constexpr Mat4 Mat4::Multiply(float scalar) const noexcept {
+        Mat4 result = *this;
+
+        for (int i = 0; i < 16; ++i)
+            result.m_MatrixElements[i] *= scalar;
+
+        return result;
     }
 
     constexpr Mat4 Mat4::Multiply(const Mat4& other) const noexcept {
@@ -448,6 +485,10 @@ namespace Bald::Math {
         return this->Subtract(other);
     }
 
+    constexpr Mat4 Mat4::operator*(float scalar) const noexcept {
+        return this->Multiply(scalar);
+    }
+
     constexpr Mat4 Mat4::operator*(const Mat4& other) const noexcept {
         return this->Multiply(other);
     }
@@ -461,7 +502,10 @@ namespace Bald::Math {
     }
 
     constexpr bool Mat4::operator==(const Mat4& other) const noexcept {
-        return std::memcmp(m_MatrixElements.begin(), other.m_MatrixElements.begin(), m_MatrixElements.size() * sizeof(m_MatrixElements[0])) == 0;
+        for(int i = 0; i < 16; ++i)
+            if(m_MatrixElements[i] != other.m_MatrixElements[i])
+                return false;
+        return true;
     }
 
     constexpr bool Mat4::operator!=(const Mat4& other) const noexcept {
@@ -476,8 +520,16 @@ namespace Bald::Math {
         return *this = *this - other;
     }
 
+    constexpr Mat4& Mat4::operator*=(float scalar) noexcept {
+        return *this = this->Multiply(scalar);
+    }
+
     constexpr Mat4& Mat4::operator*=(const Mat4& other) noexcept {
         return *this = this->Multiply(other);
+    }
+
+    constexpr Mat4 operator*(float scalar, const Mat4& other) noexcept {
+        return other.Multiply(scalar);
     }
 
 }

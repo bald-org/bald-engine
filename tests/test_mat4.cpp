@@ -13,36 +13,6 @@ TEST(Determinant, Mat4_Det) {
     ASSERT_FLOAT_EQ(24.0f, A.Det());
 }
 
-TEST(Translation, Mat4_Translation) {
-    Bald::Math::Mat4 A = Bald::Math::Mat4::Translation(Bald::Math::Vec3(2.0f, 3.0f, 1.0f));
-    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
-
-    Bald::Math::Vec4 translatedVec = A * vec;
-
-    EXPECT_EQ(Bald::Math::Vec4(3.0f, 4.0f, 2.0f, 1.0f), translatedVec);
-}
-
-TEST(Scale, Mat4_Scale) {
-    Bald::Math::Mat4 A = Bald::Math::Mat4::Scale(Bald::Math::Vec3(3.0, 3.0f, 1.0f));
-    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
-
-    Bald::Math::Vec4 scaledVec = A * vec;
-
-    EXPECT_EQ(Bald::Math::Vec4(3.0f, 3.0f, 1.0f, 1.0f), scaledVec);
-}
-
-TEST(Rotation, Mat4_Rotation) {
-    Bald::Math::Mat4 A = Bald::Math::Mat4::Rotation(90.0f, Bald::Math::Vec3(0.0f, 0.0f, 1.0f));
-    Bald::Math::Vec3 vec(5.0f, 1.0f, 0.0f);
-
-    Bald::Math::Vec4 rotatedVec = A * vec;
-
-    EXPECT_FLOAT_EQ(-1.0f, rotatedVec.GetX());
-    EXPECT_FLOAT_EQ( 5.0f, rotatedVec.GetY());
-    EXPECT_FLOAT_EQ( 0.0f, rotatedVec.GetZ());
-    EXPECT_FLOAT_EQ( 1.0f, rotatedVec.GetW());
-}
-
 TEST(Transpose, Mat4_Transpose) {
     float data[] = {3.0f, 4.0f, 3.0f, 9.0f, 2.0f, 0.0f, 0.0f, 2.0f, 0.0f, 1.0f, 2.0f, 3.0f, 1.0f, 2.0f, 1.0f, 1.0f};
     float transposedData[] = {3.0f, 2.0f, 0.0f, 1.0f, 4.0f, 0.0f, 1.0f, 2.0f, 3.0f, 0.0f, 2.0f, 1.0f, 9.0f, 2.0f, 3.0f, 1.0f};
@@ -99,6 +69,45 @@ TEST(Identity, Mat4_Identity) {
     EXPECT_EQ(A, Bald::Math::Mat4::Identity());
 }
 
+
+TEST(Translation, Mat4_Translation) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Translation(Bald::Math::Vec3(2.0f, 3.0f, 1.0f));
+    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
+
+    Bald::Math::Vec4 translatedVec = A * vec;
+
+    EXPECT_EQ(Bald::Math::Vec4(3.0f, 4.0f, 2.0f, 1.0f), translatedVec);
+}
+
+TEST(Scale, Mat4_Scale) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Scale(Bald::Math::Vec3(3.0, 3.0f, 1.0f));
+    Bald::Math::Vec3 vec(1.0f, 1.0f, 1.0f);
+
+    Bald::Math::Vec4 scaledVec = A * vec;
+
+    EXPECT_EQ(Bald::Math::Vec4(3.0f, 3.0f, 1.0f, 1.0f), scaledVec);
+}
+
+TEST(Rotation, Mat4_Rotation) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Rotation(90.0f, Bald::Math::Vec3(0.0f, 0.0f, 1.0f));
+    Bald::Math::Vec3 vec(5.0f, 1.0f, 0.0f);
+
+    Bald::Math::Vec4 rotatedVec = A * vec;
+
+    EXPECT_FLOAT_EQ(-1.0f, rotatedVec.GetX());
+    EXPECT_FLOAT_EQ( 5.0f, rotatedVec.GetY());
+    EXPECT_FLOAT_EQ( 0.0f, rotatedVec.GetZ());
+    EXPECT_FLOAT_EQ( 1.0f, rotatedVec.GetW());
+}
+
+TEST(Orthographic, Mat4_Orthographic) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    float correctOrthographicData[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    Bald::Math::Mat4 B(correctOrthographicData);
+
+    EXPECT_TRUE(A == B);
+}
+
 TEST(Addition, Mat4_Add) {
     Bald::Math::Mat4 A(2.0f);
     Bald::Math::Mat4 B(3.0f);
@@ -117,7 +126,19 @@ TEST(Subtraction, Mat4_Subtract) {
     EXPECT_EQ(Bald::Math::Mat4(-1.0f), C);
 }
 
-TEST(Multiplication, Mat4_Multiply) {
+TEST(Multiplication, Mat4_MultiplyByScalar) {
+    float dataA[] = {1.0f, 3.0f, 0.0f, 10.0f, 6.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
+    float scalar = 5.0f;
+    Bald::Math::Mat4 A(dataA);
+    A = A.Multiply(scalar);
+
+    float dataB[] = {5.0f, 15.0f, 0.0f, 50.0f, 30.0f, 5.0f, 0.0f, 10.0f, 0.0f, 0.0f, 15.0f, 0.0f, 0.0f, 5.0f, 0.0f, 0.0f};
+    Bald::Math::Mat4 B(dataB);
+
+    EXPECT_EQ(A, B);
+}
+
+TEST(Multiplication, Mat4_MultiplyByMatrix) {
     float dataA[] = {1.0f, 3.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
     float dataB[] = {0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 9.0f};
     float dataC[] = {0.0f, 0.0f, 3.0f, 0.0f, 2.0f, 6.0f, 3.0f, 0.0f, 0.0f, 3.0f, 0.0f, 6.0f, 0.0f, 9.0f, 0.0f, 0.0f};
@@ -215,4 +236,24 @@ TEST(Operator, Mat4_MultiplyEqualsOperator) {
     Bald::Math::Mat4 C(dataC);
 
     EXPECT_EQ(C, A*=B);
+}
+
+TEST(Operator, Mat4_MultiplyEqualsScalarOperator) {
+    float dataA[] = {1.0f, 3.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
+    float dataB[] = {5.0f, 15.0f, 0.0f, 0.0f, 0.0f, 5.0f, 0.0f, 10.0f, 0.0f, 0.0f, 15.0f, 0.0f, 0.0f, 5.0f, 0.0f, 0.0f};
+    float scalar = 5.0f;
+    Bald::Math::Mat4 A(dataA);
+    Bald::Math::Mat4 B(dataB);
+
+    EXPECT_EQ(B, A*=scalar);
+}
+
+TEST(Operator, Mat4_MultiplyScalarMatrixOperator) {
+    float dataA[] = {1.0f, 3.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
+    float dataB[] = {5.0f, 15.0f, 0.0f, 0.0f, 0.0f, 5.0f, 0.0f, 10.0f, 0.0f, 0.0f, 15.0f, 0.0f, 0.0f, 5.0f, 0.0f, 0.0f};
+    float scalar = 5.0f;
+    Bald::Math::Mat4 A(dataA);
+    Bald::Math::Mat4 B(dataB);
+
+    EXPECT_EQ(B, scalar * A);
 }
