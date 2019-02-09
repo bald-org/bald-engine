@@ -108,6 +108,14 @@ TEST(Orthographic, Mat4_Orthographic) {
     EXPECT_TRUE(A == B);
 }
 
+TEST(Perspective, Mat4_Perspective) {
+    Bald::Math::Mat4 A = Bald::Math::Mat4::Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
+    float correctOrthographicData[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};
+    Bald::Math::Mat4 B(correctOrthographicData);
+
+    EXPECT_TRUE(A == B);
+}
+
 TEST(Addition, Mat4_Add) {
     Bald::Math::Mat4 A(2.0f);
     Bald::Math::Mat4 B(3.0f);

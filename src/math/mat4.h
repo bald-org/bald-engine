@@ -6,6 +6,8 @@
 
 #include "pch.h"
 #include "math.h"
+#include "utils/utils.h"
+#include "utils/math_utils.h"
 #include <cmath>
 
 
@@ -119,13 +121,13 @@ namespace Bald::Math {
         [[nodiscard]] constexpr static Mat4 Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept;
 
         /**
-        * @fn                   Orthographic
+        * @fn                   Perspective
         * @brief                constructs perspective matrix
         * @param [float]        fov -> field of view (vertical)
         * @param [float]        aspectRatio -> window's aspect ratio
         * @param [float]        near -> near screen space coordinate
         * @param [float]        far -> far screen space coordinate
-        * @return [Mat4]        orthographic matrix
+        * @return [Mat4]        perspective matrix
         */
         [[nodiscard]] constexpr static Mat4 Perspective(float fov, float aspectRatio, float near, float far) noexcept;
 
@@ -332,12 +334,12 @@ namespace Bald::Math {
     }
 
     constexpr void Mat4::Transpose() noexcept {
-        ConstexprSwap(m_MatrixElements[1],  m_MatrixElements[4]);
-        ConstexprSwap(m_MatrixElements[2],  m_MatrixElements[8]);
-        ConstexprSwap(m_MatrixElements[3],  m_MatrixElements[12]);
-        ConstexprSwap(m_MatrixElements[6],  m_MatrixElements[9]);
-        ConstexprSwap(m_MatrixElements[7],  m_MatrixElements[13]);
-        ConstexprSwap(m_MatrixElements[11], m_MatrixElements[14]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[1],  m_MatrixElements[4]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[2],  m_MatrixElements[8]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[3],  m_MatrixElements[12]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[6],  m_MatrixElements[9]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[7],  m_MatrixElements[13]);
+        Bald::Utils::ConstexprSwap(m_MatrixElements[11], m_MatrixElements[14]);
     }
 
     constexpr Mat4 Mat4::Transpose(const Mat4& matrix) noexcept {
@@ -373,7 +375,7 @@ namespace Bald::Math {
     constexpr Mat4 Mat4::Rotation(float angle, const Vec3& axis) noexcept {
         Mat4 result(1.0f);
 
-        float angleInRadians = angle / 180.0f * static_cast<float>(M_PI);
+        float angleInRadians = Bald::Utils::ToRadians(angle);
         float x = axis.GetX();
         float y = axis.GetY();
         float z = axis.GetZ();
@@ -414,7 +416,7 @@ namespace Bald::Math {
     constexpr Mat4 Mat4::Perspective(float fov, float aspectRatio, float near, float far) noexcept {
         Mat4 result(0.0f);
 
-        float fovInRadians = fov / 180.0f * static_cast<float>(M_PI);
+        float fovInRadians = Bald::Utils::ToRadians(fov);
         float a = static_cast<float>(tan(fovInRadians / 2.0f));
         float b = a * aspectRatio;
 
