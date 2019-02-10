@@ -11,6 +11,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/src/math)
+include_directories(${CMAKE_SOURCE_DIR}/src/events)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
@@ -63,6 +64,9 @@ endif()
 
 add_executable(input_example examples/input_example.cpp)
 target_link_libraries(input_example bald_engine)
+
+add_executable(events_example examples/event_example.cpp)
+target_link_libraries(events_example bald_engine)
 
 #### END EXAMPLES
 
