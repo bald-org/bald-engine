@@ -18,4 +18,5 @@ namespace Bald::Math {
         out << "[" << vec.m_X << ", " << vec.m_Y << ", " << vec.m_Z << "]\n";
         return out;
     }
+
 }

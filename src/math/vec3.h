@@ -166,6 +166,14 @@ namespace Bald::Math {
         [[nodiscard]] constexpr bool operator!=(const Vec3& other) const noexcept;
 
         /**
+         * @fn                          operator[]
+         * @brief                       returns number in vector at certain index
+         * @param [int]                 index -> index of a number which you want to retrieve
+         * @return [const float&]       float at given index
+         */
+        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
+
+        /**
          * @fn                          operator<<
          * @brief                       prints the Vec3
          * @param [std::ostream&]       output stream
@@ -284,6 +292,20 @@ namespace Bald::Math {
 
         constexpr bool Vec3::operator!=(const Vec3& other) const noexcept {
                 return !(*this == other);
+        }
+
+        constexpr const float& Vec3::operator[](int index) const noexcept {
+            switch(index) {
+                case 0:
+                    return m_X;
+                case 1:
+                    return m_Y;
+                case 2:
+                    return m_Z;
+                default:
+                    assert(false);
+                    break;
+            }
         }
 
 } // END OF NAMESPACE Bald::Math

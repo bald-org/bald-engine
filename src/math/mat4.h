@@ -284,8 +284,19 @@ namespace Bald::Math {
         */
         friend constexpr Mat4 operator*(float scalar, const Mat4& other) noexcept;
 
+        /**
+         * @fn                          operator[]
+         * @brief                       returns column at given index
+         * @param [int]                 index -> index of a column which you want to retrieve
+         * @return [const Vec4&]        column in a form of Vec4
+         */
+        [[nodiscard]] constexpr const Vec4& operator[](int index) const noexcept;
     private:
-        std::array<float, 16> m_MatrixElements; /**< matrix elements are kept in an array of floats*/
+        union { /**< union for optimized elements access and elements interpretation*/
+            std::array<float, 16> m_MatrixElements; /**< matrix elements are kept in an array of floats*/
+            Vec4 m_MatrixColumns[4];                /**< matrix elements are kept in an array of Vec4s */
+        };
+
     }; // END OF CLASS Mat4
 
     constexpr Mat4::Mat4(float diagonal) : m_MatrixElements{0.0f} {
@@ -532,6 +543,10 @@ namespace Bald::Math {
 
     constexpr Mat4 operator*(float scalar, const Mat4& other) noexcept {
         return other.Multiply(scalar);
+    }
+
+    constexpr const Vec4& Mat4::operator[](int index) const noexcept {
+        return m_MatrixColumns[index];
     }
 
 }
