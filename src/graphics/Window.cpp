@@ -6,33 +6,21 @@
 
 namespace Bald::Graphics {
 
-    Window::Window(const char* title, int width, int height, bool closed)
-            : m_Title(title), m_Width(width), m_Height(height), m_Closed(closed) {
-        Init();
-    }
-
-    Window::~Window() {
-        glfwTerminate();
-    }
-
-
-    void Window::Update() const {
-        if(!m_Closed){
+    constexpr void Window::Update(){
+        if (!m_Closed) {
             glfwPollEvents();
+            glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
+            glViewport(0, 0, m_Width, m_Height);
             glfwSwapBuffers(m_Window);
         }
-
     }
-
 
     bool Window::Init() noexcept {
 
         if (!glfwInit()) {
-            CORE_LOG_ERROR("[Window.Init] Failed to init a Window!");
-
+            CORE_LOG_ERROR("[Window] Failed to init a Window!");
             return false;
         }
-
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
 
@@ -41,16 +29,10 @@ namespace Bald::Graphics {
             CORE_LOG_ERROR("[Window] Failed to create a Window!");
             return false;
         }
+
         m_Closed = false;
         glfwMakeContextCurrent(m_Window);
+
         return true;
     }
-
-
-    bool Window::IsClosed() const {
-
-        return glfwWindowShouldClose(m_Window);
-    }
-
-
 }

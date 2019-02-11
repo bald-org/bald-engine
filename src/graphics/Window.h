@@ -3,8 +3,8 @@
 //
 
 #pragma once
-#include <GLFW/glfw3.h>
 
+#include <GLFW/glfw3.h>
 
 
 namespace Bald::Graphics {
@@ -15,7 +15,7 @@ namespace Bald::Graphics {
      */
     class Window {
     public:
-        /**  methods & functions  */
+        /** ========== METHODS ========== */
 
         /**
          * @fn                      Window
@@ -24,30 +24,77 @@ namespace Bald::Graphics {
          * @param [int]             height
          * @brief                   constructor for the window
          */
-
-        Window(const char* title = "Window", int width = 800, int height = 600, bool closed = false);
+        explicit Window(const char *title = "Window", int width = 800, int height = 600,
+                        bool closed = false)
+                : m_Title(title), m_Width(width), m_Height(height), m_Closed(closed) {
+            Window::Init();
+        }
 
         /**
          * @fn                      ~Window
-         * @brief                   destructor - destructs the window
+         * @brief                   destructor - terminates the m_Window
          */
+        ~Window() noexcept { glfwTerminate(); }
 
-        ~Window();
 
         /**
          * @fn                      Update
-         * @brief                   updates the window data
+         * @brief                   updates the window data i.a. poll events & swap buffers
          */
-        void Update() const;
+        constexpr void Update();
 
         /**
-         * @fn                      Closed
+         * @fn                      IsClosed
          * @brief                   updates the window data
-         * @return [bool]           true  -> Window is closed
+         * @return [int]            true  -> Window is     closed
          *                          false -> Window is NOT closed
          */
-        bool IsClosed() const;
+        [[nodiscard]] inline int IsClosed() const noexcept { return glfwWindowShouldClose(m_Window); }
 
+        /**
+         * @fn                      DestroyWindow
+         * @brief                   destroys the Window
+         */
+        void DestroyWindow() const noexcept {
+            glfwDestroyWindow(m_Window);
+        }
+
+        /**
+         * @fn                      ClearWindow
+         * @brief                   clears buffer bit (w/e it means tbh xDD)
+         */
+        inline void ClearWindow() const noexcept {glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);}
+
+
+        /** ========== GETTERS ========== */
+
+        /**
+         * @fn                      GetWindow
+         * @brief                   returns m_Window component
+         * @return [GLFWwindow*]    pointer to the m_Window
+         */
+        [[nodiscard]] constexpr inline GLFWwindow *GetWindow() const noexcept { return m_Window; }
+
+        /**
+         * @fn                      GetTitle
+         * @brief                   returns m_Title component
+         * @return [const char*]    pointer to the m_Title
+         */
+        [[nodiscard]] constexpr inline const char *GetTitle() const noexcept { return m_Title; }
+
+        /**
+         * @fn                      GetWidth
+         * @brief                   returns the width of the Window
+         * @return [int]            m_Width component
+         */
+        [[nodiscard]] constexpr inline int GetWidth() const noexcept { return m_Width; }
+
+        /**
+         * @fn                      GetHeight
+         * @brief                   returns the height of the Window
+         * @return [int]            m_Height component
+         */
+        [[nodiscard]] constexpr inline int GetHeight() const noexcept { return m_Height; }
 
     private:
         /**
@@ -61,15 +108,10 @@ namespace Bald::Graphics {
         // START OF ATTRIBUTES
 
     private:
-        GLFWwindow *m_Window;
-
+        GLFWwindow* m_Window;
         const char* m_Title;
-
-        int m_Width;
-        int m_Height;
-
+        int m_Width;        //
+        int m_Height;       // should these two be of type GLInt ?
         bool m_Closed;
-    };
-
-
-}
+    }; // END OF WINDOW CLASS
+} // END OF NAMESPACE BALD::GRAPHICS
