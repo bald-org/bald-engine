@@ -108,6 +108,26 @@ namespace Bald::Math {
         [[nodiscard]] constexpr static Mat4 Rotation(float angle, const Vec3& axis) noexcept;
 
         /**
+        * @fn                   LookAt
+        * @brief                constructs look at matrix
+        * @param [const Vec3&]  eye -> eye position in world space
+        * @param [const Vec3&]  center -> position of thing we want to look at
+        * @param [const Vec3&]  up -> up vector of e.g. camera (not world up!)
+        * @return [Mat4]        look at matrix
+        */
+        [[nodiscard]] constexpr static Mat4 LookAt(const Vec3& eye, const Vec3& center, const Vec3& up);
+
+        /**
+        * @fn                   OrthogonalProjection
+        * @brief                constructs orthogonal projection matrix
+        * @param [float]        lightSource -> the point towards which we project
+        * @param [float]        normal -> plane's normal vector
+        * @param [float]        offset -> how much the plane is moved from the center (0,0,0)
+        * @return [Mat4]        orthogonal projection matrix
+        */
+        [[nodiscard]] constexpr static Mat4 OrthogonalProjection(const Vec3& lightSource, const Vec3& normal, float offset) noexcept;
+
+        /**
         * @fn                   Orthographic
         * @brief                constructs orthographic matrix
         * @param [float]        left -> left screen space coordinate
@@ -409,8 +429,68 @@ namespace Bald::Math {
         return result;
     }
 
-    constexpr Mat4
-    Mat4::Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept {
+    constexpr Mat4 Mat4::LookAt(const Vec3& eye, const Vec3& center, const Vec3& up) {
+        Mat4 result(0.0f);
+
+        Vec3 e = eye;
+        Vec3 c = center;
+        Vec3 u = up;
+
+        Vec3 f = c - e;
+        f.Normalize();
+        Vec3 fNorm = f;
+
+        Vec3 r = Vec3::CrossProduct(fNorm, u);
+        r.Normalize();
+        Vec3 rNorm = r;
+
+        Vec3 uNorm = Vec3::CrossProduct(rNorm, fNorm);
+
+        for (int col = 0; col < 3; ++col) {
+            result.m_MatrixElements[0 + col * 4] =  rNorm[col];
+            result.m_MatrixElements[1 + col * 4] =  uNorm[col];
+            result.m_MatrixElements[2 + col * 4] = -fNorm[col];
+        }
+
+        result.m_MatrixElements[0 + 3 * 4] = -Vec3::DotProduct(rNorm, e);
+        result.m_MatrixElements[1 + 3 * 4] = -Vec3::DotProduct(uNorm, e);
+        result.m_MatrixElements[2 + 3 * 4] =  Vec3::DotProduct(fNorm, e);
+        result.m_MatrixElements[3 + 3 * 4] =  1;
+
+        return result;
+    }
+
+    constexpr Mat4 Mat4::OrthogonalProjection(const Vec3& lightSource, const Vec3& normal, float offset) noexcept {
+        Mat4 result(1.0f);
+
+        Vec4 l = Vec4(lightSource[0], lightSource[1], lightSource[2], 1.0f);
+        Vec4 n = Vec4(normal[0], normal[1], normal[2], offset);
+        float alfa = Vec4::DotProduct(n, l);
+
+        result.m_MatrixElements[0 + 0 * 4] = alfa - n[0] * l[0];
+        result.m_MatrixElements[0 + 1 * 4] =      - n[1] * l[0];
+        result.m_MatrixElements[0 + 2 * 4] =      - n[2] * l[0];
+        result.m_MatrixElements[0 + 3 * 4] =      - n[3] * l[0];
+
+        result.m_MatrixElements[1 + 0 * 4] =      - n[0] * l[1];
+        result.m_MatrixElements[1 + 1 * 4] = alfa - n[1] * l[1];
+        result.m_MatrixElements[1 + 2 * 4] =      - n[2] * l[1];
+        result.m_MatrixElements[1 + 3 * 4] =      - n[3] * l[1];
+
+        result.m_MatrixElements[2 + 0 * 4] =      - n[0] * l[2];
+        result.m_MatrixElements[2 + 1 * 4] =      - n[1] * l[2];
+        result.m_MatrixElements[2 + 2 * 4] = alfa - n[2] * l[2];
+        result.m_MatrixElements[2 + 3 * 4] =      - n[3] * l[2];
+
+        result.m_MatrixElements[3 + 0 * 4] =      - n[0] * l[3];
+        result.m_MatrixElements[3 + 1 * 4] =      - n[1] * l[3];
+        result.m_MatrixElements[3 + 2 * 4] =      - n[2] * l[3];
+        result.m_MatrixElements[3 + 3 * 4] = alfa - n[3] * l[3];
+
+        return result;
+    }
+
+    constexpr Mat4 Mat4::Orthographic(float left, float right, float bottom, float top, float near, float far) noexcept {
         Mat4 result(1.0f);
 
         result.m_MatrixElements[0 + 0 * 4] = 2.0f / (right - left);

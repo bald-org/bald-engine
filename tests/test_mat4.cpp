@@ -100,6 +100,19 @@ TEST(Rotation, Mat4_Rotation) {
     EXPECT_FLOAT_EQ( 1.0f, rotatedVec.GetW());
 }
 
+TEST(OrthogonalProjection, Mat4_OrthogonalProjection) {
+    Bald::Math::Vec3 lightSource(0.0f, 10.0f, 0.0f);
+    Bald::Math::Vec3 normal(0.0f, 1.0f, 0.0f);
+    float offset = 0.0f;
+
+    Bald::Math::Mat4 A = Bald::Math::Mat4::OrthogonalProjection(lightSource, normal, offset);
+
+    Bald::Math::Vec4 outcome = A * Bald::Math::Vec3(5.0f, 5.0f, 0.0f);
+    outcome.Homogenize();
+
+    EXPECT_TRUE(outcome == Bald::Math::Vec4(10.0f, 0.0f, 0.0f, 1.0f));
+}
+
 TEST(Orthographic, Mat4_Orthographic) {
     Bald::Math::Mat4 A = Bald::Math::Mat4::Orthographic(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f);
     float correctOrthographicData[] = {1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f, 0.0f, 0.0f, -1.0f, 0.0f, 0.0f, 0.0f, 0.0f, 1.0f};

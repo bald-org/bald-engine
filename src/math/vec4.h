@@ -42,6 +42,12 @@ namespace Bald::Math {
         constexpr void Normalize() noexcept;
 
         /**
+         * @fn                          Homogenize
+         * @brief                       homogenizes vector (divides all of its components by m_W, so that w = 1.0f or sets m_W = 1.0f)
+         */
+        constexpr void Homogenize() noexcept;
+
+        /**
         * @fn                          MakeReverseVec
         * @brief                       creates reverse vector of a given vector
         * @param [const Vec4&]         vec -> vector which will be used to create reversed vector
@@ -207,6 +213,13 @@ namespace Bald::Math {
                         m_Z /= len;
                         m_W /= len;
                 }
+        }
+
+        constexpr void Vec4::Homogenize() noexcept {
+                if (m_W != 0)
+                    *this *= 1.0f/m_W;
+                else
+                    m_W = 1.0f;
         }
 
         constexpr Vec4 Vec4::MakeReverseVec(const Vec4& vec) noexcept {
