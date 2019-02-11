@@ -3,15 +3,22 @@
 //
 
 #include "events.h"
+#include "pch.h"
 #include <iostream>
 
 using namespace Bald;
 using namespace Events;
 
 int main() {
-    auto on_window_resize_event = new OnWindowResizeEvent();
-    EventManager::bind(on_window_resize_event);
+    EventManager::bind<OnWindowResizeEvent>();
+    EventManager::run();
+
+    EventManager::unbind<OnWindowResizeEvent>();
+    EventManager::run();
+
+    EventManager::bind<OnWindowResizeEvent>();
+    EventManager::flush();
     EventManager::run();
 
     return 0;
-};
+}
