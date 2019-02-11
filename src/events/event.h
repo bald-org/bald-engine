@@ -8,7 +8,7 @@
 namespace Bald::Events {
     class Event {
     public:
-        Event() = default;
+        constexpr Event() = default;
         virtual ~Event() = default;
         virtual void run() noexcept = 0;
     };
