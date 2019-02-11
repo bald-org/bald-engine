@@ -9,7 +9,6 @@
 namespace Bald::Events {
     class OnWindowResizeEvent : public Event {
     public:
-        constexpr OnWindowResizeEvent() = default;
         void run() noexcept override;
     };
 
