@@ -25,7 +25,7 @@ namespace Bald::Graphics {
          * @brief                   constructor for the window
          */
         explicit Window(const char *title = "Window", int width = 800, int height = 600,
-                        bool closed = false)
+                        bool closed = true)
                 : m_Title(title), m_Width(width), m_Height(height), m_Closed(closed) {
             Window::Init();
         }
@@ -34,36 +34,34 @@ namespace Bald::Graphics {
          * @fn                      ~Window
          * @brief                   destructor - terminates the m_Window
          */
-        ~Window() noexcept { glfwTerminate(); }
+        ~Window() noexcept { glfwTerminate(); } /** shouldn't be glfwDestroyWindow() ? */
 
 
         /**
          * @fn                      Update
          * @brief                   updates the window data i.a. poll events & swap buffers
          */
-        constexpr void Update();
+        void Update()noexcept;
 
         /**
          * @fn                      IsClosed
-         * @brief                   updates the window data
-         * @return [int]            true  -> Window is     closed
+         * @brief                   returns the m_Closed component
+         * @return [bool]           true  -> Window is     closed
          *                          false -> Window is NOT closed
          */
-        [[nodiscard]] inline int IsClosed() const noexcept { return glfwWindowShouldClose(m_Window); }
+        [[nodiscard]] inline bool IsClosed() const noexcept { return m_Closed; }
 
         /**
          * @fn                      DestroyWindow
          * @brief                   destroys the Window
          */
-        void DestroyWindow() const noexcept {
-            glfwDestroyWindow(m_Window);
-        }
+        void DestroyWindow() noexcept;
 
         /**
          * @fn                      ClearWindow
-         * @brief                   clears buffer bit (w/e it means tbh xDD)
+         * @brief                   clears buffer bit
          */
-        inline void ClearWindow() const noexcept {glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);}
+        inline void ClearWindow() const noexcept { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 
         /** ========== GETTERS ========== */
@@ -73,33 +71,33 @@ namespace Bald::Graphics {
          * @brief                   returns m_Window component
          * @return [GLFWwindow*]    pointer to the m_Window
          */
-        [[nodiscard]] constexpr inline GLFWwindow *GetWindow() const noexcept { return m_Window; }
+        [[nodiscard]]  inline GLFWwindow *GetWindow() const noexcept { return m_Window; }
 
         /**
          * @fn                      GetTitle
          * @brief                   returns m_Title component
          * @return [const char*]    pointer to the m_Title
          */
-        [[nodiscard]] constexpr inline const char *GetTitle() const noexcept { return m_Title; }
+        [[nodiscard]]  inline const char *GetTitle() const noexcept { return m_Title; }
 
         /**
          * @fn                      GetWidth
          * @brief                   returns the width of the Window
          * @return [int]            m_Width component
          */
-        [[nodiscard]] constexpr inline int GetWidth() const noexcept { return m_Width; }
+        [[nodiscard]]  inline int GetWidth() const noexcept { return m_Width; }
 
         /**
          * @fn                      GetHeight
          * @brief                   returns the height of the Window
          * @return [int]            m_Height component
          */
-        [[nodiscard]] constexpr inline int GetHeight() const noexcept { return m_Height; }
+        [[nodiscard]]  inline int GetHeight() const noexcept { return m_Height; }
 
     private:
         /**
          * @fn                      Init
-         * @brief                   initializes the window
+         * @brief                   attempts to initialize the window and returns success result (true/false)
          * @return [bool]           true  -> Window has been initialized successfully
          *                          false -> Window couldn't have been initialized
          */

@@ -6,7 +6,7 @@
 
 namespace Bald::Graphics {
 
-    constexpr void Window::Update(){
+    void Window::Update() noexcept {
         if (!m_Closed) {
             glfwPollEvents();
             glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
@@ -17,9 +17,18 @@ namespace Bald::Graphics {
 
     bool Window::Init() noexcept {
 
+        if (!m_Closed) {
+            CORE_LOG_WARN("[Window] Window already opened!"); // or CORE_LOG_ERROR ?
+            return false;
+        }
+        /**Not sure about this ^ */
+
         if (!glfwInit()) {
             CORE_LOG_ERROR("[Window] Failed to init a Window!");
             return false;
+
+            /** how about RE-INIT attempt here? */
+
         }
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
@@ -34,5 +43,11 @@ namespace Bald::Graphics {
         glfwMakeContextCurrent(m_Window);
 
         return true;
+    }
+
+    void Window::DestroyWindow() noexcept {
+        m_Closed = true;
+
+        glfwDestroyWindow(m_Window);
     }
 }
