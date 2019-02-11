@@ -8,6 +8,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/graphics)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/src/math)
@@ -37,11 +38,14 @@ add_compile_options(
 add_definitions(-D_LINUX)
 
 add_library(bald_engine
-        library.cpp library.h
+        library.cpp
+        library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
         src/input/input_manager.cpp
-        src/Log.cpp)
+        src/Log.cpp
+        src/graphics/Window.h
+        src/graphics/Window.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
