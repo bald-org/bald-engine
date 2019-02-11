@@ -26,7 +26,7 @@ project(bald_engine)
 
 add_compile_options(
         -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor -Werror
+        -Wnon-virtual-dtor
         -Wold-style-cast -Wcast-align
         -Wunused -Woverloaded-virtual
         -Wpedantic -Wconversion -Wnull-dereference
@@ -34,6 +34,12 @@ add_compile_options(
         -Wduplicated-branches
         -Wlogical-op -fsanitize=leak
 )
+
+if (!APPLE)
+    add_compile_options(
+            -Werror
+    )
+endif()
 
 add_definitions(-D_LINUX)
 
