@@ -9,10 +9,10 @@ namespace Bald::Events {
     class BaseHandler {
     public:
         virtual ~BaseHandler() = default;
-        void exec(Event* e) {
+        void exec(Event* e) noexcept {
             call(e);
         }
     protected:
-        virtual void call(Event* e) = 0;
+        virtual void call(Event* e) const noexcept = 0;
     };
 }

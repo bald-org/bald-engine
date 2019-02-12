@@ -37,7 +37,7 @@ namespace Bald::Events {
         }
 
         template<class T, class EventType>
-        static void subscribe(T* instance, void (T::*handler_function)(EventType*), HandlerType hType = SyncHandler) noexcept {
+        constexpr static void subscribe(T* instance, void (T::*handler_function)(EventType*), HandlerType hType = SyncHandler) noexcept {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
 
             if (handlers == nullptr) {
