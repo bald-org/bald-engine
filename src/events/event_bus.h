@@ -59,7 +59,11 @@ namespace Bald::Events {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
             std::remove_if(handlers->begin(), handlers->end(), [&](BaseHandler* const& h){
                 auto h_casted = static_cast<FunctionHandler<T, EventType>*>(h);
-                return (*h_casted)(instance, handler_function);
+                if ((*h_casted)(instance, handler_function)) {
+                    delete h_casted;
+                    return true;
+                }
+                return false;
             });
         }
     private:
