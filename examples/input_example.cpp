@@ -10,10 +10,6 @@
 using namespace Bald;
 using namespace Input;
 
-void key_pressed_call(){
-    std::cout << "key pressed callback called\n";
-}
-
 void key_typed_call(){
     std::cout << "key typed callback called\n";
 }
@@ -26,11 +22,17 @@ void mouse_button_typed_call(){
     std::cout << "mouse button typed callback called\n";
 }
 
+void key_pressed_call(int i){
+    std::cout << "key pressed callback called " << i << "\n";
+}
+
 int main() {
     glfwInit();
 
     GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
     glfwMakeContextCurrent(window);
+
+
 
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
@@ -39,7 +41,11 @@ int main() {
     InputManager::Init();
     Log::Init();
 
-    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call);
+
+    int i = 0;
+    InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, std::reference_wrapper(i));
+    i++;
+
     InputManager::SetKeyTypedCallback(GLFW_KEY_Q, key_typed_call);
     InputManager::SetMouseButtonPressedCallback(GLFW_MOUSE_BUTTON_3, mouse_button_pressed_call);
     InputManager::SetMouseButtonTypedCallback(GLFW_MOUSE_BUTTON_4, mouse_button_typed_call);
@@ -69,6 +75,14 @@ int main() {
         glfwSwapBuffers(window);
         InputManager::Update();
     }
+
+    auto fun = InputManager::RemoveKeyPressedCallback(GLFW_KEY_A);
+    fun();
+
+    InputManager::EmitKeyPressedEvent(GLFW_KEY_Q);
+    InputManager::EmitKeyTypedEvent(GLFW_KEY_Q);
+    InputManager::EmitMouseButtonPressedEvent(GLFW_MOUSE_BUTTON_3);
+    InputManager::EmitMouseButtonTypedEvent(GLFW_MOUSE_BUTTON_4);
 
     glfwDestroyWindow(window);
     glfwTerminate();

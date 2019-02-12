@@ -5,6 +5,7 @@
 #pragma once
 
 #include "GLFW/glfw3.h"
+#include "pch.h"
 
 #define MAX_KEYS          1024
 #define MAX_MOUSE_BUTTONS 64
@@ -17,7 +18,7 @@
 
 namespace Bald::Input {
 
-    using callback = void (*)();
+    using callback = std::function<void()>;
 
     class InputManager {
 
@@ -96,40 +97,153 @@ namespace Bald::Input {
         inline static void getMousePos(double &xpos, double &ypos) noexcept;
 
         /**
-         * @fn                                               SetKeyPressedCallback
-         * @brief                                            sets function which will be called on key pressed event
-         * @param keycode [int]                              GLFW key id
-         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
+         * @fn                  SetKeyPressedCallback
+         * @brief               sets function which will be called on key pressed event
+         * @param keycode [int] GLFW key id
+         * @param fun           function pointer
+         * @param args          arguments for function
          */
 
-        static void SetKeyPressedCallback(int keycode, callback fun) noexcept;
+        template <class F, class... Args>
+        static void SetKeyPressedCallback(int keycode, F&& fun, Args&&... args) noexcept;
 
         /**
-         * @fn                                               SetKeyTypedCallback
-         * @brief                                            sets function which will be called on key typed event
-         * @param keycode [int]                              GLFW key id
-         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
+         * @fn                             GetKeyPressedCallback
+         * @brief                          getter for function callback
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] callback
          */
 
-        static void SetKeyTypedCallback(int keycode, callback fun) noexcept;
+        static inline callback GetKeyPressedCallback(int keycode) noexcept;
 
         /**
-         * @fn                                               SetMouseButtonPressedCallback
-         * @brief                                            sets function which will be called on mouse button pressed event
-         * @param buttoncode [int]                           GLFW mouse button id
-         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
+         * @fn                             RemoveKeyPressedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
          */
 
-        static void SetMouseButtonPressedCallback(int buttoncode, callback fun) noexcept;
+        static callback RemoveKeyPressedCallback(int keycode) noexcept;
 
         /**
-         * @fn                                               SetMouseButtonTypedCallback
-         * @brief                                            sets function which will be called on mouse button Typed event
-         * @param buttoncode [int]                           GLFW mouse button id
-         * @param fun [void(*)()] or [Bald::Input::callback] void function with no parameter
+         * @fn                  EmitKeyPressedEvent
+         * @brief               simulate Key pressed event
+         * @param keycode [int] GLFW key id
          */
 
-        static void SetMouseButtonTypedCallback(int buttoncode, callback fun) noexcept;
+        static void EmitKeyPressedEvent(int keycode) noexcept;
+
+        /**
+         * @fn                  SetKeyTypedCallback
+         * @brief               sets function which will be called on key typed event
+         * @param keycode [int] GLFW key id
+         * @param fun           function pointers
+         * @param args          arguments for function
+         */
+
+        template<class F, class... Args>
+        static void SetKeyTypedCallback(int keycode, F&& fun, Args&&... args) noexcept;
+
+        /**
+         * @fn                             GetKeyTypedCallback
+         * @brief                          getter for function callback
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] callback
+         */
+
+        static inline callback GetKeyTypedCallback(int keycode) noexcept;
+
+        /**
+         * @fn                             RemoveKeyTypedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveKeyTypedCallback(int keycode) noexcept;
+
+        /**
+         * @fn                  EmitKeyTypedEvent
+         * @brief               simulate Key typed event
+         * @param keycode [int] GLFW key id
+         */
+
+        static void EmitKeyTypedEvent(int keycode) noexcept;
+
+        /**
+         * @fn                     SetMouseButtonPressedCallback
+         * @brief                  sets function which will be called on mouse button pressed event
+         * @param buttoncode [int] GLFW mouse button id
+         * @param fun              function pointer
+         * @param args             arguments for function
+         */
+
+        template<class F, class... Args>
+        static void SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&&... args) noexcept;
+
+        /**
+         * @fn                             GetMouseButtonPressedCallback
+         * @brief                          getter for function callback
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] callback
+         */
+
+        static inline callback GetMouseButtonPressedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                             RemoveMouseButtonPressedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveMouseButtonPressedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                  EmitMouseButtonPressedEvent
+         * @brief               simulate Mouse Button Pressed event
+         * @param keycode [int] GLFW key id
+         */
+
+        static void EmitMouseButtonPressedEvent(int buttoncode) noexcept;
+
+        /**
+         * @fn                     SetMouseButtonTypedCallback
+         * @brief                  sets function which will be called on mouse button Typed event
+         * @param buttoncode [int] GLFW mouse button id
+         * @param fun              function pointer
+         * @param args             arguments for function
+         */
+
+        template<class F, class... Args>
+        static void SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&&... args) noexcept;
+
+        /**
+         * @fn                             GetMouseButtonTypedCallback
+         * @brief                          getter for function callback
+         * @param keycode [int]            GLFw key id
+         * @return [std::function<void()>] callback
+         */
+
+        static inline callback GetMouseButtonTypedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                             RemoveMouseButtonTypedCallback
+         * @brief                          removes all previously set callbacks
+         * @param keycode [int]            GLFW key id
+         * @return [std::function<void()>] previously set callbacks
+         */
+
+        static callback RemoveMouseButtonTypedCallback(int buttoncode) noexcept;
+
+        /**
+         * @fn                     EmitMouseButtonTypedEvent
+         * @brief                  simulate Mouse Button Typed event
+         * @param buttoncode [int] GLFW key id
+         */
+
+        static void EmitMouseButtonTypedEvent(int buttoncode) noexcept;
+
 
     private:
 
@@ -177,14 +291,77 @@ namespace Bald::Input {
         Bald::Input::InputManager::m_Keys[key] = action != GLFW_RELEASE;
     }
 
-    inline void
-    mouse_button_callback([[maybe_unused]] GLFWwindow *window, int button, int action, [[maybe_unused]] int mods) {
+    inline void mouse_button_callback([[maybe_unused]] GLFWwindow *window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[button] = action != GLFW_RELEASE;
     }
 
     inline void cursor_position_callback([[maybe_unused]]GLFWwindow *window, double xpos, double ypos) {
         Bald::Input::InputManager::m_MouseX = xpos;
         Bald::Input::InputManager::m_MouseY = ypos;
+    }
+
+    template<class F, class... Args>
+    void InputManager::SetKeyPressedCallback(int keycode, F&& fun, Args&&... args) noexcept {
+        if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else{
+            auto prevfun = m_KeyPressedCallbacks[keycode];
+            m_KeyPressedCallbacks[keycode] = [prevfun, fun, args...](){
+                prevfun();
+                fun(args...);
+            };
+        }
+    }
+
+    callback InputManager::GetKeyPressedCallback(int keycode) noexcept{
+        return m_KeyPressedCallbacks[keycode];
+    }
+
+    template<class F, class... Args>
+    void InputManager::SetKeyTypedCallback(int keycode, F&& fun, Args&&... args) noexcept{
+        if (keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        else{
+            auto prevfun = m_KeyTypedCallbacks[keycode];
+            m_KeyTypedCallbacks[keycode] = [prevfun, fun, args...](){
+                prevfun();
+                fun(args...);
+            };
+        }
+    }
+
+    callback InputManager::GetKeyTypedCallback(int keycode) noexcept{
+        return m_KeyTypedCallbacks[keycode];
+    }
+
+    template<class F, class... Args>
+    void InputManager::SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&&... args) noexcept{
+        if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        else{
+            auto prevfun = m_MouseButtonPressedCallbacks[buttoncode];
+            m_MouseButtonPressedCallbacks[buttoncode] = [prevfun, fun, args...](){
+                prevfun();
+                fun(args...);
+            };
+        }
+    }
+
+    callback InputManager::GetMouseButtonPressedCallback(int buttoncode) noexcept{
+        return m_MouseButtonPressedCallbacks[buttoncode];
+    }
+
+    template<class F, class... Args>
+    void InputManager::SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&&... args) noexcept{
+        if (buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        else{
+            auto prevfun = m_MouseButtonTypedCallbacks[buttoncode];
+            m_MouseButtonTypedCallbacks[buttoncode] = [prevfun, fun, args...](){
+                prevfun();
+                fun(args...);
+            };
+        }
+    }
+
+    callback InputManager::GetMouseButtonTypedCallback(int buttoncode) noexcept{
+        return m_MouseButtonTypedCallbacks[buttoncode];
     }
 
 }
