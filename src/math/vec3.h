@@ -7,6 +7,11 @@
 #include <iostream>
 #include "pch.h"
 
+/**
+ * @class Vec3
+ * @brief vector 3 class
+ */
+
 namespace Bald::Math {
     class Vec3 {
     public:
@@ -149,7 +154,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        constexpr bool operator==(const Vec3& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec3& other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -158,7 +163,15 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        constexpr bool operator!=(const Vec3& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec3& other) const noexcept;
+
+        /**
+         * @fn                          operator[]
+         * @brief                       returns number in vector at certain index
+         * @param [int]                 index -> index of a number which you want to retrieve
+         * @return [const float&]       float at given index
+         */
+        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -195,15 +208,6 @@ namespace Bald::Math {
         float m_Y;
         float m_Z;
     }; // END OF CLASS VEC3
-
-
-        Vec3 Vec3::MakeUnitVec(const Vec3& vec) noexcept {
-                float len = vec.Length();
-                if(len != 0)
-                    return Vec3(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len);
-                CORE_LOG_WARN("[Vec3] Cannot make unit vector from zero vector!");
-                return Vec3(0.0f, 0.0f, 0.0f);
-        }
 
         constexpr void Vec3::Normalize() noexcept {
                 float len = Length();
@@ -290,9 +294,18 @@ namespace Bald::Math {
                 return !(*this == other);
         }
 
-        std::ostream& operator<<(std::ostream& out, const Vec3& vec) noexcept {
-                out << "[" << vec.m_X << ", " << vec.m_Y << ", " << vec.m_Z << "]\n";
-                return out;
+        constexpr const float& Vec3::operator[](int index) const noexcept {
+            switch(index) {
+                case 0:
+                    return m_X;
+                case 1:
+                    return m_Y;
+                case 2:
+                    return m_Z;
+                default:
+                    assert(false);
+                    break;
+            }
         }
 
 } // END OF NAMESPACE Bald::Math

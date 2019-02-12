@@ -7,6 +7,11 @@
 #include <iostream>
 #include "pch.h"
 
+/**
+ * @class Vec2
+ * @brief vector 2 class
+ */
+
 namespace Bald::Math {
 
     class Vec2 {
@@ -132,7 +137,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        constexpr bool operator==(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec2& other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -141,7 +146,15 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        constexpr bool operator!=(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec2& other) const noexcept;
+
+        /**
+         * @fn                          operator[]
+         * @brief                       returns number in vector at certain index
+         * @param [int]                 index -> index of a number which you want to retrieve
+         * @return [const float&]       float at given index
+         */
+        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -170,14 +183,6 @@ namespace Bald::Math {
         float m_X;
         float m_Y;
     }; // END OF CLASS Vec2
-
-        Vec2 Vec2::MakeUnitVec(const Vec2& vec) noexcept {
-                float len = vec.Length();
-                if(len != 0)
-                    return Vec2(vec.GetX() / len, vec.GetY() / len);
-                CORE_LOG_WARN("[Vec2] Cannot make unit vector from zero vector!");
-                return Vec2(0.0f, 0.0f);
-        }
 
         constexpr void Vec2::Normalize() noexcept {
                 float len = Length();
@@ -248,9 +253,16 @@ namespace Bald::Math {
                 return !(*this == other);
         }
 
-        std::ostream& operator<<(std::ostream& out, const Vec2& vec) noexcept {
-                out << "[" << vec.m_X << ", " << vec.m_Y << "]\n";
-                return out;
+        constexpr const float& Vec2::operator[](int index) const noexcept {
+            switch(index) {
+                case 0:
+                    return m_X;
+                case 1:
+                    return m_Y;
+                default:
+                    assert(false);
+                    break;
+            }
         }
 
 }
