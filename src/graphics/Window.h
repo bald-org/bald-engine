@@ -4,7 +4,8 @@
 
 #pragma once
 
-class GLFWwindow;
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace Bald::Graphics {
 
@@ -18,15 +19,13 @@ namespace Bald::Graphics {
 
         /**
          * @fn                      Window
-         * @param [GLFWWindow*]     glfwwindow - a pointer to m_Window
          * @param [const char*]     title
          * @param [int]             width
          * @param [int]             height
          * @param [bool]            vsync
          * @brief                   constructor for the window
          */
-        explicit Window(GLFWwindow* glfwwindow = nullptr,
-                        const char* title = "Window",
+        explicit Window(const char* title = "Window",
                         int width = 800,
                         int height = 600,
                         bool VSync = false);
@@ -122,11 +121,11 @@ namespace Bald::Graphics {
          */
         bool Init() noexcept;
 
-        /**
-         * @fn                      Shutdown
-         * @brief                   destroys the window
-         */
-        void Shutdown();
+//        /**
+//         * @fn                      Shutdown
+//         * @brief                   destroys the window
+//         */
+//        void Shutdown();
 
         // START OF ATTRIBUTES
 

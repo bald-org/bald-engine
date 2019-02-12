@@ -4,13 +4,11 @@
 
 #include "Window.h"
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
+
 
 namespace Bald::Graphics {
 
-    Window::Window(GLFWwindow *glfwwindow, const char *title, int width, int height, bool VSync) :
-            m_Window(glfwwindow),
+    Window::Window(const char* title, int width, int height, bool VSync) :
             m_Title(title),
             m_Width(width),
             m_Height(height),
@@ -19,7 +17,8 @@ namespace Bald::Graphics {
     }
 
     Window::~Window() noexcept {
-        Shutdown();
+        glfwDestroyWindow(m_Window);
+        /** Shutdown(); */
     }
 
     void Window::Update() noexcept {
@@ -44,7 +43,10 @@ namespace Bald::Graphics {
 
     bool Window::Init() noexcept {
 
+        glfwInit();
 
+        m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
+        glfwMakeContextCurrent(m_Window);
         if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
             CORE_LOG_ERROR("[Window] Failed to load GLAD!");
             exit(1);
@@ -55,15 +57,12 @@ namespace Bald::Graphics {
             exit(1);
         }
 
-        m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
 
         if (!m_Window) {
             glfwTerminate();
             CORE_LOG_ERROR("[Window] Failed to create a Window!");
             return false;
         }
-
-        glfwMakeContextCurrent(m_Window);
 
 
         return true;
@@ -72,9 +71,11 @@ namespace Bald::Graphics {
     void Window::Clear() const noexcept { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 
-    void Window::Shutdown() {
-        glfwDestroyWindow(m_Window);
-    }
+    /**
+     * void Window::Shutdown() {glfwDestroyWindow(m_Window);}
+     *
+     * not needed atm
+     */
 
 
     int Window::ShouldClose() const noexcept {
