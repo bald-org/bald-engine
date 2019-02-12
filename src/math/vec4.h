@@ -7,6 +7,11 @@
 #include <iostream>
 #include "pch.h"
 
+/**
+ * @class Vec4
+ * @brief vector 4 class
+ */
+
 namespace Bald::Math {
     class Vec4 {
     public:
@@ -35,6 +40,12 @@ namespace Bald::Math {
          *                              (divides each component by the length of the vector)
          */
         constexpr void Normalize() noexcept;
+
+        /**
+         * @fn                          Homogenize
+         * @brief                       homogenizes vector (divides all of its components by m_W, so that w = 1.0f or sets m_W = 1.0f)
+         */
+        constexpr void Homogenize() noexcept;
 
         /**
         * @fn                          MakeReverseVec
@@ -132,7 +143,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        constexpr bool operator==(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec4& other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -141,7 +152,15 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        constexpr bool operator!=(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec4& other) const noexcept;
+
+        /**
+         * @fn                          operator[]
+         * @brief                       returns number in vector at certain index
+         * @param [int]                 index -> index of a number which you want to retrieve
+         * @return [const float&]       float at given index
+         */
+        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -150,7 +169,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         vector object to be printed
          * @return [std::ostream&]      stream
          */
-        [[nodiscard]] friend std::ostream &operator<<(std::ostream& out, const Vec4& vec) noexcept;
+        [[nodiscard]] friend std::ostream& operator<<(std::ostream& out, const Vec4& vec) noexcept;
 
         /**
          * @fn                          GetX
@@ -186,14 +205,6 @@ namespace Bald::Math {
         float m_W;
     }; // END OF CLASS Vec4
 
-        Vec4 Vec4::MakeUnitVec(const Vec4& vec) noexcept {
-                float len = vec.Length();
-                if(len != 0)
-                    return Vec4(vec.GetX() / len, vec.GetY() / len, vec.GetZ() / len, vec.GetW() / len);
-                CORE_LOG_WARN("[Vec4] Cannot make unit vector from zero vector!");
-                return Vec4(0.0f, 0.0f, 0.0f, 0.0f);
-        }
-
         constexpr void Vec4::Normalize() noexcept {
                 float len = Length();
                 if (len != 0) {
@@ -202,6 +213,13 @@ namespace Bald::Math {
                         m_Z /= len;
                         m_W /= len;
                 }
+        }
+
+        constexpr void Vec4::Homogenize() noexcept {
+                if (m_W != 0)
+                    *this *= 1.0f/m_W;
+                else
+                    m_W = 1.0f;
         }
 
         constexpr Vec4 Vec4::MakeReverseVec(const Vec4& vec) noexcept {
@@ -273,9 +291,19 @@ namespace Bald::Math {
                 return !(*this == other);
         }
 
-        std::ostream& operator<<(std::ostream& out, const Vec4& vec) noexcept {
-                out << "[" << vec.m_X << ", " << vec.m_Y << ", " << vec.m_Z << ", " << vec.m_W << "]\n";
-                return out;
+        constexpr const float& Vec4::operator[](int index) const noexcept {
+                switch(index) {
+                    case 0:
+                        return m_X;
+                    case 1:
+                        return m_Y;
+                    case 2:
+                        return m_Z;
+                    case 3:
+                        return m_W;
+                    default:
+                        assert(false);
+                        break;
+                }
         }
-
 } // END OF NAMESPACE Bald::Math
