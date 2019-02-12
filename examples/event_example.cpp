@@ -9,16 +9,31 @@
 using namespace Bald;
 using namespace Events;
 
+class Resizer {
+public:
+    void init() {
+        EventBus::subscribe(this, &Resizer::onWindowResizeEvent, SyncHandler);
+    }
+
+    void deinit() {
+        EventBus::unsubscribe(this, &Resizer::onWindowResizeEvent);
+    }
+
+    void onWindowResizeEvent(WindowResizeEvent* wre) {
+        std::cout << wre->x << " " << wre->y << std::endl;
+    }
+};
+
+
 int main() {
-    EventManager::bind<OnWindowResizeEvent>();
-    EventManager::run();
+    auto r = new Resizer();
+    r->init();
 
-    EventManager::unbind<OnWindowResizeEvent>();
-    EventManager::run();
+    EventBus::emit(new WindowResizeEvent(800, 600));
 
-    EventManager::bind<OnWindowResizeEvent>();
-    EventManager::flush();
-    EventManager::run();
+    r->deinit();
+
+    EventBus::emit(new WindowResizeEvent(400, 200));
 
     return 0;
 }

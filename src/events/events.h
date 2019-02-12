@@ -3,8 +3,11 @@
 //
 
 #pragma once
+#include "base_handler.h"
 #include "event.h"
 #include "event_bus.h"
-#include "base_handler.h"
+#include "function_handler.h"
 #include "member_async_handler.h"
 #include "member_handler.h"
+
+#include "window_resize_event.h"
