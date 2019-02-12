@@ -45,6 +45,7 @@ namespace Bald::Graphics {
 
     bool Window::Init() noexcept {
 
+
         if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
             CORE_LOG_ERROR("[Window] Failed to load GLAD!");
             exit(1);
@@ -54,7 +55,6 @@ namespace Bald::Graphics {
             CORE_LOG_ERROR("[Window] Failed to init GLFW!");
             exit(1);
         }
-
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
 

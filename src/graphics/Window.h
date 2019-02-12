@@ -18,10 +18,10 @@ namespace Bald::Graphics {
 
         /**
          * @fn                      Window
-         * @param [std::string]     title
+         * @param [GLFWWindow*]     glfwwindow - a pointer to m_Window
+         * @param [const char*]     title
          * @param [int]             width
          * @param [int]             height
-         * @param [bool             closed - is window closed
          * @param [bool]            vsync
          * @brief                   constructor for the window
          */
