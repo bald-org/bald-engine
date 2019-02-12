@@ -17,9 +17,10 @@ namespace Bald::Events {
         MemberAsyncHandler(T* instance, HandlerFunction handler_function): FunctionHandler<T, EventType>(instance, handler_function) {};
     private:
         void call(Event* e) noexcept override {
-            // TODO: Isn't it working sync cuz of .get() ?
-            //auto handle = std::async(std::launch::async, FunctionHandler<T, EventType>::m_instance->*FunctionHandler<T, EventType>::m_handler_function, static_cast<EventType*>(e));
-            //handle.get();
+            auto handle = std::async([&](EventType* params) {
+                (FunctionHandler<T, EventType>::m_instance->*FunctionHandler<T, EventType>::m_handler_function)(params);
+            }, static_cast<EventType*>(e));
+            handle.get();
         }
     };
 }
