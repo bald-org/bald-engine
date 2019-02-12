@@ -152,54 +152,6 @@ namespace Bald::Math {
         [[nodiscard]] constexpr static Mat4 Perspective(float fov, float aspectRatio, float near, float far) noexcept;
 
         /**
-        * @fn                   Add
-        * @brief                adds two matrices
-        * @param [const Mat4&]  other -> matrix which we add to our current matrix
-        * @return [Mat4]        sum of two matrices
-        */
-        [[nodiscard]] constexpr Mat4 Add(const Mat4& other) const noexcept;
-
-        /**
-        * @fn                   Subtract
-        * @brief                subtracts two matrices
-        * @param [const Mat4&]  other -> matrix which we subtract to our current matrix
-        * @return [Mat4]        difference of two matrices
-        */
-        [[nodiscard]] constexpr Mat4 Subtract(const Mat4& other) const noexcept;
-
-        /**
-        * @fn                   Multiply
-        * @brief                multiplies matrix by a scalar
-        * @param [float]  scalar -> number by which the matrix will be multiplied
-        * @return [Mat4]        product of scalar and matrix
-        */
-        [[nodiscard]] constexpr Mat4 Multiply(float scalar) const noexcept;
-
-        /**
-        * @fn                   Multiply
-        * @brief                multiplies two matrices
-        * @param [const Mat4&]  other -> matrix by which we multiply our current matrix
-        * @return [Mat4]        product of two matrices
-        */
-        [[nodiscard]] constexpr Mat4 Multiply(const Mat4& other) const noexcept;
-
-        /**
-        * @fn                   Multiply
-        * @brief                multiplies matrix by vector
-        * @param [const Vec4&]  other -> vector by which we multiply the matrix
-        * @return [Vec4]        product of matrix and vector
-        */
-        [[nodiscard]] constexpr Vec4 Multiply(const Vec4& other) const noexcept;
-
-        /**
-        * @fn                   Multiply
-        * @brief                multiplies matrix by vector
-        * @param [const Vec3&]  other -> vector by which we multiply the matrix
-        * @return [Vec4]        product of matrix and vector
-        */
-        [[nodiscard]] constexpr Vec4 Multiply(const Vec3& other) const noexcept;
-
-        /**
         * @fn                   operator+
         * @brief                adds two matrices
         * @param [const Mat4&]  other -> matrix which we add to our current matrix
@@ -520,7 +472,7 @@ namespace Bald::Math {
         return result;
     }
 
-    constexpr Mat4 Mat4::Add(const Mat4& other) const noexcept {
+    constexpr Mat4 Mat4::operator+(const Mat4& other) const noexcept {
         float newElements[16] = {};
         for (int i = 0; i < 16; ++i) {
             newElements[i] = m_MatrixElements[i] + other.m_MatrixElements[i];
@@ -528,10 +480,11 @@ namespace Bald::Math {
         return Mat4(newElements);
     }
 
-    constexpr Mat4 Mat4::Subtract(const Mat4& other) const noexcept {
-        return *this + other.Multiply(-1.0f);
+    constexpr Mat4 Mat4::operator-(const Mat4& other) const noexcept {
+        return *this + (-1.0f) * other;
     }
-    constexpr Mat4 Mat4::Multiply(float scalar) const noexcept {
+
+    constexpr Mat4 Mat4::operator*(float scalar) const noexcept {
         Mat4 result = *this;
 
         for (int i = 0; i < 16; ++i)
@@ -540,7 +493,7 @@ namespace Bald::Math {
         return result;
     }
 
-    constexpr Mat4 Mat4::Multiply(const Mat4& other) const noexcept {
+    constexpr Mat4 Mat4::operator*(const Mat4& other) const noexcept {
         Mat4 result;
 
         for (int row = 0; row < 4; ++row)
@@ -553,7 +506,7 @@ namespace Bald::Math {
         return result;
     }
 
-    constexpr Vec4 Mat4::Multiply(const Vec4& other) const noexcept {
+    constexpr Vec4 Mat4::operator*(const Vec4& other) const noexcept {
         float temp_x = other.GetX();
         float temp_y = other.GetY();
         float temp_z = other.GetZ();
@@ -566,32 +519,8 @@ namespace Bald::Math {
         return Vec4(x, y, z, w);
     }
 
-    constexpr Vec4 Mat4::Multiply(const Vec3& other) const noexcept {
-        return Multiply(Vec4(other.GetX(), other.GetY(), other.GetZ(), 1.0f));
-    }
-
-    constexpr Mat4 Mat4::operator+(const Mat4& other) const noexcept {
-        return this->Add(other);
-    }
-
-    constexpr Mat4 Mat4::operator-(const Mat4& other) const noexcept {
-        return this->Subtract(other);
-    }
-
-    constexpr Mat4 Mat4::operator*(float scalar) const noexcept {
-        return this->Multiply(scalar);
-    }
-
-    constexpr Mat4 Mat4::operator*(const Mat4& other) const noexcept {
-        return this->Multiply(other);
-    }
-
-    constexpr Vec4 Mat4::operator*(const Vec4& other) const noexcept {
-        return this->Multiply(other);
-    }
-
     constexpr Vec4 Mat4::operator*(const Vec3& other) const noexcept {
-        return this->Multiply(other);
+        return *this * Vec4(other.GetX(), other.GetY(), other.GetZ(), 1.0f);
     }
 
     constexpr bool Mat4::operator==(const Mat4& other) const noexcept {
@@ -614,15 +543,15 @@ namespace Bald::Math {
     }
 
     constexpr Mat4& Mat4::operator*=(float scalar) noexcept {
-        return *this = this->Multiply(scalar);
+        return *this = *this * scalar;
     }
 
     constexpr Mat4& Mat4::operator*=(const Mat4& other) noexcept {
-        return *this = this->Multiply(other);
+        return *this = *this * other;
     }
 
     constexpr Mat4 operator*(float scalar, const Mat4& other) noexcept {
-        return other.Multiply(scalar);
+        return other * scalar;
     }
 
     constexpr const Vec4& Mat4::operator[](int index) const noexcept {

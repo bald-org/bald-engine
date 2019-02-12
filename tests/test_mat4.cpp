@@ -133,7 +133,7 @@ TEST(Addition, Mat4_Add) {
     Bald::Math::Mat4 A(2.0f);
     Bald::Math::Mat4 B(3.0f);
 
-    Bald::Math::Mat4 C = A.Add(B);
+    Bald::Math::Mat4 C = A + B;
 
     EXPECT_EQ(Bald::Math::Mat4(5.0f), C);
 }
@@ -142,7 +142,7 @@ TEST(Subtraction, Mat4_Subtract) {
     Bald::Math::Mat4 A(2.0f);
     Bald::Math::Mat4 B(3.0f);
 
-    Bald::Math::Mat4 C = A.Subtract(B);
+    Bald::Math::Mat4 C = A - B;
 
     EXPECT_EQ(Bald::Math::Mat4(-1.0f), C);
 }
@@ -151,7 +151,7 @@ TEST(Multiplication, Mat4_MultiplyByScalar) {
     float dataA[] = {1.0f, 3.0f, 0.0f, 10.0f, 6.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
     float scalar = 5.0f;
     Bald::Math::Mat4 A(dataA);
-    A = A.Multiply(scalar);
+    A = A * scalar;
 
     float dataB[] = {5.0f, 15.0f, 0.0f, 50.0f, 30.0f, 5.0f, 0.0f, 10.0f, 0.0f, 0.0f, 15.0f, 0.0f, 0.0f, 5.0f, 0.0f, 0.0f};
     Bald::Math::Mat4 B(dataB);
@@ -168,7 +168,7 @@ TEST(Multiplication, Mat4_MultiplyByMatrix) {
 
     Bald::Math::Mat4 C(dataC);
 
-    EXPECT_EQ(C, A.Multiply(B));
+    EXPECT_EQ(C, A * B);
 }
 
 TEST(Multiplication, Mat4_MultiplyByVec4) {
@@ -177,7 +177,7 @@ TEST(Multiplication, Mat4_MultiplyByVec4) {
     Bald::Math::Vec4 vec(2.0f, 1.0f, 3.0f, 4.0f);
 
 
-    EXPECT_EQ(Bald::Math::Vec4(2.0f, 11.0f, 9.0f, 2.0f), A.Multiply(vec));
+    EXPECT_EQ(Bald::Math::Vec4(2.0f, 11.0f, 9.0f, 2.0f), A * vec);
 }
 
 TEST(Multiplication, Mat4_MultiplyByVec3) {
@@ -186,37 +186,7 @@ TEST(Multiplication, Mat4_MultiplyByVec3) {
     Bald::Math::Vec3 vec(2.0f, 1.0f, 3.0f);
 
 
-    EXPECT_EQ(Bald::Math::Vec4(2.0f, 8.0f, 9.0f, 2.0f), A.Multiply(vec));
-}
-
-TEST(Operator, Mat4_AddOperator) {
-    Bald::Math::Mat4 A(2.0f);
-    Bald::Math::Mat4 B(3.0f);
-
-    Bald::Math::Mat4 C = A + B;
-
-    EXPECT_EQ(Bald::Math::Mat4(5.0f), C);
-}
-
-TEST(Operator, Mat4_SubtractOperator) {
-    Bald::Math::Mat4 A(2.0f);
-    Bald::Math::Mat4 B(3.0f);
-
-    Bald::Math::Mat4 C = A - B;
-
-    EXPECT_EQ(Bald::Math::Mat4(-1.0f), C);
-}
-
-TEST(Operator, Mat4_MultiplyOperator) {
-    float dataA[] = {1.0f, 3.0f, 0.0f, 0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f};
-    float dataB[] = {0.0f, 0.0f, 1.0f, 0.0f, 2.0f, 0.0f, 1.0f, 0.0f, 0.0f, 3.0f, 0.0f, 0.0f, 0.0f, 0.0f, 0.0f, 9.0f};
-    float dataC[] = {0.0f, 0.0f, 3.0f, 0.0f, 2.0f, 6.0f, 3.0f, 0.0f, 0.0f, 3.0f, 0.0f, 6.0f, 0.0f, 9.0f, 0.0f, 0.0f};
-    Bald::Math::Mat4 A(dataA);
-    Bald::Math::Mat4 B(dataB);
-
-    Bald::Math::Mat4 C(dataC);
-
-    EXPECT_EQ(C, A * B);
+    EXPECT_EQ(Bald::Math::Vec4(2.0f, 8.0f, 9.0f, 2.0f), A * vec);
 }
 
 TEST(Operator, Mat4_BoolOperatorTrue) {
