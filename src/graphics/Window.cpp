@@ -9,13 +9,12 @@
 
 namespace Bald::Graphics {
 
-    Window::Window(GLFWwindow* glfwwindow, const char* title, int width, int height, bool VSync):
-        m_Window(glfwwindow),
-        m_Title(title),
-        m_Width(width),
-        m_Height(height),
-        m_VSync(VSync)
-    {
+    Window::Window(GLFWwindow *glfwwindow, const char *title, int width, int height, bool VSync) :
+            m_Window(glfwwindow),
+            m_Title(title),
+            m_Width(width),
+            m_Height(height),
+            m_VSync(VSync) {
         Window::Init();
     }
 
