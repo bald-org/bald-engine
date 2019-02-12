@@ -11,8 +11,8 @@ namespace Bald::Events {
     class MemberHandler : public FunctionHandler<T, EventType> {
     public:
         typedef void (T::*HandlerFunction)(EventType*);
-        MemberHandler(T* instance, HandlerFunction handler_function): FunctionHandler<T, EventType>(instance, handler_function) {};
 
+        MemberHandler(T* instance, HandlerFunction handler_function): FunctionHandler<T, EventType>(instance, handler_function) {};
     private:
         void call(Event* e) noexcept override {
             (FunctionHandler<T, EventType>::m_instance->*FunctionHandler<T, EventType>::m_handler_function)(static_cast<EventType*>(e));

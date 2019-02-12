@@ -13,6 +13,7 @@ namespace Bald::Events {
     class MemberAsyncHandler : public FunctionHandler<T, EventType> {
     public:
         typedef void (T::*HandlerFunction)(EventType*);
+
         MemberAsyncHandler(T* instance, HandlerFunction handler_function): FunctionHandler<T, EventType>(instance, handler_function) {};
     private:
         void call(Event* e) noexcept override {
