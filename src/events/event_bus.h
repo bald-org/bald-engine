@@ -55,16 +55,19 @@ namespace Bald::Events {
         }
 
         template<class T, class EventType>
-        constexpr static void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
+        static void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
-            std::remove_if(handlers->begin(), handlers->end(), [&](BaseHandler* const& h){
-                auto h_casted = static_cast<FunctionHandler<T, EventType>*>(h);
+
+            for (auto h = handlers->begin(), e = handlers->end(); h != e; )
+            {
+                auto h_casted = static_cast<FunctionHandler<T, EventType>*>(*h);
                 if ((*h_casted)(instance, handler_function)) {
                     delete h_casted;
-                    return true;
+                    h = handlers->erase(h);
                 }
-                return false;
-            });
+                else
+                    ++h;
+            }
         }
     private:
         static std::unordered_map<std::type_index, HandlersList*> m_subscribers;
