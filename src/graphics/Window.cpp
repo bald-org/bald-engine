@@ -3,25 +3,35 @@
 //
 
 #include "Window.h"
+
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 namespace Bald::Graphics {
 
-
-    Window::Window(const char *title, int width, int height, bool closed, bool VSync)
-            : m_Title(title), m_Width(width), m_Height(height), m_Closed(closed), m_VSync(VSync) {
+    Window::Window(GLFWwindow* glfwwindow, const char* title, int width, int height, bool VSync):
+        m_Window(glfwwindow),
+        m_Title(title),
+        m_Width(width),
+        m_Height(height),
+        m_VSync(VSync)
+    {
         Window::Init();
     }
 
-    void Window::Update() noexcept {
-        if (!m_Closed) {
-            glfwPollEvents();
-            glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
-            glViewport(0, 0, m_Width, m_Height);
-            glfwSwapBuffers(m_Window);
-        }
+    Window::~Window() noexcept {
+        Shutdown();
     }
+
+    void Window::Update() noexcept {
+        glfwPollEvents();
+        glfwSwapBuffers(m_Window);
+    }
+
+    /** TODO: Callbacks
+     * glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
+     * glViewport(0, 0, m_Width, m_Height);
+     */
 
     void Window::WindowSetVSync(bool enabled) noexcept {
         if (enabled)
@@ -46,7 +56,7 @@ namespace Bald::Graphics {
         }
 
 
-        m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, NULL, NULL);
+        m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
 
         if (!m_Window) {
             glfwTerminate();
@@ -54,23 +64,19 @@ namespace Bald::Graphics {
             return false;
         }
 
-        m_Closed = false;
         glfwMakeContextCurrent(m_Window);
 
 
         return true;
     }
 
-    void Window::ClearWindow() const noexcept { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+    void Window::Clear() const noexcept { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
 
 
-    void Window::Shutdown() { glfwDestroyWindow(m_Window); }
-
-
-    void Window::DestroyWindow() noexcept {
-        m_Closed = true;
+    void Window::Shutdown() {
         glfwDestroyWindow(m_Window);
     }
+
 
     int Window::ShouldClose() const noexcept {
         return glfwWindowShouldClose(m_Window);

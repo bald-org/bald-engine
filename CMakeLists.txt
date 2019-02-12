@@ -44,7 +44,6 @@ add_library(bald_engine
         src/utils/split_string.cpp
         src/input/input_manager.cpp
         src/Log.cpp
-        src/graphics/Window.h
         src/graphics/Window.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
