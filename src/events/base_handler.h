@@ -5,14 +5,18 @@
 #pragma once
 #include "event.h"
 
-namespace Bald::Events {
+namespace Bald::Events {;
+    template<class T, class EventType>
     class BaseHandler {
     public:
+        typedef void (T::*HandlerFunction)(EventType*);
+        BaseHandler(T* instance, HandlerFunction handler_function): m_instance(instance), m_handler_function(handler_function) {};
         void exec(Event* e) {
             call(e);
         }
-        virtual bool operator ==(const BaseHandler* &h) const noexcept = 0;
-    private:
+    protected:
+        T* m_instance;
+        HandlerFunction m_handler_function;
         virtual void call(Event* e) = 0;
     };
 }

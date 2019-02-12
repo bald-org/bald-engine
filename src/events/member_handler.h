@@ -8,20 +8,14 @@
 
 namespace Bald::Events {
     template<class T, class EventType>
-    class MemberHandler : public BaseHandler {
+    class MemberHandler : public BaseHandler<T, EventType> {
     public:
         typedef void (T::*HandlerFunction)(EventType*);
-        MemberHandler(T* instance, HandlerFunction handler_function): m_instance(instance), m_handler_function(handler_function) {};
+        MemberHandler(T* instance, HandlerFunction handler_function): BaseHandler<T, EventType>(instance, handler_function) {};
 
-        void call(Event* e) noexcept override {
-            (m_instance->*m_handler_function)(static_cast<EventType*>(e));
-        }
-
-        constexpr bool operator ()(T* other_instance, HandlerFunction other_handler_function) const noexcept {
-            return m_instance == other_instance && m_handler_function == other_handler_function;
-        }
     private:
-        T* m_instance;
-        HandlerFunction m_handler_function;
+        void call(Event* e) noexcept override {
+            (BaseHandler<T, EventType>::m_instance->*BaseHandler<T, EventType>::m_handler_function)(static_cast<EventType*>(e));
+        }
     };
 }
