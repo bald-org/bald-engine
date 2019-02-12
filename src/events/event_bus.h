@@ -8,6 +8,7 @@
 
 #include "pch.h"
 #include "base_handler.h"
+#include "function_handler.h"
 #include "member_handler.h"
 #include "member_async_handler.h"
 
@@ -15,10 +16,15 @@
 namespace Bald::Events {
     typedef std::list<BaseHandler*> HandlersList;
 
+    enum HandlerType {
+        SyncHandler = 0,
+        AsyncHandler = 1
+    };
+
     class EventBus {
     public:
         template<typename EventType>
-        void emit(EventType* e) noexcept {
+        static void emit(EventType* e) noexcept {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
 
             if (handlers == nullptr) return;
@@ -30,8 +36,8 @@ namespace Bald::Events {
             }
         }
 
-        template<class T, class EventType, typename HandlerType>
-        constexpr void subscribe(T* instance, void (T::*handler_function)(EventType*)) noexcept {
+        template<class T, class EventType>
+        static void subscribe(T* instance, void (T::*handler_function)(EventType*), HandlerType hType = SyncHandler) noexcept {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
 
             if (handlers == nullptr) {
@@ -39,21 +45,26 @@ namespace Bald::Events {
                 m_subscribers[typeid(EventType)] = handlers;
             }
 
-            // TODO: This may be sooo bad :<
-            auto new_handler = new HandlerType(instance, handler_function);
-
-            handlers->push_back(new_handler);
+            if (hType == SyncHandler) {
+                handlers->push_back(new MemberHandler<T, EventType>(instance, handler_function));
+            } else if (hType == AsyncHandler) {
+                handlers->push_back(new MemberAsyncHandler<T, EventType>(instance, handler_function));
+            } else {
+                return;
+            }
         }
 
-        template<class T, class EventType, typename HandlerType>
-        constexpr void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
+        template<class T, class EventType>
+        constexpr static void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
             HandlersList * handlers = m_subscribers[typeid(EventType)];
             std::remove_if(handlers->begin(), handlers->end(), [&](BaseHandler* const& h){
-                auto h_casted = static_cast<HandlerType*>(h);
+                auto h_casted = static_cast<FunctionHandler<T, EventType>*>(h);
                 return (*h_casted)(instance, handler_function);
             });
         }
     private:
-        std::unordered_map<std::type_index, HandlersList*> m_subscribers;
+        static std::unordered_map<std::type_index, HandlersList*> m_subscribers;
     };
+
+    std::unordered_map<std::type_index, HandlersList*> EventBus::m_subscribers;
 }
