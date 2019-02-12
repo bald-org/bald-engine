@@ -6,10 +6,5 @@
 #include <iostream>
 
 namespace Bald::Events {
-    class Event {
-    public:
-        constexpr Event() = default;
-        virtual ~Event() = default;
-        virtual void run() noexcept = 0;
-    };
+    struct Event {};
 }
