@@ -36,6 +36,7 @@ namespace Bald::Events {
             std::for_each(hl->begin(), hl->end(), [](BaseHandler* h){
                EventBus::clearHandler(h);
             });
+            hl->clear();
         }
 
         template<class EventType>
@@ -86,7 +87,7 @@ namespace Bald::Events {
         }
 
         template<class T, class EventType>
-        static void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
+        static void unsubscribe(T* instance, void (T::*handler_function)(EventType*)) noexcept {
             HandlersList * handlers = m_Subscribers[typeid(EventType)];
 
             for (auto h = handlers->begin(), e = handlers->end(); h != e; )
