@@ -12,7 +12,7 @@ using namespace Events;
 class Resizer {
 public:
     void init() {
-        EventBus::subscribe(this, &Resizer::onWindowResizeEvent, SyncHandler);
+        EventBus::subscribe(this, &Resizer::onWindowResizeEvent, HandlerType::SyncHandler);
     }
 
     void deinit() {
