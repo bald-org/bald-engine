@@ -3,16 +3,19 @@
 //
 
 #pragma once
+
 #include "event.h"
 
 namespace Bald::Events {
     class BaseHandler {
     public:
         virtual ~BaseHandler() = default;
-        void exec(Event* e) noexcept {
+
+        void exec(Event *e) noexcept {
             call(e);
         }
+
     protected:
-        virtual void call(Event* e) const noexcept = 0;
+        virtual void call(Event *e) const noexcept = 0;
     };
 }
