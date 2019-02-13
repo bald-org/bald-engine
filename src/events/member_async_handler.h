@@ -18,7 +18,7 @@ namespace Bald::Events {
     private:
         constexpr void call(Event* e) const noexcept override {
             auto handle = std::async([&](EventType* params) {
-                (FunctionHandler<T, EventType>::m_instance->*FunctionHandler<T, EventType>::m_handler_function)(params);
+                (FunctionHandler<T, EventType>::m_Instance->*FunctionHandler<T, EventType>::m_HandlerFunction)(params);
             }, static_cast<EventType*>(e));
             handle.get();
         }

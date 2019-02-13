@@ -15,7 +15,7 @@ namespace Bald::Events {
         constexpr MemberHandler(T* instance, HandlerFunction handler_function) noexcept : FunctionHandler<T, EventType>(instance, handler_function) {};
     private:
         constexpr void call(Event* e) const noexcept override {
-            (FunctionHandler<T, EventType>::m_instance->*FunctionHandler<T, EventType>::m_handler_function)(static_cast<EventType*>(e));
+            (FunctionHandler<T, EventType>::m_Instance->*FunctionHandler<T, EventType>::m_HandlerFunction)(static_cast<EventType*>(e));
         }
     };
 }

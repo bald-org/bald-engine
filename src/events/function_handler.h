@@ -11,14 +11,14 @@ namespace Bald::Events {
     public:
         typedef void (T::*HandlerFunction)(EventType*);
 
-        constexpr FunctionHandler(T* instance, HandlerFunction handler_function) noexcept : m_instance(instance), m_handler_function(handler_function) {};
+        constexpr FunctionHandler(T* instance, HandlerFunction handler_function) noexcept : m_Instance(instance), m_HandlerFunction(handler_function) {};
 
         constexpr bool operator()(T* other_instance, HandlerFunction other_handler_function) const noexcept {
-            return (other_instance == m_instance) && (other_handler_function == m_handler_function);
+            return (other_instance == m_Instance) && (other_handler_function == m_HandlerFunction);
         }
     protected:
-        T* m_instance;
-        HandlerFunction m_handler_function;
+        T* m_Instance;
+        HandlerFunction m_HandlerFunction;
     };
 }
 
