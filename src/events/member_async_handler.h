@@ -12,7 +12,7 @@ namespace Bald::Events {
     template<class T, class EventType>
     class MemberAsyncHandler : public FunctionHandler<T, EventType> {
     public:
-        using HandlerFunction = void(EventType*);
+        using HandlerFunction = void(T::*)(EventType*);
 
         constexpr MemberAsyncHandler(T* instance, HandlerFunction handler_function) noexcept : FunctionHandler<T, EventType>(instance, handler_function) {};
     private:

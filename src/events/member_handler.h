@@ -10,7 +10,7 @@ namespace Bald::Events {
     template<class T, class EventType>
     class MemberHandler : public FunctionHandler<T, EventType> {
     public:
-        using HandlerFunction = void(EventType*);
+        using HandlerFunction = void(T::*)(EventType*);
 
         constexpr MemberHandler(T* instance, HandlerFunction handler_function) noexcept : FunctionHandler<T, EventType>(instance, handler_function) {};
     private:
