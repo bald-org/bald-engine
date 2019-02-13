@@ -14,18 +14,40 @@
 
 
 namespace Bald::Events {
-    typedef std::list<BaseHandler*> HandlersList;
+    typedef std::vector<BaseHandler*> HandlersList;
 
-    enum HandlerType {
+    enum class HandlerType {
         SyncHandler = 0,
         AsyncHandler = 1
     };
 
     class EventBus {
     public:
+        template<class EventType>
+        static void clearEvent(EventType* e) {
+            delete e;
+        }
+
+        static void clearHandler(BaseHandler* h) {
+            delete h;
+        }
+
+        static void clearHandlers(HandlersList* hl) {
+            std::for_each(hl->begin(), hl->end(), [](BaseHandler* h){
+               EventBus::clearHandler(h);
+            });
+        }
+
+        template<class EventType>
+        static void clear() {
+            HandlersList * handlers = m_Subscribers[typeid(EventType)];
+
+            EventBus::clearHandlers(handlers);
+        }
+
         template<typename EventType>
-        static void emit(EventType* e) noexcept {
-            HandlersList * handlers = m_subscribers[typeid(EventType)];
+        static void emit(EventType* e) {
+            HandlersList * handlers = m_Subscribers[typeid(EventType)];
 
             if (handlers == nullptr) return;
 
@@ -34,33 +56,42 @@ namespace Bald::Events {
                     handler->exec(e);
                 }
             }
+
+            EventBus::clearEvent(e);
+        }
+
+        static void flush() noexcept {
+            std::for_each(m_Subscribers.begin(), m_Subscribers.end(), [](HandlersList* hl){
+                EventBus::clearHandlers(hl);
+            });
         }
 
         template<class T, class EventType>
-        constexpr static void subscribe(T* instance, void (T::*handler_function)(EventType*), HandlerType hType = SyncHandler) noexcept {
-            HandlersList * handlers = m_subscribers[typeid(EventType)];
+        static void subscribe(T* instance, void (T::*handler_function)(EventType*), HandlerType hType = HandlerType::SyncHandler) noexcept {
+            HandlersList * handlers = m_Subscribers[typeid(EventType)];
 
             if (handlers == nullptr) {
                 handlers = new HandlersList();
-                m_subscribers[typeid(EventType)] = handlers;
+                m_Subscribers[typeid(EventType)] = handlers;
             }
 
-            if (hType == SyncHandler) {
-                handlers->push_back(new MemberHandler<T, EventType>(instance, handler_function));
-            } else if (hType == AsyncHandler) {
-                handlers->push_back(new MemberAsyncHandler<T, EventType>(instance, handler_function));
-            } else {
-                return;
+            switch (hType) {
+                case HandlerType::SyncHandler:
+                    handlers->push_back(new MemberHandler<T, EventType>(instance, handler_function));
+                    break;
+                case HandlerType::AsyncHandler:
+                    handlers->push_back(new MemberAsyncHandler<T, EventType>(instance, handler_function));
+                    break;
             }
         }
 
         template<class T, class EventType>
         static void unsubscribe(T* instance, void(T::*handler_function)(EventType*)) noexcept {
-            HandlersList * handlers = m_subscribers[typeid(EventType)];
+            HandlersList * handlers = m_Subscribers[typeid(EventType)];
 
             for (auto h = handlers->begin(), e = handlers->end(); h != e; )
             {
-                auto h_casted = static_cast<FunctionHandler<T, EventType>*>(*h);
+                auto h_casted = dynamic_cast<FunctionHandler<T, EventType>*>(*h);
                 if ((*h_casted)(instance, handler_function)) {
                     delete h_casted;
                     h = handlers->erase(h);
@@ -70,8 +101,8 @@ namespace Bald::Events {
             }
         }
     private:
-        static std::unordered_map<std::type_index, HandlersList*> m_subscribers;
+        static std::unordered_map<std::type_index, HandlersList*> m_Subscribers;
     };
 
-    std::unordered_map<std::type_index, HandlersList*> EventBus::m_subscribers;
+    std::unordered_map<std::type_index, HandlersList*> EventBus::m_Subscribers;
 }
