@@ -14,7 +14,7 @@
 
 
 namespace Bald::Events {
-    typedef std::vector<BaseHandler*> HandlersList;
+    using HandlersList = std::vector<BaseHandler*>;
 
     enum class HandlerType {
         SyncHandler = 0,
