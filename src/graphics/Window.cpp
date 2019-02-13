@@ -12,8 +12,9 @@ namespace Bald::Graphics {
             m_Title(title),
             m_Width(width),
             m_Height(height),
-            m_VSync(VSync) {
-        Window::Init();
+            m_VSync(VSync)
+    {
+            Init();
     }
 
     Window::~Window() noexcept {
