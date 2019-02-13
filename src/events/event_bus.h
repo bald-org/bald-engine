@@ -62,8 +62,8 @@ namespace Bald::Events {
         }
 
         static void flush() noexcept {
-            std::for_each(m_Subscribers.begin(), m_Subscribers.end(), [](HandlersList* hl){
-                EventBus::clearHandlers(hl);
+            std::for_each(m_Subscribers.begin(), m_Subscribers.end(), [](const std::pair<std::type_index, HandlersList*> p){
+                EventBus::clearHandlers(p.second);
             });
         }
 
