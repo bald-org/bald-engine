@@ -159,7 +159,7 @@ namespace Bald::Events {
         }
 
     private:
-        static std::unordered_map<std::type_index, HandlersVector *> m_Subscribers; /** Map of event types to it's handlers list *//
+        static std::unordered_map<std::type_index, HandlersVector *> m_Subscribers; /** Map of event types to it's handlers list **/
     };
 
     std::unordered_map<std::type_index, HandlersVector *> EventBus::m_Subscribers;
