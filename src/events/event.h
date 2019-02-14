@@ -5,5 +5,9 @@
 #pragma once
 
 namespace Bald::Events {
+    /**
+     * @struct                              Event
+     * @brief                               Basic Event structure
+     */
     struct Event {};
 }
