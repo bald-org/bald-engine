@@ -12,7 +12,6 @@ int main() {
 
     Window test("Test window!", 900, 650);
 
-    test.WindowSetVSync(true);
 
     while (!test.ShouldClose()) {
 
@@ -22,7 +21,4 @@ int main() {
         test.Clear();
 
     }
-
-
-    return 0;
 }
