@@ -145,7 +145,7 @@ namespace Bald::Events {
          * @param [void (T::*)(EventType*)] handler_function    Pointer to function, which will be invoked at event
          */
         template<class T, class EventType>
-        static void unsubscribe(T *instance, void (T::*handler_function)(EventType *)) noexcept {
+        static void unsubscribe(T *instance, void (T::*handler_function)(EventType *)) {
             HandlersVector *handlers = m_Subscribers[typeid(EventType)];
 
             for (auto h = handlers->begin(), e = handlers->end(); h != e;) {
