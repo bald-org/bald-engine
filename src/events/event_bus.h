@@ -62,6 +62,7 @@ namespace Bald::Events {
                 EventBus::clearHandler(h);
             });
             hl->clear();
+            delete hl;
         }
 
         /**
