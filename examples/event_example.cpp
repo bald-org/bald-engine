@@ -35,5 +35,8 @@ int main() {
 
     EventBus::emit(new WindowResizeEvent(400, 200));
 
+    EventBus::flush();
+    delete r;
+
     return 0;
 }
