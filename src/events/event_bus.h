@@ -39,6 +39,7 @@ namespace Bald::Events {
          */
         template<class EventType>
         static void clearEvent(EventType *e) {
+            static_assert(std::is_base_of<Event, EventType>::value, "Event is not the base of EventType");
             delete e;
         }
 
@@ -70,6 +71,7 @@ namespace Bald::Events {
          */
         template<class EventType>
         static void clear() {
+            static_assert(std::is_base_of<Event, EventType>::value, "Event is not the base of EventType");
             HandlersVector *handlers = m_Subscribers[typeid(EventType)];
 
             EventBus::clearHandlers(handlers);
@@ -83,6 +85,7 @@ namespace Bald::Events {
          */
         template<typename EventType>
         static void emit(EventType *e) {
+            static_assert(std::is_base_of<Event, EventType>::value, "Event is not the base of EventType");
             HandlersVector *handlers = m_Subscribers[typeid(EventType)];
 
             if (handlers == nullptr) return;
@@ -119,6 +122,7 @@ namespace Bald::Events {
         template<class T, class EventType>
         static void subscribe(T *instance, void (T::*handler_function)(EventType *),
                               HandlerType hType = HandlerType::SyncHandler) noexcept {
+            static_assert(std::is_base_of<Event, EventType>::value, "Event is not the base of EventType");
             HandlersVector *handlers = m_Subscribers[typeid(EventType)];
 
             if (handlers == nullptr) {
@@ -146,6 +150,7 @@ namespace Bald::Events {
          */
         template<class T, class EventType>
         static void unsubscribe(T *instance, void (T::*handler_function)(EventType *)) {
+            static_assert(std::is_base_of<Event, EventType>::value, "Event is not the base of EventType");
             HandlersVector *handlers = m_Subscribers[typeid(EventType)];
 
             for (auto h = handlers->begin(), e = handlers->end(); h != e;) {
