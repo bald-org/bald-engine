@@ -13,6 +13,9 @@ namespace Bald::Events {
      */
     class BaseHandler {
     public:
+        explicit BaseHandler(unsigned int hId) : handlerId(hId) {
+            BaseHandler::maxHandlerId++;
+        }
         /**
          * @fn                              ~BaseHandler
          * @brief                           Default virtual destructor of BaseHandler
@@ -28,6 +31,20 @@ namespace Bald::Events {
             call(e);
         }
 
+        /**
+         * @fn                              operator()
+         * @brief                           Compares two handlers
+         * @param hId                       Handler's ID
+         * @return [bool]                   Result of comparison
+         */
+        constexpr bool operator()(unsigned int hId) const noexcept {
+            return hId == handlerId;
+        }
+
+        unsigned int handlerId;
+
+        static unsigned int maxHandlerId;
+
     protected:
         /**
          * @fn                              call
@@ -36,4 +53,6 @@ namespace Bald::Events {
          */
         virtual void call(Event *e) const noexcept = 0;
     };
+
+    unsigned int BaseHandler::maxHandlerId = 0;
 }
