@@ -9,5 +9,18 @@ namespace Bald::Events {
      * @struct                              Event
      * @brief                               Basic Event structure
      */
-    struct Event {};
+    class Event {
+    public:
+        /**
+         * @fn                              getId
+         * @brief                           Virtual function, which gets eventId
+         * @return [unsigned int]           eventId
+         */
+        virtual unsigned int getId() = 0;
+        /**
+         * @fn                              ~Event
+         * @brief                           Virtual destructor of Event class
+         */
+        virtual ~Event() = default;
+    };
 }
