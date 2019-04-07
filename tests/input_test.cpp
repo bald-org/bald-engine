@@ -13,10 +13,10 @@ TEST(InputManager, initialization){
     using namespace Bald;
     using namespace Input;
 
-    EXPECT_FALSE(InputManager::isKeyPressed(GLFW_KEY_SPACE));
-    EXPECT_FALSE(InputManager::isKeyTyped(GLFW_KEY_1));
-    EXPECT_FALSE(InputManager::isMouseButtonPressed(GLFW_MOUSE_BUTTON_1));
-    EXPECT_FALSE(InputManager::isMouseButtonTyped(GLFW_MOUSE_BUTTON_2));
+    EXPECT_FALSE(InputManager::IsKeyPressed(GLFW_KEY_SPACE));
+    EXPECT_FALSE(InputManager::IsKeyTyped(GLFW_KEY_1));
+    EXPECT_FALSE(InputManager::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1));
+    EXPECT_FALSE(InputManager::IsMouseButtonTyped(GLFW_MOUSE_BUTTON_2));
 
 }
 

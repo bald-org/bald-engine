@@ -38,11 +38,9 @@ int main() {
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
 
-    InputManager::Init();
     Log::Init();
 
-
-    int i = 0;
+    [[maybe_unused]] int i = 0;
     InputManager::SetKeyPressedCallback(GLFW_KEY_A, key_pressed_call, std::reference_wrapper(i));
     i++;
 
@@ -53,21 +51,21 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
 
         double x,y;
-        InputManager::getMousePos(x, y);
+        InputManager::GetMousePos(x, y);
 
-        if (InputManager::isKeyPressed(GLFW_KEY_SPACE)) {
+        if (InputManager::IsKeyPressed(GLFW_KEY_SPACE)) {
             std::cout << "SPACE PRESSED\n";
         }
 
-        if (InputManager::isKeyTyped(GLFW_KEY_S)){
+        if (InputManager::IsKeyTyped(GLFW_KEY_S)){
             std::cout << "S TYPED\n";
         }
 
-        if (InputManager::isMouseButtonPressed(GLFW_MOUSE_BUTTON_1)){
+        if (InputManager::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1)){
             std::cout << "MOUSE BUTTON PRESSED (" << x << ", " << y << ")\n";
         }
 
-        if (InputManager::isMouseButtonTyped(GLFW_MOUSE_BUTTON_2)){
+        if (InputManager::IsMouseButtonTyped(GLFW_MOUSE_BUTTON_2)){
             std::cout << "MOUSE BUTTON TYPED (" << x << ", " << y << ")\n";
         }
 
@@ -76,15 +74,14 @@ int main() {
         InputManager::Update();
     }
 
-    auto fun = InputManager::RemoveKeyPressedCallback(GLFW_KEY_A);
-    fun();
-
     InputManager::EmitKeyPressedEvent(GLFW_KEY_Q);
     InputManager::EmitKeyTypedEvent(GLFW_KEY_Q);
     InputManager::EmitMouseButtonPressedEvent(GLFW_MOUSE_BUTTON_3);
     InputManager::EmitMouseButtonTypedEvent(GLFW_MOUSE_BUTTON_4);
 
+    EventManager::CleanUp();
     glfwDestroyWindow(window);
     glfwTerminate();
 
+    return 0;
 }
