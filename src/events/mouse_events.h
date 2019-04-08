@@ -15,6 +15,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override {}
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
     }; // END OF CLASS MouseEvent
 
@@ -27,9 +28,15 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-        [[nodiscard]] inline int GetX() const { return m_MouseX; }
-        [[nodiscard]] inline int GetY() const { return m_MouseY; }
-        [[nodiscard]] inline std::pair<int,int> GetMousePosition() const { return {m_MouseX, m_MouseY}; }
+
+        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+        [[nodiscard]] inline int GetX() const noexcept { return m_MouseX; }
+
+        [[nodiscard]] inline int GetY() const noexcept { return m_MouseY; }
+
+        [[nodiscard]] inline std::pair<int, int> GetMousePosition() const noexcept { return {m_MouseX, m_MouseY}; }
 
     private:
         int m_MouseX;
@@ -44,8 +51,11 @@ namespace Bald {
             : m_KeyCode{keycode} {}
 
     public:
+        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+
+    public:
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-        [[nodiscard]] inline int GetKeyCode() const { return m_KeyCode; }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     private:
@@ -61,8 +71,11 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-        [[nodiscard]] inline int GetKeyCode() const { return m_KeyCode; }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     private:
         int m_KeyCode;
@@ -77,8 +90,11 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-        [[nodiscard]] inline int GetKeyCode() const { return m_KeyCode; }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     private:
         int m_KeyCode;

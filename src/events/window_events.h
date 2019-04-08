@@ -15,6 +15,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override {}
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
     }; // END OF CLASS WindowEvent
 
@@ -26,13 +27,16 @@ namespace Bald {
             : m_Width(width), m_Height(height) {}
 
     public:
-        [[nodiscard]] inline int GetWidth() const { return m_Width; }
-        [[nodiscard]] inline int GetHeight() const { return m_Height; }
-        [[nodiscard]] inline std::pair<int,int> GetSize() const { return {m_Width, m_Height}; }
+        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
+
+        inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     public:
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
-        inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline int GetWidth() const noexcept { return m_Width; }
+
+        [[nodiscard]] inline int GetHeight() const noexcept { return m_Height; }
+
+        [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return {m_Width, m_Height}; }
 
     private:
         int m_Width;
@@ -44,6 +48,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
+
         inline std::type_index Type() const override { return typeid(decltype(*this)); }
     }; // END OF CLASS WindowClosedEvent
 

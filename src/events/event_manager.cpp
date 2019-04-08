@@ -6,16 +6,16 @@
 
 namespace Bald {
 
-    std::unordered_map<std::type_index, std::vector<Callback*>*> EventManager::_events_callbacks;
-    std::deque<Event*> EventManager::_events_queue;
+    std::unordered_map<std::type_index, std::vector<Callback*>*> EventManager::m_Callbacks;
+    std::deque<Event*> EventManager::m_EventQueue;
 
-    void EventManager::call() {
-        Event* event = _events_queue.front();
-        _events_queue.pop_front();
+    void EventManager::Call() noexcept {
+        Event* event = m_EventQueue.front();
+        m_EventQueue.pop_front();
 
-        auto callbacks = _events_callbacks.find(event->Type());
+        auto callbacks = m_Callbacks.find(event->Type());
 
-        if(callbacks == _events_callbacks.end()) {
+        if(callbacks == m_Callbacks.end()) {
             delete event;
             return;
         }
@@ -25,17 +25,17 @@ namespace Bald {
         delete event;
     }
 
-    void EventManager::Flush(int n) {
+    void EventManager::Flush(int n) noexcept {
         if(n == -1) {
-            while(!_events_queue.empty()) call();
+            while(!m_EventQueue.empty()) Call();
         } else {
-            for(int i = 0; i < n; ++i) if(_events_queue.empty()) return; else call();
+            for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
         }
     }
 
-    void EventManager::CleanUp() {
-        std::for_each(_events_queue.begin(), _events_queue.end(), [](Event* ev) { delete ev; });
-        for(auto a : _events_callbacks) {
+    void EventManager::CleanUp() noexcept {
+        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
+        for(auto a : m_Callbacks) {
 
             for(auto b: *a.second) {
                 delete b;

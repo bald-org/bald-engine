@@ -261,7 +261,7 @@ namespace Bald::Input {
     void InputManager::SetKeyPressedCallback(int keycode, F&& fun, Args&& ... args) noexcept {
         if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
         else {
-            Bald::EventManager::Subscribe<KeyPressedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 
@@ -269,7 +269,7 @@ namespace Bald::Input {
     void InputManager::SetKeyTypedCallback(int keycode, F&& fun, Args&& ... args) noexcept {
         if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
         else {
-            Bald::EventManager::Subscribe<KeyTypedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 
@@ -277,7 +277,7 @@ namespace Bald::Input {
     void InputManager::SetKeyReleasedCallback(int keycode, F&& fun, Args&& ... args) noexcept {
         if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
         else {
-            Bald::EventManager::Subscribe<KeyReleasedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<KeyReleasedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 
@@ -285,7 +285,7 @@ namespace Bald::Input {
     void InputManager::SetMouseButtonPressedCallback(int buttoncode, F&& fun, Args&& ... args) noexcept {
         if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else {
-            Bald::EventManager::Subscribe<MouseButtonPressedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 
@@ -293,7 +293,7 @@ namespace Bald::Input {
     void InputManager::SetMouseButtonTypedCallback(int buttoncode, F&& fun, Args&& ... args) noexcept {
         if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else {
-            Bald::EventManager::Subscribe<MouseButtonTypedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<MouseButtonTypedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 
@@ -301,7 +301,7 @@ namespace Bald::Input {
     void InputManager::SetMouseButtonReleasedCallback(int buttoncode, F&& fun, Args&& ... args) noexcept {
         if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else {
-            Bald::EventManager::Subscribe<MouseButtonReleasedEvent>(handle::sync, fun, args ...);
+            Bald::EventManager::Subscribe<MouseButtonReleasedEvent>(HandleType::SYNC, fun, args ...);
         }
     }
 

@@ -18,8 +18,11 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override {}
-        [[nodiscard]] inline int GetKeyCode() const { return m_KeyCode; }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     protected:
         int m_KeyCode;
@@ -34,6 +37,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyPressedEvent
@@ -48,6 +52,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyReleasedEvent
@@ -61,6 +66,7 @@ namespace Bald {
 
     public:
         void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyTypedEvent

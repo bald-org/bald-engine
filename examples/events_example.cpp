@@ -17,7 +17,7 @@ int main() {
 
     glfwInit();
 
-    GLFWwindow *window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
+    GLFWwindow *window = glfwCreateWindow(800, 600, "BaldEngine", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 
     glfwSetKeyCallback(window, key_callback);
@@ -26,7 +26,7 @@ int main() {
 
     Log::Init();
 
-    EventManager::Subscribe<KeyTypedEvent>(handle::sync, [](){ std::cout << "KeyTypedEvent!\n"; });
+    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
     while (!glfwWindowShouldClose(window)) {
 
         InputManager::Update();
