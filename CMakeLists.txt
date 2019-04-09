@@ -12,6 +12,8 @@ include_directories(${CMAKE_SOURCE_DIR}/src/graphics)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/src/math)
+include_directories(${CMAKE_SOURCE_DIR}/src/events)
+include_directories(${CMAKE_SOURCE_DIR}/src/events/callback)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
@@ -47,7 +49,9 @@ add_library(bald_engine
         src/math/vec2.cpp
         src/math/vec3.cpp
         src/math/vec4.cpp
-        src/math/mat4.cpp)
+        src/math/mat4.cpp
+        src/events/event_manager.cpp
+        src/events/callback/handler.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 
@@ -71,6 +75,9 @@ add_executable(input_example examples/input_example.cpp)
 add_executable(window_example examples/window_example.cpp)
 target_link_libraries(input_example bald_engine)
 target_link_libraries(window_example bald_engine)
+
+add_executable(events_example examples/events_example.cpp)
+target_link_libraries(events_example bald_engine)
 
 #### END EXAMPLES
 

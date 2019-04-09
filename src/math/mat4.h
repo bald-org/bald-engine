@@ -10,8 +10,6 @@
 #include "utils/math_utils.h"
 #include <cmath>
 
-
-
 /**
  * @class Mat4
  * @brief 4x4 matrix class, column major implementation
