@@ -122,11 +122,11 @@ namespace Bald::Graphics {
          */
         bool Init() noexcept;
 
-//        /**
-//         * @fn                      Shutdown
-//         * @brief                   destroys the window
-//         */
-//        void Shutdown();
+       /**
+        * @fn                      Shutdown
+        * @brief                   destroys the window
+        */
+       void Shutdown();
 
         // START OF ATTRIBUTES
 

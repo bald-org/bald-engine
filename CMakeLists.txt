@@ -45,7 +45,7 @@ add_library(bald_engine
         src/utils/split_string.cpp
         src/input/input_manager.cpp
         src/Log.cpp
-        src/graphics/Window.cpp
+        src/graphics/window.cpp
         src/math/vec2.cpp
         src/math/vec3.cpp
         src/math/vec4.cpp
