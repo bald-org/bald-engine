@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/bald-org/bald-engine.svg?branch=master)](https://travis-ci.com/bald-org/bald-engine)
 
-It's a simple game engine, written by 4 students, who want to conquer gaming world with it!
+It's a simple game engine written by 4 students who want to conquer gaming world with it!
 
 # Contributors
 * [Bartłomiej Długosz](https://github.com/4jeR)
