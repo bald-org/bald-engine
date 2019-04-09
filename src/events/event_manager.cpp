@@ -6,7 +6,7 @@
 
 namespace Bald {
 
-    std::unordered_map<std::type_index, std::vector<Callback*>*> EventManager::m_Callbacks;
+    std::unordered_map<std::type_index, std::vector<Handler*>*> EventManager::m_Callbacks;
     std::deque<Event*> EventManager::m_EventQueue;
 
     void EventManager::Call() noexcept {
@@ -20,7 +20,7 @@ namespace Bald {
             return;
         }
 
-        for(auto& fun : *callbacks->second) fun->run();
+        for(auto& fun : *callbacks->second) fun->Run();
 
         delete event;
     }

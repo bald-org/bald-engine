@@ -48,7 +48,7 @@ add_library(bald_engine
         src/math/vec4.cpp
         src/math/mat4.cpp
         src/events/event_manager.cpp
-        src/events/callback/callback.cpp)
+        src/events/callback/handler.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 

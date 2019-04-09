@@ -5,16 +5,34 @@
 #pragma once
 
 #include <future>
-#include "callback.h"
+#include "handler.h"
+
+/**
+ * @class AsyncFunctionHandler
+ * @brief Asynchronous function wrapper implementation
+ */
 
 namespace Bald {
 
-    class AsyncFunctionHandler : public Callback {
+    class AsyncFunctionHandler : public Handler {
     public:
-        template<class F, class... Args>
-        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Callback(fun, args...) {}
 
-        inline void run() const override { std::async(std::launch::async, _function); }
+        /**
+        * @fn                   AsyncFunctionHandler
+        * @brief                Constructor
+        * @param [F&&]          fun -> Function which will be wrapped
+        * @param [Args&& ...]   args -> Function's arguments
+        */
+
+        template<class F, class... Args>
+        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler(fun, args...) {}
+
+        /**
+        * @fn                   Run
+        * @brief                This method runs wrapped function asynchronously
+        */
+
+        inline void Run() const override { std::async(std::launch::async, m_Function); }
     };
 
 } //END OF NAMESPACE Bald
