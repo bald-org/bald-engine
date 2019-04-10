@@ -18,8 +18,10 @@ int main() {
 
     Window window("BaldEngine!", 800, 600);
 
-    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, []() { std::cout << "Key Typed Event!\n"; });
-    EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [&]() {
+    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, []() { CORE_LOG_INFO("Key Typed Event!"); });
+    EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, []() { CORE_LOG_INFO("Mouse Moved Event!"); });
+    EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, []() { CORE_LOG_INFO("Mouse Button Pressed Event!"); } );
+    EventManager::Subscribe<WindowClosedEvent>(HandleType::ASYNC, [&]() {
         glfwSetWindowShouldClose(window.GetWindow(), true);
     });
 
