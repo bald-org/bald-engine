@@ -5,7 +5,7 @@
 #include <iostream>
 #include "input_manager.h"
 #include "GLFW/glfw3.h"
-#include <mouse_events.h>
+#include "mouse_events.h"
 #include "key_events.h"
 #include "window_events.h"
 #include "event_manager.h"
@@ -30,7 +30,7 @@ int main() {
     while (!glfwWindowShouldClose(window)) {
 
         InputManager::Update();
-        EventManager::Flush(-1);
+        EventManager::Flush();
 
         glfwPollEvents();
         glfwSwapBuffers(window);
