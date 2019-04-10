@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <vector>
-#include <functional>
+#include "pch.h"
 
 /**
  * @class Callback
@@ -72,12 +71,18 @@ namespace Bald {
             m_TakenID.push_back(0);
             m_ID = 0;
         } else {
+            bool handled = false;
             for(unsigned int i = 1; i < UINT32_MAX; ++i) {
                 if(std::find(m_TakenID.begin(), m_TakenID.end(), i) == m_TakenID.end()) {
                     m_TakenID.push_back(i);
                     m_ID = i;
+                    handled = true;
                     break;
                 }
+            }
+
+            if(!handled) {
+                CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
             }
         }
 
