@@ -17,7 +17,7 @@ int main() {
 
     Log::Init();
     glfwInit();
-
+    new int[100];
     GLFWwindow *window = glfwCreateWindow(800, 600, "BaldEngine", nullptr, nullptr);
     glfwMakeContextCurrent(window);
 

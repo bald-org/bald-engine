@@ -27,13 +27,14 @@ project(bald_engine)
 
 add_compile_options(
         -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor -Werror
+        -Wnon-virtual-dtor
         -Wold-style-cast -Wcast-align
         -Wunused -Woverloaded-virtual
         -Wpedantic -Wconversion -Wnull-dereference
         -Wdouble-promotion -Wduplicated-cond
         -Wduplicated-branches
-        -Wlogical-op -fsanitize=leak)
+        -Wlogical-op
+)
 
 add_definitions(-D_LINUX)
 
