@@ -72,9 +72,9 @@ namespace Bald {
             m_ID = 0;
         } else {
             bool handled = false;
+
             for(unsigned int i = 1; i < UINT32_MAX; ++i) {
                 if(std::find(m_TakenID.begin(), m_TakenID.end(), i) == m_TakenID.end()) {
-                    m_TakenID.push_back(i);
                     m_ID = i;
                     handled = true;
                     break;

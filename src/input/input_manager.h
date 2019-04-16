@@ -255,6 +255,7 @@ namespace Bald::Input {
     inline void cursor_position_callback([[maybe_unused]]GLFWwindow* window, double xpos, double ypos) {
         Bald::Input::InputManager::m_MouseX = xpos;
         Bald::Input::InputManager::m_MouseY = ypos;
+        Bald::EventManager::Emit<MouseMovedEvent>(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 
     template<class F, class... Args>
