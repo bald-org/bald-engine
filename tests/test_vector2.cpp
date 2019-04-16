@@ -8,7 +8,7 @@
 
 TEST(Getter, Vec2_GetX) { //NOLINT
     Bald::Math::Vec2 A(66.0f, 3.4f);
-
+    new int [100];
     ASSERT_FLOAT_EQ(66.0f, A.GetX());
 }
 
