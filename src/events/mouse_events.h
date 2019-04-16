@@ -101,7 +101,75 @@ namespace Bald {
     private:
         int m_MouseX; /* < Mouse x coordinate */
         int m_MouseY; /* < Mouse y coordinate */
-    }; // END OF CLASS MouseEvent
+    }; // END OF CLASS MouseMovedEvent
+
+    /**
+     * @class MouseScrolledEvent
+     * @brief Specific event implementation for mouse offset type event
+     */
+
+    class MouseScrolledEvent : public MouseEvent {
+        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+
+    protected:
+
+        /**
+        * @fn                   MouseScrolledEvent
+        * @brief                Constructor
+        * @param [int]          xoffset -> specific mouse offset
+        * @param [int]          yoffset -> specific mouse offset
+        */
+
+        explicit MouseScrolledEvent(double xoffset, double yoffset)
+            : m_OffsetX(xoffset), m_OffsetY(yoffset) {}
+
+    public:
+
+        /**
+        * @fn                   EmitConnectedEvents
+        * @brief                This method is emits additional MouseEvent
+        */
+
+        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+
+        /**
+        * @fn                           Type
+        * @brief                        This method returns type index of this specific class. This is used for polymorphism
+        * @return [std::type_index]     Type index
+        */
+
+        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+
+        /**
+        * @fn                   GetOffsetX
+        * @brief                Mouse x offset getter
+        * @return [int]         Mouse x offset
+        */
+
+        [[nodiscard]] inline double GetOffsetX() const noexcept { return m_OffsetX; }
+
+        /**
+        * @fn                   GetOffsetY
+        * @brief                Mouse y offset getter
+        * @return [int]         Mouse y offset
+        */
+
+        [[nodiscard]] inline double GetOffsetY() const noexcept { return m_OffsetY; }
+
+        /**
+        * @fn                               GetMouseOffset
+        * @brief                            Mouse x, y offset getter
+        * @return [std::pair<int,int>]      x, y offset as pair
+        */
+
+        [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return {m_OffsetX, m_OffsetY}; }
+
+    private:
+        double m_OffsetX; /* < Mouse x offset */
+        double m_OffsetY; /* < Mouse y offset */
+    }; // END OF CLASS MouseScrolledEvent
 
     /**
      * @class MouseButtonPressedEvent
