@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "pch.h"
+#include <vector>
+#include <functional>
+#include "Log.h"
 
 /**
  * @class Callback
