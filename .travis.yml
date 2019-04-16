@@ -29,6 +29,6 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build && cd build
-  - cmake -DCMAKE_CXX_FLAGS=" -fsanitize=leak -g -fsanitize=undefined" -DCMAKE_C_FLAGS=" -fsanitize=leak -g" -DCMAKE_EXE_LINKER_FLAGS=" -fsanitize=leak -fsanitize=undefined " ../
+  - cmake -DCMAKE_CXX_FLAGS=" -fsanitize=leak -g -fsanitize=undefined" -DCMAKE_EXE_LINKER_FLAGS=" -fsanitize=leak -fsanitize=undefined " ../
   - cmake --build .
   - ./runUnitTests
