@@ -7,8 +7,10 @@
 
 namespace Bald::Input {
 
-    double InputManager::m_MouseX = 0.0;
-    double InputManager::m_MouseY = 0.0;
+    double InputManager::m_MouseX{0.0};
+    double InputManager::m_MouseY{0.0};
+    double InputManager::m_OffsetX{0.0};
+    double InputManager::m_OffsetY{0.0};
     bool InputManager::m_Keys[MAX_KEYS];
     bool InputManager::m_KeysState[MAX_KEYS];
     bool InputManager::m_KeysTyped[MAX_KEYS];

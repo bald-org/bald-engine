@@ -28,11 +28,13 @@ namespace Bald::Input {
 
     class InputManager {
 
-        friend void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+        friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-        friend void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
+        friend inline void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
-        friend void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+        friend inline void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
+
+        friend inline void scroll_callback(GLFWwindow* window, double xoffset, double yoffset);
 
     public:
 
@@ -206,6 +208,8 @@ namespace Bald::Input {
     private:
         static double m_MouseX;                                           /**< current mouse x - coordinate*/
         static double m_MouseY;                                           /**< current mouse y - coordinate*/
+        static double m_OffsetX;                                          /**< current scroll x - offset*/
+        static double m_OffsetY;                                          /**< current scroll y - offset*/
         static bool m_Keys[MAX_KEYS];                                     /**< current keys states*/
         static bool m_KeysState[MAX_KEYS];                                /**< keys states in previous frame*/
         static bool m_KeysTyped[MAX_KEYS];                                /**< keys witch were typed*/
@@ -247,15 +251,20 @@ namespace Bald::Input {
         Bald::Input::InputManager::m_Keys[key] = action != GLFW_RELEASE;
     }
 
-    inline void
-    mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
+    inline void mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[button] = action != GLFW_RELEASE;
     }
 
-    inline void cursor_position_callback([[maybe_unused]]GLFWwindow* window, double xpos, double ypos) {
+    inline void cursor_position_callback([[maybe_unused]] GLFWwindow* window, double xpos, double ypos) {
         Bald::Input::InputManager::m_MouseX = xpos;
         Bald::Input::InputManager::m_MouseY = ypos;
         Bald::EventManager::Emit<MouseMovedEvent>(static_cast<int>(xpos), static_cast<int>(ypos));
+    }
+
+    inline void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
+        Bald::Input::InputManager::m_OffsetX = xoffset;
+        Bald::Input::InputManager::m_OffsetY = yoffset;
+        // TODO: Emit MouseScrolledEvent with offsets
     }
 
     template<class F, class... Args>
