@@ -6,11 +6,15 @@
 #include <iostream>
 #include <array>
 #include <vector>
+#include <deque>
+#include <unordered_map>
 #include <string>
 #include <sstream>
 #include <memory>
 #include <algorithm>
 #include <functional>
+#include <typeindex>
+#include <typeinfo>
 
 #include "Log.h"
 //BALD_ENGINE_PCH_H
