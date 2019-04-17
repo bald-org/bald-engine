@@ -127,7 +127,7 @@ namespace Bald::Math {
                         copy.m_MatrixElements[3] * m_MatrixElements[12];
 
             if(det == 0) {
-                    CORE_LOG_WARN("Matrix determinant equals 0! Returning identity matrix!");
+                    CORE_LOG_WARN("[Mat4] Matrix determinant equals 0! Returning identity matrix!");
                     *this = Identity();
                     return;
             }

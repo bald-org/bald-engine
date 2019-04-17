@@ -20,7 +20,7 @@ namespace Bald::Utils {
         FILE *file = fopen(filePath, "r");
 
         if (!file) {
-            CORE_LOG_WARN("Couldn't open the file at path: " + static_cast<std::string>(filePath));
+            CORE_LOG_WARN("[FileManager] Couldn't open the file at path: " + static_cast<std::string>(filePath));
             return std::string("Error!");
         }
 
@@ -44,7 +44,7 @@ namespace Bald::Utils {
         }
         catch (std::bad_alloc& ba)
         {
-            CORE_LOG_ERROR("bad_alloc caught: " + static_cast<std::string>(ba.what()));
+            CORE_LOG_ERROR("[FileManager] bad_alloc caught: " + static_cast<std::string>(ba.what()));
             return std::string("Error!");
         }
     }
@@ -55,7 +55,7 @@ namespace Bald::Utils {
         struct stat sb;
 
         if (fstat(fileDescriptor, &sb) == -1) {
-            CORE_LOG_WARN("Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath));
+            CORE_LOG_WARN("[FileManager] Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath));
             return std::string("Error!");
         }
 

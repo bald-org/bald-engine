@@ -210,12 +210,14 @@ namespace Bald::Math {
     }; // END OF CLASS VEC3
 
         constexpr void Vec3::Normalize() noexcept {
-                float len = Length();
-                if (len != 0) {
-                        m_X /= len;
-                        m_Y /= len;
-                        m_Z /= len;
-                }
+            float len = Length();
+            if (len != 0) {
+                    m_X /= len;
+                    m_Y /= len;
+                    m_Z /= len;
+            }
+            CORE_LOG_WARN("[Vec3] Couldn't normalize zero vector!");
+            return;
         }
 
         constexpr Vec3 Vec3::MakeReverseVec(const Vec3& vec) noexcept {

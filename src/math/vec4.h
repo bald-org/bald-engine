@@ -206,13 +206,15 @@ namespace Bald::Math {
     }; // END OF CLASS Vec4
 
         constexpr void Vec4::Normalize() noexcept {
-                float len = Length();
-                if (len != 0) {
-                        m_X /= len;
-                        m_Y /= len;
-                        m_Z /= len;
-                        m_W /= len;
-                }
+            float len = Length();
+            if (len != 0) {
+                    m_X /= len;
+                    m_Y /= len;
+                    m_Z /= len;
+                    m_W /= len;
+            }
+            CORE_LOG_WARN("[Vec4] Couldn't normalize zero vector!");
+            return;
         }
 
         constexpr void Vec4::Homogenize() noexcept {
