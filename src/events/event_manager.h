@@ -55,7 +55,7 @@ namespace Bald {
         */
 
         template<class T>
-        static void Unsubscibe(unsigned id) noexcept;
+        static void Unsubscribe(unsigned id) noexcept;
 
         /**
         * @fn                    Emit
@@ -114,7 +114,7 @@ namespace Bald {
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-
+        CORE_LOG_INFO("[EventManager] Subscribe beginning...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         if(m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
@@ -123,18 +123,21 @@ namespace Bald {
 
         switch(type) {
             case HandleType::SYNC:
+                CORE_LOG_INFO("[EventManager] Pushing new FunctionHandler to callbacks map");
                 m_Callbacks[typeid(T)]->push_back(new FunctionHandler(callback, args...));
                 break;
             case HandleType::ASYNC:
+                CORE_LOG_INFO("[EventManager] Pushing new AsyncFunctionHandler to callbacks map");
                 m_Callbacks[typeid(T)]->push_back(new AsyncFunctionHandler(callback, args...));
                 break;
         }
-
+        CORE_LOG_INFO("[EventManager] Subscribtion completed successfully!");
         return m_Callbacks[typeid(T)]->back()->GetID();
     }
 
     template<class T>
-    void EventManager::Unsubscibe(unsigned id) noexcept {
+    void EventManager::Unsubscribe(unsigned id) noexcept {
+        CORE_LOG_INFO("[EventManager] Unsubscribe beginning...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         auto iter = m_Callbacks.find(typeid(T));
 
@@ -149,6 +152,7 @@ namespace Bald {
                 return;
             }
         }
+        CORE_LOG_INFO("[EventManager] Unsubscribe completed successfully!");
     }
 
     template<class T, class... Args>
@@ -158,6 +162,7 @@ namespace Bald {
         T* event = new T{args...};
         event->EmitConnectedEvents();
         m_EventQueue.push_back(event);
+        CORE_LOG_INFO("[EventManager] Emit completed successfully!");
     }
 
     template<class T>
@@ -171,6 +176,7 @@ namespace Bald {
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
+        CORE_LOG_INFO("[EventManager] Attempting to remove all Callbacks by type...");
         auto iter = m_Callbacks.find(typeid(T));
         if(iter == m_Callbacks.end()) return;
 
@@ -178,6 +184,7 @@ namespace Bald {
             delete iter->second->back();
             iter->second->pop_back();
         }
+        CORE_LOG_INFO("[EventManager] Successfully removed all Callbacks by type!");
     }
 
 } //END OF NAMESPACE Bald

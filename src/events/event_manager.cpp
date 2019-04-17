@@ -10,6 +10,7 @@ namespace Bald {
     std::deque<Event*> EventManager::m_EventQueue;
 
     void EventManager::Call() noexcept {
+        CORE_LOG_INFO("[EventManager] Call beginning...");
         Event* event = m_EventQueue.front();
         m_EventQueue.pop_front();
 
@@ -26,6 +27,7 @@ namespace Bald {
     }
 
     void EventManager::Flush(int n) noexcept {
+        CORE_LOG_INFO("[EventManager] Flush beginning...");
         if(n == -1) {
             while(!m_EventQueue.empty()) Call();
         } else {
@@ -34,6 +36,7 @@ namespace Bald {
     }
 
     void EventManager::CleanUp() noexcept {
+        CORE_LOG_INFO("[EventManager] CleanUp beginning...");
         std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
         for(auto a : m_Callbacks) {
 
