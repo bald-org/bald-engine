@@ -26,14 +26,15 @@ set(CMAKE_CXX_STANDARD 17)
 project(bald_engine)
 
 add_compile_options(
-        -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor -Werror
-        -Wold-style-cast -Wcast-align
-        -Wunused -Woverloaded-virtual
-        -Wpedantic -Wconversion -Wnull-dereference
-        -Wdouble-promotion -Wduplicated-cond
-        -Wduplicated-branches
-        -Wlogical-op -fsanitize=leak)
+#        -pedantic -Wall -Wextra
+#        -Wnon-virtual-dtor -Werror
+#        -Wold-style-cast -Wcast-align
+#        -Wunused -Woverloaded-virtual
+#        -Wpedantic -Wconversion -Wnull-dereference
+#        -Wdouble-promotion -Wduplicated-cond
+#        -Wduplicated-branches
+#        -Wlogical-op
+)
 
 add_definitions(-D_LINUX)
 
