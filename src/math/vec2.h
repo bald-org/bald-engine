@@ -23,7 +23,7 @@ namespace Bald::Math {
         * @param [float]               y variable
         */
         explicit constexpr Vec2(float x = 0.0f, float y = 0.0f)
-            : m_X(x), m_Y(y) {}
+                : m_X(x), m_Y(y) {}
 
         /**
         * @fn                          MakeUnitVec
@@ -31,7 +31,7 @@ namespace Bald::Math {
         * @param [const Vec2&]         vec -> vector which will be used to create unit vector
         * @return [Vec2]               unit long vector
         */
-        [[nodiscard]] static Vec2 MakeUnitVec(const Vec2& vec) noexcept;
+        [[nodiscard]] static Vec2 MakeUnitVec(const Vec2 &vec) noexcept;
 
         /**
          * @fn                          Normalize
@@ -47,7 +47,7 @@ namespace Bald::Math {
         * @param [const Vec2&]         vec -> vector which will be used to create reversed vector
         * @return [Vec2]               new, reversed vector
         */
-        [[nodiscard]] static constexpr Vec2 MakeReverseVec(const Vec2& vec) noexcept;
+        [[nodiscard]] static constexpr Vec2 MakeReverseVec(const Vec2 &vec) noexcept;
 
         /**
          * @fn                         Reverse
@@ -63,7 +63,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         vec2 vector
          * @return [float]              dot product of the vector passed in
          */
-        [[nodiscard]] static constexpr float DotProduct(const Vec2& vec1, const Vec2& vec2) noexcept;
+        [[nodiscard]] static constexpr float DotProduct(const Vec2 &vec1, const Vec2 &vec2) noexcept;
 
         /**
          * @fn                          AngleBetween
@@ -72,7 +72,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         vec2 vector
          * @return [float]              angle in radians
          */
-        [[nodiscard]] static constexpr float AngleBetween(const Vec2& vec1, const Vec2& vec2) noexcept;
+        [[nodiscard]] static constexpr float AngleBetween(const Vec2 &vec1, const Vec2 &vec2) noexcept;
 
         /**
          * @fn                          Length
@@ -87,7 +87,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2]               new vector
          */
-        [[nodiscard]] constexpr Vec2 operator+(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr Vec2 operator+(const Vec2 &other) const noexcept;
 
 
         /**
@@ -96,7 +96,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2]               new vector
          */
-        [[nodiscard]] constexpr Vec2 operator-(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr Vec2 operator-(const Vec2 &other) const noexcept;
 
         /**
          * @fn                          operator*
@@ -112,7 +112,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector added with the passed vector
          */
-        constexpr Vec2& operator+=(const Vec2& other) noexcept;
+        constexpr Vec2 &operator+=(const Vec2 &other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -120,7 +120,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         other vector
          * @return [Vec2&]              current vector subtracted with the passed vector
          */
-        constexpr Vec2& operator-=(const Vec2& other) noexcept;
+        constexpr Vec2 &operator-=(const Vec2 &other) noexcept;
 
         /**
          * @fn                          operator*=
@@ -128,7 +128,7 @@ namespace Bald::Math {
          * @param [const Vec23&]         other vector
          * @return [Vec2&]              current vector multiplied by the passed multiplier
          */
-        constexpr Vec2& operator*=(float multiplier) noexcept;
+        constexpr Vec2 &operator*=(float multiplier) noexcept;
 
         /**
          * @fn                          operator==
@@ -137,7 +137,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        [[nodiscard]] constexpr bool operator==(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec2 &other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -146,7 +146,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        [[nodiscard]] constexpr bool operator!=(const Vec2& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec2 &other) const noexcept;
 
         /**
          * @fn                          operator[]
@@ -154,7 +154,7 @@ namespace Bald::Math {
          * @param [int]                 index -> index of a number which you want to retrieve
          * @return [const float&]       float at given index
          */
-        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
+        [[nodiscard]] constexpr const float &operator[](int index) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -163,7 +163,7 @@ namespace Bald::Math {
          * @param [const Vec2&]         vector object to be printed
          * @return [std::ostream&]      stream
          */
-        [[nodiscard]] friend std::ostream &operator<<(std::ostream& out, const Vec2& vec) noexcept;
+        [[nodiscard]] friend std::ostream &operator<<(std::ostream &out, const Vec2 &vec) noexcept;
 
         /**
          * @fn                          GetX
@@ -184,88 +184,87 @@ namespace Bald::Math {
         float m_Y;
     }; // END OF CLASS Vec2
 
-        constexpr void Vec2::Normalize() noexcept {
-            float len = Length();
-            if (len != 0) {
-                    m_X /= len;
-                    m_Y /= len;
-            }
-            CORE_LOG_WARN("[Vec2] Couldn't normalize zero vector!");
-            return;
+    constexpr void Vec2::Normalize() noexcept {
+        float len = Length();
+        if (len != 0) {
+            m_X /= len;
+            m_Y /= len;
         }
 
-        constexpr Vec2 Vec2::MakeReverseVec(const Vec2& vec) noexcept {
-                return Vec2(-1.0f * vec.GetX(), -1.0f * vec.GetY());
-        }
+    }
 
-        constexpr void Vec2::Reverse() noexcept {
-                m_X *= -1.0f;
-                m_Y *= -1.0f;
-        }
+    constexpr Vec2 Vec2::MakeReverseVec(const Vec2 &vec) noexcept {
+        return Vec2(-1.0f * vec.GetX(), -1.0f * vec.GetY());
+    }
 
-        constexpr float Vec2::DotProduct(const Vec2& vec1, const Vec2& vec2) noexcept {
-                return vec1.GetX() * vec2.GetX() + vec1.GetY() * vec2.GetY();
-        }
+    constexpr void Vec2::Reverse() noexcept {
+        m_X *= -1.0f;
+        m_Y *= -1.0f;
+    }
 
-        constexpr float Vec2::AngleBetween(const Vec2& vec1, const Vec2& vec2) noexcept {
-                float dot = DotProduct(vec1, vec2);
-                float len = vec1.Length() * vec2.Length();
-                return static_cast<float>(acos(dot / len));
-        }
+    constexpr float Vec2::DotProduct(const Vec2 &vec1, const Vec2 &vec2) noexcept {
+        return vec1.GetX() * vec2.GetX() + vec1.GetY() * vec2.GetY();
+    }
 
-        constexpr float Vec2::Length() const noexcept {
-                return static_cast<float>(sqrt(m_X * m_X + m_Y * m_Y));
-        }
+    constexpr float Vec2::AngleBetween(const Vec2 &vec1, const Vec2 &vec2) noexcept {
+        float dot = DotProduct(vec1, vec2);
+        float len = vec1.Length() * vec2.Length();
+        return static_cast<float>(acos(dot / len));
+    }
 
-        constexpr Vec2 Vec2::operator+(const Vec2& other) const noexcept {
-                return Vec2(m_X + other.m_X, m_Y + other.m_Y);
-        }
+    constexpr float Vec2::Length() const noexcept {
+        return static_cast<float>(sqrt(m_X * m_X + m_Y * m_Y));
+    }
 
-        constexpr Vec2 Vec2::operator-(const Vec2& other) const noexcept {
-                return Vec2(m_X - other.m_X, m_Y - other.m_Y);
-        }
+    constexpr Vec2 Vec2::operator+(const Vec2 &other) const noexcept {
+        return Vec2(m_X + other.m_X, m_Y + other.m_Y);
+    }
 
-        constexpr Vec2 Vec2::operator*(float multiplier) const noexcept {
-                return Vec2(multiplier * m_X, multiplier * m_Y);
-        }
+    constexpr Vec2 Vec2::operator-(const Vec2 &other) const noexcept {
+        return Vec2(m_X - other.m_X, m_Y - other.m_Y);
+    }
 
-        constexpr Vec2& Vec2::operator+=(const Vec2& other) noexcept {
-                m_X += other.m_X;
-                m_Y += other.m_Y;
-                return *this;
-        }
+    constexpr Vec2 Vec2::operator*(float multiplier) const noexcept {
+        return Vec2(multiplier * m_X, multiplier * m_Y);
+    }
 
-        constexpr Vec2& Vec2::operator-=(const Vec2& other) noexcept {
-                m_X -= other.m_X;
-                m_Y -= other.m_Y;
-                return *this;
-        }
+    constexpr Vec2 &Vec2::operator+=(const Vec2 &other) noexcept {
+        m_X += other.m_X;
+        m_Y += other.m_Y;
+        return *this;
+    }
 
-        constexpr Vec2& Vec2::operator*=(float multiplier) noexcept {
-                m_X *= multiplier;
-                m_Y *= multiplier;
-                return *this;
-        }
+    constexpr Vec2 &Vec2::operator-=(const Vec2 &other) noexcept {
+        m_X -= other.m_X;
+        m_Y -= other.m_Y;
+        return *this;
+    }
 
-        constexpr bool Vec2::operator==(const Vec2& other) const noexcept {
-                return m_X == other.m_X && m_Y == other.m_Y;
-        }
+    constexpr Vec2 &Vec2::operator*=(float multiplier) noexcept {
+        m_X *= multiplier;
+        m_Y *= multiplier;
+        return *this;
+    }
 
-        constexpr bool Vec2::operator!=(const Vec2& other) const noexcept {
-                return !(*this == other);
-        }
+    constexpr bool Vec2::operator==(const Vec2 &other) const noexcept {
+        return m_X == other.m_X && m_Y == other.m_Y;
+    }
 
-        constexpr const float& Vec2::operator[](int index) const noexcept {
-            switch(index) {
-                case 0:
-                    return m_X;
-                case 1:
-                    return m_Y;
-                default:
-                    assert(false);
-                    break;
-            }
+    constexpr bool Vec2::operator!=(const Vec2 &other) const noexcept {
+        return !(*this == other);
+    }
+
+    constexpr const float &Vec2::operator[](int index) const noexcept {
+        switch (index) {
+            case 0:
+                return m_X;
+            case 1:
+                return m_Y;
+            default:
+                assert(false);
+                break;
         }
+    }
 
 }
 // END OF NAMESPACE Bald::Math

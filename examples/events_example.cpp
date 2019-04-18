@@ -19,7 +19,7 @@ int main() {
     glfwInit();
     GLFWwindow *window = glfwCreateWindow(800, 600, "BaldEngine", nullptr, nullptr);
     glfwMakeContextCurrent(window);
-
+    
     glfwSetKeyCallback(window, key_callback);
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);

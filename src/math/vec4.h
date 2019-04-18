@@ -24,7 +24,7 @@ namespace Bald::Math {
          * @param [float]               w variable
          */
         explicit constexpr Vec4(float x = 0.0f, float y = 0.0f, float z = 0.0f, float w = 0.0f)
-            : m_X(x), m_Y(y), m_Z(z), m_W(w) {}
+                : m_X(x), m_Y(y), m_Z(z), m_W(w) {}
 
         /**
         * @fn                          MakeUnitVec
@@ -32,7 +32,7 @@ namespace Bald::Math {
         * @param [const Vec4&]         vec -> vector which will be used to create unit vector
         * @return [Vec4]               unit long vector
         */
-        [[nodiscard]] static Vec4 MakeUnitVec(const Vec4& vec) noexcept;
+        [[nodiscard]] static Vec4 MakeUnitVec(const Vec4 &vec) noexcept;
 
         /**
          * @fn                          Normalize
@@ -53,7 +53,7 @@ namespace Bald::Math {
         * @param [const Vec4&]         vec -> vector which will be used to create reversed vector
         * @return [Vec4]               new, reversed vector
         */
-        [[nodiscard]] static constexpr Vec4 MakeReverseVec(const Vec4& vec) noexcept;
+        [[nodiscard]] static constexpr Vec4 MakeReverseVec(const Vec4 &vec) noexcept;
 
         /**
          * @fn                         Reverse
@@ -69,7 +69,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         vec2 vector
          * @return [float]              dot product of the vector passed in
          */
-        [[nodiscard]] static constexpr float DotProduct(const Vec4& vec1, const Vec4& vec2) noexcept;
+        [[nodiscard]] static constexpr float DotProduct(const Vec4 &vec1, const Vec4 &vec2) noexcept;
 
         /**
          * @fn                          AngleBetween
@@ -78,7 +78,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         vec2 vector
          * @return [float]              angle in radians
          */
-        [[nodiscard]] static constexpr float AngleBetween(const Vec4& vec1, const Vec4& vec2) noexcept;
+        [[nodiscard]] static constexpr float AngleBetween(const Vec4 &vec1, const Vec4 &vec2) noexcept;
 
         /**
          * @fn                          Length
@@ -93,7 +93,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         other vector
          * @return [Vec4]               new vector
          */
-        [[nodiscard]] constexpr Vec4 operator+(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr Vec4 operator+(const Vec4 &other) const noexcept;
 
 
         /**
@@ -102,7 +102,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         other vector
          * @return [Vec4]               new vector
          */
-        [[nodiscard]] constexpr Vec4 operator-(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr Vec4 operator-(const Vec4 &other) const noexcept;
 
         /**
          * @fn                          operator*
@@ -118,7 +118,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         other vector
          * @return [Vec4&]              current vector added with the passed vector
          */
-        constexpr Vec4& operator+=(const Vec4& other) noexcept;
+        constexpr Vec4 &operator+=(const Vec4 &other) noexcept;
 
         /**
          * @fn                          operator-=
@@ -126,7 +126,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         other vector
          * @return [Vec4&]              current vector subtracted with the passed vector
          */
-        constexpr Vec4& operator-=(const Vec4& other) noexcept;
+        constexpr Vec4 &operator-=(const Vec4 &other) noexcept;
 
         /**
          * @fn                          operator*=
@@ -134,7 +134,7 @@ namespace Bald::Math {
          * @param [const Vec43&]         other vector
          * @return [Vec4&]              current vector multiplied by the passed multiplier
          */
-        constexpr Vec4& operator*=(float multiplier) noexcept;
+        constexpr Vec4 &operator*=(float multiplier) noexcept;
 
         /**
          * @fn                          operator==
@@ -143,7 +143,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are     the same
          *                              false - vectors are NOT the same
          */
-        [[nodiscard]] constexpr bool operator==(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr bool operator==(const Vec4 &other) const noexcept;
 
         /**
          * @fn                          operator!=
@@ -152,7 +152,7 @@ namespace Bald::Math {
          * @return [bool]               true  - vectors are NOT the same
          *                              false - vectors are     the same
          */
-        [[nodiscard]] constexpr bool operator!=(const Vec4& other) const noexcept;
+        [[nodiscard]] constexpr bool operator!=(const Vec4 &other) const noexcept;
 
         /**
          * @fn                          operator[]
@@ -160,7 +160,7 @@ namespace Bald::Math {
          * @param [int]                 index -> index of a number which you want to retrieve
          * @return [const float&]       float at given index
          */
-        [[nodiscard]] constexpr const float& operator[](int index) const noexcept;
+        [[nodiscard]] constexpr const float &operator[](int index) const noexcept;
 
         /**
          * @fn                          operator<<
@@ -169,7 +169,7 @@ namespace Bald::Math {
          * @param [const Vec4&]         vector object to be printed
          * @return [std::ostream&]      stream
          */
-        [[nodiscard]] friend std::ostream& operator<<(std::ostream& out, const Vec4& vec) noexcept;
+        [[nodiscard]] friend std::ostream &operator<<(std::ostream &out, const Vec4 &vec) noexcept;
 
         /**
          * @fn                          GetX
@@ -198,6 +198,7 @@ namespace Bald::Math {
          * @return [float]              m_W
          */
         [[nodiscard]] constexpr inline float GetW() const noexcept { return m_W; }
+
     private:
         float m_X;
         float m_Y;
@@ -205,107 +206,106 @@ namespace Bald::Math {
         float m_W;
     }; // END OF CLASS Vec4
 
-        constexpr void Vec4::Normalize() noexcept {
-            float len = Length();
-            if (len != 0) {
-                    m_X /= len;
-                    m_Y /= len;
-                    m_Z /= len;
-                    m_W /= len;
-            }
-            CORE_LOG_WARN("[Vec4] Couldn't normalize zero vector!");
-            return;
+    constexpr void Vec4::Normalize() noexcept {
+        float len = Length();
+        if (len != 0) {
+            m_X /= len;
+            m_Y /= len;
+            m_Z /= len;
+            m_W /= len;
         }
+    }
 
-        constexpr void Vec4::Homogenize() noexcept {
-                if (m_W != 0)
-                    *this *= 1.0f/m_W;
-                else
-                    m_W = 1.0f;
-        }
+    constexpr void Vec4::Homogenize() noexcept {
+        if (m_W != 0)
+            *this *= 1.0f / m_W;
+        else
+            m_W = 1.0f;
+    }
 
-        constexpr Vec4 Vec4::MakeReverseVec(const Vec4& vec) noexcept {
-                return Vec4(-1.0f * vec.GetX(), -1.0f * vec.GetY(), -1.0f * vec.GetZ(), -1.0f * vec.GetW());
-        }
+    constexpr Vec4 Vec4::MakeReverseVec(const Vec4 &vec) noexcept {
+        return Vec4(-1.0f * vec.GetX(), -1.0f * vec.GetY(), -1.0f * vec.GetZ(), -1.0f * vec.GetW());
+    }
 
-        constexpr void Vec4::Reverse() noexcept {
-                m_X *= -1.0f;
-                m_Y *= -1.0f;
-                m_Z *= -1.0f;
-                m_W *= -1.0f;
-        }
+    constexpr void Vec4::Reverse() noexcept {
+        m_X *= -1.0f;
+        m_Y *= -1.0f;
+        m_Z *= -1.0f;
+        m_W *= -1.0f;
+    }
 
-        constexpr float Vec4::DotProduct(const Vec4& vec1, const Vec4& vec2) noexcept {
-                return vec1.GetX() * vec2.GetX() + vec1.GetY() * vec2.GetY() + vec1.GetZ() * vec2.GetZ() + vec1.GetW() * vec2.GetW();
-        }
+    constexpr float Vec4::DotProduct(const Vec4 &vec1, const Vec4 &vec2) noexcept {
+        return vec1.GetX() * vec2.GetX() + vec1.GetY() * vec2.GetY() + vec1.GetZ() * vec2.GetZ() +
+               vec1.GetW() * vec2.GetW();
+    }
 
-        constexpr float Vec4::AngleBetween(const Vec4& vec1, const Vec4& vec2) noexcept {
-                float dot = DotProduct(vec1, vec2);
-                float len = vec1.Length() * vec2.Length();
-                return static_cast<float>(acos(dot / len));
-        }
+    constexpr float Vec4::AngleBetween(const Vec4 &vec1, const Vec4 &vec2) noexcept {
+        float dot = DotProduct(vec1, vec2);
+        float len = vec1.Length() * vec2.Length();
+        return static_cast<float>(acos(dot / len));
+    }
 
-        constexpr float Vec4::Length() const noexcept {
-                return static_cast<float>(sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z + m_W * m_W));
-        }
+    constexpr float Vec4::Length() const noexcept {
+        return static_cast<float>(sqrt(m_X * m_X + m_Y * m_Y + m_Z * m_Z + m_W * m_W));
+    }
 
-        constexpr Vec4 Vec4::operator+(const Vec4& other) const noexcept {
-                return Vec4(m_X + other.m_X, m_Y + other.m_Y, m_Z + other.m_Z, m_W + other.m_W);
-        }
+    constexpr Vec4 Vec4::operator+(const Vec4 &other) const noexcept {
+        return Vec4(m_X + other.m_X, m_Y + other.m_Y, m_Z + other.m_Z, m_W + other.m_W);
+    }
 
-        constexpr Vec4 Vec4::operator-(const Vec4& other) const noexcept {
-                return Vec4(m_X - other.m_X, m_Y - other.m_Y, m_Z - other.m_Z, m_W - other.m_W);
-        }
+    constexpr Vec4 Vec4::operator-(const Vec4 &other) const noexcept {
+        return Vec4(m_X - other.m_X, m_Y - other.m_Y, m_Z - other.m_Z, m_W - other.m_W);
+    }
 
-        constexpr Vec4 Vec4::operator*(float multiplier) const noexcept {
-                return Vec4(multiplier * m_X, multiplier * m_Y, multiplier * m_Z, multiplier * m_W);
-        }
+    constexpr Vec4 Vec4::operator*(float multiplier) const noexcept {
+        return Vec4(multiplier * m_X, multiplier * m_Y, multiplier * m_Z, multiplier * m_W);
+    }
 
-        constexpr Vec4& Vec4::operator+=(const Vec4& other) noexcept {
-                m_X += other.m_X;
-                m_Y += other.m_Y;
-                m_Z += other.m_Z;
-                m_W += other.m_W;
-                return *this;
-        }
+    constexpr Vec4 &Vec4::operator+=(const Vec4 &other) noexcept {
+        m_X += other.m_X;
+        m_Y += other.m_Y;
+        m_Z += other.m_Z;
+        m_W += other.m_W;
+        return *this;
+    }
 
-        constexpr Vec4& Vec4::operator-=(const Vec4& other) noexcept {
-                m_X -= other.m_X;
-                m_Y -= other.m_Y;
-                m_Z -= other.m_Z;
-                m_W -= other.m_W;
-                return *this;
-        }
+    constexpr Vec4 &Vec4::operator-=(const Vec4 &other) noexcept {
+        m_X -= other.m_X;
+        m_Y -= other.m_Y;
+        m_Z -= other.m_Z;
+        m_W -= other.m_W;
+        return *this;
+    }
 
-        constexpr Vec4& Vec4::operator*=(float multiplier) noexcept {
-                m_X *= multiplier;
-                m_Y *= multiplier;
-                m_Z *= multiplier;
-                m_W *= multiplier;
-                return *this;
-        }
+    constexpr Vec4 &Vec4::operator*=(float multiplier) noexcept {
+        m_X *= multiplier;
+        m_Y *= multiplier;
+        m_Z *= multiplier;
+        m_W *= multiplier;
+        return *this;
+    }
 
-        constexpr bool Vec4::operator==(const Vec4& other) const noexcept {
-                return m_X == other.m_X && m_Y == other.m_Y && m_Z == other.m_Z && m_W == other.m_W;
-        }
+    constexpr bool Vec4::operator==(const Vec4 &other) const noexcept {
+        return m_X == other.m_X && m_Y == other.m_Y && m_Z == other.m_Z && m_W == other.m_W;
+    }
 
-        constexpr bool Vec4::operator!=(const Vec4& other) const noexcept {
-                return !(*this == other);
-        }
+    constexpr bool Vec4::operator!=(const Vec4 &other) const noexcept {
+        return !(*this == other);
+    }
 
-        constexpr const float& Vec4::operator[](int index) const noexcept {
-                switch(index) {
-                    case 0:
-                        return m_X;
-                    case 1:
-                        return m_Y;
-                    case 2:
-                        return m_Z;
-                    case 3:
-                        return m_W;
-                    default:
-                        assert(false);
-                        break;
-                }
+    constexpr const float &Vec4::operator[](int index) const noexcept {
+        switch (index) {
+            case 0:
+                return m_X;
+            case 1:
+                return m_Y;
+            case 2:
+                return m_Z;
+            case 3:
+                return m_W;
+            default:
+                assert(false);
+                break;
         }
+    }
 } // END OF NAMESPACE Bald::Math
