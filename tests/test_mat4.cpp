@@ -94,7 +94,7 @@ TEST(Rotation, Mat4_Rotation) {
 
     Bald::Math::Vec4 rotatedVec = A * vec;
 
-    EXPECT_TRUE(std::abs(-1.0f - rotatedVec.GetX()) < 1e-6);
+    EXPECT_TRUE(std::abs(-1.0f - rotatedVec.GetX()) < static_cast<float >(1e-6));
     EXPECT_FLOAT_EQ( 5.0f, rotatedVec.GetY());
     EXPECT_FLOAT_EQ( 0.0f, rotatedVec.GetZ());
     EXPECT_FLOAT_EQ( 1.0f, rotatedVec.GetW());
