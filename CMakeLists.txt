@@ -36,6 +36,13 @@ add_compile_options(
 #        -Wlogical-op
 )
 
+if(DEFINE_DEBUG)
+    add_definitions(-DDEBUG)
+endif()
+if(TRAVIS_BUILD)
+    add_definitions(-DTRAVIS)
+endif()
+
 add_definitions(-D_LINUX)
 
 add_library(bald_engine
