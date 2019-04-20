@@ -34,6 +34,6 @@ script:
   - ./runUnitTests
   - cd ..
   - mkdir build_releas && cd build_releas
-  - cmake -DCMAKE_CXX_FLAGS="-Ofast" -DCMAKE_C_FLAGS="-Ofast"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast" ../
+  - cmake -DCMAKE_CXX_FLAGS="-Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast -Werror" ../
   - /usr/bin/time make -j 12
   - ./runUnitTests
