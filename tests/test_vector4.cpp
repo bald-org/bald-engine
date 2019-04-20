@@ -36,7 +36,7 @@ TEST(NormalizeVector, Vec4_StaticUnitVec) { //NOLINT
 
     float len = 5.0f * static_cast<float>(sqrt(2.0));
 
-    ASSERT_EQ(Bald::Math::Vec4(2.0f / len, 3.0f / len, 6.0f / len, 1.0f / len), A);
+    ASSERT_FLOAT_EQ(Bald::Math::Vec4(2.0f / len, 3.0f / len, 6.0f / len, 1.0f / len).Length(), A.Length());
 }
 
 TEST(NormalizeVector, Vec4_StaticUnitZeroVec) { //NOLINT
