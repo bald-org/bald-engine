@@ -31,16 +31,17 @@ namespace Bald::Utils {
         try
         {
             auto *buffer = new char[stringSize + 1];
-            fread(buffer, sizeof(char), stringSize, file);
-            buffer[stringSize] = 0;
-
-            std::string result(buffer);
-
+            if(fread(buffer, sizeof(char), stringSize, file) != 0){
+                buffer[stringSize] = '\0';
+                std::string result(buffer);
+                delete[] buffer;
+                fclose(file);
+                return result;
+            }
             delete[] buffer;
-
             fclose(file);
-
-            return result;
+            CORE_LOG_ERROR("[FILE_MANAGER] error while reading file");
+            return "ERROR READING FILE";
         }
         catch (std::bad_alloc& ba)
         {
