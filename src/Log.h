@@ -62,6 +62,4 @@ namespace Bald {
 
 //example call CORE_LOG_INFO("Some Info"); will result in [19:12:23] Bald: Some Info
 
-}
-
- //BALD_ENGINE_LOG_H
+} // END OF NAMESPACE Bald

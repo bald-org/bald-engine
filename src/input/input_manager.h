@@ -294,5 +294,4 @@ namespace Bald::Input {
         Bald::EventManager::Subscribe<MouseButtonReleasedEvent>(HandleType::SYNC, fun, args ...);
     }
 
-}
-//BALD_ENGINE_INPUT_MANAGER_H
+} // END OF NAMESPACE Bald::Input

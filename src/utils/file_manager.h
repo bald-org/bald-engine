@@ -63,4 +63,5 @@ namespace Bald::Utils {
          */
         [[nodiscard]] static std::string ReadBigFile(const char* filePath);
     };
-}
+
+} // END OF NAMESPACE Bald::Utils

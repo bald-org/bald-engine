@@ -81,4 +81,5 @@ namespace Bald::Input {
         if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
         else Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
     }
-}
+
+} // END OF NAMESPACE Bald::Input

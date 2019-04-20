@@ -11,4 +11,4 @@ namespace Bald::Utils {
         first = second;
         second = copy;
     }
-}
+} // END OF NAMESPACE Bald::Utils

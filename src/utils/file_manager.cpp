@@ -72,4 +72,5 @@ namespace Bald::Utils {
         ReadSmallFile(filePath);
 #endif
     }
-}
+
+} // END OF NAMESPACE Bald::Utils
