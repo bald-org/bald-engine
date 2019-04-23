@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
+add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
@@ -16,6 +17,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/events/callback)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/spdlog/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glfw/include/)
 include_directories(${CMAKE_SOURCE_DIR}/vendor/glad/include/)
+include_directories(${CMAKE_SOURCE_DIR}/vendor/glm/glm/)
 
 #### END-LIBRARIES
 
@@ -51,10 +53,6 @@ add_library(bald_engine
         src/utils/split_string.cpp
         src/input/input_manager.cpp
         src/Log.cpp
-        src/math/vec2.cpp
-        src/math/vec3.cpp
-        src/math/vec4.cpp
-        src/math/mat4.cpp
         src/events/event_manager.cpp
         src/events/callback/handler.cpp)
 
