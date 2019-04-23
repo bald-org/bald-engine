@@ -35,13 +35,9 @@ namespace Bald {
 
     void EventManager::CleanUp() noexcept {
         std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
-        for(auto a : m_Callbacks) {
-
-            for(auto b: *a.second) {
-                delete b;
-            }
-
-            delete a.second;
-        }
+        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<Handler*>*>&& pair) {
+            std::for_each(pair.second->begin(), pair.second->end(), [](Handler* handler) { delete handler; });
+            delete pair.second;
+        });
     }
 } //END OF NAMESPACE Bald

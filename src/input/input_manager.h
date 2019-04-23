@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include <events/event.h>
-#include <events/event_manager.h>
+#include "events/event.h"
+#include "events/event_manager.h"
 #include "GLFW/glfw3.h"
 #include "pch.h"
 
@@ -210,8 +210,7 @@ namespace Bald::Input {
         static void EmitMouseButtonReleasedEvent(int buttoncode) noexcept;
 
     private:
-        static double m_MouseX;                                           /**< current mouse x - coordinate*/
-        static double m_MouseY;                                           /**< current mouse y - coordinate*/
+        static std::pair<double, double> m_MousePos;                      /**< current mouse x, y - coordinate*/
         static bool m_Keys[MAX_KEYS];                                     /**< current keys states*/
         static bool m_KeysState[MAX_KEYS];                                /**< keys states in previous frame*/
         static bool m_KeysTyped[MAX_KEYS];                                /**< keys witch were typed*/
@@ -245,8 +244,8 @@ namespace Bald::Input {
     }
 
     void InputManager::GetMousePos(double& xpos, double& ypos) noexcept {
-        xpos = InputManager::m_MouseX;
-        ypos = InputManager::m_MouseY;
+        xpos = InputManager::m_MousePos.first;
+        ypos = InputManager::m_MousePos.second;
     }
 
     inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -259,8 +258,8 @@ namespace Bald::Input {
     }
 
     inline void cursor_position_callback([[maybe_unused]]GLFWwindow* window, double xpos, double ypos) {
-        Bald::Input::InputManager::m_MouseX = xpos;
-        Bald::Input::InputManager::m_MouseY = ypos;
+        Bald::Input::InputManager::m_MousePos.first = xpos;
+        Bald::Input::InputManager::m_MousePos.second = ypos;
         Bald::EventManager::Emit<MouseMovedEvent>(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 

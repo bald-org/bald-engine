@@ -3,16 +3,17 @@
 //
 
 #include "file_manager.h"
-
 #include "pch.h"
 #include <fstream>
-#ifdef _LINUX
+
+#ifdef LINUX
     #include <sys/mman.h>
 #endif
+
 namespace Bald::Utils {
 
     std::string FileManager::ReadFile(const char* filePath, Size size) {
-        if (size == SMALL_FILE)
+        if (size == Size::SMALL_FILE)
             return ReadSmallFile(filePath);
         return ReadBigFile(filePath);
     }
@@ -53,11 +54,11 @@ namespace Bald::Utils {
 
     }
 
-#ifdef _LINUX
+#ifdef LINUX
 
     std::string FileManager::ReadBigFile(const char* filePath) {
         int fileDescriptor = open(filePath, O_RDONLY, S_IRUSR | S_IWUSR);
-        struct stat sb;
+        struct stat sb{};
 
         if (fstat(fileDescriptor, &sb) == -1) {
             CORE_LOG_WARN("[FILE_MANAGER] Error: Couldn't get size of the file. Check if the file exists at path: " +
@@ -65,8 +66,7 @@ namespace Bald::Utils {
             return std::string("Error!");
         }
 
-        auto* buffer = static_cast<char*>(mmap(nullptr, static_cast<unsigned long>(sb.st_size), PROT_READ, MAP_PRIVATE,
-                                               fileDescriptor, 0));
+        auto* buffer = static_cast<char*>(mmap(nullptr, static_cast<unsigned long>(sb.st_size), PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
 
         std::string result(buffer);
 
@@ -75,7 +75,7 @@ namespace Bald::Utils {
         return result;
     }
 }
-#elif _WINDOWS
+#elif WINDOWS
     std::string FileManager::ReadBigFile(const char *filePath) {
         CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
         ReadSmallFile(filePath);

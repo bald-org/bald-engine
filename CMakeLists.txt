@@ -27,12 +27,15 @@ project(bald_engine)
 
 if(DEFINE_DEBUG)
     add_definitions(-DDEBUG)
+elseif(DEFINE_RELEASE)
+    add_definitions(-DRELEASE)
 endif()
+
 if(TRAVIS_BUILD)
     add_definitions(-DTRAVIS)
 endif()
 
-add_definitions(-D_LINUX)
+add_definitions(-DLINUX)
 
 add_library(bald_engine
         library.cpp library.h

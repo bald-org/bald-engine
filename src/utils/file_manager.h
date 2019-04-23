@@ -18,7 +18,7 @@ namespace Bald::Utils {
         /**
          * ENUM which determines size of file and therefor methods, which will be used to read it
          */
-        enum Size : char {
+        enum class Size : char {
             SMALL_FILE, BIG_FILE
         };
     public:

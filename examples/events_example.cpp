@@ -24,8 +24,8 @@ int main() {
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
 
-    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
     EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, [](){ std::cout << "KeyPressedEvent!\n"; });
+    unsigned id = EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
     EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](){ std::cout << "KeyMovedEvent!\n"; });
     while (!glfwWindowShouldClose(window)) {
 
@@ -36,6 +36,14 @@ int main() {
         glfwSwapBuffers(window);
     }
 
+    EventManager::Unsubscibe<KeyTypedEvent>(id);
+    EventManager::Emit<KeyTypedEvent>(GLFW_KEY_ESCAPE);
+    EventManager::Flush();
+
+    EventManager::Subscribe<KeyTypedEvent>( HandleType::SYNC, [](){ std::cout << "After Unsubscribe!\n"; });
+    EventManager::Emit<KeyTypedEvent>(GLFW_KEY_ESCAPE);
+
+    EventManager::Flush();
     EventManager::CleanUp();
 
     glfwDestroyWindow(window);
