@@ -52,7 +52,7 @@ namespace Bald {
         * @param [int]          ypos -> specific mouse position
         */
 
-        MouseMovedEvent(int mouseX, int mouseY)
+        explicit MouseMovedEvent(int mouseX, int mouseY)
             : m_MousePos{mouseX, mouseY} {}
 
     public:

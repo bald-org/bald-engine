@@ -53,7 +53,7 @@ namespace Bald {
         * @param [int]          height -> Window's height
         */
 
-        WindowResizedEvent(int windowWidth, int windowHeight)
+        explicit WindowResizedEvent(int windowWidth, int windowHeight)
             : m_WindowSize{windowWidth, windowHeight} {}
 
     public:
