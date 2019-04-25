@@ -59,39 +59,36 @@ namespace Bald {
         inline bool operator==(const unsigned& other) const;
 
     protected:
-        static std::vector<unsigned> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
+        static std::vector<bool> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
                                                      for ex. remove one of such from some type of queue */
 
         std::function<void()> m_Function; /**< Function wrapper */
-        unsigned m_ID; /**< This instance's id */
+        unsigned m_ID; /**< This instance's id. When this value is 0 it means that handler is not used. */
 
     }; // END OF CLASS Handler
 
     template<class F, class... Args>
-    Handler::Handler(F&& fun, Args&& ... args) {
-        if(m_TakenID.empty()) {
-            m_TakenID.push_back(0);
-            m_ID = 0;
-        } else {
-            bool handled = false;
-
-            for(unsigned int i = 1; i < UINT32_MAX; ++i) {
-                if(std::find(m_TakenID.begin(), m_TakenID.end(), i) == m_TakenID.end()) {
-                    m_TakenID.push_back(i);
-                    m_ID = i;
-                    handled = true;
-                    break;
-                }
-            }
-
-            if(!handled) {
-                CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
+    Handler::Handler(F&& fun, Args&& ... args) : m_ID{0} {
+        for(unsigned int i = 1; i < UINT32_MAX; ++i) {
+            if(i <= m_TakenID.size() && m_TakenID[i - 1] == false) {
+                m_TakenID[i - 1] = true;
+                m_ID = i;
+                break;
+            } else if (i > m_TakenID.size()) {
+                m_TakenID.push_back(true);
+                m_ID = i;
+                break;
             }
         }
 
-        m_Function = [=]() {
-            fun(args...);
-        };
+        if(m_ID != 0) {
+            m_Function = [=]() {
+                fun(args...);
+            };
+        } else {
+            CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
+        }
+
     }
 
     bool Handler::operator==(const unsigned& other) const {

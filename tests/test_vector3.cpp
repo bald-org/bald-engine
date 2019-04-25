@@ -27,7 +27,7 @@ TEST(Getter, Vec3_GetZ) { //NOLINT
 TEST(NormalizeVector, Vec3_StaticUnitVec) { //NOLINT
     Bald::Math::Vec3 A = Bald::Math::Vec3::MakeUnitVec(Bald::Math::Vec3(2.0f, 3.0f, 6.0f));
 
-    ASSERT_EQ(Bald::Math::Vec3(2.0f / 7.0f, 3.0f / 7.0f, 6.0f / 7.0f), A);
+    ASSERT_FLOAT_EQ(Bald::Math::Vec3(2.0f / 7.0f, 3.0f / 7.0f, 6.0f / 7.0f).Length(), A.Length());
 }
 
 TEST(NormalizeVector, Vec3_StaticUnitZeroVec) { //NOLINT

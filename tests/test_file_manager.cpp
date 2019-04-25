@@ -8,7 +8,7 @@
 
 TEST(FileManager, GoodSmallFileOpening) { //NOLINT
 
-    std::string file_result = Bald::Utils::FileManager::ReadFile("test_file_manager.txt", Bald::Utils::FileManager::SMALL_FILE);
+    std::string file_result = Bald::Utils::FileManager::ReadFile("test_file_manager.txt", Bald::Utils::FileManager::Size::SMALL_FILE);
 
     EXPECT_EQ("plik testowy\n"
               "do odczytu", file_result);
@@ -16,7 +16,7 @@ TEST(FileManager, GoodSmallFileOpening) { //NOLINT
 
 TEST(FileManager, GoodBigFileOpening) { //NOLINT
 
-    std::string file_result = Bald::Utils::FileManager::ReadFile("test_file_manager.txt", Bald::Utils::FileManager::BIG_FILE);
+    std::string file_result = Bald::Utils::FileManager::ReadFile("test_file_manager.txt", Bald::Utils::FileManager::Size::BIG_FILE);
 
     EXPECT_EQ("plik testowy\n"
               "do odczytu", file_result);
@@ -25,14 +25,14 @@ TEST(FileManager, GoodBigFileOpening) { //NOLINT
 
 TEST(FileManager, WrongSmallFileOpening) { //NOLINT
 
-    std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::SMALL_FILE);
+    std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::Size::SMALL_FILE);
 
     EXPECT_EQ("Error!", file_result);
 }
 
 TEST(FileManager, WrongBigFileOpening) { //NOLINT
 
-    std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::BIG_FILE);
+    std::string file_result = Bald::Utils::FileManager::ReadFile("no_such_file.cpp", Bald::Utils::FileManager::Size::BIG_FILE);
 
     EXPECT_EQ("Error!", file_result);
 }

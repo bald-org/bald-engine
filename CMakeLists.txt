@@ -25,17 +25,17 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(bald_engine)
 
-add_compile_options(
-        -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor -Werror
-        -Wold-style-cast -Wcast-align
-        -Wunused -Woverloaded-virtual
-        -Wpedantic -Wconversion -Wnull-dereference
-        -Wdouble-promotion -Wduplicated-cond
-        -Wduplicated-branches
-        -Wlogical-op -fsanitize=leak)
+if(DEFINE_DEBUG)
+    add_definitions(-DDEBUG)
+elseif(DEFINE_RELEASE)
+    add_definitions(-DRELEASE)
+endif()
 
-add_definitions(-D_LINUX)
+if(TRAVIS_BUILD)
+    add_definitions(-DTRAVIS)
+endif()
+
+add_definitions(-DLINUX)
 
 add_library(bald_engine
         library.cpp library.h

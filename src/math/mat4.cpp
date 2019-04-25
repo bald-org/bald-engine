@@ -142,4 +142,4 @@ namespace Bald::Math {
             return copy;
     }
 
-}
+} // END OF NAMESPACE Bald::Math
