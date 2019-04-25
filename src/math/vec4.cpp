@@ -5,6 +5,7 @@
 #include "vec4.h"
 
 namespace Bald::Math {
+
     Vec4 Vec4::MakeUnitVec(const Vec4& vec) noexcept {
         float len = vec.Length();
         if(len != 0)
@@ -18,4 +19,4 @@ namespace Bald::Math {
         return out;
     }
 
-}
+} // END OF NAMESPACE Bald::Math

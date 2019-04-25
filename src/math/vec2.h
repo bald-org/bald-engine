@@ -265,5 +265,4 @@ namespace Bald::Math {
             }
         }
 
-}
-// END OF NAMESPACE Bald::Math
+} // END OF NAMESPACE Bald::Math

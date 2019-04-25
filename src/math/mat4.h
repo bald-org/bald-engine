@@ -556,5 +556,4 @@ namespace Bald::Math {
         return m_MatrixColumns[index];
     }
 
-}
-// END OF NAMESPACE Bald::Math
+} // END OF NAMESPACE Bald::Math

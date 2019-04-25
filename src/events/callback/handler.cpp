@@ -6,11 +6,10 @@
 
 namespace Bald {
 
-    std::vector<unsigned> Handler::m_TakenID;
+    std::vector<bool> Handler::m_TakenID;
 
     Handler::~Handler() {
-        auto iter = std::find(m_TakenID.begin(), m_TakenID.end(), m_ID);
-        m_TakenID.erase(iter);
+        m_TakenID[m_ID - 1] = false;
     }
 
 } //END OF NAMESPACE Bald

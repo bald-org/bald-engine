@@ -53,8 +53,8 @@ namespace Bald {
         * @param [int]          height -> Window's height
         */
 
-        explicit WindowResizedEvent(int width, int height)
-            : m_Width(width), m_Height(height) {}
+        explicit WindowResizedEvent(int windowWidth, int windowHeight)
+            : m_WindowSize{windowWidth, windowHeight} {}
 
     public:
 
@@ -81,7 +81,7 @@ namespace Bald {
         * @return [int]         Window's width during event emission
         */
 
-        [[nodiscard]] inline int GetWidth() const noexcept { return m_Width; }
+        [[nodiscard]] inline int GetWidth() const noexcept { return m_WindowSize.first; }
 
         /**
         * @fn                   GetHeight
@@ -89,7 +89,7 @@ namespace Bald {
         * @return [int]         Window's height during event emission
         */
 
-        [[nodiscard]] inline int GetHeight() const noexcept { return m_Height; }
+        [[nodiscard]] inline int GetHeight() const noexcept { return m_WindowSize.second; }
 
         /**
         * @fn                               GetSize
@@ -97,11 +97,10 @@ namespace Bald {
         * @return [std::pair<int,int>]      width, height coordinates as pair
         */
 
-        [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return {m_Width, m_Height}; }
+        [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return m_WindowSize; }
 
     private:
-        int m_Width;  /* < Window's width */
-        int m_Height; /* < Window's height */
+        const std::pair<int, int> m_WindowSize; /* < Window's width, height */
     }; // END OF CLASS WindowResizedEvent
 
     /**
