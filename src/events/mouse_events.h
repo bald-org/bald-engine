@@ -120,7 +120,7 @@ namespace Bald {
         */
 
         explicit MouseScrolledEvent(double xoffset, double yoffset)
-            : m_OffsetX(xoffset), m_OffsetY(yoffset) {}
+            : m_MouseOff{xoffset, yoffset} {}
 
     public:
 
@@ -147,7 +147,7 @@ namespace Bald {
         * @return [int]         Mouse x offset
         */
 
-        [[nodiscard]] inline double GetOffsetX() const noexcept { return m_OffsetX; }
+        [[nodiscard]] inline double GetOffsetX() const noexcept { return m_MouseOff.first; }
 
         /**
         * @fn                   GetOffsetY
@@ -155,7 +155,7 @@ namespace Bald {
         * @return [int]         Mouse y offset
         */
 
-        [[nodiscard]] inline double GetOffsetY() const noexcept { return m_OffsetY; }
+        [[nodiscard]] inline double GetOffsetY() const noexcept { return m_MouseOff.second; }
 
         /**
         * @fn                               GetMouseOffset
@@ -163,11 +163,10 @@ namespace Bald {
         * @return [std::pair<int,int>]      x, y offset as pair
         */
 
-        [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return {m_OffsetX, m_OffsetY}; }
+        [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
 
     private:
-        double m_OffsetX; /* < Mouse x offset */
-        double m_OffsetY; /* < Mouse y offset */
+        const std::pair<int, int> m_MouseOff; /* < Mouse x, y offset */
     }; // END OF CLASS MouseScrolledEvent
 
     /**
