@@ -13,9 +13,6 @@
 #include "key_events.h"
 #include "mouse_events.h"
 
-#define MAX_KEYS          1024
-#define MAX_MOUSE_BUTTONS 64
-
 /**
  * @class InputManager
  * @brief manages user's input
@@ -23,6 +20,9 @@
 
 
 namespace Bald::Input {
+
+    constexpr int MAX_KEYS{1024};
+    constexpr int MAX_MOUSE_BUTTONS{64};
 
     using callback = std::function<void()>;
 
@@ -53,7 +53,7 @@ namespace Bald::Input {
         static void Update() noexcept; //TODO: have to be called in Window class Update
 
         /**
-         * @fn                   isKeyPressed
+         * @fn                   IsKeyPressed
          * @brief                function that checks if key was pressed
          * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
          * @return        [bool] true if key was pressed otherwise false
@@ -62,7 +62,7 @@ namespace Bald::Input {
         [[nodiscard]] inline static bool IsKeyPressed(int keycode) noexcept;
 
         /**
-         * @fn                   isKeyTyped
+         * @fn                   IsKeyTyped
          * @brief                function that checks if key was typed
          * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
          * @return        [bool] true if key was typed otherwise false
@@ -71,7 +71,7 @@ namespace Bald::Input {
         [[nodiscard]] inline static bool IsKeyTyped(int keycode) noexcept;
 
         /**
-         * @fn                      isMouseButtonPressed
+         * @fn                      IsMouseButtonPressed
          * @brief                   function that checks if mouse button was pressed
          * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
          * @return           [bool] true if button was pressed otherwise false
@@ -80,7 +80,7 @@ namespace Bald::Input {
         [[nodiscard]] inline static bool IsMouseButtonPressed(int buttoncode) noexcept;
 
         /**
-         * @fn                      isMouseButtonTyped
+         * @fn                      IsMouseButtonTyped
          * @brief                   function that checks if mouse button was typed
          * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
          * @return           [bool] true if button was typed otherwise false
@@ -89,7 +89,7 @@ namespace Bald::Input {
         [[nodiscard]] inline static bool IsMouseButtonTyped(int buttoncode) noexcept;
 
         /**
-         * @fn                  getMousePos
+         * @fn                  GetMousePos
          * @brief               sets two variables on current mouse position
          * @param xpos [double] x-coordinate
          * @param ypos [double] y-coordinate
