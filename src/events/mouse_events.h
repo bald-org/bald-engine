@@ -144,7 +144,7 @@ namespace Bald {
         /**
         * @fn                   GetOffsetX
         * @brief                Mouse x offset getter
-        * @return [int]         Mouse x offset
+        * @return [double]      Mouse x offset
         */
 
         [[nodiscard]] inline double GetOffsetX() const noexcept { return m_MouseOff.first; }
@@ -152,15 +152,15 @@ namespace Bald {
         /**
         * @fn                   GetOffsetY
         * @brief                Mouse y offset getter
-        * @return [int]         Mouse y offset
+        * @return [double]      Mouse y offset
         */
 
         [[nodiscard]] inline double GetOffsetY() const noexcept { return m_MouseOff.second; }
 
         /**
-        * @fn                               GetMouseOffset
-        * @brief                            Mouse x, y offset getter
-        * @return [std::pair<int,int>]      x, y offset as pair
+        * @fn                                   GetMouseOffset
+        * @brief                                Mouse x, y offset getter
+        * @return [std::pair<double,double>]    x, y offset as pair
         */
 
         [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
