@@ -115,8 +115,8 @@ namespace Bald {
         /**
         * @fn                   MouseScrolledEvent
         * @brief                Constructor
-        * @param [int]          xoffset -> specific mouse offset
-        * @param [int]          yoffset -> specific mouse offset
+        * @param [double]       xoffset -> specific mouse offset
+        * @param [double]       yoffset -> specific mouse offset
         */
 
         explicit MouseScrolledEvent(double xoffset, double yoffset)
