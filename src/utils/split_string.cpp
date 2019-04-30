@@ -7,6 +7,7 @@
 #include "pch.h"
 
 namespace Bald::Utils {
+
     std::vector<std::string> split_string(const char* str_to_split, char delimiter) {
         std::vector<std::string> result;
         std::string temp;
@@ -18,4 +19,4 @@ namespace Bald::Utils {
         }
         return result;
     }
-}
+}// END OF NAMESPACE Bald::Utils

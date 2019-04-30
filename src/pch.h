@@ -17,4 +17,3 @@
 #include <typeinfo>
 
 #include "Log.h"
-//BALD_ENGINE_PCH_H

@@ -305,5 +305,6 @@ namespace Bald::Math {
                         assert(false);
                         break;
                 }
+                return m_X;
         }
 } // END OF NAMESPACE Bald::Math

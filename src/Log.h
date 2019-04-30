@@ -51,7 +51,7 @@ namespace Bald {
     constexpr std::shared_ptr<spdlog::logger> &Log::GetGameLogger() noexcept { return m_GameLogger; }
 
 
-
+#ifdef DEBUG
 #define CORE_LOG_INFO(...) ::Bald::Log::GetCoreLogger()->info(__VA_ARGS__) /**< print info in Core Logger */
 #define CORE_LOG_WARN(...) ::Bald::Log::GetCoreLogger()->warn(__VA_ARGS__) /**< print warning in Core Logger */
 #define CORE_LOG_ERROR(...) ::Bald::Log::GetCoreLogger()->error(__VA_ARGS__) /**< print error in Core Logger */
@@ -60,8 +60,13 @@ namespace Bald {
 #define GAME_LOG_WARN(...) ::Bald::Log::GetGameLogger()->warn(__VA_ARGS__)   /**< print warning in Game Logger */
 #define GAME_LOG_ERROR(...) ::Bald::Log::GetGameLogger()->error(__VA_ARGS__) /**< print error in Game Logger */
 
-//example call CORE_LOG_INFO("Some Info"); will result in [19:12:23] Bald: Some Info
+#else
+#define CORE_LOG_INFO(...) /**< empty instruction */
+#define CORE_LOG_WARN(...) /**< empty instruction */
+#define CORE_LOG_ERROR(...) /**< empty instruction */
 
-}
-
- //BALD_ENGINE_LOG_H
+#define GAME_LOG_INFO(...) /**< empty instruction */
+#define GAME_LOG_WARN(...)   /**< empty instruction */
+#define GAME_LOG_ERROR(...) /**< empty instruction */
+#endif
+} // END OF NAMESPACE Bald

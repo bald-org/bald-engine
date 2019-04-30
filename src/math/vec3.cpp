@@ -19,4 +19,4 @@ namespace Bald::Math {
         return out;
     }
 
-}
+} // END OF NAMESPACE Bald::Math
