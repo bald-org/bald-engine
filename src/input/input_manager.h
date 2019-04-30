@@ -242,12 +242,50 @@ namespace Bald::Input {
         static callback m_MouseButtonTypedCallbacks[MAX_MOUSE_BUTTONS];   /**< callbacks on mouse button typed event*/
     };
 
-    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
+    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action,
+                             [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_Keys[key] = action != GLFW_RELEASE;
+
+        switch(action) {
+            case GLFW_PRESS: {
+                InputManager::EmitKeyTypedEvent(key);
+                break;
+            }
+            case GLFW_RELEASE: {
+                InputManager::EmitKeyReleasedEvent(key);
+                break;
+            }
+            case GLFW_REPEAT: {
+                InputManager::EmitKeyPressedEvent(key);
+                break;
+            }
+            default: {
+                CORE_LOG_WARN("[InputManager] Wrong state provided");
+            }
+        }
     }
 
-    inline void mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
+    inline void
+    mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[button] = action != GLFW_RELEASE;
+
+        switch(action) {
+            case GLFW_PRESS: {
+                InputManager::EmitMouseButtonTypedEvent(button);
+                break;
+            }
+            case GLFW_RELEASE: {
+                InputManager::EmitMouseButtonReleasedEvent(button);
+                break;
+            }
+            case GLFW_REPEAT: {
+                InputManager::EmitMouseButtonPressedEvent(button);
+                break;
+            }
+            default: {
+                CORE_LOG_WARN("[InputManager] Wrong state provided");
+            }
+        }
     }
 
     inline void cursor_position_callback([[maybe_unused]]GLFWwindow* window, double xpos, double ypos) {
@@ -259,7 +297,7 @@ namespace Bald::Input {
     inline void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
         Bald::Input::InputManager::m_MouseOff.first = xoffset;
         Bald::Input::InputManager::m_MouseOff.second = yoffset;
-        // TODO: Emit MouseScrolledEvent with offsets
+        Bald::EventManager::Emit<MouseScrolledEvent>(xoffset, yoffset);
     }
 
     bool InputManager::IsKeyPressed(int keycode) noexcept {
@@ -309,9 +347,7 @@ namespace Bald::Input {
 
     template<class F, class... Args>
     void InputManager::SetMouseScrolledCallback([[maybe_unused]]F&& fun, [[maybe_unused]]Args&& ... args) noexcept {
-        // TODO: Subscribe to MouseScrolledEvent, because it is non existant in currently submitted revision.
-        //       Also remove [[maybe_unused]] specifiers.
-        // Bald::EventManager::Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
+        Bald::EventManager::Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>

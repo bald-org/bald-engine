@@ -18,10 +18,14 @@ int main() {
 
     Window window("BaldEngine!", 800, 600);
 
-    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, []() { CORE_LOG_INFO("Key Typed Event!"); });
-    EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, []() { CORE_LOG_INFO("Mouse Moved Event!"); });
-    EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, []() { CORE_LOG_INFO("Mouse Button Pressed Event!"); } );
-    EventManager::Subscribe<WindowClosedEvent>(HandleType::ASYNC, [&]() {
+    EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Typed Event!"); });
+    EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Pressed Event!"); });
+    EventManager::Subscribe<KeyReleasedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Released Event!"); });
+    EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, []() { CORE_LOG_TRACE("Mouse Moved Event!"); });
+    EventManager::Subscribe<MouseScrolledEvent>(HandleType::ASYNC, []() { CORE_LOG_TRACE("Mouse Scrolled Event!"); });
+    EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Mouse Button Pressed Event!"); } );
+    EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [&]() {
+        CORE_LOG_TRACE("Window Closed Event!");
         glfwSetWindowShouldClose(window.GetWindow(), true);
     });
 

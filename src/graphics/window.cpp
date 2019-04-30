@@ -87,17 +87,20 @@ namespace Bald::Graphics {
 
         glfwSetKeyCallback(m_Window, Input::key_callback);
 
+        // TODO: Not really sure how to decouple text handling from input handling right now.
+        //       This callback will have to be set: glfwSetCharCallback
+
         glfwSetMouseButtonCallback(m_Window, Input::mouse_button_callback);
 
         glfwSetCursorPosCallback(m_Window, Input::cursor_position_callback);
 
-        // TODO: Set glfwSetScrollCallback, glfwSetCharCallback
+        glfwSetScrollCallback(m_Window, Input::scroll_callback);
 
         return true;
     }
 
     void Window::Shutdown() {
-        EventManager::CleanUp(); // TODO: This should probably be called somewhere else ~Blinku
+        EventManager::CleanUp();
         glfwDestroyWindow(m_Window);
     }
 

@@ -72,15 +72,14 @@ endif ()
 #### EXAMPLES
 
 add_executable(input_example examples/input_example.cpp)
+add_executable(events_example examples/events_example.cpp)
 add_executable(window_example examples/window_example.cpp)
+
 target_link_libraries(input_example bald_engine)
+target_link_libraries(events_example bald_engine)
 target_link_libraries(window_example bald_engine)
 
-add_executable(events_example examples/events_example.cpp)
-target_link_libraries(events_example bald_engine)
 
-add_executable(events_example examples/events_example.cpp)
-target_link_libraries(events_example bald_engine)
 
 #### END EXAMPLES
 
