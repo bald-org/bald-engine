@@ -166,7 +166,7 @@ namespace Bald {
         [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
 
     private:
-        const std::pair<int, int> m_MouseOff; /* < Mouse x, y offset */
+        const std::pair<double, double> m_MouseOff; /* < Mouse x, y offset */
     }; // END OF CLASS MouseScrolledEvent
 
     /**
