@@ -26,17 +26,17 @@ set(CMAKE_CXX_STANDARD 17)
 
 project(bald_engine)
 
-add_compile_options(
-        -pedantic -Wall -Wextra
-        -Wnon-virtual-dtor -Werror
-        -Wold-style-cast -Wcast-align
-        -Wunused -Woverloaded-virtual
-        -Wpedantic -Wconversion -Wnull-dereference
-        -Wdouble-promotion -Wduplicated-cond
-        -Wduplicated-branches
-        -Wlogical-op -fsanitize=leak)
+if(DEFINE_DEBUG)
+    add_definitions(-DDEBUG)
+elseif(DEFINE_RELEASE)
+    add_definitions(-DRELEASE)
+endif()
 
-add_definitions(-D_LINUX)
+if(TRAVIS_BUILD)
+    add_definitions(-DTRAVIS)
+endif()
+
+add_definitions(-DLINUX)
 
 add_library(bald_engine
         library.cpp
@@ -75,6 +75,9 @@ add_executable(input_example examples/input_example.cpp)
 add_executable(window_example examples/window_example.cpp)
 target_link_libraries(input_example bald_engine)
 target_link_libraries(window_example bald_engine)
+
+add_executable(events_example examples/events_example.cpp)
+target_link_libraries(events_example bald_engine)
 
 add_executable(events_example examples/events_example.cpp)
 target_link_libraries(events_example bald_engine)

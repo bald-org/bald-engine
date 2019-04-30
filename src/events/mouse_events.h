@@ -52,8 +52,8 @@ namespace Bald {
         * @param [int]          ypos -> specific mouse position
         */
 
-        explicit MouseMovedEvent(int xpos, int ypos)
-            : m_MouseX(xpos), m_MouseY(ypos) {}
+        explicit MouseMovedEvent(int mouseX, int mouseY)
+            : m_MousePos{mouseX, mouseY} {}
 
     public:
 
@@ -80,7 +80,7 @@ namespace Bald {
         * @return [int]         Mouse x coordinate
         */
 
-        [[nodiscard]] inline int GetX() const noexcept { return m_MouseX; }
+        [[nodiscard]] inline int GetX() const noexcept { return m_MousePos.first; }
 
         /**
         * @fn                   GetY
@@ -88,7 +88,7 @@ namespace Bald {
         * @return [int]         Mouse y coordinate
         */
 
-        [[nodiscard]] inline int GetY() const noexcept { return m_MouseY; }
+        [[nodiscard]] inline int GetY() const noexcept { return m_MousePos.second; }
 
         /**
         * @fn                               GetMousePosition
@@ -96,12 +96,78 @@ namespace Bald {
         * @return [std::pair<int,int>]      x, y coordinates as pair
         */
 
-        [[nodiscard]] inline std::pair<int, int> GetMousePosition() const noexcept { return {m_MouseX, m_MouseY}; }
+        [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
     private:
-        int m_MouseX; /* < Mouse x coordinate */
-        int m_MouseY; /* < Mouse y coordinate */
-    }; // END OF CLASS MouseEvent
+        const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
+    }; // END OF CLASS MouseMovedEvent
+
+    /**
+     * @class MouseScrolledEvent
+     * @brief Specific event implementation for mouse offset type event
+     */
+
+    class MouseScrolledEvent : public MouseEvent {
+        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+
+    protected:
+
+        /**
+        * @fn                   MouseScrolledEvent
+        * @brief                Constructor
+        * @param [double]       xoffset -> specific mouse offset
+        * @param [double]       yoffset -> specific mouse offset
+        */
+
+        explicit MouseScrolledEvent(double xoffset, double yoffset)
+            : m_MouseOff{xoffset, yoffset} {}
+
+    public:
+
+        /**
+        * @fn                   EmitConnectedEvents
+        * @brief                This method is emits additional MouseEvent
+        */
+
+        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+
+        /**
+        * @fn                           Type
+        * @brief                        This method returns type index of this specific class. This is used for polymorphism
+        * @return [std::type_index]     Type index
+        */
+
+        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+    public:
+
+        /**
+        * @fn                   GetOffsetX
+        * @brief                Mouse x offset getter
+        * @return [double]      Mouse x offset
+        */
+
+        [[nodiscard]] inline double GetOffsetX() const noexcept { return m_MouseOff.first; }
+
+        /**
+        * @fn                   GetOffsetY
+        * @brief                Mouse y offset getter
+        * @return [double]      Mouse y offset
+        */
+
+        [[nodiscard]] inline double GetOffsetY() const noexcept { return m_MouseOff.second; }
+
+        /**
+        * @fn                                   GetMouseOffset
+        * @brief                                Mouse x, y offset getter
+        * @return [std::pair<double,double>]    x, y offset as pair
+        */
+
+        [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
+
+    private:
+        const std::pair<double, double> m_MouseOff; /* < Mouse x, y offset */
+    }; // END OF CLASS MouseScrolledEvent
 
     /**
      * @class MouseButtonPressedEvent
@@ -150,7 +216,7 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     private:
-        int m_KeyCode; /* < We save key code simply as an integer */
+        const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonPressedEvent
 
     /**
@@ -200,7 +266,7 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     private:
-        int m_KeyCode; /* < We save key code simply as an integer */
+        const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonReleasedEvent
 
     /**
@@ -250,7 +316,7 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     private:
-        int m_KeyCode; /* < We save key code simply as an integer */
+        const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonTypedEvent
 
 } // END OF NAMESPACE Bald
