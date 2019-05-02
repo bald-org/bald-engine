@@ -55,7 +55,7 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
     protected:
-        int m_KeyCode; /* < We save key code simply as an integer */
+        const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS KeyEvent
 
     /**
