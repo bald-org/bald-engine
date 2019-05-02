@@ -7,6 +7,8 @@
 #include <iostream>
 #include <Log.h>
 
+#include "glm.hpp"
+
 using namespace Bald;
 using namespace Input;
 
