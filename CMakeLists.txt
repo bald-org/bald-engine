@@ -5,7 +5,6 @@ cmake_minimum_required(VERSION 3.12)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
-add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)

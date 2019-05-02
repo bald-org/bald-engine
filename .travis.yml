@@ -34,6 +34,6 @@ script:
   - ./runUnitTests
   - cd ..
   - mkdir build_release && cd build_release
-  - cmake -DDEFINE_RELEASE=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast -Werror" ../
+  - cmake -DDEFINE_RELEASE=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-std=c++17 -Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-std=c++17 -Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS="-std=c++17 -Ofast -Werror" ../
   - make -j 12
   - ./runUnitTests
