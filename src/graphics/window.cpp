@@ -29,21 +29,19 @@ namespace Bald::Graphics {
         glfwSwapBuffers(m_Window);
     }
 
-    /** TODO: Callbacks
-     * glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
-     * glViewport(0, 0, m_Width, m_Height);
-     */
+    // TODO: Once we start rendering we will have to deal with:
+    //       glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
+    //       glViewport(0, 0, m_Width, m_Height);
 
     void Window::WindowSetVSync(bool enabled) noexcept {
-        if(enabled)
-            glfwSwapInterval(1);
-        else
-            glfwSwapInterval(0);
+        enabled ? glfwSwapInterval(1) : glfwSwapInterval(0);
 
         m_VSync = enabled;
     }
 
-    void Window::Clear() const noexcept { glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT); }
+    void Window::Clear() const noexcept {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    }
 
     int Window::ShouldClose() const noexcept {
         return glfwWindowShouldClose(m_Window);
@@ -64,7 +62,6 @@ namespace Bald::Graphics {
             CORE_LOG_ERROR("[Window] Failed to init GLFW!");
             exit(1);
         }
-
 
         if(!m_Window) {
             glfwTerminate();
@@ -88,7 +85,7 @@ namespace Bald::Graphics {
         glfwSetKeyCallback(m_Window, Input::key_callback);
 
         // TODO: Not really sure how to decouple text handling from input handling right now.
-        //       This callback will have to be set: glfwSetCharCallback
+        //       We do not need it now though. This callback will have to be set in the future: glfwSetCharCallback
 
         glfwSetMouseButtonCallback(m_Window, Input::mouse_button_callback);
 
@@ -100,8 +97,8 @@ namespace Bald::Graphics {
     }
 
     void Window::Shutdown() {
-        EventManager::CleanUp();
+        EventManager::CleanUp(); // TODO: This should probably be called somewhere else ~Blinku
         glfwDestroyWindow(m_Window);
     }
 
-}// END OF NAMESPACE BALD::GRAPHICS
+} // END OF NAMESPACE BALD::GRAPHICS

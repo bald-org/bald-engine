@@ -33,7 +33,7 @@ int main() {
 
         // do stuff
 
-        if (Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
+        if (Input::InputManager::IsKeyPressed(GLFW_KEY_ESCAPE)) {
             EventManager::Emit<WindowClosedEvent>();
         }
 
