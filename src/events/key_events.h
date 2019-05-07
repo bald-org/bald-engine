@@ -17,11 +17,11 @@ namespace Bald {
      */
 
     class KeyEvent : public Event {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-        template<class E, class H>
-        friend void Subscribe(const H& ev);
+//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+//        template<class E, class H>
+//        friend void Subscribe(const H& ev);
 
-    protected:
+    public:
 
         /**
         * @fn                   KeyEvent
@@ -48,15 +48,6 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        inline void run() const override {
-            for (const auto& callback : callbacks) {
-                callback.Run(*this);
-            }
-            for (const auto& callback : async_callbacks) {
-                callback.Run(*this);
-            }
-        }
-
     public:
         /**
         * @fn                   GetKeyCode
@@ -65,10 +56,10 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    protected:
+    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
 
-    private:
+    public:
         static std::vector<FunctionHandler < KeyEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < KeyEvent>> async_callbacks;
     }; // END OF CLASS KeyEvent
@@ -91,10 +82,11 @@ namespace Bald {
      */
 
     class KeyPressedEvent : public KeyEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-        template<class E, class H>
-        friend void Subscribe(const H& ev);
-    protected:
+//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+//        template<class E, class H>
+//        friend void Subscribe(const H& ev);
+
+    public:
 
         /**
         * @fn                   KeyPressedEvent
@@ -121,15 +113,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        void run() const override {
-            for (const auto& callback : callbacks) {
-                callback.Run(*this);
-            }
-            for (const auto& callback : async_callbacks) {
-                callback.Run(*this);
-            }
-        }
-    private:
+    public:
         static std::vector<FunctionHandler < KeyPressedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < KeyPressedEvent>> async_callbacks;
     }; // END OF CLASS KeyPressedEvent
@@ -150,10 +134,10 @@ namespace Bald {
      */
 
     class KeyReleasedEvent : public KeyEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-        template<class E, class H>
-        friend void Subscribe(const H& ev);
-    protected:
+//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+//        template<class E, class H>
+//        friend void Subscribe(const H& ev);
+    public:
 
         /**
         * @fn                   KeyReleasedEvent
@@ -180,16 +164,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        void run() const override {
-            for (const auto& callback : callbacks) {
-                callback.Run(*this);
-            }
-            for (const auto& callback : async_callbacks) {
-                callback.Run(*this);
-            }
-        }
-
-    private:
+    public:
         static std::vector<FunctionHandler < KeyReleasedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < KeyReleasedEvent>> async_callbacks;
     }; // END OF CLASS KeyReleasedEvent
@@ -210,10 +185,11 @@ namespace Bald {
      */
 
     class KeyTypedEvent : public KeyEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-        template<class E, class H>
-        friend void Subscribe(const H& ev);
-    protected:
+//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+//        template<class E, class H>
+//        friend void Subscribe(const H& ev);
+
+    public:
 
         /**
         * @fn                   KeyTypedEvent
@@ -240,16 +216,8 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        void run() const override {
-            for (const auto& callback : callbacks) {
-                callback.Run(*this);
-            }
-            for (const auto& callback : async_callbacks) {
-                callback.Run(*this);
-            }
-        }
 
-    private:
+    public:
         static std::vector<FunctionHandler < KeyTypedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < KeyTypedEvent>> async_callbacks;
 

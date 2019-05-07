@@ -5,6 +5,7 @@
 #pragma once
 
 #include <typeindex>
+#include "Log.h"
 /**
  * @class Event
  * @brief Abstract class which provides simple API for specific events implementations
@@ -13,7 +14,7 @@
 namespace Bald {
 
     template<class E, class H>
-    void Subscribe(const H& ev) {
+    void Subscribe([[maybe_unused]]const H& ev) {
         CORE_LOG_ERROR("[Event Manager] ");
         assert(false);
     }
@@ -23,7 +24,7 @@ namespace Bald {
     };
 
     class Event {
-    protected:
+    public:
 
         /**
         * @fn       Event
@@ -58,8 +59,22 @@ namespace Bald {
         *           This function MUST be overwritten in every single specific event class implementation
         *           Overwrite it like this: [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
         */
-
-        virtual void run() const = 0;
     }; //END OF CLASS Event
+
+    template<class E>
+    void run(const E& event) {
+        for (const auto& callback : E::callbacks) {
+            callback.Run(event);
+        }
+
+        for (const auto& callback : E::async_callbacks) {
+            callback.Run(event);
+        }
+    }
+
+    template<>
+    void run<Event>([[maybe_unused]]const Event& event) {
+        assert(false); //TODO: some info
+    }
 
 } //END OF NAMESPACE Bald
