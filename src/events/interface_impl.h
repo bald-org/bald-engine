@@ -9,7 +9,7 @@
 
 
 namespace Bald {
-    class Event;
+    struct Event;
     enum class HandleType {
         SYNC, ASYNC
     };

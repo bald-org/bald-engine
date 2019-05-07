@@ -16,9 +16,7 @@
 
 namespace Bald {
 
-    class Event {
-    public:
-
+    struct Event {
         /**
         * @fn       Event
         * @brief    Default constructor
@@ -26,16 +24,12 @@ namespace Bald {
 
         Event() = default;
 
-    public:
-
         /**
         * @fn       ~Event
         * @brief    Default constructor
         */
 
         virtual ~Event() = default;
-
-    public:
 
         /**
         * @fn       EmitConnectedEvents
@@ -46,12 +40,6 @@ namespace Bald {
 
         virtual void EmitConnectedEvents() const = 0;
 
-        /**
-        * @fn       Type
-        * @brief    This method queries specific object for its type.
-        *           This function MUST be overwritten in every single specific event class implementation
-        *           Overwrite it like this: [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-        */
     }; //END OF CLASS Event
 
 
@@ -70,7 +58,6 @@ namespace Bald {
     inline void Subscribe<Event>([[maybe_unused]]const AsyncFunctionHandler <Event>& ev ){
         assert(false);
     }
-
 
     template <>
     inline void Unsubscibe<Event>([[maybe_unused]]HandleType type, [[maybe_unused]]unsigned int id){

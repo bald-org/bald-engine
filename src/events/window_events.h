@@ -15,11 +15,7 @@ namespace Bald {
      * @brief Specific event implementation which also provides an API for even more specific window events
      */
 
-    class WindowEvent : public Event {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
-
+    struct WindowEvent : public Event {
         /**
         * @fn                   EmitConnectedEvents
         * @brief                This method is left blank because KeyEvent does not emit any associated events
@@ -42,10 +38,7 @@ namespace Bald {
      * @brief Specific event implementation for window resized type event
      */
 
-    class WindowResizedEvent : public WindowEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
+    struct WindowResizedEvent : public WindowEvent {
 
         /**
         * @fn                   WindowResizedEvent
@@ -57,7 +50,6 @@ namespace Bald {
         explicit WindowResizedEvent(int windowWidth, int windowHeight)
             : m_WindowSize{windowWidth, windowHeight} {}
 
-    public:
 
         /**
         * @fn                   EmitConnectedEvents
@@ -65,14 +57,6 @@ namespace Bald {
         */
 
         void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
-
-        /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-    public:
 
         /**
         * @fn                   GetWidth
@@ -98,7 +82,6 @@ namespace Bald {
 
         [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return m_WindowSize; }
 
-    public:
         const std::pair<int, int> m_WindowSize; /* < Window's width, height */
         static std::vector<FunctionHandler < WindowResizedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < WindowResizedEvent>> async_callbacks;
@@ -109,10 +92,7 @@ namespace Bald {
      * @brief Specific event implementation for window closed type event
      */
 
-    class WindowClosedEvent : public WindowEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
+    struct WindowClosedEvent : public WindowEvent {
 
         /**
         * @fn                   EmitConnectedEvents
