@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "window.h"
-#include "input_manager.h"
+#include <input_manager.h>
 #include "event_manager.h"
 #include "key_events.h"
 #include "window_events.h"
