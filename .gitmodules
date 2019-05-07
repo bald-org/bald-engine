@@ -1,12 +1,12 @@
 [submodule "vendor/cotire"]
-	path = vendor/cotire
+	path = bald-engine/vendor/cotire
 	url = https://github.com/sakra/cotire
 [submodule "vendor/google/googletest"]
-	path = vendor/google/googletest
+	path = bald-engine/vendor/google/googletest
 	url = https://github.com/google/googletest.git
 [submodule "vendor/spdlog"]
-	path = vendor/spdlog
+	path = bald-engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
 [submodule "vendor/glfw"]
-	path = vendor/glfw
+	path = bald-engine/vendor/glfw
 	url = https://github.com/glfw/glfw.git
