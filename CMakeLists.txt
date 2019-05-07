@@ -45,7 +45,7 @@ add_library(bald_engine
         src/input/input_manager.cpp
         src/Log.cpp
         src/events/event_manager.cpp
-        src/events/interface_impl.h src/events/key_events.cpp src/events/mouse_events.cpp)
+        src/events/interface_impl.h src/events/key_events.cpp src/events/mouse_events.cpp src/events/window_events.cpp)
 
 link_directories(${CMAKE_SOURCE_DIR}/vendor/glad/bin)
 

@@ -10,19 +10,19 @@
 using namespace Bald;
 using namespace Input;
 
-void key_typed_call() {
+void key_typed_call(const KeyTypedEvent&) {
     std::cout << "key typed callback called\n";
 }
 
-void mouse_button_pressed_call() {
+void mouse_button_pressed_call(const MouseButtonPressedEvent&) {
     std::cout << "mouse button pressed callback called\n";
 }
 
-void mouse_button_typed_call() {
+void mouse_button_typed_call(const MouseButtonTypedEvent&) {
     std::cout << "mouse button typed callback called\n";
 }
 
-void key_pressed_call(int i) {
+void key_pressed_call(const KeyPressedEvent&, int i) {
     std::cout << "key pressed callback called " << i << "\n";
 }
 

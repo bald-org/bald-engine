@@ -15,4 +15,7 @@ namespace Bald {
 
     std::vector<FunctionHandler < MouseButtonPressedEvent>> MouseButtonPressedEvent::callbacks;
     std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>> MouseButtonPressedEvent::async_callbacks;
+
+    std::vector<FunctionHandler < MouseButtonTypedEvent>> MouseButtonTypedEvent::callbacks;
+    std::vector<AsyncFunctionHandler < MouseButtonTypedEvent>> MouseButtonTypedEvent::async_callbacks;
 }
