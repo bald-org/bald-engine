@@ -346,7 +346,7 @@ namespace Bald::Input {
     }
 
     template<class F, class... Args>
-    void InputManager::SetMouseScrolledCallback([[maybe_unused]]F&& fun, [[maybe_unused]]Args&& ... args) noexcept {
+    void InputManager::SetMouseScrolledCallback(F&& fun, Args&& ... args) noexcept {
         Bald::EventManager::Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
     }
 
