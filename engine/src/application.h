@@ -29,8 +29,8 @@ namespace Bald {
 
     private:
         static const Application* m_Instance;
-    }; // END OF APPLICATION CLASS
+    }; // END OF CLASS Application
 
-} // END OF NAMESPACE BALD
+} // END OF NAMESPACE Bald
 
 

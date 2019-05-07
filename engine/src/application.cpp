@@ -78,6 +78,6 @@ namespace Bald {
         CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 
-} // END OF NAMESPACE BALD
+} // END OF NAMESPACE Bald
 
 
