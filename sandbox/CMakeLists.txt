@@ -21,6 +21,7 @@ endif()
 include_directories(${bald_engine_include_dirs})
 
 add_executable(sandbox src/sandbox.cpp)
+target_link_libraries(sandbox PUBLIC bald_engine)
 
 #### EXAMPLES
 
@@ -34,4 +35,4 @@ target_link_libraries(events_example PUBLIC bald_engine)
 
 #### END EXAMPLES
 
-target_link_libraries(sandbox PUBLIC bald_engine)
+
