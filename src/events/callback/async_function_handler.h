@@ -13,8 +13,8 @@
  */
 
 namespace Bald {
-
-    class AsyncFunctionHandler : public Handler {
+    template <class Event>
+    class AsyncFunctionHandler : public Handler<Event> {
     public:
 
         /**
@@ -25,14 +25,16 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler(fun, args...) {}
+        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler<Event>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function asynchronously
         */
 
-        inline void Run() const override { std::async(std::launch::async, m_Function); }
+        inline void Run(const Event& ev) const override { std::async(std::launch::async, [this, &ev](){
+            m_Function(ev);
+        }); }
     };
 
 } //END OF NAMESPACE Bald

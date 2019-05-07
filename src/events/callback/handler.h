@@ -14,7 +14,7 @@
  */
 
 namespace Bald {
-
+    template <typename Event>
     class Handler {
     public:
 
@@ -26,7 +26,28 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit Handler(F&& fun, Args&& ... args);
+        explicit Handler(F&& fun, Args&& ... args){
+            for(unsigned int i = 1; i < UINT32_MAX; ++i) {
+                if(i <= m_TakenID.size() && m_TakenID[i - 1] == false) {
+                    m_TakenID[i - 1] = true;
+                    m_ID = i;
+                    break;
+                } else if (i > m_TakenID.size()) {
+                    m_TakenID.push_back(true);
+                    m_ID = i;
+                    break;
+                }
+            }
+
+            if(m_ID != 0) {
+                m_Function = [=](const Event& ev) {
+                    fun(ev, args...);
+                };
+            } else {
+                CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
+            }
+
+        }
 
         /**
         * @fn                   ~Handler
@@ -49,50 +70,24 @@ namespace Bald {
         *                       Right now we use it to provide option for synchronous and asynchronous function calls
         */
 
-        virtual void Run() const = 0;
+        virtual void Run(const Event& ev) const = 0;
 
         /**
         * @fn                   operator==
         * @brief                This operator is used to compare two different instances of type Handler.
         */
 
-        inline bool operator==(const unsigned& other) const;
+        inline bool operator==(const unsigned& other) const {
+            return m_ID == other;
+        }
 
     protected:
         static std::vector<bool> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
                                                      for ex. remove one of such from some type of queue */
 
-        std::function<void()> m_Function; /**< Function wrapper */
+        std::function<void(const Event&)> m_Function; /**< Function wrapper */
         unsigned m_ID; /**< This instance's id. When this value is 0 it means that handler is not used. */
 
     }; // END OF CLASS Handler
-
-    template<class F, class... Args>
-    Handler::Handler(F&& fun, Args&& ... args) : m_ID{0} {
-        for(unsigned int i = 1; i < UINT32_MAX; ++i) {
-            if(i <= m_TakenID.size() && m_TakenID[i - 1] == false) {
-                m_TakenID[i - 1] = true;
-                m_ID = i;
-                break;
-            } else if (i > m_TakenID.size()) {
-                m_TakenID.push_back(true);
-                m_ID = i;
-                break;
-            }
-        }
-
-        if(m_ID != 0) {
-            m_Function = [=]() {
-                fun(args...);
-            };
-        } else {
-            CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
-        }
-
-    }
-
-    bool Handler::operator==(const unsigned& other) const {
-        return m_ID == other;
-    }
 
 } //END OF NAMESPACE Bald

@@ -5,13 +5,22 @@
 #pragma once
 
 #include <typeindex>
-
 /**
  * @class Event
  * @brief Abstract class which provides simple API for specific events implementations
  */
 
 namespace Bald {
+
+    template<class E, class H>
+    void Subscribe(const H& ev) {
+        CORE_LOG_ERROR("[Event Manager] ");
+        assert(false);
+    }
+
+    enum class HandleType {
+        SYNC, ASYNC
+    };
 
     class Event {
     protected:
@@ -22,7 +31,7 @@ namespace Bald {
         */
 
         Event() = default;
-        
+
     public:
 
         /**
@@ -50,8 +59,7 @@ namespace Bald {
         *           Overwrite it like this: [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
         */
 
-        [[nodiscard]] virtual std::type_index Type() const = 0;
-
+        virtual void run() const = 0;
     }; //END OF CLASS Event
 
 } //END OF NAMESPACE Bald

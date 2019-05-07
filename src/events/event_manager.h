@@ -24,10 +24,6 @@
 
 namespace Bald {
 
-    enum class HandleType {
-        SYNC, ASYNC
-    };
-
     class EventManager {
     public:
         /**
@@ -108,47 +104,26 @@ namespace Bald {
         static inline void Call() noexcept;
 
     public:
-        static std::unordered_map<std::type_index, std::vector<Handler*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
     }; // END OF CLASS EventManager
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-
-        if(m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
-            m_Callbacks[typeid(T)] = new std::vector<Handler*>;
-        }
 
         switch(type) {
             case HandleType::SYNC:
-                m_Callbacks[typeid(T)]->push_back(new FunctionHandler(callback, args...));
                 break;
             case HandleType::ASYNC:
-                m_Callbacks[typeid(T)]->push_back(new AsyncFunctionHandler(callback, args...));
                 break;
         }
 
-        return m_Callbacks[typeid(T)]->back()->GetID();
+        return 1;
     }
 
     template<class T>
     void EventManager::Unsubscibe(unsigned id) noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        auto iter = m_Callbacks.find(typeid(T));
-
-        if(iter == m_Callbacks.end()) return;
-
-        auto vector = iter->second;
-
-        for(auto i = vector->begin(); i != vector->end(); ++i) {
-            if((**i) == id) {
-                delete *i;
-                vector->erase(i);
-                return;
-            }
-        }
     }
 
     template<class T, class... Args>
@@ -163,21 +138,12 @@ namespace Bald {
     template<class T>
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        for(auto ev : m_EventQueue) {
-            if(ev->Type() == typeid(T)) return true;
-        }
         return false;
     }
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
-        auto iter = m_Callbacks.find(typeid(T));
-        if(iter == m_Callbacks.end()) return;
 
-        while(!iter->second->empty()) {
-            delete iter->second->back();
-            iter->second->pop_back();
-        }
     }
 
 } //END OF NAMESPACE Bald

@@ -12,8 +12,8 @@ namespace Bald {
      * @class FunctionHandler
      * @brief Synchronous function wrapper implementation
      */
-
-    class FunctionHandler : public Handler {
+    template <class Event>
+    class FunctionHandler : public Handler<Event> {
     public:
 
         /**
@@ -24,14 +24,14 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit FunctionHandler(F&& fun, Args&& ... args): Handler(fun, args...) {}
+        explicit FunctionHandler(F&& fun, Args&& ... args): Handler<Event>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function
         */
 
-        inline void Run() const override { m_Function(); }
+        inline void Run(const Event& ev) const override { m_Function(ev); }
     }; // END OF CLASS FunctionHandler
 
 } //END OF NAMESPACE Bald
