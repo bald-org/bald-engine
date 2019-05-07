@@ -1,15 +1,15 @@
-[submodule "vendor/cotire"]
-	path = vendor/cotire
+[submodule "engine/vendor/cotire"]
+	path = engine/vendor/cotire
 	url = https://github.com/sakra/cotire
-[submodule "vendor/google/googletest"]
-	path = vendor/google/googletest
+[submodule "engine/vendor/google/googletest"]
+	path = engine/vendor/google/googletest
 	url = https://github.com/google/googletest.git
-[submodule "vendor/spdlog"]
-	path = vendor/spdlog
+[submodule "engine/vendor/spdlog"]
+	path = engine/vendor/spdlog
 	url = https://github.com/gabime/spdlog.git
-[submodule "vendor/glfw"]
-	path = vendor/glfw
+[submodule "engine/vendor/glfw"]
+	path = engine/vendor/glfw
 	url = https://github.com/glfw/glfw.git
-[submodule "vendor/glm"]
-	path = vendor/glm
+[submodule "engine/vendor/glm"]
+	path = engine/vendor/glm
 	url = https://github.com/g-truc/glm.git

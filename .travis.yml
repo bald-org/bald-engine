@@ -5,6 +5,7 @@ dist: xenial
 branches:
   only:
     - master
+
 addons:
   apt:
     sources:
@@ -14,10 +15,19 @@ addons:
       - libglfw3
       - libglew-dev
       - xorg-dev
+
 services:
   - xvfb
+
+before_install:
+  - mkdir $HOME/usr
+  - export PATH="$HOME/usr/bin:$PATH"
+  - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3-Linux-x86_64.sh
+  - chmod +x cmake-3.14.3-Linux-x86_64.sh
+  - ./cmake-3.14.3-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
+
 install:
-  - cd vendor/glfw/
+  - cd engine/vendor/glfw/
   - mkdir build && cd build
   - cmake ../
   - make -j 12
@@ -29,11 +39,13 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build_debug && cd build_debug
-  - cmake -DDEFINE_DEBUG=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS=" -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond  -Wlogical-op -g" -DCMAKE_C_FLAGS=" -fsanitize=leak"  -DCMAKE_EXE_LINKER_FLAGS=" -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond  -Wlogical-op -g" -DCMAKE_MODULE_LINKER_FLAGS=" -std=c++17 -fsanitize=leak  -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond  -Wlogical-op -g" ../
+  - cmake -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_C_FLAGS=" -fsanitize=leak"  -DCMAKE_EXE_LINKER_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_MODULE_LINKER_FLAGS="  -fsanitize=leak  -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" ../
   - make -j 12
+  - cd bin
   - ./runUnitTests
-  - cd ..
+  - cd ../../
   - mkdir build_release && cd build_release
-  - cmake -DDEFINE_RELEASE=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-std=c++17 -Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-std=c++17 -Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS="-std=c++17 -Ofast -Werror" ../
+  - cmake -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast -Werror" ../
   - make -j 12
+  - cd bin
   - ./runUnitTests
