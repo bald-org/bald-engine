@@ -19,6 +19,7 @@ set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/
     CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${bald_engine_include_dirs})
@@ -57,10 +58,6 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/window.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/vec2.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/vec3.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/vec4.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math/mat4.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/events/event_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback/handler.cpp)
 

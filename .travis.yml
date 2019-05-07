@@ -17,7 +17,7 @@ addons:
 services:
   - xvfb
 install:
-  - cd bald-engine/vendor/glfw/
+  - cd engine/vendor/glfw/
   - mkdir build && cd build
   - cmake ../
   - make -j 12
