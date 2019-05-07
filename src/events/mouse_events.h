@@ -15,17 +15,13 @@ namespace Bald {
      * @brief Specific event implementation which also provides an API for even more specific mouse events
      */
 
-    class MouseEvent : public Event {
-        //friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
-
+    struct MouseEvent : public Event {
         /**
         * @fn                   EmitConnectedEvents
         * @brief                This method is left blank because MouseEvent does not emit any associated events
         */
 
-        void EmitConnectedEvents() const override {}
+        void EmitConnectedEvents() const override { }
 
         /**
         * @fn                   Type
@@ -41,11 +37,7 @@ namespace Bald {
      * @brief Specific event implementation for mouse moved type event
      */
 
-    class MouseMovedEvent : public MouseEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
-
+    struct MouseMovedEvent : public MouseEvent {
         /**
         * @fn                   MouseMovedEvent
         * @brief                Constructor
@@ -54,9 +46,8 @@ namespace Bald {
         */
 
         explicit MouseMovedEvent(int mouseX, int mouseY)
-            : m_MousePos{mouseX, mouseY} {}
-
-    public:
+                :
+                m_MousePos{mouseX, mouseY} { }
 
         /**
         * @fn                   EmitConnectedEvents
@@ -64,15 +55,6 @@ namespace Bald {
         */
 
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-
-        /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-
-    public:
 
         /**
         * @fn                   GetX
@@ -98,7 +80,6 @@ namespace Bald {
 
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
-    public:
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
         static std::vector<FunctionHandler < MouseMovedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseMovedEvent>> async_callbacks;
@@ -109,11 +90,7 @@ namespace Bald {
      * @brief Specific event implementation for mouse offset type event
      */
 
-    class MouseScrolledEvent : public MouseEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
-
+    struct MouseScrolledEvent : public MouseEvent {
         /**
         * @fn                   MouseScrolledEvent
         * @brief                Constructor
@@ -122,9 +99,8 @@ namespace Bald {
         */
 
         explicit MouseScrolledEvent(double xoffset, double yoffset)
-            : m_MouseOff{xoffset, yoffset} {}
-
-    public:
+                :
+                m_MouseOff{xoffset, yoffset} { }
 
         /**
         * @fn                   EmitConnectedEvents
@@ -132,14 +108,6 @@ namespace Bald {
         */
 
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-
-        /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-    public:
 
         /**
         * @fn                   GetOffsetX
@@ -165,7 +133,6 @@ namespace Bald {
 
         [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
 
-    public:
         const std::pair<double, double> m_MouseOff; /* < Mouse x, y offset */
         static std::vector<FunctionHandler < MouseScrolledEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseScrolledEvent>> async_callbacks;
@@ -176,10 +143,7 @@ namespace Bald {
      * @brief Specific event implementation for mouse button pressed type event
      */
 
-    class MouseButtonPressedEvent : public MouseEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
+    struct MouseButtonPressedEvent : public MouseEvent {
 
         /**
         * @fn                   MouseButtonPressedEvent
@@ -188,9 +152,8 @@ namespace Bald {
         */
 
         explicit MouseButtonPressedEvent(int keycode)
-            : m_KeyCode{keycode} {}
-
-    public:
+                :
+                m_KeyCode{keycode} { }
 
         /**
         * @fn                   EmitConnectedEvents
@@ -200,14 +163,6 @@ namespace Bald {
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
         /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-    public:
-
-        /**
         * @fn                   GetKeyCode
         * @brief                Key code getter
         * @return [int]         Key code
@@ -215,7 +170,6 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
         static std::vector<FunctionHandler < MouseButtonPressedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>> async_callbacks;
@@ -226,10 +180,7 @@ namespace Bald {
      * @brief Specific event implementation for mouse button released type event
      */
 
-    class MouseButtonReleasedEvent : public MouseEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
+    struct MouseButtonReleasedEvent : public MouseEvent {
 
         /**
         * @fn                   MouseButtonReleasedEvent
@@ -238,9 +189,8 @@ namespace Bald {
         */
 
         explicit MouseButtonReleasedEvent(int keycode)
-            : m_KeyCode{keycode} {}
-
-    public:
+                :
+                m_KeyCode{keycode} { }
 
         /**
         * @fn                   EmitConnectedEvents
@@ -250,15 +200,6 @@ namespace Bald {
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
         /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-
-    public:
-
-        /**
         * @fn                   GetKeyCode
         * @brief                Key code getter
         * @return [int]         Key code
@@ -266,7 +207,6 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
         static std::vector<FunctionHandler < MouseButtonReleasedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseButtonReleasedEvent>> async_callbacks;
@@ -277,10 +217,7 @@ namespace Bald {
      * @brief Specific event implementation for mouse button typed type event
      */
 
-    class MouseButtonTypedEvent : public MouseEvent {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    public:
+    struct MouseButtonTypedEvent : public MouseEvent {
 
         /**
         * @fn                   MouseButtonTypedEvent
@@ -289,9 +226,9 @@ namespace Bald {
         */
 
         explicit MouseButtonTypedEvent(int keycode)
-            : m_KeyCode{keycode} {}
+                :
+                m_KeyCode{keycode} { }
 
-    public:
 
         /**
         * @fn                   EmitConnectedEvents
@@ -299,8 +236,6 @@ namespace Bald {
         */
 
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-
-    public:
 
         /**
         * @fn                   GetKeyCode
@@ -310,7 +245,6 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
         static std::vector<FunctionHandler < MouseButtonTypedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseButtonTypedEvent>> async_callbacks;
