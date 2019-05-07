@@ -9,14 +9,14 @@
 
 
 namespace Bald {
-
+    class Event;
     enum class HandleType {
         SYNC, ASYNC
     };
 
     template<class E>
     void run(const E& event) {
-        //static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
+        static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         for (const auto& callback : E::callbacks) {
             callback.Run(event);
         }
@@ -26,20 +26,15 @@ namespace Bald {
         }
     }
 
-//    template<>
-//    void run<Event>([[maybe_unused]]const Event& event) {
-//        assert(false); //TODO: log some info
-//    }
-
     template <class E>
     void Subscribe(const FunctionHandler < E>& ev ){
-        //static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
+        static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         E::callbacks.push_back(ev);
     }
 
     template <class E>
     void Subscribe(const AsyncFunctionHandler <E>& ev ){
-        //static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
+        static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         E::async_callbacks.push_back(ev);
     }
 
@@ -55,7 +50,7 @@ namespace Bald {
 
     template <class E>
     void Unsubscibe(HandleType type, unsigned int id){
-        //static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
+        static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         if (type == HandleType::SYNC) {
             for(auto i = E::callbacks.begin(); i != E::callbacks.end(); i++){
                 if(i == id){

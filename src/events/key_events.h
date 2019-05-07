@@ -15,24 +15,15 @@ namespace Bald {
      * @brief Specific event implementation which also provides an API for even more specific keyboard events
      */
 
-    class KeyEvent : public Event {
-//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-//        template<class E, class H>
-//        friend void Subscribe(const H& ev);
-
-    public:
-
+    struct KeyEvent : public Event {
         /**
         * @fn                   KeyEvent
         * @brief                Constructor
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyEvent(int keycode)
-                :
+        explicit KeyEvent(int keycode) :
                 m_KeyCode(keycode) { }
-
-    public:
 
         /**
         * @fn                   EmitConnectedEvents
@@ -63,18 +54,6 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < KeyEvent>> async_callbacks;
     }; // END OF CLASS KeyEvent
 
-
-
-    template <>
-    inline void Subscribe< KeyEvent >(const FunctionHandler < KeyEvent>& ev ){
-        KeyEvent::callbacks.push_back(ev);
-    }
-
-    template <>
-    inline void Subscribe< KeyEvent >(const AsyncFunctionHandler < KeyEvent>& ev ){
-        KeyEvent::async_callbacks.push_back(ev);
-    }
-
     /**
      * @class KeyPressedEvent
      * @brief Specific event implementation for key pressed type event
@@ -104,7 +83,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override {  }
+        void EmitConnectedEvents() const override { }
 
         /**
         * @fn                   Type
@@ -117,25 +96,12 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < KeyPressedEvent>> async_callbacks;
     }; // END OF CLASS KeyPressedEvent
 
-    template <>
-    inline void Subscribe< KeyPressedEvent >(const FunctionHandler < KeyPressedEvent>& ev ){
-        KeyPressedEvent::callbacks.push_back(ev);
-    }
-
-    template <>
-    inline void Subscribe< KeyPressedEvent>(const AsyncFunctionHandler < KeyPressedEvent>& ev ){
-        KeyPressedEvent::async_callbacks.push_back(ev);
-    }
-
     /**
      * @class KeyReleasedEvent
      * @brief Specific event implementation for key released type event
      */
 
     class KeyReleasedEvent : public KeyEvent {
-//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-//        template<class E, class H>
-//        friend void Subscribe(const H& ev);
     public:
 
         /**
@@ -155,7 +121,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override {  }
+        void EmitConnectedEvents() const override { }
 
         /**
         * @fn                   Type
@@ -168,13 +134,13 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < KeyReleasedEvent>> async_callbacks;
     }; // END OF CLASS KeyReleasedEvent
 
-    template <>
-    inline void Subscribe< KeyReleasedEvent >(const FunctionHandler < KeyReleasedEvent>& ev ){
+    template<>
+    inline void Subscribe<KeyReleasedEvent>(const FunctionHandler <KeyReleasedEvent>& ev) {
         KeyReleasedEvent::callbacks.push_back(ev);
     }
 
-    template <>
-    inline void Subscribe<KeyReleasedEvent >(const AsyncFunctionHandler < KeyReleasedEvent>& ev ){
+    template<>
+    inline void Subscribe<KeyReleasedEvent>(const AsyncFunctionHandler <KeyReleasedEvent>& ev) {
         KeyReleasedEvent::async_callbacks.push_back(ev);
     }
 
@@ -207,7 +173,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override {  }
+        void EmitConnectedEvents() const override { }
 
         /**
         * @fn                   Type

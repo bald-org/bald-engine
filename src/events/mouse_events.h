@@ -36,16 +36,6 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < MouseEvent>> async_callbacks;
     }; // END OF CLASS MouseEvent
 
-//    template <>
-//    void Subscribe<KeyReleasedEvent, FunctionHandler < MouseEvent> >(const FunctionHandler < MouseEvent>& ev ){
-//        MouseEvent::callbacks.push_back(ev);
-//    }
-//
-//    template <>
-//    void Subscribe<KeyReleasedEvent, AsyncFunctionHandler < MouseEvent> >(const AsyncFunctionHandler < MouseEvent>& ev ){
-//        MouseEvent::async_callbacks.push_back(ev);
-//    }
-
     /**
      * @class MouseMovedEvent
      * @brief Specific event implementation for mouse moved type event
@@ -114,16 +104,6 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < MouseMovedEvent>> async_callbacks;
     }; // END OF CLASS MouseMovedEvent
 
-//    template <>
-//    void Subscribe<MouseMovedEvent, FunctionHandler < MouseMovedEvent> >(const FunctionHandler < MouseMovedEvent>& ev ){
-//        MouseMovedEvent::callbacks.push_back(ev);
-//    }
-//
-//    template <>
-//    void Subscribe<MouseMovedEvent, AsyncFunctionHandler < MouseMovedEvent> >(const AsyncFunctionHandler < MouseMovedEvent>& ev ){
-//        MouseMovedEvent::async_callbacks.push_back(ev);
-//    }
-
     /**
      * @class MouseScrolledEvent
      * @brief Specific event implementation for mouse offset type event
@@ -191,16 +171,6 @@ namespace Bald {
         static std::vector<AsyncFunctionHandler < MouseScrolledEvent>> async_callbacks;
     }; // END OF CLASS MouseScrolledEvent
 
-//    template <>
-//    void Subscribe<MouseScrolledEvent, FunctionHandler < MouseScrolledEvent> >(const FunctionHandler < MouseScrolledEvent>& ev ){
-//        MouseScrolledEvent::callbacks.push_back(ev);
-//    }
-//
-//    template <>
-//    void Subscribe<MouseMovedEvent, AsyncFunctionHandler < MouseScrolledEvent> >(const AsyncFunctionHandler < MouseScrolledEvent>& ev ){
-//        MouseScrolledEvent::async_callbacks.push_back(ev);
-//    }
-
     /**
      * @class MouseButtonPressedEvent
      * @brief Specific event implementation for mouse button pressed type event
@@ -250,17 +220,6 @@ namespace Bald {
         static std::vector<FunctionHandler < MouseButtonPressedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>> async_callbacks;
     }; // END OF CLASS MouseButtonPressedEvent
-
-//    template <>
-//    void Subscribe<MouseButtonPressedEvent, FunctionHandler < MouseButtonPressedEvent> >(const FunctionHandler < MouseButtonPressedEvent>& ev ){
-//        MouseButtonPressedEvent::callbacks.push_back(ev);
-//    }
-//
-//    template <>
-//    void Subscribe<MouseButtonPressedEvent, AsyncFunctionHandler < MouseButtonPressedEvent> >(const AsyncFunctionHandler < MouseButtonPressedEvent>& ev ){
-//        MouseButtonPressedEvent::async_callbacks.push_back(ev);
-//    }
-
 
     /**
      * @class MouseButtonReleasedEvent
@@ -312,16 +271,6 @@ namespace Bald {
         static std::vector<FunctionHandler < MouseButtonReleasedEvent>> callbacks;
         static std::vector<AsyncFunctionHandler < MouseButtonReleasedEvent>> async_callbacks;
     }; // END OF CLASS MouseButtonReleasedEvent
-
-//    template <>
-//    void Subscribe<MouseButtonReleasedEvent, FunctionHandler < MouseButtonReleasedEvent> >(const FunctionHandler < MouseButtonReleasedEvent>& ev ){
-//        MouseButtonReleasedEvent::callbacks.push_back(ev);
-//    }
-//
-//    template <>
-//    void Subscribe<MouseButtonReleasedEvent, AsyncFunctionHandler < MouseButtonReleasedEvent> >(const AsyncFunctionHandler < MouseButtonReleasedEvent>& ev ){
-//        MouseButtonReleasedEvent::async_callbacks.push_back(ev);
-//    }
 
     /**
      * @class MouseButtonTypedEvent
