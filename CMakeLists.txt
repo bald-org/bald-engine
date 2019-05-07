@@ -40,7 +40,8 @@ endif()
 add_definitions(-DLINUX)
 
 add_library(bald_engine
-        library.cpp library.h
+        library.cpp
+        library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
         src/input/input_manager.cpp
