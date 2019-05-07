@@ -45,7 +45,7 @@ namespace Bald::Graphics {
     }
 
     bool Window::Init() noexcept {
-
+        CORE_LOG_INFO("[Window] Initializing window...");
         glfwInit();
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
@@ -90,11 +90,17 @@ namespace Bald::Graphics {
 
         glfwSetScrollCallback(m_Window, Input::scroll_callback);
 
+        CORE_LOG_INFO("[Window] Initialization was successful");
+
         return true;
     }
 
     void Window::Shutdown() {
+        CORE_LOG_INFO("[Window] Shutting down window...");
+
         glfwDestroyWindow(m_Window);
+
+        CORE_LOG_INFO("[Window] Shutdown was successful");
     }
 
 } // END OF NAMESPACE BALD::GRAPHICS

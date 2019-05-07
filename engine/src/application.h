@@ -19,10 +19,16 @@ namespace Bald {
         void Run();
 
     private:
+        bool Init() noexcept;
+
+        void Shutdown() const;
+
+    private:
         std::unique_ptr<Graphics::Window> m_Window;
         bool m_Running;
+
     private:
-        static Application* m_Instance;
+        static const Application* m_Instance;
     }; // END OF APPLICATION CLASS
 
 } // END OF NAMESPACE BALD
