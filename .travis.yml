@@ -27,7 +27,7 @@ install:
   - mv cmake-3.14.3 cmake-install
   - cd cmake-install && ./bootstrap
   - make -j 12
-  - make install
+  - sudo make install
   - PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
   - cd ${TRAVIS_BUILD_DIR}
   - cd engine/vendor/glfw/
