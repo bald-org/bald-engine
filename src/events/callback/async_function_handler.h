@@ -33,8 +33,9 @@ namespace Bald {
         */
 
         inline void Run(const Event& ev) const override { std::async(std::launch::async, [this, &ev](){
-            m_Function(ev);
-        }); }
+                this->m_Function(ev);
+            });
+        }
     };
 
 } //END OF NAMESPACE Bald

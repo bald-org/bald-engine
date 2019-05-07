@@ -31,7 +31,7 @@ namespace Bald {
         * @brief                This method runs wrapped function
         */
 
-        inline void Run(const Event& ev) const override { m_Function(ev); }
+        inline void Run(const Event& ev) const override { this->m_Function(ev); }
     }; // END OF CLASS FunctionHandler
 
 } //END OF NAMESPACE Bald

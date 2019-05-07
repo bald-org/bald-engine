@@ -9,6 +9,7 @@
 #include "key_events.h"
 #include "window_events.h"
 #include "event_manager.h"
+#include "interface_impl.h"
 
 int main() {
 
@@ -24,9 +25,9 @@ int main() {
     glfwSetMouseButtonCallback(window, mouse_button_callback);
     glfwSetCursorPosCallback(window, cursor_position_callback);
 
-    EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, [](){ std::cout << "KeyPressedEvent!\n"; });
-    unsigned id = EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
-    EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](){ std::cout << "KeyMovedEvent!\n"; });
+    EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&){ std::cout << "KeyPressedEvent!\n"; });
+    //unsigned id = EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
+    EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&){ std::cout << "KeyMovedEvent!\n"; });
     while (!glfwWindowShouldClose(window)) {
 
         InputManager::Update();
@@ -36,11 +37,11 @@ int main() {
         glfwSwapBuffers(window);
     }
 
-    EventManager::Unsubscibe<KeyTypedEvent>(id);
+//    EventManager::Unsubscibe<KeyTypedEvent>(id);
     EventManager::Emit<KeyTypedEvent>(GLFW_KEY_ESCAPE);
     EventManager::Flush();
 
-    EventManager::Subscribe<KeyTypedEvent>( HandleType::SYNC, [](){ std::cout << "After Unsubscribe!\n"; });
+    EventManager::Subscribe<KeyTypedEvent>( HandleType::SYNC, [](const KeyTypedEvent&){ std::cout << "After Unsubscribe!\n"; });
     EventManager::Emit<KeyTypedEvent>(GLFW_KEY_ESCAPE);
 
     EventManager::Flush();

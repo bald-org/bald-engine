@@ -5,7 +5,6 @@
 #pragma once
 
 #include "event.h"
-#include "event_manager.h"
 #include "function_handler.h"
 #include "async_function_handler.h"
 
@@ -67,12 +66,12 @@ namespace Bald {
 
 
     template <>
-    void Subscribe<KeyEvent, FunctionHandler < KeyEvent> >(const FunctionHandler < KeyEvent>& ev ){
+    inline void Subscribe< KeyEvent >(const FunctionHandler < KeyEvent>& ev ){
         KeyEvent::callbacks.push_back(ev);
     }
 
     template <>
-    void Subscribe<KeyEvent, AsyncFunctionHandler < KeyEvent> >(const AsyncFunctionHandler < KeyEvent>& ev ){
+    inline void Subscribe< KeyEvent >(const AsyncFunctionHandler < KeyEvent>& ev ){
         KeyEvent::async_callbacks.push_back(ev);
     }
 
@@ -81,8 +80,8 @@ namespace Bald {
      * @brief Specific event implementation for key pressed type event
      */
 
-    class KeyPressedEvent : public KeyEvent {
-//        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    class KeyPressedEvent : protected KeyEvent {
+        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 //        template<class E, class H>
 //        friend void Subscribe(const H& ev);
 
@@ -105,7 +104,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   Type
@@ -119,12 +118,12 @@ namespace Bald {
     }; // END OF CLASS KeyPressedEvent
 
     template <>
-    void Subscribe<KeyPressedEvent, FunctionHandler < KeyPressedEvent> >(const FunctionHandler < KeyPressedEvent>& ev ){
+    inline void Subscribe< KeyPressedEvent >(const FunctionHandler < KeyPressedEvent>& ev ){
         KeyPressedEvent::callbacks.push_back(ev);
     }
 
     template <>
-    void Subscribe<KeyPressedEvent, AsyncFunctionHandler < KeyPressedEvent> >(const AsyncFunctionHandler < KeyPressedEvent>& ev ){
+    inline void Subscribe< KeyPressedEvent>(const AsyncFunctionHandler < KeyPressedEvent>& ev ){
         KeyPressedEvent::async_callbacks.push_back(ev);
     }
 
@@ -156,7 +155,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   Type
@@ -170,12 +169,12 @@ namespace Bald {
     }; // END OF CLASS KeyReleasedEvent
 
     template <>
-    void Subscribe<KeyReleasedEvent, FunctionHandler < KeyReleasedEvent> >(const FunctionHandler < KeyReleasedEvent>& ev ){
+    inline void Subscribe< KeyReleasedEvent >(const FunctionHandler < KeyReleasedEvent>& ev ){
         KeyReleasedEvent::callbacks.push_back(ev);
     }
 
     template <>
-    void Subscribe<KeyReleasedEvent, AsyncFunctionHandler < KeyReleasedEvent> >(const AsyncFunctionHandler < KeyReleasedEvent>& ev ){
+    inline void Subscribe<KeyReleasedEvent >(const AsyncFunctionHandler < KeyReleasedEvent>& ev ){
         KeyReleasedEvent::async_callbacks.push_back(ev);
     }
 
@@ -208,7 +207,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   Type
@@ -223,14 +222,14 @@ namespace Bald {
 
     }; // END OF CLASS KeyTypedEvent
 
-    template <>
-    void Subscribe<KeyTypedEvent, FunctionHandler < KeyTypedEvent> >(const FunctionHandler < KeyTypedEvent>& ev ){
-        KeyTypedEvent::callbacks.push_back(ev);
-    }
-
-    template <>
-    void Subscribe<KeyTypedEvent, AsyncFunctionHandler < KeyTypedEvent> >(const AsyncFunctionHandler < KeyTypedEvent>& ev ){
-        KeyTypedEvent::async_callbacks.push_back(ev);
-    }
+//    template <>
+//    inline void Subscribe< KeyTypedEvent >(const FunctionHandler < KeyTypedEvent>& ev ){
+//        KeyTypedEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    inline void Subscribe<KeyTypedEvent>(const AsyncFunctionHandler < KeyTypedEvent>& ev ){
+//        KeyTypedEvent::async_callbacks.push_back(ev);
+//    }
 
 } // END OF NAMESPACE Bald

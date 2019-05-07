@@ -16,7 +16,7 @@ namespace Bald {
      */
 
     class MouseEvent : public Event {
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+        //friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     public:
 
@@ -32,8 +32,19 @@ namespace Bald {
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        static std::vector<FunctionHandler < MouseEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseEvent>> async_callbacks;
     }; // END OF CLASS MouseEvent
+
+//    template <>
+//    void Subscribe<KeyReleasedEvent, FunctionHandler < MouseEvent> >(const FunctionHandler < MouseEvent>& ev ){
+//        MouseEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    void Subscribe<KeyReleasedEvent, AsyncFunctionHandler < MouseEvent> >(const AsyncFunctionHandler < MouseEvent>& ev ){
+//        MouseEvent::async_callbacks.push_back(ev);
+//    }
 
     /**
      * @class MouseMovedEvent
@@ -43,7 +54,7 @@ namespace Bald {
     class MouseMovedEvent : public MouseEvent {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
-    protected:
+    public:
 
         /**
         * @fn                   MouseMovedEvent
@@ -70,7 +81,6 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -98,9 +108,21 @@ namespace Bald {
 
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
-    private:
+    public:
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
+        static std::vector<FunctionHandler < MouseMovedEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseMovedEvent>> async_callbacks;
     }; // END OF CLASS MouseMovedEvent
+
+//    template <>
+//    void Subscribe<MouseMovedEvent, FunctionHandler < MouseMovedEvent> >(const FunctionHandler < MouseMovedEvent>& ev ){
+//        MouseMovedEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    void Subscribe<MouseMovedEvent, AsyncFunctionHandler < MouseMovedEvent> >(const AsyncFunctionHandler < MouseMovedEvent>& ev ){
+//        MouseMovedEvent::async_callbacks.push_back(ev);
+//    }
 
     /**
      * @class MouseScrolledEvent
@@ -110,7 +132,7 @@ namespace Bald {
     class MouseScrolledEvent : public MouseEvent {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
-    protected:
+    public:
 
         /**
         * @fn                   MouseScrolledEvent
@@ -136,8 +158,6 @@ namespace Bald {
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
         */
-
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -165,9 +185,21 @@ namespace Bald {
 
         [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
 
-    private:
+    public:
         const std::pair<double, double> m_MouseOff; /* < Mouse x, y offset */
+        static std::vector<FunctionHandler < MouseScrolledEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseScrolledEvent>> async_callbacks;
     }; // END OF CLASS MouseScrolledEvent
+
+//    template <>
+//    void Subscribe<MouseScrolledEvent, FunctionHandler < MouseScrolledEvent> >(const FunctionHandler < MouseScrolledEvent>& ev ){
+//        MouseScrolledEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    void Subscribe<MouseMovedEvent, AsyncFunctionHandler < MouseScrolledEvent> >(const AsyncFunctionHandler < MouseScrolledEvent>& ev ){
+//        MouseScrolledEvent::async_callbacks.push_back(ev);
+//    }
 
     /**
      * @class MouseButtonPressedEvent
@@ -177,7 +209,7 @@ namespace Bald {
     class MouseButtonPressedEvent : public MouseEvent {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
-    protected:
+    public:
 
         /**
         * @fn                   MouseButtonPressedEvent
@@ -203,8 +235,6 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
     public:
 
         /**
@@ -215,9 +245,22 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    private:
+    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
+        static std::vector<FunctionHandler < MouseButtonPressedEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>> async_callbacks;
     }; // END OF CLASS MouseButtonPressedEvent
+
+//    template <>
+//    void Subscribe<MouseButtonPressedEvent, FunctionHandler < MouseButtonPressedEvent> >(const FunctionHandler < MouseButtonPressedEvent>& ev ){
+//        MouseButtonPressedEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    void Subscribe<MouseButtonPressedEvent, AsyncFunctionHandler < MouseButtonPressedEvent> >(const AsyncFunctionHandler < MouseButtonPressedEvent>& ev ){
+//        MouseButtonPressedEvent::async_callbacks.push_back(ev);
+//    }
+
 
     /**
      * @class MouseButtonReleasedEvent
@@ -227,7 +270,7 @@ namespace Bald {
     class MouseButtonReleasedEvent : public MouseEvent {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
-    protected:
+    public:
 
         /**
         * @fn                   MouseButtonReleasedEvent
@@ -253,7 +296,6 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -265,9 +307,21 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    private:
+    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
+        static std::vector<FunctionHandler < MouseButtonReleasedEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonReleasedEvent>> async_callbacks;
     }; // END OF CLASS MouseButtonReleasedEvent
+
+//    template <>
+//    void Subscribe<MouseButtonReleasedEvent, FunctionHandler < MouseButtonReleasedEvent> >(const FunctionHandler < MouseButtonReleasedEvent>& ev ){
+//        MouseButtonReleasedEvent::callbacks.push_back(ev);
+//    }
+//
+//    template <>
+//    void Subscribe<MouseButtonReleasedEvent, AsyncFunctionHandler < MouseButtonReleasedEvent> >(const AsyncFunctionHandler < MouseButtonReleasedEvent>& ev ){
+//        MouseButtonReleasedEvent::async_callbacks.push_back(ev);
+//    }
 
     /**
      * @class MouseButtonTypedEvent
@@ -277,7 +331,7 @@ namespace Bald {
     class MouseButtonTypedEvent : public MouseEvent {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
-    protected:
+    public:
 
         /**
         * @fn                   MouseButtonTypedEvent
@@ -297,14 +351,6 @@ namespace Bald {
 
         void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
-        /**
-        * @fn                           Type
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
-        */
-
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
     public:
 
         /**
@@ -315,8 +361,10 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
-    private:
+    public:
         const int m_KeyCode; /* < We save key code simply as an integer */
+        static std::vector<FunctionHandler < MouseButtonTypedEvent>> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonTypedEvent>> async_callbacks;
     }; // END OF CLASS MouseButtonTypedEvent
 
 } // END OF NAMESPACE Bald

@@ -27,4 +27,5 @@ namespace Bald {
     void EventManager::CleanUp() noexcept {
         std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
     }
+
 } //END OF NAMESPACE Bald

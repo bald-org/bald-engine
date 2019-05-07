@@ -14,7 +14,7 @@
  */
 
 namespace Bald {
-    template <typename Event>
+    template <typename E>
     class Handler {
     public:
 
@@ -40,7 +40,7 @@ namespace Bald {
             }
 
             if(m_ID != 0) {
-                m_Function = [=](const Event& ev) {
+                m_Function = [=](const E& ev) {
                     fun(ev, args...);
                 };
             } else {
@@ -54,7 +54,9 @@ namespace Bald {
         * @brief                Virtual destructor
         */
 
-        virtual ~Handler();
+        virtual ~Handler(){
+            m_TakenID[m_ID - 1] = false;
+        }
 
         /**
         * @fn                   GetID
@@ -70,7 +72,7 @@ namespace Bald {
         *                       Right now we use it to provide option for synchronous and asynchronous function calls
         */
 
-        virtual void Run(const Event& ev) const = 0;
+        virtual void Run(const E& ev) const = 0;
 
         /**
         * @fn                   operator==
@@ -85,9 +87,11 @@ namespace Bald {
         static std::vector<bool> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
                                                      for ex. remove one of such from some type of queue */
 
-        std::function<void(const Event&)> m_Function; /**< Function wrapper */
+        std::function<void(const E&)> m_Function; /**< Function wrapper */
         unsigned m_ID; /**< This instance's id. When this value is 0 it means that handler is not used. */
 
     }; // END OF CLASS Handler
 
+    template <class E>
+    std::vector<bool> Handler<E>::m_TakenID;
 } //END OF NAMESPACE Bald

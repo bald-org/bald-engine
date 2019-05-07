@@ -12,6 +12,7 @@
 #include <typeinfo>
 
 #include "event.h"
+#include "key_events.h"
 #include "callback/handler.h"
 #include "callback/function_handler.h"
 #include "callback/async_function_handler.h"
@@ -51,7 +52,7 @@ namespace Bald {
         */
 
         template<class T>
-        static void Unsubscibe(unsigned id) noexcept;
+        static void Unsubscibe(HandleType type, unsigned id) noexcept;
 
         /**
         * @fn                    Emit
@@ -113,8 +114,10 @@ namespace Bald {
 
         switch(type) {
             case HandleType::SYNC:
+                Bald::Subscribe(FunctionHandler<T>(callback, args...));
                 break;
             case HandleType::ASYNC:
+                Bald::Subscribe(AsyncFunctionHandler<T>(callback, args...));
                 break;
         }
 
@@ -122,8 +125,9 @@ namespace Bald {
     }
 
     template<class T>
-    void EventManager::Unsubscibe(unsigned id) noexcept {
+    void EventManager::Unsubscibe(HandleType type, unsigned id) noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
+        Bald::Unsubscibe<T>(type, id);
     }
 
     template<class T, class... Args>
