@@ -40,4 +40,5 @@ namespace Bald {
             delete pair.second;
         });
     }
+
 } //END OF NAMESPACE Bald

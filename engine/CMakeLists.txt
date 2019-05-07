@@ -77,20 +77,6 @@ target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src
 
 #### END CONFIG
 
-#### EXAMPLES
-
-add_executable(application_example examples/application_example.cpp)
-add_executable(input_example examples/input_example.cpp)
-add_executable(events_example examples/events_example.cpp)
-add_executable(window_example examples/window_example.cpp)
-
-target_link_libraries(application_example bald_engine)
-target_link_libraries(input_example bald_engine)
-target_link_libraries(events_example bald_engine)
-target_link_libraries(window_example bald_engine)
-
-#### END EXAMPLES
-
 #### PCH
 
 set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")

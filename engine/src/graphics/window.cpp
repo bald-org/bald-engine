@@ -22,9 +22,6 @@ namespace Bald::Graphics {
     }
 
     void Window::Update() noexcept {
-        Input::InputManager::Update(); // TODO: This should probably be called somewhere else ~Blinku
-        EventManager::Flush(); // TODO: This should probably be called somewhere else ~Blinku
-
         glfwPollEvents();
         glfwSwapBuffers(m_Window);
     }
@@ -97,7 +94,6 @@ namespace Bald::Graphics {
     }
 
     void Window::Shutdown() {
-        EventManager::CleanUp(); // TODO: This should probably be called somewhere else ~Blinku
         glfwDestroyWindow(m_Window);
     }
 

@@ -17,17 +17,13 @@ namespace Bald {
 
         m_Instance = this;
 
-        m_Window = std::make_unique<Graphics::Window>("Bald Engine");
-
         Log::Init();
+
+        m_Window = std::make_unique<Graphics::Window>("Bald Engine");
     }
 
     Application::~Application() {
-        EventManager::CleanUp();
-    }
-
-    Application* Application::Create() noexcept {
-        return new Application();
+        EventManager::CleanUp(); // TODO: Maybe after layer update? We will have to discuss this
     }
 
     void Application::Run() {
