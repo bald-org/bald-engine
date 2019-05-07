@@ -52,21 +52,25 @@ namespace Bald {
 
 
 #ifdef DEBUG
-#define CORE_LOG_INFO(...) ::Bald::Log::GetCoreLogger()->info(__VA_ARGS__) /**< print info in Core Logger */
-#define CORE_LOG_WARN(...) ::Bald::Log::GetCoreLogger()->warn(__VA_ARGS__) /**< print warning in Core Logger */
-#define CORE_LOG_ERROR(...) ::Bald::Log::GetCoreLogger()->error(__VA_ARGS__) /**< print error in Core Logger */
+#define CORE_LOG_TRACE(...) ::Bald::Log::GetCoreLogger()->trace(__VA_ARGS__)   /**< print info in Core Logger */
+#define CORE_LOG_INFO(...)  ::Bald::Log::GetCoreLogger()->info(__VA_ARGS__)    /**< print info in Core Logger */
+#define CORE_LOG_WARN(...)  ::Bald::Log::GetCoreLogger()->warn(__VA_ARGS__)    /**< print warning in Core Logger */
+#define CORE_LOG_ERROR(...) ::Bald::Log::GetCoreLogger()->error(__VA_ARGS__)   /**< print error in Core Logger */
 
-#define GAME_LOG_INFO(...) ::Bald::Log::GetGameLogger()->info(__VA_ARGS__) /**< print info in Game Logger */
-#define GAME_LOG_WARN(...) ::Bald::Log::GetGameLogger()->warn(__VA_ARGS__)   /**< print warning in Game Logger */
-#define GAME_LOG_ERROR(...) ::Bald::Log::GetGameLogger()->error(__VA_ARGS__) /**< print error in Game Logger */
+#define GAME_LOG_TRACE(...) ::Bald::Log::GetGameLogger()->trace(__VA_ARGS__)   /**< print info in Game Logger */
+#define GAME_LOG_INFO(...)  ::Bald::Log::GetGameLogger()->info(__VA_ARGS__)    /**< print info in Game Logger */
+#define GAME_LOG_WARN(...)  ::Bald::Log::GetGameLogger()->warn(__VA_ARGS__)    /**< print warning in Game Logger */
+#define GAME_LOG_ERROR(...) ::Bald::Log::GetGameLogger()->error(__VA_ARGS__)   /**< print error in Game Logger */
 
 #else
-#define CORE_LOG_INFO(...) /**< empty instruction */
-#define CORE_LOG_WARN(...) /**< empty instruction */
+#define CORE_LOG_TRACE(...) /**< empty instruction */
+#define CORE_LOG_INFO(...)  /**< empty instruction */
+#define CORE_LOG_WARN(...)  /**< empty instruction */
 #define CORE_LOG_ERROR(...) /**< empty instruction */
 
-#define GAME_LOG_INFO(...) /**< empty instruction */
-#define GAME_LOG_WARN(...)   /**< empty instruction */
+#define GAME_LOG_TRACE(...) /**< empty instruction */
+#define GAME_LOG_INFO(...)  /**< empty instruction */
+#define GAME_LOG_WARN(...)  /**< empty instruction */
 #define GAME_LOG_ERROR(...) /**< empty instruction */
 #endif
 } // END OF NAMESPACE Bald

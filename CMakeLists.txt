@@ -8,6 +8,7 @@ add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/google/googletest)
 add_subdirectory(${CMAKE_SOURCE_DIR}/vendor/glad/)
 
 include_directories(${CMAKE_SOURCE_DIR}/src)
+include_directories(${CMAKE_SOURCE_DIR}/src/graphics)
 include_directories(${CMAKE_SOURCE_DIR}/src/utils)
 include_directories(${CMAKE_SOURCE_DIR}/src/input)
 include_directories(${CMAKE_SOURCE_DIR}/src/math)
@@ -39,11 +40,13 @@ endif()
 add_definitions(-DLINUX)
 
 add_library(bald_engine
-        library.cpp library.h
+        library.cpp
+        library.h
         src/utils/file_manager.cpp
         src/utils/split_string.cpp
         src/input/input_manager.cpp
         src/Log.cpp
+        src/graphics/window.cpp
         src/events/event_manager.cpp
         src/events/callback/handler.cpp)
 
@@ -66,10 +69,14 @@ endif ()
 #### EXAMPLES
 
 add_executable(input_example examples/input_example.cpp)
-target_link_libraries(input_example bald_engine)
-
 add_executable(events_example examples/events_example.cpp)
+add_executable(window_example examples/window_example.cpp)
+
+target_link_libraries(input_example bald_engine)
 target_link_libraries(events_example bald_engine)
+target_link_libraries(window_example bald_engine)
+
+
 
 #### END EXAMPLES
 

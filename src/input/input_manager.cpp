@@ -8,6 +8,7 @@
 namespace Bald::Input {
 
     std::pair<double, double> InputManager::m_MousePos;
+    std::pair<double, double> InputManager::m_MouseOff;
     bool InputManager::m_Keys[MAX_KEYS];
     bool InputManager::m_KeysState[MAX_KEYS];
     bool InputManager::m_KeysTyped[MAX_KEYS];
@@ -19,32 +20,10 @@ namespace Bald::Input {
 
         for(int i = 0; i < MAX_KEYS; i++) {
             m_KeysTyped[i] = !m_KeysState[i] && m_Keys[i];
-            if(m_Keys[i]) {
-                Bald::EventManager::Emit<KeyPressedEvent>(i);
-            }
-
-            if(m_KeysTyped[i]) {
-                Bald::EventManager::Emit<KeyTypedEvent>(i);
-            }
-
-            if(m_KeysState[i] && !m_Keys[i]) {
-                Bald::EventManager::Emit<KeyReleasedEvent>(i);
-            }
         }
 
         for(int i = 0; i < MAX_MOUSE_BUTTONS; i++) {
             m_MouseButtonsTyped[i] = !m_MouseButtonsState[i] && m_MouseButtons[i];
-            if(m_MouseButtons[i]) {
-                Bald::EventManager::Emit<MouseButtonPressedEvent>(i);
-            }
-
-            if(m_MouseButtonsTyped[i]) {
-                Bald::EventManager::Emit<MouseButtonTypedEvent>(i);
-            }
-
-            if(m_MouseButtonsState[i] && !m_MouseButtons[i]) {
-                Bald::EventManager::Emit<MouseButtonReleasedEvent>(i);
-            }
         }
 
         std::memcpy(m_KeysState, m_Keys, MAX_KEYS * sizeof(m_Keys[0]));
