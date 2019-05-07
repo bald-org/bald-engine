@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/bald-engine.iml" filepath="$PROJECT_DIR$/.idea/bald-engine.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/ENGINE.iml" filepath="$PROJECT_DIR$/.idea/ENGINE.iml" />
     </modules>
   </component>
 </project>
