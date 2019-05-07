@@ -18,6 +18,6 @@ TEST(GLFW_GLAD, GLFW_GLAD_Initialization){
 
     EXPECT_EQ(gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), true);
 
-    glfwTerminate();
+    glfwDestroyWindow(window);
 
 }
