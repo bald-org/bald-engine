@@ -14,5 +14,5 @@ if (WIN32)
     set(CMAKE_SHARED_LIBRARY_PREFIX "")
 endif ()
 
-add_subdirectory(bald-engine)
+add_subdirectory(engine)
 add_subdirectory(sandbox)
