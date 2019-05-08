@@ -6,11 +6,10 @@
 #include "input_manager.h"
 #include "event_manager.h"
 #include "window_events.h"
-#include "pch.h"
 
 namespace Bald {
 
-    Application* Application::m_Instance{nullptr};
+    const Application* Application::m_Instance = nullptr;
 
     Application::Application() : m_Running(true) {
         assert(!m_Instance);
