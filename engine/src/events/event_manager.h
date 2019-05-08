@@ -15,6 +15,7 @@
 #include "callback/handler.h"
 #include "callback/function_handler.h"
 #include "callback/async_function_handler.h"
+#include "callback/handler_interface.h"
 
 namespace Bald {
 
@@ -110,7 +111,7 @@ namespace Bald {
         static inline void Call() noexcept;
 
     public:
-        static std::unordered_map<std::type_index, std::vector<Handler*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
+        static std::unordered_map<std::type_index, std::vector<HandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
     }; // END OF CLASS EventManager
 
@@ -120,19 +121,19 @@ namespace Bald {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         if(m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
-            m_Callbacks[typeid(T)] = new std::vector<Handler*>;
+            m_Callbacks[typeid(T)] = new std::vector<HandlerInterface*>;
         }
 
         switch(type) {
             case HandleType::SYNC:
-                m_Callbacks[typeid(T)]->push_back(new FunctionHandler(callback, args...));
+                m_Callbacks[typeid(T)]->push_back(new FunctionHandler<T>(callback, args...));
                 break;
             case HandleType::ASYNC:
-                m_Callbacks[typeid(T)]->push_back(new AsyncFunctionHandler(callback, args...));
+                m_Callbacks[typeid(T)]->push_back(new AsyncFunctionHandler<T>(callback, args...));
                 break;
         }
 
-        return m_Callbacks[typeid(T)]->back()->GetID();
+        return static_cast<Handler<T>*>(m_Callbacks[typeid(T)]->back())->GetID();
     }
 
     template<class T>

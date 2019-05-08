@@ -33,6 +33,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
     }; // END OF CLASS MouseEvent
 
     /**
@@ -98,6 +100,8 @@ namespace Bald {
 
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
+        auto cast() -> decltype(this) override { return this; }
+
     private:
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
     }; // END OF CLASS MouseMovedEvent
@@ -138,6 +142,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
 
     public:
 
@@ -215,6 +221,7 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
+        auto cast() -> decltype(this) override { return this; }
     private:
         const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonPressedEvent
@@ -254,6 +261,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
 
     public:
 
@@ -314,6 +323,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+
+        auto cast() -> decltype(this) override { return this; }
 
     private:
         const int m_KeyCode; /* < We save key code simply as an integer */

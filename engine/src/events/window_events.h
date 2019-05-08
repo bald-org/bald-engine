@@ -34,6 +34,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
     }; // END OF CLASS WindowEvent
 
     /**
@@ -99,6 +101,8 @@ namespace Bald {
 
         [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return m_WindowSize; }
 
+        auto cast() -> decltype(this) override { return this; }
+
     private:
         const std::pair<int, int> m_WindowSize; /* < Window's width, height */
     }; // END OF CLASS WindowResizedEvent
@@ -127,6 +131,8 @@ namespace Bald {
         */
 
         inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
     }; // END OF CLASS WindowClosedEvent
 
 } // END OF NAMESPACE Bald

@@ -28,13 +28,13 @@ namespace Bald {
     void Application::Run() {
 
         // TODO: This subscribes are temporary, because we still have no layers ~Blinku
-        EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Typed Event!"); });
-        EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Pressed Event!"); });
-        EventManager::Subscribe<KeyReleasedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Key Released Event!"); });
-        EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, []() { CORE_LOG_TRACE("Mouse Moved Event!"); });
-        EventManager::Subscribe<MouseScrolledEvent>(HandleType::ASYNC, []() { CORE_LOG_TRACE("Mouse Scrolled Event!"); });
-        EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, []() { CORE_LOG_TRACE("Mouse Button Pressed Event!"); } );
-        EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [&]() {
+        EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](const KeyTypedEvent&) { CORE_LOG_TRACE("Key Typed Event!"); });
+        EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&) { CORE_LOG_TRACE("Key Pressed Event!"); });
+        EventManager::Subscribe<KeyReleasedEvent>(HandleType::SYNC, [](const KeyReleasedEvent&) { CORE_LOG_TRACE("Key Released Event!"); });
+        EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&) { CORE_LOG_TRACE("Mouse Moved Event!"); });
+        EventManager::Subscribe<MouseScrolledEvent>(HandleType::ASYNC, [](const MouseScrolledEvent&) { CORE_LOG_TRACE("Mouse Scrolled Event!"); });
+        EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, [](const MouseButtonPressedEvent&) { CORE_LOG_TRACE("Mouse Button Pressed Event!"); } );
+        EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [&](const WindowClosedEvent&) {
             CORE_LOG_TRACE("Window Closed Event!");
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             m_Running = false;

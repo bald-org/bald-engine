@@ -6,7 +6,7 @@
 
 namespace Bald {
 
-    std::unordered_map<std::type_index, std::vector<Handler*>*> EventManager::m_Callbacks;
+    std::unordered_map<std::type_index, std::vector<HandlerInterface*>*> EventManager::m_Callbacks;
     std::deque<Event*> EventManager::m_EventQueue;
 
     void EventManager::Call() noexcept {
@@ -20,7 +20,7 @@ namespace Bald {
             return;
         }
 
-        for(auto& fun : *callbacks->second) fun->Run();
+        for(auto& fun : *callbacks->second) fun->Run(*event);
 
         delete event;
     }
@@ -35,8 +35,8 @@ namespace Bald {
 
     void EventManager::CleanUp() noexcept {
         std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
-        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<Handler*>*>&& pair) {
-            std::for_each(pair.second->begin(), pair.second->end(), [](Handler* handler) { delete handler; });
+        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<HandlerInterface*>*>&& pair) {
+            std::for_each(pair.second->begin(), pair.second->end(), [](HandlerInterface* handler) { delete handler; });
             delete pair.second;
         });
     }

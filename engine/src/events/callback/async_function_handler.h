@@ -13,8 +13,8 @@
  */
 
 namespace Bald {
-
-    class AsyncFunctionHandler : public Handler {
+    template <typename E>
+    class AsyncFunctionHandler : public Handler<E> {
     public:
 
         /**
@@ -25,14 +25,16 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler(fun, args...) {}
+        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler<E>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function asynchronously
         */
 
-        inline void Run() const override { std::async(std::launch::async, m_Function); }
+        void Run(const Event& ev) const override { std::async(std::launch::async, [this, &ev](){
+            this->m_Function(static_cast<const E&>(ev));
+        }); } //TODO: This should return std::future
     };
 
 } //END OF NAMESPACE Bald

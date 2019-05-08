@@ -54,6 +54,8 @@ namespace Bald {
 
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
+        auto cast() -> decltype(this) override { return this; }
+
     protected:
         const int m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS KeyEvent
@@ -94,6 +96,8 @@ namespace Bald {
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
+        auto cast() -> decltype(this) override { return this; }
+
     }; // END OF CLASS KeyPressedEvent
 
     /**
@@ -132,6 +136,8 @@ namespace Bald {
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
+        auto cast() -> decltype(this) override { return this; }
+
     }; // END OF CLASS KeyReleasedEvent
 
     /**
@@ -169,6 +175,8 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
+        auto cast() -> decltype(this) override { return this; }
 
     }; // END OF CLASS KeyTypedEvent
 

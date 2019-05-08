@@ -7,13 +7,14 @@
 #include "handler.h"
 
 namespace Bald {
-
+    class Event;
     /**
      * @class FunctionHandler
      * @brief Synchronous function wrapper implementation
      */
 
-    class FunctionHandler : public Handler {
+    template <typename E>
+    class FunctionHandler : public Handler<E> {
     public:
 
         /**
@@ -24,14 +25,15 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit FunctionHandler(F&& fun, Args&& ... args): Handler(fun, args...) {}
+        explicit FunctionHandler(F&& fun, Args&& ... args): Handler<E>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function
         */
 
-        inline void Run() const override { m_Function(); }
+        void Run(const Event& ev) const override { this->m_Function(static_cast<const E&>(ev)); }
+
     }; // END OF CLASS FunctionHandler
 
 } //END OF NAMESPACE Bald

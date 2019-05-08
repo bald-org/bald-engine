@@ -52,6 +52,8 @@ namespace Bald {
 
         [[nodiscard]] virtual std::type_index Type() const = 0;
 
+        virtual auto cast() -> decltype(this) = 0;
+
     }; //END OF CLASS Event
 
 } //END OF NAMESPACE Bald
