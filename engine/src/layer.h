@@ -24,7 +24,6 @@ namespace Bald {
 
     private:
         bool m_Attached = true;
-        //EventManager m_EventManager;
     }; // END OF CLASS Layer
 
 } // END OF NAMESPACE Bald

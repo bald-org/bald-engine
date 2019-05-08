@@ -3,6 +3,7 @@
 //
 
 #include "layer.h"
+#include "event_manager.h"
 
 namespace Bald {
 
@@ -15,7 +16,7 @@ namespace Bald {
     }
 
     void Layer::RunEvents() {
-        //m_EventManager.Flush();
+        EventManager::Flush();
     }
 
     bool Layer::IsAttached() const noexcept {
