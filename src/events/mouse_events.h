@@ -6,7 +6,6 @@
 
 #include <utility>
 #include "event.h"
-#include "event_manager.h"
 
 namespace Bald {
 
@@ -54,7 +53,7 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetX
@@ -107,7 +106,7 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetOffsetX
@@ -160,7 +159,7 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetKeyCode
@@ -197,7 +196,7 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetKeyCode
@@ -235,7 +234,7 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetKeyCode

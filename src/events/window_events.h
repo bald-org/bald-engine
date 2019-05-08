@@ -6,7 +6,6 @@
 
 #include <utility>
 #include "event.h"
-#include "event_manager.h"
 
 namespace Bald {
 
@@ -56,7 +55,7 @@ namespace Bald {
         * @brief                This method is emits additional WindowEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                   GetWidth
@@ -99,7 +98,7 @@ namespace Bald {
         * @brief                This method is emits additional WindowEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
+        void EmitConnectedEvents() const override {  }
 
         /**
         * @fn                           Type
