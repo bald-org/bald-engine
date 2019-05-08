@@ -26,5 +26,3 @@ namespace Bald {
     }; // END OF APPLICATION CLASS
 
 } // END OF NAMESPACE BALD
-
-

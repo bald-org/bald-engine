@@ -11,6 +11,10 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering_device
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering_device/opengl
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering_device/opengl/buffers
     ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/input
     ${CMAKE_CURRENT_SOURCE_DIR}/src/math
@@ -58,6 +62,9 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering/rendering_device/opengl/buffers/buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering/rendering_device/opengl/buffers/index_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/rendering/rendering_device/opengl/buffers/vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/events/event_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback/handler.cpp)
 

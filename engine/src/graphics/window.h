@@ -14,6 +14,7 @@ namespace Bald::Graphics {
      * @class Window
      * @brief Implementation of simple Window
      */
+
     class Window {
     public:
         /** ========== METHODS ========== */
