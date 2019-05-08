@@ -29,8 +29,8 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        static std::vector<FunctionHandler < WindowEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < WindowEvent>> async_callbacks;
+        static std::vector<FunctionHandler < WindowEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < WindowEvent>*> async_callbacks;
     }; // END OF CLASS WindowEvent
 
     /**
@@ -83,8 +83,8 @@ namespace Bald {
         [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return m_WindowSize; }
 
         const std::pair<int, int> m_WindowSize; /* < Window's width, height */
-        static std::vector<FunctionHandler < WindowResizedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < WindowResizedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < WindowResizedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < WindowResizedEvent>*> async_callbacks;
     }; // END OF CLASS WindowResizedEvent
 
     /**
@@ -107,8 +107,8 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        static std::vector<FunctionHandler < WindowClosedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < WindowClosedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < WindowClosedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < WindowClosedEvent>*> async_callbacks;
     }; // END OF CLASS WindowClosedEvent
 
 } // END OF NAMESPACE Bald

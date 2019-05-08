@@ -66,8 +66,8 @@ namespace Bald {
 
         void EmitConnectedEvents() const override { }
 
-        static std::vector<FunctionHandler < KeyPressedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < KeyPressedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < KeyPressedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < KeyPressedEvent>*> async_callbacks;
     }; // END OF CLASS KeyPressedEvent
 
     /**
@@ -93,8 +93,8 @@ namespace Bald {
 
         void EmitConnectedEvents() const override { }
 
-        static std::vector<FunctionHandler < KeyReleasedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < KeyReleasedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < KeyReleasedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < KeyReleasedEvent>*> async_callbacks;
     }; // END OF CLASS KeyReleasedEvent
 
     /**
@@ -121,8 +121,8 @@ namespace Bald {
 
         void EmitConnectedEvents() const override { }
 
-        static std::vector<FunctionHandler < KeyTypedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < KeyTypedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < KeyTypedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < KeyTypedEvent>*> async_callbacks;
     }; // END OF CLASS KeyTypedEvent
 
 

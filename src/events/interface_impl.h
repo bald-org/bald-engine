@@ -18,35 +18,25 @@ namespace Bald {
     void run(const E& event) {
         static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         for (const auto& callback : E::callbacks) {
-            callback.Run(event);
+            callback->Run(event);
         }
 
         for (const auto& callback : E::async_callbacks) {
-            callback.Run(event);
+            callback->Run(event);
         }
     }
 
     template <class E>
-    void Subscribe(const FunctionHandler < E>& ev ){
+    void Subscribe(FunctionHandler < E>* ev ){
         static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         E::callbacks.push_back(ev);
     }
 
     template <class E>
-    void Subscribe(const AsyncFunctionHandler <E>& ev ){
+    void Subscribe(AsyncFunctionHandler <E>* ev ){
         static_assert(std::is_base_of<Event, E>::value, "Event is not the base of T");
         E::async_callbacks.push_back(ev);
     }
-
-//    template <>
-//    void Subscribe<Event>([[maybe_unused]]const FunctionHandler <Event>& ev ){
-//        assert(false);
-//    }
-
-//    template <>
-//    void Subscribe<Event>([[maybe_unused]]const AsyncFunctionHandler <Event>& ev ){
-//        assert(false);
-//    }
 
     template <class E>
     void Unsubscibe(HandleType type, unsigned int id){
@@ -68,9 +58,4 @@ namespace Bald {
         }
 
     }
-
-//    template <>
-//    void Unsubscibe<Event>([[maybe_unused]]HandleType type, [[maybe_unused]]unsigned int id){
-//        assert(false);
-//    }
 }

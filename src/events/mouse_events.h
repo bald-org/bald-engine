@@ -28,8 +28,8 @@ namespace Bald {
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         */
 
-        static std::vector<FunctionHandler < MouseEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseEvent>*> async_callbacks;
     }; // END OF CLASS MouseEvent
 
     /**
@@ -81,8 +81,8 @@ namespace Bald {
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
-        static std::vector<FunctionHandler < MouseMovedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseMovedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseMovedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseMovedEvent>*> async_callbacks;
     }; // END OF CLASS MouseMovedEvent
 
     /**
@@ -134,8 +134,8 @@ namespace Bald {
         [[nodiscard]] inline std::pair<double, double> GetMouseOffset() const noexcept { return m_MouseOff; }
 
         const std::pair<double, double> m_MouseOff; /* < Mouse x, y offset */
-        static std::vector<FunctionHandler < MouseScrolledEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseScrolledEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseScrolledEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseScrolledEvent>*> async_callbacks;
     }; // END OF CLASS MouseScrolledEvent
 
     /**
@@ -171,8 +171,8 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
         const int m_KeyCode; /* < We save key code simply as an integer */
-        static std::vector<FunctionHandler < MouseButtonPressedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseButtonPressedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonPressedEvent>*> async_callbacks;
     }; // END OF CLASS MouseButtonPressedEvent
 
     /**
@@ -208,8 +208,8 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
         const int m_KeyCode; /* < We save key code simply as an integer */
-        static std::vector<FunctionHandler < MouseButtonReleasedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseButtonReleasedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseButtonReleasedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonReleasedEvent>*> async_callbacks;
     }; // END OF CLASS MouseButtonReleasedEvent
 
     /**
@@ -246,8 +246,8 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
         const int m_KeyCode; /* < We save key code simply as an integer */
-        static std::vector<FunctionHandler < MouseButtonTypedEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < MouseButtonTypedEvent>> async_callbacks;
+        static std::vector<FunctionHandler < MouseButtonTypedEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < MouseButtonTypedEvent>*> async_callbacks;
     }; // END OF CLASS MouseButtonTypedEvent
 
 } // END OF NAMESPACE Bald

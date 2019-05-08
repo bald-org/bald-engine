@@ -50,12 +50,12 @@ namespace Bald {
     }
 
     template <>
-    inline void Subscribe<Event>([[maybe_unused]]const FunctionHandler <Event>& ev ){
+    inline void Subscribe<Event>([[maybe_unused]]FunctionHandler <Event>* ev ){
         assert(false);
     }
 
     template <>
-    inline void Subscribe<Event>([[maybe_unused]]const AsyncFunctionHandler <Event>& ev ){
+    inline void Subscribe<Event>([[maybe_unused]] AsyncFunctionHandler <Event>* ev ){
         assert(false);
     }
 

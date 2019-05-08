@@ -114,14 +114,14 @@ namespace Bald {
 
         switch(type) {
             case HandleType::SYNC:
-                Bald::Subscribe(FunctionHandler<T>(callback, args...));
+                Bald::Subscribe(FunctionHandler<T>(callback, args...)); //TODO: probably to make it this way we have to define move  constructor or make it on the heap
                 break;
             case HandleType::ASYNC:
                 Bald::Subscribe(AsyncFunctionHandler<T>(callback, args...));
                 break;
         }
 
-        return 1;
+        return 1; //TODO: we have to send user ID of what we created
     }
 
     template<class T>
