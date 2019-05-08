@@ -5,6 +5,9 @@
 #include "key_events.h"
 
 namespace Bald {
+    std::vector<FunctionHandler < KeyEvent>*> KeyEvent::callbacks;
+    std::vector<AsyncFunctionHandler < KeyEvent>*> KeyEvent::async_callbacks;
+
     std::vector<FunctionHandler < KeyPressedEvent>*> KeyPressedEvent::callbacks;
     std::vector<AsyncFunctionHandler < KeyPressedEvent>*> KeyPressedEvent::async_callbacks;
 

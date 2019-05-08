@@ -40,8 +40,8 @@ namespace Bald {
         [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
 
         const int m_KeyCode; /* < We save key code simply as an integer */
-        static std::vector<FunctionHandler < KeyEvent>> callbacks;
-        static std::vector<AsyncFunctionHandler < KeyEvent>> async_callbacks;
+        static std::vector<FunctionHandler < KeyEvent>*> callbacks;
+        static std::vector<AsyncFunctionHandler < KeyEvent>*> async_callbacks;
     }; // END OF CLASS KeyEvent
 
     /**
