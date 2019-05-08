@@ -110,6 +110,7 @@ namespace Bald {
         template<class T>
         static std::deque<T*>& GetEventQueueByType() { assert(false); }
 
+
     private:
         static std::deque<Bald::KeyEvent*> m_KeyEventQueue;
         static std::deque<Bald::KeyPressedEvent*> m_KeyPressedEventQueue;
@@ -121,63 +122,29 @@ namespace Bald {
         static std::deque<Bald::MouseButtonPressedEvent*> m_MouseButtonPressedEventQueue;
         static std::deque<Bald::MouseMovedEvent*> m_MouseMovedEventQueue;
         static std::deque<Bald::MouseScrolledEvent*> m_MouseScrolledEventQueue;
+        static std::deque<Bald::MouseButtonReleasedEvent*> m_MouseButtonReleasedEventQueue;
 
         static std::deque<Bald::WindowEvent*> m_WindowEventQueue;
         static std::deque<Bald::WindowResizedEvent*> m_WindowResizedEventQueue;
         static std::deque<Bald::WindowClosedEvent*> m_WindowClosedEventQueue;
     }; // END OF CLASS EventManager
 
-    template<>
-    inline std::deque<KeyEvent*>& EventManager::GetEventQueueByType<KeyEvent>() { return m_KeyEventQueue; }
-
-    template<>
-    inline std::deque<KeyPressedEvent*>& EventManager::GetEventQueueByType<KeyPressedEvent>() { return m_KeyPressedEventQueue; }
-
-    template<>
-    inline std::deque<KeyTypedEvent*>& EventManager::GetEventQueueByType<KeyTypedEvent>() { return m_KeyTypedEventQueue; }
-
-    template<>
-    inline std::deque<KeyReleasedEvent*>& EventManager::GetEventQueueByType<KeyReleasedEvent>() { return m_KeyReleasedEventQueue; }
-
-    template<>
-    inline std::deque<MouseEvent*>& EventManager::GetEventQueueByType<MouseEvent>() { return m_MouseEventQueue; }
-
-    template<>
-    inline std::deque<MouseButtonTypedEvent*>& EventManager::GetEventQueueByType<MouseButtonTypedEvent>() { return m_MouseButtonTypedEventQueue; }
-
-    template<>
-    inline std::deque<MouseButtonPressedEvent*>& EventManager::GetEventQueueByType<MouseButtonPressedEvent>() { return m_MouseButtonPressedEventQueue; }
-
-    template<>
-    inline std::deque<MouseMovedEvent*>& EventManager::GetEventQueueByType<MouseMovedEvent>() { return m_MouseMovedEventQueue; }
-
-    template<>
-    inline std::deque<MouseScrolledEvent*>& EventManager::GetEventQueueByType<MouseScrolledEvent>() { return m_MouseScrolledEventQueue; }
-
-    template<>
-    inline std::deque<WindowEvent*>& EventManager::GetEventQueueByType<WindowEvent>() { return m_WindowEventQueue; }
-
-    template<>
-    inline std::deque<WindowResizedEvent*>& EventManager::GetEventQueueByType<WindowResizedEvent>() { return m_WindowResizedEventQueue; }
-
-    template<>
-    inline std::deque<WindowClosedEvent*>& EventManager::GetEventQueueByType<WindowClosedEvent>() { return m_WindowClosedEventQueue; }
-
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        Handler<T>* pointer;
         switch (type) {
-            case HandleType::SYNC:
-                pointer = new FunctionHandler<T>(callback, args...);
+            case HandleType::SYNC: {
+                auto pointer = new FunctionHandler<T>(callback, args...);
                 Bald::Subscribe(static_cast<FunctionHandler<T>*>(pointer));
-                break;
-            case HandleType::ASYNC:
-                pointer = new AsyncFunctionHandler<T>(callback, args...);
+                return pointer->GetID();
+            }
+            case HandleType::ASYNC: {
+                auto pointer = new AsyncFunctionHandler<T>(callback, args...);
                 Bald::Subscribe(static_cast<AsyncFunctionHandler<T>*>(pointer));
-                break;
+                return pointer->GetID();
+            }
         }
-        return pointer->GetID();
+        return -1;
     }
 
     template<class T>
@@ -203,7 +170,69 @@ namespace Bald {
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
+        Bald::RemoveAllCallbacks<T>();
+        Bald::RemoveAllCallbacks<KeyPressedEvent>();
+        Bald::RemoveAllCallbacks<KeyTypedEvent>();
+        Bald::RemoveAllCallbacks<KeyReleasedEvent>();
 
+        Bald::RemoveAllCallbacks<MouseEvent>();
+        Bald::RemoveAllCallbacks<MouseButtonTypedEvent>();
+        Bald::RemoveAllCallbacks<MouseButtonPressedEvent>();
+        Bald::RemoveAllCallbacks<MouseScrolledEvent>();
+        Bald::RemoveAllCallbacks<MouseMovedEvent>();
+
+        Bald::RemoveAllCallbacks<WindowEvent>();
+        Bald::RemoveAllCallbacks<WindowResizedEvent>();
+        Bald::RemoveAllCallbacks<WindowClosedEvent>();
     }
+
+    template<>
+    inline std::deque<KeyEvent*>& EventManager::GetEventQueueByType() { return m_KeyEventQueue; }
+
+    template<>
+    inline std::deque<KeyPressedEvent*>&
+    EventManager::GetEventQueueByType<KeyPressedEvent>() { return m_KeyPressedEventQueue; }
+
+    template<>
+    inline std::deque<KeyTypedEvent*>&
+    EventManager::GetEventQueueByType<KeyTypedEvent>() { return m_KeyTypedEventQueue; }
+
+    template<>
+    inline std::deque<KeyReleasedEvent*>&
+    EventManager::GetEventQueueByType<KeyReleasedEvent>() { return m_KeyReleasedEventQueue; }
+
+    template<>
+    inline std::deque<MouseEvent*>& EventManager::GetEventQueueByType<MouseEvent>() { return m_MouseEventQueue; }
+
+    template<>
+    inline std::deque<MouseButtonTypedEvent*>&
+    EventManager::GetEventQueueByType<MouseButtonTypedEvent>() { return m_MouseButtonTypedEventQueue; }
+
+    template<>
+    inline std::deque<MouseButtonReleasedEvent*>&
+    EventManager::GetEventQueueByType<MouseButtonReleasedEvent>() { return m_MouseButtonReleasedEventQueue; }
+
+    template<>
+    inline std::deque<MouseButtonPressedEvent*>&
+    EventManager::GetEventQueueByType<MouseButtonPressedEvent>() { return m_MouseButtonPressedEventQueue; }
+
+    template<>
+    inline std::deque<MouseMovedEvent*>&
+    EventManager::GetEventQueueByType<MouseMovedEvent>() { return m_MouseMovedEventQueue; }
+
+    template<>
+    inline std::deque<MouseScrolledEvent*>&
+    EventManager::GetEventQueueByType<MouseScrolledEvent>() { return m_MouseScrolledEventQueue; }
+
+    template<>
+    inline std::deque<WindowEvent*>& EventManager::GetEventQueueByType<WindowEvent>() { return m_WindowEventQueue; }
+
+    template<>
+    inline std::deque<WindowResizedEvent*>&
+    EventManager::GetEventQueueByType<WindowResizedEvent>() { return m_WindowResizedEventQueue; }
+
+    template<>
+    inline std::deque<WindowClosedEvent*>&
+    EventManager::GetEventQueueByType<WindowClosedEvent>() { return m_WindowClosedEventQueue; }
 
 } //END OF NAMESPACE Bald

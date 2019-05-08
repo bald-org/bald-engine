@@ -28,6 +28,7 @@ int main() {
     EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&){ std::cout << "KeyPressedEvent!\n"; });
     //unsigned id = EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, [](){ std::cout << "KeyTypedEvent!\n"; });
     EventManager::Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&){ std::cout << "KeyMovedEvent!\n"; });
+    EventManager::Subscribe<KeyEvent>(HandleType::SYNC, [](const KeyEvent&){ std::cout << "KeyEvent!\n"; });
     while (!glfwWindowShouldClose(window)) {
 
         InputManager::Update();

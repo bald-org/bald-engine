@@ -16,6 +16,7 @@ namespace Bald {
     std::deque<Bald::MouseButtonPressedEvent*> EventManager::m_MouseButtonPressedEventQueue;
     std::deque<Bald::MouseMovedEvent*> EventManager::m_MouseMovedEventQueue;
     std::deque<Bald::MouseScrolledEvent*> EventManager::m_MouseScrolledEventQueue;
+    std::deque<Bald::MouseButtonReleasedEvent*> EventManager::m_MouseButtonReleasedEventQueue;
 
     std::deque<Bald::WindowEvent*> EventManager::m_WindowEventQueue;
     std::deque<Bald::WindowResizedEvent*> EventManager::m_WindowResizedEventQueue;
@@ -26,11 +27,33 @@ namespace Bald {
     }
 
     void EventManager::Flush(int n) noexcept {
-        std::cout << n << "\n";
+        if (n == -1){
+            while (!GetEventQueueByType<KeyEvent>().empty()){
+                Bald::run(*GetEventQueueByType<KeyEvent>().front());
+                delete GetEventQueueByType<KeyEvent>().front();
+                GetEventQueueByType<KeyEvent>().pop_front();
+            }
+        } else {
+
+        }
     }
 
     void EventManager::CleanUp() noexcept {
+        Bald::RemoveAllCallbacks<KeyEvent>();
+        Bald::RemoveAllCallbacks<KeyPressedEvent>();
+        Bald::RemoveAllCallbacks<KeyTypedEvent>();
+        Bald::RemoveAllCallbacks<KeyReleasedEvent>();
 
+        Bald::RemoveAllCallbacks<MouseEvent>();
+        Bald::RemoveAllCallbacks<MouseButtonTypedEvent>();
+        Bald::RemoveAllCallbacks<MouseButtonPressedEvent>();
+        Bald::RemoveAllCallbacks<MouseScrolledEvent>();
+        Bald::RemoveAllCallbacks<MouseMovedEvent>();
+        Bald::RemoveAllCallbacks<MouseButtonReleasedEvent>();
+
+        Bald::RemoveAllCallbacks<WindowEvent>();
+        Bald::RemoveAllCallbacks<WindowResizedEvent>();
+        Bald::RemoveAllCallbacks<WindowClosedEvent>();
     }
 
 } //END OF NAMESPACE Bald
