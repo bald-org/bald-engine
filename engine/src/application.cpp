@@ -9,7 +9,7 @@
 
 namespace Bald {
 
-    const Application* Application::m_Instance{nullptr};
+    const Application* Application::m_Instance = nullptr;
 
     Application::Application() : m_Running(true) {
         assert(!m_Instance);
