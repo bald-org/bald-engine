@@ -53,6 +53,8 @@ namespace Bald {
             glfwSetWindowShouldClose(m_Window.get()->GetWindow(), true);
             this->m_Running = false;
         });
+
+        return true;
     }
 
     void Application::Shutdown() {
