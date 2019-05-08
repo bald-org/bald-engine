@@ -147,8 +147,6 @@ namespace Bald {
         std::deque<WindowClosedEvent*>& GetEventQueueByType<WindowClosedEvent>() { return m_WindowClosedEventQueue; }
 
     public:
-        static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
-
         static std::deque<Bald::KeyEvent*> m_KeyEventQueue;
         static std::deque<Bald::KeyPressedEvent*> m_KeyPressedEventQueue;
         static std::deque<Bald::KeyTypedEvent*> m_KeyTypedEventQueue;

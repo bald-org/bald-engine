@@ -6,26 +6,31 @@
 
 namespace Bald {
 
-    std::deque<Event*> EventManager::m_EventQueue;
+    std::deque<Bald::KeyEvent*> EventManager::m_KeyEventQueue;
+    std::deque<Bald::KeyPressedEvent*> EventManager::m_KeyPressedEventQueue;
+    std::deque<Bald::KeyTypedEvent*> EventManager::m_KeyTypedEventQueue;
+    std::deque<Bald::KeyReleasedEvent*> EventManager::m_KeyReleasedEventQueue;
+
+    std::deque<Bald::MouseEvent*> EventManager::m_MouseEventQueue;
+    std::deque<Bald::MouseButtonTypedEvent*> EventManager::m_MouseButtonTypedEventQueue;
+    std::deque<Bald::MouseButtonPressedEvent*> EventManager::m_MouseButtonPressedEventQueue;
+    std::deque<Bald::MouseMovedEvent*> EventManager::m_MouseMovedEventQueue;
+    std::deque<Bald::MouseScrolledEvent*> EventManager::m_MouseScrolledEventQueue;
+
+    std::deque<Bald::WindowEvent*> EventManager::m_WindowEventQueue;
+    std::deque<Bald::WindowResizedEvent*> EventManager::m_WindowResizedEventQueue;
+    std::deque<Bald::WindowClosedEvent*> EventManager::m_WindowClosedEventQueue;
 
     void EventManager::Call() noexcept {
-        Event* event = m_EventQueue.front();
-        m_EventQueue.pop_front();
-        //TODO: call run on event
 
-        delete event;
     }
 
     void EventManager::Flush(int n) noexcept {
-        if(n == -1) {
-            while(!m_EventQueue.empty()) Call();
-        } else {
-            for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
-        }
+        std::cout << n << "\n";
     }
 
     void EventManager::CleanUp() noexcept {
-        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
+
     }
 
 } //END OF NAMESPACE Bald
