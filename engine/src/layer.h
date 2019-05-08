@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <typeindex>
+
 namespace Bald {
 
     class Layer {
@@ -12,18 +14,26 @@ namespace Bald {
 
         virtual ~Layer() = default;
 
-        void Attach() noexcept;
+        virtual void OnAttach() noexcept = 0;
 
-        void Detach() noexcept;
-
-        virtual void RunEvents();
+        virtual void OnDetach() noexcept = 0;
 
         virtual void Update() = 0;
 
-        [[nodiscard]] bool IsAttached() const noexcept;
+        virtual void RunEvents();
+
+        void Enable() noexcept;
+
+        void Disable() noexcept;
+
+        [[nodiscard]] inline bool IsEnabled() const noexcept;
 
     private:
-        bool m_Attached = true;
+        bool m_IsEnabled = true;
     }; // END OF CLASS Layer
+
+    inline bool Layer::IsEnabled() const noexcept {
+        return m_IsEnabled;
+    }
 
 } // END OF NAMESPACE Bald

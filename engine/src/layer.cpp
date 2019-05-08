@@ -7,20 +7,16 @@
 
 namespace Bald {
 
-    void Layer::Attach() noexcept {
-        m_Attached = true;
+    void Layer::Enable() noexcept {
+        m_IsEnabled = true;
     }
 
-    void Layer::Detach() noexcept {
-        m_Attached = false;
+    void Layer::Disable() noexcept {
+        m_IsEnabled = false;
     }
 
     void Layer::RunEvents() {
         EventManager::Flush();
-    }
-
-    bool Layer::IsAttached() const noexcept {
-        return m_Attached;
     }
 
 }

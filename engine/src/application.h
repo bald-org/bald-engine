@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "window.h"
+#include "layer_stack.h"
 
 namespace Bald {
 
@@ -32,6 +33,18 @@ namespace Bald {
 
         virtual ~Application();
 
+        template<class L>
+        void PushLayer();
+
+        template<class L>
+        void PushOverlay();
+
+        template<class L>
+        void PopLayer();
+
+        template<class L>
+        void PopOverlay();
+
         /**
          * @fn                      Create
          * @brief                   Creates an application. This function should be implemented on the client's side.
@@ -48,12 +61,43 @@ namespace Bald {
         void Run();
 
     private:
+
+        bool Init();
+
+        void Shutdown();
+
+    private:
         std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
+        LayerStack m_LayerStack; /**< Main layer stack */
         bool m_Running; /**< State of the application */
 
     private:
         static const Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
     }; // END OF APPLICATION CLASS
+
+    template<class L>
+    void Application::PushLayer() {
+        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        m_LayerStack.PushLayer(new L{});
+    }
+
+    template<class L>
+    void Application::PushOverlay() {
+        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+        m_LayerStack.PushOverlay(new L{});
+    }
+
+    template<class L>
+    void Application::PopLayer() {
+        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        m_LayerStack.PopLayer(new L{});
+    }
+
+    template<class L>
+    void Application::PopOverlay() {
+        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+        m_LayerStack.PopOverlay(new L{});
+    }
 
 } // END OF NAMESPACE BALD
 
