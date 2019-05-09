@@ -6,12 +6,12 @@
 
 #include <typeindex>
 
-/**
- * @class Event
- * @brief Abstract class which provides simple API for specific events implementations
- */
-
 namespace Bald {
+
+    /**
+     * @class Event
+     * @brief Abstract class which provides simple API for specific events implementations
+     */
 
     class Event {
     protected:

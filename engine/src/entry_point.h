@@ -4,6 +4,10 @@
 
 #pragma once
 
+/**
+ * This is the engine's entry point.
+ */
+
 #ifdef LINUX
 
 int main() {

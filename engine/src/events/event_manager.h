@@ -16,25 +16,27 @@
 #include "callback/function_handler.h"
 #include "callback/async_function_handler.h"
 
-/**
- * @class EventManager
- * @brief Central event bus. Right now this class is responsible for
- *        managing all engine's events.
- */
-
 namespace Bald {
 
     enum class HandleType {
         SYNC, ASYNC
     };
 
+    /**
+     * @class EventManager
+     * @brief Central event bus. Right now this class is responsible for
+     *        managing all engine's events.
+     */
+
     class EventManager {
     public:
+
         /**
         * @fn       EventManager
         * @brief    Constructor is deleted because this class is just a system,
         *           meaning you cannot instantiate it
         */
+
         EventManager() = delete;
 
         /**
