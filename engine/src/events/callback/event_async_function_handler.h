@@ -5,7 +5,7 @@
 #pragma once
 
 #include <future>
-#include "handler.h"
+#include "event_handler.h"
 
 /**
  * @class AsyncFunctionHandler
@@ -14,7 +14,7 @@
 
 namespace Bald {
     template <typename E>
-    class AsyncFunctionHandler : public Handler<E> {
+    class EventAsyncFunctionHandler : public EventHandler<E> {
     public:
 
         /**
@@ -25,11 +25,12 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit AsyncFunctionHandler(F&& fun, Args&& ... args): Handler<E>(fun, args...) {}
+        explicit EventAsyncFunctionHandler(F&& fun, Args&& ... args): EventHandler<E>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function asynchronously
+        * @param [Event]        ev -> event that will be casted to E type and passed to the function
         */
 
         void Run(const Event& ev) const override { std::async(std::launch::async, [this, &ev](){

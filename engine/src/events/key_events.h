@@ -26,16 +26,10 @@ namespace Bald {
         */
 
         explicit KeyEvent(unsigned keycode)
-            : m_KeyCode{keycode} {}
+                :
+                m_KeyCode{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is left blank because KeyEvent does not emit any associated events
-        */
-
-        void EmitConnectedEvents() const override {}
 
         /**
         * @fn                           Type
@@ -76,16 +70,10 @@ namespace Bald {
         */
 
         explicit KeyPressedEvent(unsigned keycode)
-            : KeyEvent{keycode} {}
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
-
-
 
         /**
         * @fn                   Type
@@ -114,21 +102,18 @@ namespace Bald {
         */
 
         explicit KeyReleasedEvent(unsigned keycode)
-            : KeyEvent{keycode} {}
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
-
 
         /**
         * @fn                   Type
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
         */
+
+        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyReleasedEvent
 
@@ -149,14 +134,10 @@ namespace Bald {
         */
 
         explicit KeyTypedEvent(unsigned keycode)
-            : KeyEvent{keycode} {}
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
 
         /**
         * @fn                   Type

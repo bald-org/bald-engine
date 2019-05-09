@@ -21,13 +21,6 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is left blank because MouseEvent does not emit any associated events
-        */
-
-        void EmitConnectedEvents() const override {}
-
-        /**
         * @fn                   Type
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         */
@@ -57,12 +50,6 @@ namespace Bald {
             : m_MousePos{mouseX, mouseY} {}
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional MouseEvent
-        */
-
 
         /**
         * @fn                           Type
@@ -127,12 +114,6 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional MouseEvent
-        */
-
-
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
@@ -192,11 +173,6 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional MouseEvent
-        */
-
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
@@ -240,10 +216,6 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional MouseEvent
-        */
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
@@ -286,10 +258,6 @@ namespace Bald {
 
     public:
 
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional MouseEvent
-        */
         /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism

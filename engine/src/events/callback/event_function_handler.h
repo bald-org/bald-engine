@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "handler.h"
+#include "event_handler.h"
 
 namespace Bald {
     class Event;
@@ -14,26 +14,27 @@ namespace Bald {
      */
 
     template <typename E>
-    class FunctionHandler : public Handler<E> {
+    class EventFunctionHandler : public EventHandler<E> {
     public:
 
         /**
         * @fn                   FunctionHandler
         * @brief                Constructor
-        * @param [F&&]          fun -> Function which will be wrapped
+        * @param [F&&]          fun -> Function which will be wrapped *HAS TO* take as first parameter an const reference to Event
         * @param [Args&& ...]   args -> Function's arguments
         */
 
         template<class F, class... Args>
-        explicit FunctionHandler(F&& fun, Args&& ... args): Handler<E>(fun, args...) {}
+        explicit EventFunctionHandler(F&& fun, Args&& ... args): EventHandler<E>(fun, args...) {}
 
         /**
         * @fn                   Run
         * @brief                This method runs wrapped function
+        * @param [Event]        ev -> event that will be casted to E type and passed to the function
         */
 
         void Run(const Event& ev) const override { this->m_Function(static_cast<const E&>(ev)); }
 
-    }; // END OF CLASS FunctionHandler
+    }; // END OF CLASS EventFunctionHandler
 
 } //END OF NAMESPACE Bald

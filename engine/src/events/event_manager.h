@@ -12,10 +12,10 @@
 #include <typeinfo>
 
 #include "event.h"
-#include "callback/handler.h"
-#include "callback/function_handler.h"
-#include "callback/async_function_handler.h"
-#include "callback/handler_interface.h"
+#include "callback/event_handler.h"
+#include "callback/event_function_handler.h"
+#include "callback/event_async_function_handler.h"
+#include "callback/event_handler_interface.h"
 
 namespace Bald {
 
@@ -34,8 +34,7 @@ namespace Bald {
 
         /**
         * @fn       EventManager
-        * @brief    Constructor is deleted because this class is just a system,
-        *           meaning you cannot instantiate it
+        * @brief    Constructor of EventManager class and performs counting of existing objects
         */
 
         EventManager();
@@ -44,7 +43,7 @@ namespace Bald {
         * @fn                    Subscribe
         * @brief                 Templated function which allows you to subscribe to any kind of engine's event
         * @param [HandleType]    type -> Manner in which the function will be handled e.g. synchronous/asynchronous
-        * @param [F&&]           callback -> Function with which you subscribe to an event
+        * @param [F&&]           callback -> Function with which you subscribe to an event. It *HAS TO* take as first parameter an const reference to Event
         * @param [Args&& ...]    args -> Function's arguments
         */
 
@@ -85,7 +84,17 @@ namespace Bald {
         template<class T>
         void RemoveAllCallbacksByType() noexcept;
 
+        /**
+         * @fn RemoveAllCallbacks
+         * @brief removes all handlers for every event
+         */
+
         void RemoveAllCallbacks() noexcept;
+
+        /**
+         * @fn ClearEventsQueue
+         * @brief deletes all events form queue
+         */
 
         static void ClearEventsQueue() noexcept;
 
@@ -99,9 +108,9 @@ namespace Bald {
         void Flush(int n = -1) noexcept;
 
         /**
-        * @fn                    Flush
-        * @brief                 This function should be called at the end of program to clean up allocated memory
-        */
+         * @fn ~EventManager
+         * @brief destroys Event Manager object
+         */
 
         ~EventManager();
 
@@ -114,11 +123,23 @@ namespace Bald {
 
         inline void Call() noexcept;
 
+        /**
+         * @fn Init
+         * @brief Initialize Event Manager object
+         * @return [bool]  true if initialization was successful otherwise false
+         */
+
         bool Init();
+
+        /**
+         * @fn Shutdown
+         * @brief destroys Event Manager object if it is the last one also clears event queue
+         */
+
         void Shutdown();
 
     private:
-        std::unordered_map<std::type_index, std::vector<HandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
+        std::unordered_map<std::type_index, std::vector<EventHandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
         static int m_ReferenceCounter;
     }; // END OF CLASS EventManager
@@ -129,19 +150,19 @@ namespace Bald {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         if (m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
-            m_Callbacks[typeid(T)] = new std::vector<HandlerInterface*>;
+            m_Callbacks[typeid(T)] = new std::vector<EventHandlerInterface*>;
         }
 
         switch (type) {
             case HandleType::SYNC:
-                m_Callbacks[typeid(T)]->push_back(new FunctionHandler<T>(callback, args...));
+                m_Callbacks[typeid(T)]->push_back(new EventFunctionHandler<T>(callback, args...));
                 break;
             case HandleType::ASYNC:
-                m_Callbacks[typeid(T)]->push_back(new AsyncFunctionHandler<T>(callback, args...));
+                m_Callbacks[typeid(T)]->push_back(new EventAsyncFunctionHandler<T>(callback, args...));
                 break;
         }
 
-        return static_cast<Handler<T>*>(m_Callbacks[typeid(T)]->back())->GetID();
+        return m_Callbacks[typeid(T)]->back()->GetID();
     }
 
     template<class T>
@@ -153,10 +174,10 @@ namespace Bald {
 
         auto vector = iter->second;
 
-        for (auto i = vector->begin(); i != vector->end(); ++i) {
-            if (( **i ) == id) {
-                delete *i;
-                vector->erase(i);
+        for (auto it = vector->begin(); it != vector->end(); ++it) {
+            if (( **it ) == id) {
+                delete *it;
+                vector->erase(it);
                 return;
             }
         }
@@ -167,7 +188,6 @@ namespace Bald {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         T* event = new T{args...};
-        event->EmitConnectedEvents();
         m_EventQueue.push_back(event);
     }
 

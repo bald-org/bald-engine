@@ -21,13 +21,6 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is left blank because KeyEvent does not emit any associated events
-        */
-
-        void EmitConnectedEvents() const override {}
-
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
@@ -58,13 +51,6 @@ namespace Bald {
             : m_WindowSize{windowWidth, windowHeight} {}
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional WindowEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
 
         /**
         * @fn                           Type
@@ -113,13 +99,6 @@ namespace Bald {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional WindowEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
 
         /**
         * @fn                           Type

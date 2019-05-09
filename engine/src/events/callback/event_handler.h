@@ -7,7 +7,7 @@
 #include <vector>
 #include <functional>
 #include "Log.h"
-#include "handler_interface.h"
+#include "event_handler_interface.h"
 
 /**
  * @class Callback
@@ -15,27 +15,34 @@
  */
 
 namespace Bald {
-    class Event;
+
+    /**
+     * @class EventHandler
+     * @brief class that holds a function that takes  specific event as a parameter
+     * @tparam E -> type of event that will be passed to the function
+     */
+
     template<typename E>
-    class Handler : public HandlerInterface {
+    class EventHandler : public EventHandlerInterface {
     public:
 
         /**
-        * @fn                   Handler
+        * @fn                   EventHandler
         * @brief                Constructor
-        * @param [F&&]          fun -> Function which will be wrapped
+        * @param [F&&]          fun -> Function which will be wrapped it *HAS TO* take as first parameter an const reference to Event
         * @param [Args&& ...]   args -> Function's arguments
         */
 
         template<class F, class... Args>
-        explicit Handler(F&& fun, Args&& ... args) :
-                HandlerInterface() {
+        explicit EventHandler(F&& fun, Args&& ... args) :
+                EventHandlerInterface() {
             if (this->m_ID != 0) {
                 m_Function = [=](const E& ev) {
                     fun(ev, args...);
                 };
             } else {
-                CORE_LOG_WARN("[Handler] Could not create Handler object because maximum number of ID's was reached");
+                CORE_LOG_WARN(
+                        "[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
             }
         }
 
@@ -43,15 +50,14 @@ namespace Bald {
         * @fn                   Run
         * @brief                Virtual method which provides an API for implementing function calls.
         *                       Right now we use it to provide option for synchronous and asynchronous function calls
+        * @param [Event]        ev -> Event that will be casted to E type and passed to the function
         */
 
         void Run(const Event&) const override = 0;
 
-
-
     protected:
         std::function<void(const E& ev)> m_Function; /**< Function wrapper */
 
-    }; // END OF CLASS Handler
+    }; // END OF CLASS EventHandler
 
 } //END OF NAMESPACE Bald

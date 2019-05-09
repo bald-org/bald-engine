@@ -33,17 +33,16 @@ namespace Bald {
 
     void EventManager::Call() noexcept {
         Event* event = m_EventQueue.front();
-        m_EventQueue.pop_front();
 
         auto callbacks = m_Callbacks.find(event->Type());
 
         if(callbacks == m_Callbacks.end()) {
-            delete event;
             return;
         }
 
         for(auto& fun : *callbacks->second) fun->Run(*event);
 
+        m_EventQueue.pop_front();
         delete event;
     }
 
@@ -56,8 +55,8 @@ namespace Bald {
     }
 
     void EventManager::RemoveAllCallbacks() noexcept {
-        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<HandlerInterface*>*>&& pair) {
-            std::for_each(pair.second->begin(), pair.second->end(), [](HandlerInterface* handler) { delete handler; });
+        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<EventHandlerInterface*>*>&& pair) {
+            std::for_each(pair.second->begin(), pair.second->end(), [](EventHandlerInterface* handler) { delete handler; });
             delete pair.second;
         });
     }

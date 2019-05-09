@@ -20,10 +20,6 @@ namespace Bald {
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
     }
 
-    Application::~Application() {
-         // TODO: Maybe after layer update? We will have to discuss this
-    }
-
     void Application::Run() {
 
         // TODO: This subscribes are temporary, because we still have no layers ~Blinku
