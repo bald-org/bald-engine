@@ -16,7 +16,8 @@ namespace Bald::Graphics {
         m_Width(width),
         m_Height(height),
         m_VSync(VSync) {
-        assert(Init());
+        [[maybe_unused]] bool state = Init();
+        assert(state);
     }
 
     Window::~Window() noexcept {
