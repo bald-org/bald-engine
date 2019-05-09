@@ -61,7 +61,7 @@ namespace Bald::Graphics {
         }
 
         if(!m_Window) {
-            glfwTerminate();
+            glfwDestroyWindow(m_Window);
             CORE_LOG_ERROR("[Window] Failed to create a Window!");
             return false;
         }
