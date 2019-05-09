@@ -13,7 +13,7 @@ namespace Bald {
     const Application* Application::m_Instance = nullptr;
 
     Application::Application() : m_Running(true) {
-        bool state = Init();
+        [[maybe_unused]] bool state = Init();
         assert(state);
     }
 
@@ -41,11 +41,13 @@ namespace Bald {
     }
 
     bool Application::Init() {
+        Log::Init();
+
+        CORE_LOG_INFO("[Application] Initializing application...");
+
         assert(!m_Instance);
 
         m_Instance = this;
-
-        Log::Init();
 
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
 
@@ -54,15 +56,21 @@ namespace Bald {
             this->m_Running = false;
         });
 
+        CORE_LOG_INFO("[Application] Initialization was successful");
+
         return true;
     }
 
     void Application::Shutdown() {
-        for(auto layer : m_LayerStack) {
+        CORE_LOG_INFO("[Application] Shutting down application...");
+
+        for(Layer* layer : m_LayerStack) {
             delete layer;
         }
 
         EventManager::CleanUp(); // TODO: Maybe after layer update? We will have to discuss this
+
+        CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 
 } // END OF NAMESPACE BALD

@@ -27,15 +27,20 @@ public:
         }
     }
 
+    [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
+
 };
 
 class Sandbox : public Bald::Application {
 public:
     Sandbox() {
         PushLayer<DebugLayer>();
+        PushLayer<DebugLayer>();
     }
 
-    ~Sandbox() override = default;
+    ~Sandbox() override {
+        PopLayer<DebugLayer>();
+    }
 };
 
 Bald::Application* Bald::Application::Create() noexcept {

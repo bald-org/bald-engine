@@ -28,6 +28,8 @@ namespace Bald {
 
         [[nodiscard]] inline bool IsEnabled() const noexcept;
 
+        [[nodiscard]] virtual std::type_index GetType() const = 0;
+
     private:
         bool m_IsEnabled = true;
     }; // END OF CLASS Layer

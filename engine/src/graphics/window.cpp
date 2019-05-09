@@ -14,7 +14,7 @@ namespace Bald::Graphics {
         m_Width(width),
         m_Height(height),
         m_VSync(VSync) {
-        bool state = Init();
+        [[maybe_unused]] bool state = Init();
         assert(state);
     }
 

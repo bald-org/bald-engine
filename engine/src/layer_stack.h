@@ -18,13 +18,17 @@ namespace Bald {
 
         ~LayerStack() = default;
 
-        void PushLayer(Layer* layer);
+        template<typename L>
+        void PushLayer();
 
-        void PushOverlay(Layer* overlay);
+        template<typename L>
+        void PushOverlay();
 
-        void PopLayer(Layer* layer);
+        template<typename L>
+        void PopLayer();
 
-        void PopOverlay(Layer* overlay);
+        template<typename L>
+        void PopOverlay();
 
         inline std::vector<Layer*>::iterator begin();
 
@@ -41,6 +45,79 @@ namespace Bald {
 
     inline std::vector<Layer*>::iterator LayerStack::end() {
         return m_LayerStack.end();
+    }
+
+    template<typename L>
+    void LayerStack::PushLayer() {
+        CORE_LOG_INFO("[LayerStack] Pushing layer...");
+
+        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        auto* layer = new L{};
+        layer->OnAttach();
+        m_LayerStack.emplace(m_LayerStack.begin() + m_LayersAmount, layer);
+        ++m_LayersAmount;
+
+        CORE_LOG_INFO("[LayerStack] Pushing was successful");
+    }
+
+    template<typename L>
+    void LayerStack::PushOverlay() {
+        CORE_LOG_INFO("[LayerStack] Pushing overlay...");
+
+        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+        auto* overlay = new L{};
+        overlay->OnAttach();
+        m_LayerStack.emplace_back(overlay);
+
+        CORE_LOG_INFO("[LayerStack] Pushing was successful");
+    }
+
+    template<typename L>
+    void LayerStack::PopLayer() {
+        CORE_LOG_INFO("[LayerStack] Popping layer...");
+
+        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+
+        auto it = m_LayerStack.begin();
+
+        for(; it != m_LayerStack.end(); ++it) {
+            if((*it)->GetType() == typeid(L)) {
+                break;
+            }
+        }
+
+        if(it != m_LayerStack.end()) {
+            delete *it;
+            m_LayerStack.erase(it);
+            --m_LayersAmount;
+            CORE_LOG_INFO("[LayerStack] Popping was successful");
+        } else {
+            CORE_LOG_WARN("[LayerStack] Could not pop a layer because such layer does not exist in layer stack");
+        }
+    }
+
+    template<typename L>
+    void LayerStack::PopOverlay() {
+        CORE_LOG_INFO("[LayerStack] Popping overlay...");
+
+        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+
+        auto it = m_LayerStack.begin();
+
+        for(; it != m_LayerStack.end(); ++it) {
+            if((*it)->GetType() == typeid(L)) {
+                break;
+            }
+        }
+
+        if(it != m_LayerStack.end()) {
+            (*it)->OnDetach();
+            delete *it;
+            m_LayerStack.erase(it);
+            CORE_LOG_INFO("[LayerStack] Popping was successful");
+        } else {
+            CORE_LOG_WARN("[LayerStack] Could not pop an overlay because such overlayer does not exist in layer stack");
+        }
     }
 
 } // END OF NAMESPACE Bald
