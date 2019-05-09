@@ -47,11 +47,13 @@ namespace Bald {
     }
 
     void EventManager::Flush(int n) noexcept {
+        CORE_LOG_INFO("[EventManager] Flushing events...");
         if(n == -1) {
             while(!m_EventQueue.empty()) Call();
         } else {
             for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
         }
+        CORE_LOG_INFO("[EventManager] Flush was successful");
     }
 
     void EventManager::RemoveAllCallbacks() noexcept {

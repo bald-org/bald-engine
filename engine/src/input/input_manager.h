@@ -47,6 +47,12 @@ namespace Bald::Input {
 
         InputManager() = delete;
 
+        /**
+         * @fn Init
+         * @brief Initialize InputManager
+         * @param [EventManager&] ev -> reference on main event manager
+         */
+
         static void Init(EventManager& ev);
 
         /**
@@ -247,7 +253,7 @@ namespace Bald::Input {
                              [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != GLFW_RELEASE;
 
-        switch(action) {
+        switch (action) {
             case GLFW_PRESS: {
                 InputManager::EmitKeyTypedEvent(static_cast<unsigned>(key));
                 break;
@@ -270,7 +276,7 @@ namespace Bald::Input {
     mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != GLFW_RELEASE;
 
-        switch(action) {
+        switch (action) {
             case GLFW_PRESS: {
                 InputManager::EmitMouseButtonTypedEvent(static_cast<unsigned>(button));
                 break;
@@ -302,22 +308,22 @@ namespace Bald::Input {
     }
 
     bool InputManager::IsKeyPressed(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) return false;
+        if (keycode >= MAX_KEYS) return false;
         return m_Keys[keycode];
     }
 
     bool InputManager::IsKeyTyped(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) return false;
+        if (keycode >= MAX_KEYS) return false;
         return m_KeysTyped[keycode];
     }
 
     bool InputManager::IsMouseButtonPressed(unsigned buttoncode) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) return false;
+        if (buttoncode >= MAX_MOUSE_BUTTONS) return false;
         return m_MouseButtons[buttoncode];
     }
 
     bool InputManager::IsMouseButtonTyped(unsigned buttoncode) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) return false;
+        if (buttoncode >= MAX_MOUSE_BUTTONS) return false;
         return m_MouseButtonsTyped[buttoncode];
     }
 
@@ -328,42 +334,42 @@ namespace Bald::Input {
 
     template<class F, class... Args>
     void InputManager::SetKeyPressedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<KeyPressedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<KeyPressedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetKeyTypedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<KeyTypedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<KeyTypedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetKeyReleasedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<KeyReleasedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<KeyReleasedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetMouseMovedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<MouseMovedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<MouseMovedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetMouseScrolledCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetMouseButtonPressedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetMouseButtonTypedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<MouseButtonTypedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<MouseButtonTypedEvent>(HandleType::SYNC, fun, args ...);
     }
 
     template<class F, class... Args>
     void InputManager::SetMouseButtonReleasedCallback(F&& fun, Args&& ... args) noexcept {
-        Bald::EventManager::Subscribe<MouseButtonReleasedEvent>(HandleType::SYNC, fun, args ...);
+        m_EventManager->Subscribe<MouseButtonReleasedEvent>(HandleType::SYNC, fun, args ...);
     }
 
 } // END OF NAMESPACE Bald::Input
