@@ -9,6 +9,8 @@
 
 namespace Bald::Graphics {
 
+    bool Window::m_GLFWInitialized = false;
+
     Window::Window(const char* title, int width, int height, bool VSync) :
         m_Title(title),
         m_Width(width),
@@ -46,17 +48,22 @@ namespace Bald::Graphics {
 
     bool Window::Init() noexcept {
         CORE_LOG_INFO("[Window] Initializing window...");
-        glfwInit();
+
+        if(!m_GLFWInitialized) {
+            int success = glfwInit();
+
+            if(!success) {
+                CORE_LOG_ERROR("[Window] Failed to init GLFW!");
+                exit(1);
+            }
+
+            m_GLFWInitialized = true;
+        }
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
         if(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
             CORE_LOG_ERROR("[Window] Failed to load GLAD!");
-            exit(1);
-        }
-
-        if(!glfwInit()) {
-            CORE_LOG_ERROR("[Window] Failed to init GLFW!");
             exit(1);
         }
 

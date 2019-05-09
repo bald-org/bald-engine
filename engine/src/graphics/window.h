@@ -147,6 +147,9 @@ namespace Bald::Graphics {
         int m_Width;          /**< Current window width */
         int m_Height;         /**< Current window height */
         bool m_VSync;         /**< State of VSync */
+
+    private:
+        static bool m_GLFWInitialized;
     }; // END OF WINDOW CLASS
 
 } // END OF NAMESPACE BALD::GRAPHICS
