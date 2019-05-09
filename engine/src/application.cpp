@@ -52,7 +52,7 @@ namespace Bald {
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
 
         EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [this]() {
-            glfwSetWindowShouldClose(m_Window.get()->GetWindow(), true);
+            glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             this->m_Running = false;
         });
 
