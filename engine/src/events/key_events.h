@@ -25,7 +25,7 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyEvent(int keycode)
+        explicit KeyEvent(unsigned keycode)
             : m_KeyCode{keycode} {}
 
     public:
@@ -52,12 +52,11 @@ namespace Bald {
         * @brief                Key code getter
         */
 
-        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_KeyCode; }
 
-        auto cast() -> decltype(this) override { return this; }
 
     protected:
-        const int m_KeyCode; /* < We save key code simply as an integer */
+        const unsigned m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS KeyEvent
 
     /**
@@ -76,7 +75,7 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyPressedEvent(int keycode)
+        explicit KeyPressedEvent(unsigned keycode)
             : KeyEvent{keycode} {}
 
     public:
@@ -86,7 +85,7 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
+
 
         /**
         * @fn                   Type
@@ -95,8 +94,6 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
-        auto cast() -> decltype(this) override { return this; }
 
     }; // END OF CLASS KeyPressedEvent
 
@@ -116,7 +113,7 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyReleasedEvent(int keycode)
+        explicit KeyReleasedEvent(unsigned keycode)
             : KeyEvent{keycode} {}
 
     public:
@@ -126,17 +123,12 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
 
         /**
         * @fn                   Type
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
         */
-
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
-        auto cast() -> decltype(this) override { return this; }
 
     }; // END OF CLASS KeyReleasedEvent
 
@@ -156,7 +148,7 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyTypedEvent(int keycode)
+        explicit KeyTypedEvent(unsigned keycode)
             : KeyEvent{keycode} {}
 
     public:
@@ -166,8 +158,6 @@ namespace Bald {
         * @brief                This method is emits additional KeyEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
-
         /**
         * @fn                   Type
         * @brief                This method returns type index of this specific class. This is used for polymorphism
@@ -176,7 +166,6 @@ namespace Bald {
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
-        auto cast() -> decltype(this) override { return this; }
 
     }; // END OF CLASS KeyTypedEvent
 

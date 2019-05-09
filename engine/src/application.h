@@ -6,6 +6,7 @@
 
 #include <memory>
 #include "window.h"
+#include "event_manager.h"
 
 namespace Bald {
 
@@ -48,9 +49,9 @@ namespace Bald {
         void Run();
 
     private:
-        std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
         bool m_Running; /**< State of the application */
-
+        std::unique_ptr<EventManager> m_EventManager;
+        std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
     private:
         static const Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
     }; // END OF APPLICATION CLASS

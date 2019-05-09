@@ -38,7 +38,7 @@ namespace Bald {
         *           meaning you cannot instantiate it
         */
 
-        EventManager() = delete;
+        EventManager();
 
         /**
         * @fn                    Subscribe
@@ -49,7 +49,7 @@ namespace Bald {
         */
 
         template<class T, class F, class... Args>
-        static unsigned Subscribe(HandleType type, F&& callback, Args&& ... args);
+        unsigned Subscribe(HandleType type, F&& callback, Args&& ... args);
 
         /**
         * @fn                    Unsubscribe
@@ -58,7 +58,7 @@ namespace Bald {
         */
 
         template<class T>
-        static void Unsubscibe(unsigned id) noexcept;
+        void Unsubscibe(unsigned id) noexcept;
 
         /**
         * @fn                    Emit
@@ -75,7 +75,7 @@ namespace Bald {
         */
 
         template<class T>
-        [[nodiscard]] static bool IsEventInQueue() noexcept;
+        [[nodiscard]] bool IsEventInQueue() noexcept;
 
         /**
         * @fn                    RemoveAllCallbacksByType
@@ -83,7 +83,11 @@ namespace Bald {
         */
 
         template<class T>
-        static void RemoveAllCallbacksByType() noexcept;
+        void RemoveAllCallbacksByType() noexcept;
+
+        void RemoveAllCallbacks() noexcept;
+
+        static void ClearEventsQueue() noexcept;
 
         /**
         * @fn                    Flush
@@ -92,14 +96,14 @@ namespace Bald {
         *                             this will iterate through whole queue
         */
 
-        static void Flush(int n = -1) noexcept;
+        void Flush(int n = -1) noexcept;
 
         /**
         * @fn                    Flush
         * @brief                 This function should be called at the end of program to clean up allocated memory
         */
 
-        static void CleanUp() noexcept;
+        ~EventManager();
 
     private:
 
@@ -108,11 +112,15 @@ namespace Bald {
         * @brief                 This function pops first element of the queue and runs all functions associated with that event
         */
 
-        static inline void Call() noexcept;
+        inline void Call() noexcept;
 
-    public:
-        static std::unordered_map<std::type_index, std::vector<HandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
+        bool Init();
+        void Shutdown();
+
+    private:
+        std::unordered_map<std::type_index, std::vector<HandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
+        static int m_ReferenceCounter;
     }; // END OF CLASS EventManager
 
     template<class T, class F, class... Args>
@@ -120,11 +128,11 @@ namespace Bald {
 
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
-        if(m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
+        if (m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
             m_Callbacks[typeid(T)] = new std::vector<HandlerInterface*>;
         }
 
-        switch(type) {
+        switch (type) {
             case HandleType::SYNC:
                 m_Callbacks[typeid(T)]->push_back(new FunctionHandler<T>(callback, args...));
                 break;
@@ -141,12 +149,12 @@ namespace Bald {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         auto iter = m_Callbacks.find(typeid(T));
 
-        if(iter == m_Callbacks.end()) return;
+        if (iter == m_Callbacks.end()) return;
 
         auto vector = iter->second;
 
-        for(auto i = vector->begin(); i != vector->end(); ++i) {
-            if((**i) == id) {
+        for (auto i = vector->begin(); i != vector->end(); ++i) {
+            if (( **i ) == id) {
                 delete *i;
                 vector->erase(i);
                 return;
@@ -166,8 +174,8 @@ namespace Bald {
     template<class T>
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        for(auto ev : m_EventQueue) {
-            if(ev->Type() == typeid(T)) return true;
+        for (auto ev : m_EventQueue) {
+            if (ev->Type() == typeid(T)) return true;
         }
         return false;
     }
@@ -175,9 +183,9 @@ namespace Bald {
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
         auto iter = m_Callbacks.find(typeid(T));
-        if(iter == m_Callbacks.end()) return;
+        if (iter == m_Callbacks.end()) return;
 
-        while(!iter->second->empty()) {
+        while (!iter->second->empty()) {
             delete iter->second->back();
             iter->second->pop_back();
         }

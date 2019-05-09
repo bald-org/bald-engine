@@ -34,7 +34,6 @@ namespace Bald {
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
 
-        auto cast() -> decltype(this) override { return this; }
     }; // END OF CLASS MouseEvent
 
     /**
@@ -64,7 +63,6 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
         /**
         * @fn                           Type
@@ -100,7 +98,7 @@ namespace Bald {
 
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
-        auto cast() -> decltype(this) override { return this; }
+
 
     private:
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate */
@@ -133,7 +131,6 @@ namespace Bald {
         * @brief                This method is emits additional MouseEvent
         */
 
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
         /**
         * @fn                           Type
@@ -142,8 +139,6 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
-        auto cast() -> decltype(this) override { return this; }
 
     public:
 
@@ -191,8 +186,8 @@ namespace Bald {
         * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit MouseButtonPressedEvent(int keycode)
-            : m_KeyCode{keycode} {}
+        explicit MouseButtonPressedEvent(unsigned buttoncode)
+            : m_ButtonCode{buttoncode} {}
 
     public:
 
@@ -200,8 +195,6 @@ namespace Bald {
         * @fn                   EmitConnectedEvents
         * @brief                This method is emits additional MouseEvent
         */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
 
         /**
         * @fn                           Type
@@ -219,11 +212,10 @@ namespace Bald {
         * @return [int]         Key code
         */
 
-        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
 
-        auto cast() -> decltype(this) override { return this; }
     private:
-        const int m_KeyCode; /* < We save key code simply as an integer */
+        const unsigned m_ButtonCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonPressedEvent
 
     /**
@@ -242,8 +234,8 @@ namespace Bald {
         * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit MouseButtonReleasedEvent(int keycode)
-            : m_KeyCode{keycode} {}
+        explicit MouseButtonReleasedEvent(unsigned buttoncode)
+            : m_ButtonCode{buttoncode} {}
 
     public:
 
@@ -251,9 +243,6 @@ namespace Bald {
         * @fn                   EmitConnectedEvents
         * @brief                This method is emits additional MouseEvent
         */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-
         /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
@@ -261,8 +250,6 @@ namespace Bald {
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
-
-        auto cast() -> decltype(this) override { return this; }
 
     public:
 
@@ -272,10 +259,10 @@ namespace Bald {
         * @return [int]         Key code
         */
 
-        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
 
     private:
-        const int m_KeyCode; /* < We save key code simply as an integer */
+        const unsigned m_ButtonCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonReleasedEvent
 
     /**
@@ -294,8 +281,8 @@ namespace Bald {
         * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit MouseButtonTypedEvent(int keycode)
-            : m_KeyCode{keycode} {}
+        explicit MouseButtonTypedEvent(unsigned buttoncode)
+            : m_ButtonCode{buttoncode} {}
 
     public:
 
@@ -303,9 +290,6 @@ namespace Bald {
         * @fn                   EmitConnectedEvents
         * @brief                This method is emits additional MouseEvent
         */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<MouseEvent>(); }
-
         /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
@@ -322,12 +306,9 @@ namespace Bald {
         * @return [int]         Key code
         */
 
-        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
-
-        auto cast() -> decltype(this) override { return this; }
-
+        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
     private:
-        const int m_KeyCode; /* < We save key code simply as an integer */
+        const unsigned m_ButtonCode; /* < We save key code simply as an integer */
     }; // END OF CLASS MouseButtonTypedEvent
 
 } // END OF NAMESPACE Bald
