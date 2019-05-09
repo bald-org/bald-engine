@@ -13,7 +13,7 @@
  */
 
 namespace Bald {
-    template <typename E>
+    template<typename E>
     class EventAsyncFunctionHandler : public EventHandler<E> {
     public:
 
@@ -25,7 +25,8 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventAsyncFunctionHandler(F&& fun, Args&& ... args): EventHandler<E>(fun, args...) {}
+        explicit EventAsyncFunctionHandler(F&& fun, Args&& ... args) :
+                EventHandler<E>(fun, args...) { }
 
         /**
         * @fn                   Run
@@ -33,9 +34,11 @@ namespace Bald {
         * @param [Event]        ev -> event that will be casted to E type and passed to the function
         */
 
-        void Run(const Event& ev) const override { std::async(std::launch::async, [this, &ev](){
-            this->m_Function(static_cast<const E&>(ev));
-        }); } //TODO: This should return std::future
+        void Run(const Event& ev) const override {
+            std::async(std::launch::async, [this, &ev]() {
+                this->m_Function(static_cast<const E&>(ev));
+            });
+        } //TODO: This should return std::future
     };
 
 } //END OF NAMESPACE Bald

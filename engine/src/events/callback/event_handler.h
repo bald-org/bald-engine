@@ -9,11 +9,6 @@
 #include "Log.h"
 #include "event_handler_interface.h"
 
-/**
- * @class Callback
- * @brief Abstract class whose job is to provide a simple function-wrapper API
- */
-
 namespace Bald {
 
     /**
@@ -41,8 +36,7 @@ namespace Bald {
                     fun(ev, args...);
                 };
             } else {
-                CORE_LOG_WARN(
-                        "[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
+                CORE_LOG_WARN("[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
             }
         }
 

@@ -4,19 +4,18 @@
 
 #include "application.h"
 #include "input_manager.h"
-#include "event_manager.h"
 #include "window_events.h"
 
 namespace Bald {
 
     const Application* Application::m_Instance = nullptr;
 
-    Application::Application() : m_Running(true), m_EventManager(std::make_unique<EventManager>()) {
+    Application::Application() : m_Running(true) {
         assert(!m_Instance);
         m_Instance = this;
 
         Log::Init();
-
+        m_EventManager = std::make_unique<EventManager>();
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
     }
 

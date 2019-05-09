@@ -7,10 +7,12 @@
 #include "event.h"
 
 namespace Bald {
+
     /**
      * @class EventHandlerInterface
      * @brief class which gives us interface for specialized callbacks for events and deals with id's
      */
+
     class EventHandlerInterface {
     public:
 
@@ -56,7 +58,7 @@ namespace Bald {
     protected:
         static std::vector<bool> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
                                                      for ex. remove one of such from some type of queue */
-        unsigned m_ID; /**< This instance's id. When this value is 0 it means that handler is not used. */
+        unsigned m_ID;                      /**< This instance's id. When this value is 0 it means that handler is not used. */
     };
 }
 

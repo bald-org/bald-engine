@@ -26,8 +26,6 @@ namespace Bald::Input {
     constexpr unsigned MAX_KEYS = 1024;
     constexpr unsigned MAX_MOUSE_BUTTONS = 64;
 
-    using callback = std::function<void()>;
-
     class InputManager {
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);

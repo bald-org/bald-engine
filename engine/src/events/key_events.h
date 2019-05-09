@@ -26,8 +26,7 @@ namespace Bald {
         */
 
         explicit KeyEvent(unsigned keycode)
-                :
-                m_KeyCode{keycode} { }
+                : m_KeyCode{keycode} { }
 
     public:
 
@@ -47,7 +46,6 @@ namespace Bald {
         */
 
         [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_KeyCode; }
-
 
     protected:
         const unsigned m_KeyCode; /* < We save key code simply as an integer */

@@ -34,16 +34,23 @@ namespace Bald {
 
         /**
         * @fn       EventManager
-        * @brief    Constructor of EventManager class and performs counting of existing objects
+        * @brief    EventManager constructor. Its role is to increase the static reference counter variable
         */
 
         EventManager();
 
         /**
+         * @fn ~EventManager
+         * @brief destroys Event Manager object
+         */
+
+        ~EventManager();
+
+        /**
         * @fn                    Subscribe
         * @brief                 Templated function which allows you to subscribe to any kind of engine's event
         * @param [HandleType]    type -> Manner in which the function will be handled e.g. synchronous/asynchronous
-        * @param [F&&]           callback -> Function with which you subscribe to an event. It *HAS TO* take as first parameter an const reference to Event
+        * @param [F&&]           callback -> Function with which you subscribe to an event. It MUST take Event reference as the first parameter
         * @param [Args&& ...]    args -> Function's arguments
         */
 
@@ -74,7 +81,7 @@ namespace Bald {
         */
 
         template<class T>
-        [[nodiscard]] bool IsEventInQueue() noexcept;
+        [[nodiscard]] static bool IsEventInQueue() noexcept;
 
         /**
         * @fn                    RemoveAllCallbacksByType
@@ -107,13 +114,6 @@ namespace Bald {
 
         void Flush(int n = -1) noexcept;
 
-        /**
-         * @fn ~EventManager
-         * @brief destroys Event Manager object
-         */
-
-        ~EventManager();
-
     private:
 
         /**
@@ -121,7 +121,7 @@ namespace Bald {
         * @brief                 This function pops first element of the queue and runs all functions associated with that event
         */
 
-        inline void Call() noexcept;
+        void Call() noexcept;
 
         /**
          * @fn Init
@@ -141,7 +141,7 @@ namespace Bald {
     private:
         std::unordered_map<std::type_index, std::vector<EventHandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
-        static int m_ReferenceCounter;
+        static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
     }; // END OF CLASS EventManager
 
     template<class T, class F, class... Args>
