@@ -149,7 +149,7 @@ namespace Bald::Graphics {
         bool m_VSync;         /**< State of VSync */
 
     private:
-        static bool m_GLFWInitialized;
+        static bool m_GLFWInitialized; /**< State of GLFW initialization */
     }; // END OF WINDOW CLASS
 
 } // END OF NAMESPACE BALD::GRAPHICS
