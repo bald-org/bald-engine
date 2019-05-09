@@ -116,7 +116,7 @@ namespace Bald {
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-
+        CORE_LOG_INFO("[EventManager] Subscribing to an event...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         if(m_Callbacks.find(typeid(T)) == m_Callbacks.end()) {
@@ -132,11 +132,14 @@ namespace Bald {
                 break;
         }
 
+        CORE_LOG_INFO("[EventManager] Subscribe was successful...");
+
         return m_Callbacks[typeid(T)]->back()->GetID();
     }
 
     template<class T>
     void EventManager::Unsubscibe(unsigned id) noexcept {
+        CORE_LOG_INFO("[EventManager] Unsubscribing to an event...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         auto iter = m_Callbacks.find(typeid(T));
 
@@ -148,9 +151,11 @@ namespace Bald {
             if((**i) == id) {
                 delete *i;
                 vector->erase(i);
+                CORE_LOG_INFO("[EventManager] Unsubscribed was successful...");
                 return;
             }
         }
+        CORE_LOG_WARN("[EventManager] Unsubscribe failed...");
     }
 
     template<class T, class... Args>
@@ -173,13 +178,19 @@ namespace Bald {
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
+        CORE_LOG_INFO("[EventManager] Removing all callbacks by type...");
         auto iter = m_Callbacks.find(typeid(T));
-        if(iter == m_Callbacks.end()) return;
+        if(iter == m_Callbacks.end())
+        {
+            CORE_LOG_WARN("[EventManager] No callbacks for removal were found");
+            return;
+        }
 
         while(!iter->second->empty()) {
             delete iter->second->back();
             iter->second->pop_back();
         }
+        CORE_LOG_INFO("[EventManager] Removed all callbacks by type successfully");
     }
 
 } //END OF NAMESPACE Bald

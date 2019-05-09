@@ -24,8 +24,6 @@ namespace Bald::Input {
     constexpr int MAX_KEYS{1024};
     constexpr int MAX_MOUSE_BUTTONS{64};
 
-    using callback = std::function<void()>;
-
     class InputManager {
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
@@ -236,11 +234,7 @@ namespace Bald::Input {
         static bool m_MouseButtons[MAX_MOUSE_BUTTONS];                    /**< current mouse buttons states*/
         static bool m_MouseButtonsState[MAX_MOUSE_BUTTONS];               /**< mouse buttons states in previous frame*/
         static bool m_MouseButtonsTyped[MAX_MOUSE_BUTTONS];               /**< mouse buttons witch were typed*/
-        static callback m_KeyPressedCallbacks[MAX_KEYS];                  /**< callbacks on key pressed event*/
-        static callback m_KeyTypedCallbacks[MAX_KEYS];                    /**< callbacks on key typed event*/
-        static callback m_MouseButtonPressedCallbacks[MAX_MOUSE_BUTTONS]; /**< callbacks on mouse button pressed event*/
-        static callback m_MouseButtonTypedCallbacks[MAX_MOUSE_BUTTONS];   /**< callbacks on mouse button typed event*/
-    };
+    }; // END OF CLASS InputManager
 
     inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action,
                              [[maybe_unused]] int mods) {
