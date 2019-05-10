@@ -7,6 +7,7 @@
 class DebugLayer : public Bald::Layer {
 public:
     DebugLayer() = default;
+
     ~DebugLayer() override = default;
 
     void OnAttach() noexcept override {
@@ -15,14 +16,21 @@ public:
             CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
         });
 
+
+        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent&) {
+            CORE_LOG_TRACE("MouseMovedEvent");
+        });
+
     }
 
-    void OnDetach () noexcept override {
+    void OnDetach() noexcept override {
 
     }
 
     void OnUpdate() noexcept override {
-
+        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
+            Bald::EventManager::Emit<Bald::WindowClosedEvent>();
+        }
     }
 
     [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };

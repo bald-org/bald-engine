@@ -208,7 +208,9 @@ namespace Bald {
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
         CORE_LOG_INFO("[EventManager] Removing all callbacks by type...");
+
         auto iter = m_Callbacks.find(typeid(T));
+
         if(iter == m_Callbacks.end())
         {
             CORE_LOG_WARN("[EventManager] No callbacks for removal were found");
@@ -219,6 +221,7 @@ namespace Bald {
             delete iter->second->back();
             iter->second->pop_back();
         }
+
         CORE_LOG_INFO("[EventManager] Removed all callbacks by type successfully");
     }
 

@@ -56,19 +56,18 @@ namespace Bald {
 
     void EventManager::Flush(int n) noexcept {
         if(n == -1) {
-            //while(!m_EventQueue.empty()) Call();
-            auto it = m_EventQueue.begin();
-            for(; it != m_EventQueue.end(); ++it) {
-                auto callbacks = m_Callbacks.find((*it)->GetType());
+            for(auto it = m_EventQueue.begin(); it != m_EventQueue.end();) {
+                const auto& callbacks = m_Callbacks.find((*it)->GetType());
 
                 if(callbacks == m_Callbacks.end()) {
+                    ++it;
                     continue;
                 }
 
-                for(auto& fun : *(callbacks)->second) fun->Run(**(it));
+                for(const auto& fun : *(callbacks)->second) fun->Run(**it);
 
                 delete *it;
-                m_EventQueue.erase(it);
+                it = m_EventQueue.erase(it);
             }
         } else {
             for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();

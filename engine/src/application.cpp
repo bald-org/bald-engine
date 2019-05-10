@@ -26,18 +26,21 @@ namespace Bald {
         while(m_Running) {
             m_Window->Clear();
 
-            //for(auto layer : m_LayerStack) {
-            //    layer->OnUpdate();
-            //    layer->RunEvents();
-            //}
+            for(auto it = m_LayerStack.begin(); it != m_LayerStack.end(); ++it) {
+                (*it)->OnUpdate();
+            }
 
-            m_Window->Update();
-
-            Input::InputManager::Update();
+            for(auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
+                (*--it)->RunEvents();
+            }
 
             m_EventManager->Flush();
 
             EventManager::ClearEventQueue();
+
+            Input::InputManager::Update();
+
+            m_Window->Update();
         }
     }
 
@@ -53,17 +56,9 @@ namespace Bald {
         m_EventManager = std::make_unique<EventManager>();
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
 
-        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this]([[maybe_unused]] const WindowClosedEvent& e) {
+        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this](const WindowClosedEvent&) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             this->m_Running = false;
-        });
-
-        m_EventManager->Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::ASYNC, [](const Bald::KeyTypedEvent& e) {
-            CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
-        });
-
-        m_EventManager->Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent&) {
-            CORE_LOG_TRACE("MouseMovedEvent");
         });
 
         CORE_LOG_INFO("[Application] Initialization was successful");
