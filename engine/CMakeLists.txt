@@ -53,14 +53,13 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/application.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/layer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/events/event_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback/handler.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback/event_handler_interface.cpp)
 
 if (APPLE)
     target_link_libraries(bald_engine

@@ -5,10 +5,12 @@
 #pragma once
 
 namespace Bald::Utils {
+
     template<typename T>
     constexpr void ConstexprSwap(T& first, T& second) {
         T copy = first;
         first = second;
         second = copy;
     }
+
 } // END OF NAMESPACE Bald::Utils

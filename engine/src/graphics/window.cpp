@@ -9,8 +9,10 @@
 
 namespace Bald::Graphics {
 
-    Window::Window(const char* title, int width, int height, bool VSync)
-    :   m_Title(title),
+    bool Window::m_GLFWInitialized = false;
+
+    Window::Window(const char* title, int width, int height, bool VSync) :
+        m_Title(title),
         m_Width(width),
         m_Height(height),
         m_VSync(VSync) {
@@ -46,8 +48,18 @@ namespace Bald::Graphics {
     }
 
     bool Window::Init() noexcept {
+        CORE_LOG_INFO("[Window] Initializing window...");
 
-        glfwInit();
+        if(!m_GLFWInitialized) {
+            int success = glfwInit();
+
+            if(!success) {
+                CORE_LOG_ERROR("[Window] Failed to init GLFW!");
+                exit(1);
+            }
+
+            m_GLFWInitialized = true;
+        }
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
@@ -56,13 +68,8 @@ namespace Bald::Graphics {
             exit(1);
         }
 
-        if(!glfwInit()) {
-            CORE_LOG_ERROR("[Window] Failed to init GLFW!");
-            exit(1);
-        }
-
         if(!m_Window) {
-            glfwTerminate();
+            glfwDestroyWindow(m_Window);
             CORE_LOG_ERROR("[Window] Failed to create a Window!");
             return false;
         }
@@ -91,11 +98,17 @@ namespace Bald::Graphics {
 
         glfwSetScrollCallback(m_Window, Input::scroll_callback);
 
+        CORE_LOG_INFO("[Window] Initialization was successful");
+
         return true;
     }
 
     void Window::Shutdown() {
+        CORE_LOG_INFO("[Window] Shutting down window...");
+
         glfwDestroyWindow(m_Window);
+
+        CORE_LOG_INFO("[Window] Shutdown was successful");
     }
 
 } // END OF NAMESPACE BALD::GRAPHICS

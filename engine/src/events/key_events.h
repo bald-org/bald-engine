@@ -25,17 +25,10 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyEvent(int keycode)
-            : m_KeyCode{keycode} {}
+        explicit KeyEvent(unsigned keycode)
+                : m_KeyCode{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is left blank because KeyEvent does not emit any associated events
-        */
-
-        void EmitConnectedEvents() const override {}
 
         /**
         * @fn                           Type
@@ -43,7 +36,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -52,10 +45,10 @@ namespace Bald {
         * @brief                Key code getter
         */
 
-        [[nodiscard]] inline int GetKeyCode() const noexcept { return m_KeyCode; }
+        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_KeyCode; }
 
     protected:
-        const int m_KeyCode; /* < We save key code simply as an integer */
+        const unsigned m_KeyCode; /* < We save key code simply as an integer */
     }; // END OF CLASS KeyEvent
 
     /**
@@ -74,17 +67,11 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyPressedEvent(int keycode)
-            : KeyEvent{keycode} {}
+        explicit KeyPressedEvent(unsigned keycode)
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
 
         /**
         * @fn                   Type
@@ -92,7 +79,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyPressedEvent
 
@@ -112,17 +99,11 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyReleasedEvent(int keycode)
-            : KeyEvent{keycode} {}
+        explicit KeyReleasedEvent(unsigned keycode)
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
 
         /**
         * @fn                   Type
@@ -130,7 +111,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyReleasedEvent
 
@@ -150,17 +131,11 @@ namespace Bald {
         * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id
         */
 
-        explicit KeyTypedEvent(int keycode)
-            : KeyEvent{keycode} {}
+        explicit KeyTypedEvent(unsigned keycode)
+                :
+                KeyEvent{keycode} { }
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional KeyEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<KeyEvent>(m_KeyCode); }
 
         /**
         * @fn                   Type
@@ -168,7 +143,8 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
+
 
     }; // END OF CLASS KeyTypedEvent
 

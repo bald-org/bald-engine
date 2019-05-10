@@ -36,6 +36,10 @@ namespace Bald {
             Input::InputManager::Update(); // TODO: Let's think whether or not this should be called during layer update! ~Blinku
 
             m_Window->Update();
+            Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
+            EventManager::ClearEventQueue();
+        }
+    }
 
         }
     }

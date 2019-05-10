@@ -132,7 +132,7 @@ namespace Bald::Graphics {
          *                          false -> Window couldn't have been initialized
          */
 
-        bool Init() noexcept;
+        [[nodiscard]] bool Init() noexcept;
 
        /**
         * @fn                      Shutdown
@@ -147,6 +147,9 @@ namespace Bald::Graphics {
         int m_Width;          /**< Current window width */
         int m_Height;         /**< Current window height */
         bool m_VSync;         /**< State of VSync */
+
+    private:
+        static bool m_GLFWInitialized; /**< State of GLFW initialization */
     }; // END OF WINDOW CLASS
 
 } // END OF NAMESPACE BALD::GRAPHICS
