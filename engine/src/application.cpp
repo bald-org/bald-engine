@@ -11,44 +11,48 @@ namespace Bald {
     const Application* Application::m_Instance = nullptr;
 
     Application::Application() : m_Running(true) {
-        assert(!m_Instance);
+        [[maybe_unused]] bool state = Init();
+        assert(state);
+    }
 
-        m_Instance = this;
-
-        Log::Init();
-        m_EventManager = std::make_unique<EventManager>();
-        m_Window = std::make_unique<Graphics::Window>("Bald Engine");
+    Application::~Application() {
+        Shutdown();
     }
 
     void Application::Run() {
 
-        // TODO: This subscribes are temporary, because we still have no layers ~Blinku
-        m_EventManager->Subscribe<KeyTypedEvent>(HandleType::SYNC, [](const KeyTypedEvent&) { CORE_LOG_TRACE("Key Typed Event!"); });
-        m_EventManager->Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&) { CORE_LOG_TRACE("Key Pressed Event!"); });
-        m_EventManager->Subscribe<KeyReleasedEvent>(HandleType::SYNC, [](const KeyReleasedEvent&) { CORE_LOG_TRACE("Key Released Event!"); });
-        m_EventManager->Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&) { CORE_LOG_TRACE("Mouse Moved Event!"); });
-        m_EventManager->Subscribe<MouseScrolledEvent>(HandleType::ASYNC, [](const MouseScrolledEvent&) { CORE_LOG_TRACE("Mouse Scrolled Event!"); });
-        m_EventManager->Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, [](const MouseButtonPressedEvent&) { CORE_LOG_TRACE("Mouse Button Pressed Event!"); } );
-        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [&](const WindowClosedEvent&) {
-            CORE_LOG_TRACE("Window Closed Event!");
-            glfwSetWindowShouldClose(m_Window->GetWindow(), true);
-            m_Running = false;
-        });
-
         while(m_Running) {
-
             m_Window->Clear();
 
-            if (Input::InputManager::IsKeyPressed(GLFW_KEY_ESCAPE)) {
-                EventManager::Emit<WindowClosedEvent>();
-            }
-
-            Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
-            m_EventManager->Flush(); // TODO: This should probably be called on layer update ~Blinku
+            // TODO: Update layer stack here
 
             m_Window->Update();
-
+            Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
+            EventManager::ClearEventQueue();
         }
+    }
+
+    bool Application::Init() noexcept {
+        Log::Init();
+
+        CORE_LOG_INFO("[Application] Initializing application...");
+
+        assert(!m_Instance);
+
+        m_Instance = this;
+
+        m_EventManager = std::make_unique<EventManager>();
+        m_Window = std::make_unique<Graphics::Window>("Bald Engine");
+
+        CORE_LOG_INFO("[Application] Initialization was successful");
+
+        return true;
+    }
+
+    void Application::Shutdown() {
+        CORE_LOG_INFO("[Application] Shutting down application...");
+        // Currently does nothing, later on will clear LayerStack.
+        CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 
 } // END OF NAMESPACE BALD

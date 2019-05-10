@@ -132,7 +132,7 @@ namespace Bald::Graphics {
          *                          false -> Window couldn't have been initialized
          */
 
-        bool Init() noexcept;
+        [[nodiscard]] bool Init() noexcept;
 
        /**
         * @fn                      Shutdown

@@ -36,7 +36,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -79,7 +79,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyPressedEvent
 
@@ -111,7 +111,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS KeyReleasedEvent
 
@@ -143,7 +143,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
 
     }; // END OF CLASS KeyTypedEvent

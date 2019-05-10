@@ -99,11 +99,11 @@ namespace Bald {
         void RemoveAllCallbacks() noexcept;
 
         /**
-         * @fn ClearEventsQueue
+         * @fn ClearEventQueue
          * @brief deletes all events form queue
          */
 
-        static void ClearEventsQueue() noexcept;
+        static void ClearEventQueue() noexcept;
 
         /**
         * @fn                    Flush
@@ -200,7 +200,7 @@ namespace Bald {
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         for (auto ev : m_EventQueue) {
-            if (ev->Type() == typeid(T)) return true;
+            if (ev->GetType() == typeid(T)) return true;
         }
         return false;
     }

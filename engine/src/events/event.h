@@ -35,13 +35,13 @@ namespace Bald {
     public:
 
         /**
-        * @fn       Type
+        * @fn       GetType
         * @brief    This method queries specific object for its type.
         *           This function MUST be overwritten in every single specific event class implementation
-        *           Overwrite it like this: [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        *           Overwrite it like this: [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
         */
 
-        [[nodiscard]] virtual std::type_index Type() const = 0;
+        [[nodiscard]] virtual std::type_index GetType() const = 0;
 
     }; //END OF CLASS Event
 

@@ -25,7 +25,7 @@ namespace Bald {
         * @brief                This method returns type index of this specific class. This is used for polymorphism
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     }; // END OF CLASS MouseEvent
 
@@ -57,7 +57,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -119,7 +119,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -178,7 +178,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -221,7 +221,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 
@@ -264,7 +264,7 @@ namespace Bald {
         * @return [std::type_index]     Type index
         */
 
-        [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
 
     public:
 

@@ -33,7 +33,7 @@ namespace Bald {
         if(m_ReferenceCounter == 0){
             CORE_LOG_INFO("[EventManager] This was last one EventManager");
             CORE_LOG_INFO("[EventManager] Clearing event queue...");
-            ClearEventsQueue();
+            ClearEventQueue();
             CORE_LOG_INFO("[EventManager] Clearing event queue was successful");
         }
         CORE_LOG_INFO("[EventManager] Shutdown was successful");
@@ -42,7 +42,7 @@ namespace Bald {
     void EventManager::Call() noexcept {
         Event* event = m_EventQueue.front();
 
-        auto callbacks = m_Callbacks.find(event->Type());
+        auto callbacks = m_Callbacks.find(event->GetType());
 
         if(callbacks == m_Callbacks.end()) {
             return;
@@ -69,8 +69,13 @@ namespace Bald {
         });
     }
 
-    void EventManager::ClearEventsQueue() noexcept {
-        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
+    void EventManager::ClearEventQueue() noexcept {
+        while(!m_EventQueue.empty())
+        {
+            auto ev = m_EventQueue.back();
+            delete ev;
+            m_EventQueue.pop_back();
+        }
     }
 
 } //END OF NAMESPACE Bald
