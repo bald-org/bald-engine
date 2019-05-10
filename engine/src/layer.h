@@ -53,28 +53,28 @@ namespace Bald {
          *        It is updated in every iteration of the core engine loop.
          */
 
-        virtual void OnUpdate() = 0;
+        virtual void OnUpdate() noexcept = 0;
 
         /**
          * @fn RunEvents
          * @brief A method that flushes layer's event manager.
          */
 
-        inline void RunEvents() { m_EventManager.Flush(); }
+        inline void RunEvents() noexcept { m_EventManager.Flush(); }
 
         /**
          * @fn Enable
          * @brief A method that enables a layer.
          */
 
-        inline void Enable() { m_IsEnabled = true; }
+        inline void Enable() noexcept { m_IsEnabled = true; }
 
         /**
          * @fn Disable
          * @brief A method that disables a layer.
          */
 
-        inline void Disable() { m_IsEnabled = false; }
+        inline void Disable() noexcept { m_IsEnabled = false; }
 
         /**
          * @fn IsEnabled
