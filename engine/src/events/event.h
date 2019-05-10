@@ -5,6 +5,7 @@
 #pragma once
 
 #include <typeindex>
+#include "type_id.h"
 
 namespace Bald {
 
@@ -41,7 +42,7 @@ namespace Bald {
         *           Overwrite it like this: [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
         */
 
-        [[nodiscard]] virtual std::type_index Type() const = 0;
+        [[nodiscard]] virtual unsigned Type() const = 0;
 
     }; //END OF CLASS Event
 

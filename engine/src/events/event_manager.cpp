@@ -63,7 +63,7 @@ namespace Bald {
     }
 
     void EventManager::RemoveAllCallbacks() noexcept {
-        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<EventHandlerInterface*>*>&& pair) {
+        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<unsigned , std::vector<EventHandlerInterface*>*>&& pair) {
             std::for_each(pair.second->begin(), pair.second->end(), [](EventHandlerInterface* handler) { delete handler; });
             delete pair.second;
         });
