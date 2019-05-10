@@ -10,7 +10,7 @@
 
 namespace Bald {
 
-    const Application* Application::m_Instance = nullptr;
+    Application* Application::m_Instance = nullptr;
 
     Application::Application() : m_Running(true) {
         [[maybe_unused]] bool state = Init();
@@ -26,12 +26,12 @@ namespace Bald {
         while(m_Running) {
             m_Window->Clear();
 
-            for(auto it = m_LayerStack.begin(); it != m_LayerStack.end(); ++it) {
-                (*it)->OnUpdate();
+            for(Layer* layer : m_LayerStack) {
+                layer->OnUpdate();
             }
 
-            for(auto it = m_LayerStack.end(); it != m_LayerStack.begin();) {
-                (*--it)->RunEvents();
+            for(auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
+                (*it)->RunEvents();
             }
 
             m_EventManager->Flush();
@@ -42,6 +42,10 @@ namespace Bald {
 
             m_Window->Update();
         }
+    }
+
+    Application& Application::GetApplication() noexcept {
+        return *m_Instance;
     }
 
     bool Application::Init() noexcept {
@@ -68,11 +72,6 @@ namespace Bald {
 
     void Application::Shutdown() {
         CORE_LOG_INFO("[Application] Shutting down application...");
-
-        for(Layer* layer : m_LayerStack) {
-            delete layer;
-        }
-
         CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 

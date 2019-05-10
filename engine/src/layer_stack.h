@@ -16,7 +16,7 @@ namespace Bald {
     public:
         LayerStack() = default;
 
-        ~LayerStack() = default;
+        ~LayerStack();
 
         template<typename L>
         void PushLayer();
@@ -32,7 +32,17 @@ namespace Bald {
 
         inline std::vector<Layer*>::iterator begin();
 
+        inline std::vector<Layer*>::reverse_iterator rbegin();
+
         inline std::vector<Layer*>::iterator end();
+
+        inline std::vector<Layer*>::reverse_iterator rend();
+
+    private:
+
+        bool Init();
+
+        void Shutdown();
 
     private:
         std::vector<Layer*> m_LayerStack;
@@ -43,8 +53,16 @@ namespace Bald {
         return m_LayerStack.begin();
     }
 
-    inline std::vector<Layer*>::iterator LayerStack::end() {
+    inline std::vector<Layer*>::reverse_iterator LayerStack::rbegin() {
+        return m_LayerStack.rbegin();
+    }
+
+    inline std::vector<Layer*>::iterator LayerStack::LayerStack::end() {
         return m_LayerStack.end();
+    }
+
+    inline std::vector<Layer*>::reverse_iterator LayerStack::rend() {
+        return m_LayerStack.rend();
     }
 
     template<typename L>

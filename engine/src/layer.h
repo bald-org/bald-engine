@@ -94,6 +94,10 @@ namespace Bald {
 
         [[nodiscard]] virtual std::type_index GetType() const = 0;
 
+    private:
+
+        void Shutdown();
+
     protected:
         EventManager m_EventManager; /**< Layer-specific EventManager*/
 

@@ -16,8 +16,13 @@ public:
             CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
         });
 
-        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent&) {
-            CORE_LOG_TRACE("MouseMovedEvent");
+        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent& e) {
+            CORE_LOG_TRACE(std::string("MouseMovedEvent: [")
+                               .append(std::to_string(e.GetX()))
+                               .append(", ")
+                               .append(std::to_string(e.GetY()))
+                               .append("]")
+            );
         });
 
     }
@@ -27,9 +32,45 @@ public:
     }
 
     void OnUpdate() noexcept override {
-        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_Q)) {
-            CORE_LOG_TRACE("Q typed");
+
+    }
+
+    [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
+
+};
+
+class GameLayer : public Bald::Layer {
+public:
+    GameLayer() = default;
+
+    ~GameLayer() override = default;
+
+    void OnAttach() noexcept override {
+
+    }
+
+    void OnDetach() noexcept override {
+
+    }
+
+    void OnUpdate() noexcept override {
+
+        static bool isMenuUp = false;
+
+        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
+
+            if(!isMenuUp) {
+                Bald::Application& app = Bald::Application::GetApplication();
+                app.PushOverlay<DebugLayer>();
+                isMenuUp = true;
+            } else {
+                Bald::Application& app = Bald::Application::GetApplication();
+                app.PopOverlay<DebugLayer>();
+                isMenuUp = false;
+            }
+
         }
+
     }
 
     [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
@@ -39,7 +80,7 @@ public:
 class Sandbox : public Bald::Application {
 public:
     Sandbox() {
-        PushLayer<DebugLayer>();
+        PushLayer<GameLayer>();
     }
 
     ~Sandbox() override = default;

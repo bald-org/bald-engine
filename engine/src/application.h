@@ -54,6 +54,14 @@ namespace Bald {
         [[nodiscard]] static Application* Create() noexcept;
 
         /**
+         * @fn                      Create
+         * @brief                   Creates an application. This function should be implemented on the client's side.
+         * @return [Application*]   Pointer to application instance
+         */
+
+        [[nodiscard]] static Application& GetApplication() noexcept;
+
+        /**
          * @fn                      Run
          * @brief                   Main loop
          */
@@ -85,7 +93,7 @@ namespace Bald {
         LayerStack m_LayerStack; /**< Main layer stack */
 
     private:
-        static const Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
+        static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
 
     }; // END OF CLASS Application
 
