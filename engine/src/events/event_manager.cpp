@@ -19,16 +19,24 @@ namespace Bald {
     }
 
     bool EventManager::Init() {
+        CORE_LOG_INFO("[EventManager] Initializing EventManager...");
         ++m_ReferenceCounter;
+        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
         return m_ReferenceCounter > 0;
     }
 
     void EventManager::Shutdown() {
+        CORE_LOG_INFO("[EventManager] Shutting down EventManager...");
         RemoveAllCallbacks();
         --m_ReferenceCounter;
+        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
         if(m_ReferenceCounter == 0){
+            CORE_LOG_INFO("[EventManager] This was last one EventManager");
+            CORE_LOG_INFO("[EventManager] Clearing event queue...");
             ClearEventsQueue();
+            CORE_LOG_INFO("[EventManager] Clearing event queue was successful");
         }
+        CORE_LOG_INFO("[EventManager] Shutdown was successful");
     }
 
     void EventManager::Call() noexcept {
@@ -47,13 +55,11 @@ namespace Bald {
     }
 
     void EventManager::Flush(int n) noexcept {
-        CORE_LOG_INFO("[EventManager] Flushing events...");
         if(n == -1) {
             while(!m_EventQueue.empty()) Call();
         } else {
             for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
         }
-        CORE_LOG_INFO("[EventManager] Flush was successful");
     }
 
     void EventManager::RemoveAllCallbacks() noexcept {
