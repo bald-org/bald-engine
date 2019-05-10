@@ -135,6 +135,7 @@ namespace Bald {
         std::unordered_map<std::type_index, std::vector<EventHandlerInterface*>*> m_Callbacks; /**< Unordered map of events' type indexes and associated functions */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
         static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
+
     }; // END OF CLASS EventManager
 
     template<class T, class F, class... Args>
