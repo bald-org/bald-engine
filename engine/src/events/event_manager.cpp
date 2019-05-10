@@ -39,38 +39,19 @@ namespace Bald {
         CORE_LOG_INFO("[EventManager] Shutdown was successful");
     }
 
-    void EventManager::Call() noexcept {
-        Event* event = m_EventQueue.front();
+    void EventManager::Flush() noexcept {
+        for(auto it = m_EventQueue.begin(); it != m_EventQueue.end();) {
+            const auto& callbacks = m_Callbacks.find((*it)->GetType());
 
-        auto callbacks = m_Callbacks.find(event->GetType());
-
-        if(callbacks == m_Callbacks.end()) {
-            return;
-        }
-
-        for(auto& fun : *callbacks->second) fun->Run(*event);
-
-        m_EventQueue.pop_front();
-        delete event;
-    }
-
-    void EventManager::Flush(int n) noexcept {
-        if(n == -1) {
-            for(auto it = m_EventQueue.begin(); it != m_EventQueue.end();) {
-                const auto& callbacks = m_Callbacks.find((*it)->GetType());
-
-                if(callbacks == m_Callbacks.end()) {
-                    ++it;
-                    continue;
-                }
-
-                for(const auto& fun : *(callbacks)->second) fun->Run(**it);
-
-                delete *it;
-                it = m_EventQueue.erase(it);
+            if(callbacks == m_Callbacks.end()) {
+                ++it;
+                continue;
             }
-        } else {
-            for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
+
+            for(const auto& fun : *(callbacks)->second) fun->Run(**it);
+
+            delete *it;
+            it = m_EventQueue.erase(it);
         }
     }
 

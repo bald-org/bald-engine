@@ -112,16 +112,9 @@ namespace Bald {
         *                             this will iterate through whole queue
         */
 
-        void Flush(int n = -1) noexcept;
+        void Flush() noexcept;
 
     private:
-
-        /**
-        * @fn                    Call
-        * @brief                 This function pops first element of the queue and runs all functions associated with that event
-        */
-
-        void Call() noexcept;
 
         /**
          * @fn Init

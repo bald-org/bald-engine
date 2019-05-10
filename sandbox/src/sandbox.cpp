@@ -16,7 +16,6 @@ public:
             CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
         });
 
-
         m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent&) {
             CORE_LOG_TRACE("MouseMovedEvent");
         });
@@ -28,8 +27,8 @@ public:
     }
 
     void OnUpdate() noexcept override {
-        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
-            Bald::EventManager::Emit<Bald::WindowClosedEvent>();
+        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_Q)) {
+            CORE_LOG_TRACE("Q typed");
         }
     }
 
