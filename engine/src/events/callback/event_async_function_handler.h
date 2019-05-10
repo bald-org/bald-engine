@@ -25,8 +25,7 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventAsyncFunctionHandler(F&& fun, Args&& ... args) :
-                EventHandler<E>(fun, args...) { }
+        explicit EventAsyncFunctionHandler(F&& fun, Args&& ... args) : EventHandler<E>(fun, args...) { }
 
         /**
         * @fn                   Run

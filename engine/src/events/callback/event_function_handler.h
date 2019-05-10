@@ -20,7 +20,7 @@ namespace Bald {
         /**
         * @fn                   FunctionHandler
         * @brief                Constructor
-        * @param [F&&]          fun -> Function which will be wrapped *HAS TO* take as first parameter an const reference to Event
+        * @param [F&&]          fun -> Function which will be wrapped. This function *MUST* take Event as first parameter
         * @param [Args&& ...]   args -> Function's arguments
         */
 
