@@ -22,7 +22,7 @@ namespace Bald {
         */
 
         Event() = default;
-        
+
     public:
 
         /**
@@ -33,15 +33,6 @@ namespace Bald {
         virtual ~Event() = default;
 
     public:
-
-        /**
-        * @fn       EmitConnectedEvents
-        * @brief    This method is used to create specific events which also emit
-        *           associated events (ex. KeyPressedEvent also emits KeyEvent).
-        *           This function must be overwritten in all scenarios!
-        */
-
-        virtual void EmitConnectedEvents() const = 0;
 
         /**
         * @fn       Type
