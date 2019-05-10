@@ -6,22 +6,51 @@
 
 namespace Bald {
 
-    std::unordered_map<std::type_index, std::vector<Handler*>*> EventManager::m_Callbacks;
     std::deque<Event*> EventManager::m_EventQueue;
+    int EventManager::m_ReferenceCounter = 0;
+
+    EventManager::EventManager() {
+        [[maybe_unused]] bool state = Init();
+        assert(state);
+    }
+
+    EventManager::~EventManager() {
+        Shutdown();
+    }
+
+    bool EventManager::Init() {
+        CORE_LOG_INFO("[EventManager] Initializing EventManager...");
+        ++m_ReferenceCounter;
+        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        return m_ReferenceCounter > 0;
+    }
+
+    void EventManager::Shutdown() {
+        CORE_LOG_INFO("[EventManager] Shutting down EventManager...");
+        RemoveAllCallbacks();
+        --m_ReferenceCounter;
+        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        if(m_ReferenceCounter == 0){
+            CORE_LOG_INFO("[EventManager] This was last one EventManager");
+            CORE_LOG_INFO("[EventManager] Clearing event queue...");
+            ClearEventsQueue();
+            CORE_LOG_INFO("[EventManager] Clearing event queue was successful");
+        }
+        CORE_LOG_INFO("[EventManager] Shutdown was successful");
+    }
 
     void EventManager::Call() noexcept {
         Event* event = m_EventQueue.front();
-        m_EventQueue.pop_front();
 
         auto callbacks = m_Callbacks.find(event->Type());
 
         if(callbacks == m_Callbacks.end()) {
-            delete event;
             return;
         }
 
-        for(auto& fun : *callbacks->second) fun->Run();
+        for(auto& fun : *callbacks->second) fun->Run(*event);
 
+        m_EventQueue.pop_front();
         delete event;
     }
 
@@ -33,12 +62,15 @@ namespace Bald {
         }
     }
 
-    void EventManager::CleanUp() noexcept {
-        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
-        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<Handler*>*>&& pair) {
-            std::for_each(pair.second->begin(), pair.second->end(), [](Handler* handler) { delete handler; });
+    void EventManager::RemoveAllCallbacks() noexcept {
+        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<std::type_index, std::vector<EventHandlerInterface*>*>&& pair) {
+            std::for_each(pair.second->begin(), pair.second->end(), [](EventHandlerInterface* handler) { delete handler; });
             delete pair.second;
         });
+    }
+
+    void EventManager::ClearEventsQueue() noexcept {
+        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
     }
 
 } //END OF NAMESPACE Bald

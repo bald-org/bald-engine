@@ -21,19 +21,13 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is left blank because KeyEvent does not emit any associated events
-        */
-
-        void EmitConnectedEvents() const override {}
-
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
         */
 
         [[nodiscard]] inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
     }; // END OF CLASS WindowEvent
 
     /**
@@ -57,13 +51,6 @@ namespace Bald {
             : m_WindowSize{windowWidth, windowHeight} {}
 
     public:
-
-        /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional WindowEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
 
         /**
         * @fn                           Type
@@ -114,19 +101,13 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   EmitConnectedEvents
-        * @brief                This method is emits additional WindowEvent
-        */
-
-        void EmitConnectedEvents() const override { EventManager::Emit<WindowEvent>(); }
-
-        /**
         * @fn                           Type
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
         * @return [std::type_index]     Type index
         */
 
         inline std::type_index Type() const override { return typeid(decltype(*this)); }
+
     }; // END OF CLASS WindowClosedEvent
 
 } // END OF NAMESPACE Bald
