@@ -30,7 +30,7 @@ namespace Bald {
         RemoveAllCallbacks();
         --m_ReferenceCounter;
         CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
-        if(m_ReferenceCounter == 0){
+        if(m_ReferenceCounter == 0) {
             CORE_LOG_INFO("[EventManager] This was last one EventManager");
             CORE_LOG_INFO("[EventManager] Clearing event queue...");
             ClearEventQueue();
@@ -56,7 +56,20 @@ namespace Bald {
 
     void EventManager::Flush(int n) noexcept {
         if(n == -1) {
-            while(!m_EventQueue.empty()) Call();
+            //while(!m_EventQueue.empty()) Call();
+            auto it = m_EventQueue.begin();
+            for(; it != m_EventQueue.end(); ++it) {
+                auto callbacks = m_Callbacks.find((*it)->GetType());
+
+                if(callbacks == m_Callbacks.end()) {
+                    continue;
+                }
+
+                for(auto& fun : *(callbacks)->second) fun->Run(**(it));
+
+                delete *it;
+                m_EventQueue.erase(it);
+            }
         } else {
             for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
         }
@@ -70,8 +83,7 @@ namespace Bald {
     }
 
     void EventManager::ClearEventQueue() noexcept {
-        while(!m_EventQueue.empty())
-        {
+        while(!m_EventQueue.empty()) {
             auto ev = m_EventQueue.back();
             delete ev;
             m_EventQueue.pop_back();

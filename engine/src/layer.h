@@ -94,9 +94,11 @@ namespace Bald {
 
         [[nodiscard]] virtual std::type_index GetType() const = 0;
 
+    protected:
+        EventManager m_EventManager; /**< Layer-specific EventManager*/
+
     private:
         bool m_IsEnabled = true; /**< State of the layer */
-        EventManager m_EventManager; /**< Layer-specific EventManager*/
 
     }; // END OF CLASS Layer
 

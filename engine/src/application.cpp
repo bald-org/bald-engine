@@ -24,40 +24,46 @@ namespace Bald {
     void Application::Run() {
 
         while(m_Running) {
-
             m_Window->Clear();
 
-            for(auto layer : m_LayerStack)
-            {
-                layer->Update();
-                layer->RunEvents();
-            }
-
-            Input::InputManager::Update(); // TODO: Let's think whether or not this should be called during layer update! ~Blinku
+            //for(auto layer : m_LayerStack) {
+            //    layer->OnUpdate();
+            //    layer->RunEvents();
+            //}
 
             m_Window->Update();
-            Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
+
+            Input::InputManager::Update();
+
+            m_EventManager->Flush();
+
             EventManager::ClearEventQueue();
         }
     }
 
-        }
-    }
-
-    bool Application::Init() {
+    bool Application::Init() noexcept {
         Log::Init();
 
-        CORE_LOG_INFO("[Application] Initializing application...");
+        CORE_LOG_INFO("[Application] Initializing Application...");
 
         assert(!m_Instance);
 
         m_Instance = this;
 
+        m_EventManager = std::make_unique<EventManager>();
         m_Window = std::make_unique<Graphics::Window>("Bald Engine");
 
-        EventManager::Subscribe<WindowClosedEvent>(HandleType::SYNC, [this]() {
+        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this]([[maybe_unused]] const WindowClosedEvent& e) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             this->m_Running = false;
+        });
+
+        m_EventManager->Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::ASYNC, [](const Bald::KeyTypedEvent& e) {
+            CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
+        });
+
+        m_EventManager->Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent&) {
+            CORE_LOG_TRACE("MouseMovedEvent");
         });
 
         CORE_LOG_INFO("[Application] Initialization was successful");
@@ -72,11 +78,10 @@ namespace Bald {
             delete layer;
         }
 
-        EventManager::CleanUp(); // TODO: Maybe after layer update? We will have to discuss this
-
         CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 
-} // END OF NAMESPACE BALD
+} // END OF NAMESPACE Bald
+
 
 

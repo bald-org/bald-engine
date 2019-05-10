@@ -10,21 +10,19 @@ public:
     ~DebugLayer() override = default;
 
     void OnAttach() noexcept override {
-        Bald::EventManager::Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, []() {
-            CORE_LOG_INFO("MouseMovedEvent!");
+
+        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::ASYNC, [](const Bald::KeyTypedEvent& e) {
+            CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
         });
+
     }
 
     void OnDetach () noexcept override {
 
     }
 
-    void Update() override {
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_ESCAPE))
-        {
-            CORE_LOG_TRACE("WindowClosedEvent!");
-            Bald::EventManager::Emit<Bald::WindowClosedEvent>();
-        }
+    void OnUpdate() noexcept override {
+
     }
 
     [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
@@ -35,12 +33,9 @@ class Sandbox : public Bald::Application {
 public:
     Sandbox() {
         PushLayer<DebugLayer>();
-        PushLayer<DebugLayer>();
     }
 
-    ~Sandbox() override {
-        PopLayer<DebugLayer>();
-    }
+    ~Sandbox() override = default;
 };
 
 Bald::Application* Bald::Application::Create() noexcept {
