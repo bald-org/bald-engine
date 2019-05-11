@@ -16,6 +16,7 @@
 #include "callback/event_function_handler.h"
 #include "callback/event_async_function_handler.h"
 #include "callback/event_handler_interface.h"
+#include "type_name.h"
 
 namespace Bald {
 
@@ -146,7 +147,7 @@ namespace Bald {
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-        CORE_LOG_INFO("[EventManager] Subscribing to an event...");
+        CORE_LOG_INFO("[EventManager] Subscribing function " + type_name<F>() + " to an " + type_name<T>() + " ...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         if (m_Callbacks.find(get_type_id<T>()) == m_Callbacks.end()) {
@@ -200,7 +201,7 @@ namespace Bald {
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         for (auto ev : m_EventQueue) {
-            if (ev->Type() == get_type_id<T>()) return true;
+            if (ev->GetType() == get_type_id<T>()) return true;
         }
         return false;
     }
