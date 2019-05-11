@@ -12,11 +12,7 @@ public:
 
     void OnAttach() noexcept override {
 
-        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::ASYNC, [](const Bald::KeyTypedEvent& e) {
-            CORE_LOG_TRACE(static_cast<char>(e.GetKeyCode()));
-        });
-
-        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::ASYNC, [](const Bald::MouseMovedEvent& e) {
+        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::SYNC, [](const Bald::MouseMovedEvent& e) {
             CORE_LOG_TRACE(std::string("MouseMovedEvent: [")
                                .append(std::to_string(e.GetX()))
                                .append(", ")
@@ -45,30 +41,23 @@ public:
 
     ~GameLayer() override = default;
 
-    void OnAttach() noexcept override {
+    void OnAttach() noexcept override {}
 
-    }
-
-    void OnDetach() noexcept override {
-
-    }
+    void OnDetach() noexcept override {}
 
     void OnUpdate() noexcept override {
-
         static bool isMenuUp = false;
 
         if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
-
             if(!isMenuUp) {
                 Bald::Application& app = Bald::Application::GetApplication();
-                app.PushOverlay<DebugLayer>();
+                app.PushOverlayImmediately<DebugLayer>();
                 isMenuUp = true;
             } else {
                 Bald::Application& app = Bald::Application::GetApplication();
-                app.PopOverlay<DebugLayer>();
+                app.PopOverlayImmediately<DebugLayer>();
                 isMenuUp = false;
             }
-
         }
 
     }
@@ -80,7 +69,7 @@ public:
 class Sandbox : public Bald::Application {
 public:
     Sandbox() {
-        PushLayer<GameLayer>();
+        PushLayerImmediately<GameLayer>();
     }
 
     ~Sandbox() override = default;

@@ -11,6 +11,7 @@ namespace Bald {
     }
 
     void LayerStack::Shutdown() {
+        // TODO: Think if we need to call layer->OnDetach() here!
         for(Layer* layer : m_LayerStack) {
             delete layer;
         }

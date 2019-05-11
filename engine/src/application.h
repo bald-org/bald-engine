@@ -34,16 +34,16 @@ namespace Bald {
         virtual ~Application();
 
         template<class L>
-        void PushLayer();
+        void PushLayerImmediately();
 
         template<class L>
-        void PushOverlay();
+        void PushOverlayImmediately();
 
         template<class L>
-        void PopLayer();
+        void PopLayerImmediately();
 
         template<class L>
-        void PopOverlay();
+        void PopOverlayImmediately();
 
         /**
          * @fn                      Create
@@ -98,23 +98,23 @@ namespace Bald {
     }; // END OF CLASS Application
 
     template<class L>
-    void Application::PushLayer() {
-        m_LayerStack.PushLayer<L>();
+    void Application::PushLayerImmediately() {
+        m_LayerStack.PushLayerImmediately<L>();
     }
 
     template<class L>
-    void Application::PushOverlay() {
-        m_LayerStack.PushOverlay<L>();
+    void Application::PushOverlayImmediately() {
+        m_LayerStack.PushOverlayImmediately<L>();
     }
 
     template<class L>
-    void Application::PopLayer() {
-        m_LayerStack.PopLayer<L>();
+    void Application::PopLayerImmediately() {
+        m_LayerStack.PopLayerImmediately<L>();
     }
 
     template<class L>
-    void Application::PopOverlay() {
-        m_LayerStack.PopOverlay<L>();
+    void Application::PopOverlayImmediately() {
+        m_LayerStack.PopOverlayImmediately<L>();
     }
 
 } // END OF NAMESPACE Bald

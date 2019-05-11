@@ -3,9 +3,7 @@
 //
 
 #include "application.h"
-
 #include "input_manager.h"
-
 #include "window_events.h"
 
 namespace Bald {
@@ -26,12 +24,12 @@ namespace Bald {
         while(m_Running) {
             m_Window->Clear();
 
-            for(Layer* layer : m_LayerStack) {
-                layer->OnUpdate();
+            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
+                m_LayerStack[i]->OnUpdate();
             }
 
-            for(auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it) {
-                (*it)->RunEvents();
+            for(size_t i = m_LayerStack.GetSize() - 1; i != 0; --i) {
+                m_LayerStack[i]->RunEvents();
             }
 
             m_EventManager->Flush();
@@ -76,6 +74,3 @@ namespace Bald {
     }
 
 } // END OF NAMESPACE Bald
-
-
-
