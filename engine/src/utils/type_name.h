@@ -16,7 +16,7 @@ namespace Bald {
 
     /**
      * @fn type_name
-     * @brief Function that demangle name of type T
+     * @brief Function that demangles name of type T
      * @tparam T Type of which we want to demangle name
      * @return [std::string] -> Name of type T
      */
@@ -34,7 +34,7 @@ namespace Bald {
 
     /**
      * @fn type_name(const T&)
-     * @brief Function that demangle name of type of object passed to it
+     * @brief Function that demangles name of type of object passed to it
      * @param T Object which type name we want to demangle
      * @return [std::string] -> Name of type of object
      */

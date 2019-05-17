@@ -8,7 +8,7 @@ namespace Bald {
 
     /**
      * @fn generator_id
-     * @brief Function that generate unique id
+     * @brief Function that generates a unique id
      * @return [unsigned int] Generated id
      */
 
@@ -29,32 +29,28 @@ namespace Bald {
 
         /**
          * @fn type_id
-         * @brief Static function which returns
-         * @return
+         * @brief Static function which returns the id of a specific type
+         * @return The id of a specific type
          */
 
-        static inline unsigned type_id() noexcept {
-            return id;
-        }
+        static inline unsigned type_id() noexcept { return id; }
 
     private:
-        static const int id;
+        static const unsigned int id;
     };
 
     template<typename T>
-    int const TypeInfo<T>::id = generator_id();
+    unsigned int const TypeInfo<T>::id = generator_id();
 
     /**
      * @fn get_type_id
      * @brief Function that returns the id of type T
-     * @tparam T Type of which we want to get the id
+     * @tparam T The type that is queried for id
      * @return id of type T
      */
 
     template<typename T>
-    inline unsigned get_type_id() {
-        return TypeInfo<T>::type_id();
-    }
+    inline unsigned get_type_id() { return TypeInfo<T>::type_id(); }
 
     /**
      * @fn get_type_id(const T&)
