@@ -5,7 +5,6 @@
 #include "gtest/gtest.h"
 #include "window.h"
 
-
 TEST(Getter, Window_GetTitle) { //NOLINT
 
     Bald::Graphics::Window A("TestPassed", 1500, 752, true);
@@ -13,14 +12,12 @@ TEST(Getter, Window_GetTitle) { //NOLINT
     EXPECT_EQ(A.GetTitle(), "TestPassed");
 }
 
-
 TEST(Getter, Window_GetWidth) { //NOLINT
 
     Bald::Graphics::Window B("kochampizze", 1337, 600, false);
 
     EXPECT_EQ(B.GetWidth(), 1337);
 }
-
 
 TEST(Getter, Window_GetHeight) { //NOLINT
 

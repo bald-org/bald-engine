@@ -31,12 +31,12 @@ namespace Bald {
     public:
 
         /**
-        * @fn                           Type
+        * @fn                           GetType
         * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
+        * @return [unsigned]            Type index
         */
 
-        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
     public:
 
@@ -74,12 +74,12 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   Type
+        * @fn                   GetType
         * @brief                This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
+        * @return [unsigned]    Type index
         */
 
-        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
     }; // END OF CLASS KeyPressedEvent
 
@@ -106,12 +106,12 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   Type
+        * @fn                   GetType
         * @brief                This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
+        * @return [unsigned]    Type index
         */
 
-        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
     }; // END OF CLASS KeyReleasedEvent
 
@@ -138,12 +138,12 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   Type
+        * @fn                   GetType
         * @brief                This method returns type index of this specific class. This is used for polymorphism
-        * @return [std::type_index]     Type index
+        * @return [unsigned]    Type index
         */
 
-        [[nodiscard]] inline std::type_index GetType() const override { return typeid(decltype(*this)); }
+        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
 
     }; // END OF CLASS KeyTypedEvent

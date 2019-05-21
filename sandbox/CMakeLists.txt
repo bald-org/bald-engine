@@ -28,10 +28,12 @@ target_link_libraries(sandbox PUBLIC bald_engine)
 add_executable(application_example examples/application_example.cpp)
 add_executable(input_example examples/input_example.cpp)
 add_executable(events_example examples/events_example.cpp)
+add_executable(event_time_test examples/event_time_test.cpp)
 
 target_link_libraries(application_example PUBLIC bald_engine)
 target_link_libraries(input_example PUBLIC bald_engine)
 target_link_libraries(events_example PUBLIC bald_engine)
+target_link_libraries(event_time_test PUBLIC bald_engine)
 
 #### END EXAMPLES
 
