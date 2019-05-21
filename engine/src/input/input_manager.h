@@ -15,16 +15,15 @@
 #include "key_events.h"
 #include "mouse_events.h"
 
-/**
- * @class InputManager
- * @brief manages user's input
- */
-
-
 namespace Bald::Input {
 
     constexpr unsigned MAX_KEYS = 1024;
     constexpr unsigned MAX_MOUSE_BUTTONS = 64;
+
+    /**
+     * @class InputManager
+     * @brief Manages users input
+     */
 
     class InputManager {
 

@@ -104,7 +104,7 @@ namespace Bald {
          * @brief deletes all events form queue
          */
 
-        static void ClearEventsQueue() noexcept;
+        static void ClearEventQueue() noexcept;
 
         /**
         * @fn                    Flush
