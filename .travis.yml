@@ -34,7 +34,7 @@ install:
   - sudo make install
 
 before_script:
-  - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
+  - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9
 
 script:
   - cd $TRAVIS_BUILD_DIR
