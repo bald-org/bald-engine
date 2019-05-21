@@ -27,7 +27,7 @@ public:
 
     void OnUpdate() noexcept override {}
 
-    [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
+    [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
 };
 
@@ -61,7 +61,7 @@ public:
 
     void OnUpdate() noexcept override {}
 
-    [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
+    [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
 
 };
 

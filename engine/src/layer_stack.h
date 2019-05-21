@@ -70,7 +70,7 @@ namespace Bald {
         std::vector<Layer*> m_ForAddition; /**< Temp layer stack used for holding layers so that they will be pushed AFTER main loop tick */
         unsigned m_ForAdditionAmount = 0; /**< Current number of layers in temp layer stack */
 
-        std::vector<std::type_index> m_ForRemoval;
+        std::vector<unsigned> m_ForRemoval;
 
 
     }; // END OF CLASS LayerStack
@@ -91,13 +91,13 @@ namespace Bald {
     template<typename L>
     void LayerStack::PopLayer() {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
-        m_ForRemoval.emplace_back(typeid(L));
+        m_ForRemoval.emplace_back(get_type_id<L>());
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
         static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
-        m_ForRemoval.emplace_back(typeid(L));
+        m_ForRemoval.emplace_back(get_type_id<L>());
     }
 
     template<typename L>
@@ -134,7 +134,7 @@ namespace Bald {
         auto it = m_LayerStack.begin();
 
         for(; it != m_LayerStack.end(); ++it) {
-            if((*it)->GetType() == typeid(L)) {
+            if((*it)->GetType() == get_type_id<L>()) {
                 break;
             }
         }
@@ -158,7 +158,7 @@ namespace Bald {
         auto it = m_LayerStack.begin();
 
         for(; it != m_LayerStack.end(); ++it) {
-            if((*it)->GetType() == typeid(L)) {
+            if((*it)->GetType() == get_type_id<L>()) {
                 break;
             }
         }
