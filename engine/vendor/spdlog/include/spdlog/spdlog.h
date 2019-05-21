@@ -47,6 +47,21 @@ inline std::shared_ptr<spdlog::logger> create(std::string logger_name, SinkArgs 
     return default_factory::create<Sink>(std::move(logger_name), std::forward<SinkArgs>(sink_args)...);
 }
 
+// Initialize and register a logger,
+// formatter and flush level will be set according the global settings.
+//
+// NOTE:
+// Use this function when creating loggers manually.
+//
+// Example:
+//   auto console_sink = std::make_shared<spdlog::sinks::stdout_sink_mt>();
+//   auto console_logger = std::make_shared<spdlog::logger>("console_logger", console_sink);
+//   spdlog::initialize_logger(console_logger);
+inline void initialize_logger(std::shared_ptr<logger> logger)
+{
+    details::registry::instance().initialize_logger(std::move(logger));
+}
+
 // Return an existing logger or nullptr if a logger with such name doesn't
 // exist.
 // example: spdlog::get("my_logger")->info("hello {}", "world");
@@ -298,8 +313,6 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 
 } // namespace spdlog
 
-
-
 //
 // enable/disable log calls at compile time according to global level.
 //
@@ -313,10 +326,14 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 // SPDLOG_LEVEL_OFF
 //
 
+#define SPDLOG_LOGGER_CALL(logger, level, ...)                                                                                             \
+    do {                                                                                                                                   \
+        if (logger->should_log(level))                                                                                                     \
+            logger->log(spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__, SPDLOG_FUNCTION}, level, __VA_ARGS__);                \
+    } while (0)
+
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_TRACE
-#define SPDLOG_LOGGER_TRACE(logger, ...)\
-    if(logger->should_log(spdlog::level::trace))\
-        logger->log(spdlog::source_loc{SPDLOG_FILE_BASENAME(__FILE__), __LINE__}, spdlog::level::trace, __VA_ARGS__)
+#define SPDLOG_LOGGER_TRACE(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::trace, __VA_ARGS__)
 #define SPDLOG_TRACE(...) SPDLOG_LOGGER_TRACE(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_TRACE(logger, ...) (void)0
@@ -324,7 +341,7 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 #endif
 
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_DEBUG
-#define SPDLOG_LOGGER_DEBUG(logger, ...) logger->log(spdlog::level::debug, __VA_ARGS__)
+#define SPDLOG_LOGGER_DEBUG(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::debug, __VA_ARGS__)
 #define SPDLOG_DEBUG(...) SPDLOG_LOGGER_DEBUG(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_DEBUG(logger, ...) (void)0
@@ -332,7 +349,7 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 #endif
 
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_INFO
-#define SPDLOG_LOGGER_INFO(logger, ...) logger->log(spdlog::level::info, __VA_ARGS__)
+#define SPDLOG_LOGGER_INFO(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::info, __VA_ARGS__)
 #define SPDLOG_INFO(...) SPDLOG_LOGGER_INFO(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_INFO(logger, ...) (void)0
@@ -340,7 +357,7 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 #endif
 
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_WARN
-#define SPDLOG_LOGGER_WARN(logger, ...) logger->log(spdlog::level::warn, __VA_ARGS__)
+#define SPDLOG_LOGGER_WARN(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::warn, __VA_ARGS__)
 #define SPDLOG_WARN(...) SPDLOG_LOGGER_WARN(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_WARN(logger, ...) (void)0
@@ -348,7 +365,7 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 #endif
 
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_ERROR
-#define SPDLOG_LOGGER_ERROR(logger, ...) logger->log(spdlog::level::err, __VA_ARGS__)
+#define SPDLOG_LOGGER_ERROR(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::err, __VA_ARGS__)
 #define SPDLOG_ERROR(...) SPDLOG_LOGGER_ERROR(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_ERROR(logger, ...) (void)0
@@ -356,7 +373,7 @@ inline void critical(const wchar_t *fmt, const Args &... args)
 #endif
 
 #if SPDLOG_ACTIVE_LEVEL <= SPDLOG_LEVEL_CRITICAL
-#define SPDLOG_LOGGER_CRITICAL(logger, ...) logger->log(spdlog::level::critical, __VA_ARGS__)
+#define SPDLOG_LOGGER_CRITICAL(logger, ...) SPDLOG_LOGGER_CALL(logger, spdlog::level::critical, __VA_ARGS__)
 #define SPDLOG_CRITICAL(...) SPDLOG_LOGGER_CRITICAL(spdlog::default_logger_raw(), __VA_ARGS__)
 #else
 #define SPDLOG_LOGGER_CRITICAL(logger, ...) (void)0

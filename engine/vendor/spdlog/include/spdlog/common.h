@@ -46,14 +46,13 @@
 
 // disable thread local on msvc 2013
 #ifndef SPDLOG_NO_TLS
-#if (defined(_MSC_VER) && (_MSC_VER < 1900))
+#if (defined(_MSC_VER) && (_MSC_VER < 1900)) || defined(__cplusplus_winrt)
 #define SPDLOG_NO_TLS 1
 #endif
 #endif
 
-
-// Get the basename of __FILE__ (at compile time if possible) 
-#if FMT_HAS_FEATURE(__builtin_strrchr) 
+// Get the basename of __FILE__ (at compile time if possible)
+#if FMT_HAS_FEATURE(__builtin_strrchr)
 #define SPDLOG_STRRCHR(str, sep) __builtin_strrchr(str, sep)
 #else
 #define SPDLOG_STRRCHR(str, sep) strrchr(str, sep)
@@ -63,6 +62,10 @@
 #define SPDLOG_FILE_BASENAME(file) SPDLOG_STRRCHR("\\" file, '\\') + 1
 #else
 #define SPDLOG_FILE_BASENAME(file) SPDLOG_STRRCHR("/" file, '/') + 1
+#endif
+
+#ifndef SPDLOG_FUNCTION
+#define SPDLOG_FUNCTION __FUNCTION__
 #endif
 
 namespace spdlog {
@@ -122,9 +125,12 @@ enum level_enum
         "trace", "debug", "info", "warning", "error", "critical", "off"                                                                    \
     }
 #endif
-
 static string_view_t level_string_views[] SPDLOG_LEVEL_NAMES;
-static const char *short_level_names[]{"T", "D", "I", "W", "E", "C", "O"};
+
+#if !defined(SPDLOG_SHORT_LEVEL_NAMES)
+#define SPDLOG_SHORT_LEVEL_NAMES {"T", "D", "I", "W", "E", "C", "O"}
+#endif
+static const char *short_level_names[] SPDLOG_SHORT_LEVEL_NAMES;
 
 inline string_view_t &to_string_view(spdlog::level::level_enum l) SPDLOG_NOEXCEPT
 {
@@ -152,6 +158,16 @@ inline spdlog::level::level_enum from_str(const std::string &name) SPDLOG_NOEXCE
 
 using level_hasher = std::hash<int>;
 } // namespace level
+
+//
+// Color mode used by sinks with color support.
+//
+enum class color_mode
+{
+    always,
+    automatic,
+    never
+};
 
 //
 // Pattern time - specific time getting to use for pattern_formatter.
@@ -204,11 +220,13 @@ struct source_loc
     SPDLOG_CONSTEXPR source_loc()
         : filename{""}
         , line{0}
+        , funcname{""}
     {
     }
-    SPDLOG_CONSTEXPR source_loc(const char *filename, int line)
-        : filename{filename}
-        , line{static_cast<uint32_t>(line)}
+    SPDLOG_CONSTEXPR source_loc(const char *filename_in, int line_in, const char *funcname_in)
+        : filename{filename_in}
+        , line{static_cast<uint32_t>(line_in)}
+        , funcname{funcname_in}
     {
     }
 
@@ -218,6 +236,7 @@ struct source_loc
     }
     const char *filename;
     uint32_t line;
+    const char *funcname;
 };
 
 namespace details {

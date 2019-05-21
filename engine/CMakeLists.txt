@@ -5,7 +5,7 @@ project(bald_engine)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/googletest)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 
 set(${PROJECT_NAME}_include_dirs
