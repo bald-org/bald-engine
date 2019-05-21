@@ -18,6 +18,15 @@ namespace Bald {
     class WindowEvent : public Event {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
+    protected:
+
+        /**
+        * @fn                   WindowEvent
+        * @brief                Default constructor.
+        */
+
+        WindowEvent() = default;
+
     public:
 
         /**

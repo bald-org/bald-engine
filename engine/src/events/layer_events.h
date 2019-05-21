@@ -17,6 +17,15 @@ namespace Bald {
     class LayerPushedEvent : public Event {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
+    protected:
+
+        /**
+        * @fn                   LayerPushedEvent
+        * @brief                Default constructor.
+        */
+
+        LayerPushedEvent() = default;
+
     public:
 
         /**
@@ -29,13 +38,22 @@ namespace Bald {
 
     }; // END OF CLASS LayerPushedEvent
 
-/**
+    /**
      * @class LayerPoppedEvent
      * @brief Specific event implementation for layer popped type event
      */
 
     class LayerPoppedEvent : public Event {
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+
+    protected:
+
+        /**
+        * @fn                   LayerPoppedEvent
+        * @brief                Default constructor.
+        */
+
+        LayerPoppedEvent() = default;
 
     public:
 
