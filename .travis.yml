@@ -27,6 +27,8 @@ before_install:
   - ./cmake-3.14.3-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
 
 install:
+  - sudo apt-get install gcc-9
+  - sudo apt-get install g++-9
   - cd engine/vendor/glfw/
   - mkdir build && cd build
   - cmake ../
