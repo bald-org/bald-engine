@@ -34,6 +34,18 @@ namespace Bald {
         virtual ~Application();
 
         template<class L>
+        void PushLayer();
+
+        template<class L>
+        void PushOverlay();
+
+        template<class L>
+        void PopLayer();
+
+        template<class L>
+        void PopOverlay();
+
+        template<class L>
         void PushLayerImmediately();
 
         template<class L>
@@ -96,6 +108,26 @@ namespace Bald {
         static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
 
     }; // END OF CLASS Application
+
+    template<class L>
+    void Application::PushLayer() {
+        m_LayerStack.PushLayer<L>();
+    }
+
+    template<class L>
+    void Application::PushOverlay() {
+        m_LayerStack.PushOverlay<L>();
+    }
+
+    template<class L>
+    void Application::PopLayer() {
+        m_LayerStack.PopLayer<L>();
+    }
+
+    template<class L>
+    void Application::PopOverlay() {
+        m_LayerStack.PopOverlay<L>();
+    }
 
     template<class L>
     void Application::PushLayerImmediately() {

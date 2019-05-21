@@ -51,11 +51,11 @@ public:
         if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
             if(!isMenuUp) {
                 Bald::Application& app = Bald::Application::GetApplication();
-                app.PushOverlayImmediately<DebugLayer>();
+                app.PushOverlay<DebugLayer>();
                 isMenuUp = true;
             } else {
                 Bald::Application& app = Bald::Application::GetApplication();
-                app.PopOverlayImmediately<DebugLayer>();
+                app.PopOverlay<DebugLayer>();
                 isMenuUp = false;
             }
         }
@@ -69,7 +69,7 @@ public:
 class Sandbox : public Bald::Application {
 public:
     Sandbox() {
-        PushLayerImmediately<GameLayer>();
+        PushLayer<GameLayer>();
     }
 
     ~Sandbox() override = default;

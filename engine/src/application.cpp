@@ -28,8 +28,8 @@ namespace Bald {
                 m_LayerStack[i]->OnUpdate();
             }
 
-            for(size_t i = m_LayerStack.GetSize() - 1; i != 0; --i) {
-                m_LayerStack[i]->RunEvents();
+            for(size_t i = m_LayerStack.GetSize(); i != 0; --i) {
+                m_LayerStack[i - 1]->RunEvents();
             }
 
             m_EventManager->Flush();
@@ -39,6 +39,8 @@ namespace Bald {
             Input::InputManager::Update();
 
             m_Window->Update();
+
+            m_LayerStack.AttachDetachLayers();
         }
     }
 
@@ -47,9 +49,7 @@ namespace Bald {
     }
 
     bool Application::Init() noexcept {
-        Log::Init();
-
-        CORE_LOG_INFO("[Application] Initializing Application...");
+        CORE_LOG_INFO("[Application] Initializing application...");
 
         assert(!m_Instance);
 
