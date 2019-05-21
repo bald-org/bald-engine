@@ -9,8 +9,6 @@
 #include "event.h"
 #include "key_events.h"
 
-
-
 TEST(RTTI, RTTI_test){
     using namespace Bald;
     int i = 0;
