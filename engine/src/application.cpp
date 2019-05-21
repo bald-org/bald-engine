@@ -50,6 +50,6 @@ namespace Bald {
         }
     }
 
-} // END OF NAMESPACE BALD
+} // END OF NAMESPACE Bald
 
 
