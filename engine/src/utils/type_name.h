@@ -49,8 +49,10 @@ namespace Bald {
         };
         return ( status == 0 ) ? result.get() : name;
     }
-}
+} // END OF NAMESPACE Bald
+
 #else
+
 namespace Bald {
 
     /**
@@ -72,5 +74,6 @@ namespace Bald {
     std::string type_name(const T&){
         return typeid(T).name();
     }
-}
+} // END OF NAMESPACE Bald
+
 #endif
