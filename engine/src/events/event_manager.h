@@ -120,7 +120,7 @@ namespace Bald {
         /**
          * @fn Init
          * @brief Initialize Event Manager object
-         * @return [bool]  true if initialization was successful otherwise false
+         * @return [bool] true if initialization was successful otherwise false
          */
 
         bool Init();

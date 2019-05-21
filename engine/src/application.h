@@ -20,62 +20,106 @@ namespace Bald {
     public:
 
         /**
-         * @fn                      Application
-         * @brief                   Application constructor
+         * @fn Application
+         * @brief Application constructor
          */
 
         Application();
 
         /**
-         * @fn                      ~Application
-         * @brief                   Application destructor
+         * @fn ~Application
+         * @brief Application destructor
          */
 
         virtual ~Application();
 
-        template<class L>
+/**
+         * @fn PushLayer
+         * @brief Templated method which pushes a layer onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
+        template<typename L>
         void PushLayer();
 
-        template<class L>
+        /**
+         * @fn PushOverlay
+         * @brief Templated method which pushes an overlay onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
+        template<typename L>
         void PushOverlay();
 
-        template<class L>
+        /**
+         * @fn PopLayer
+         * @brief Templated method which pops a layer from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
+        template<typename L>
         void PopLayer();
 
-        template<class L>
+        /**
+         * @fn PopOverlay
+         * @brief Templated method which pops an1 overlay from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
+        template<typename L>
         void PopOverlay();
 
-        template<class L>
+        /**
+         * @fn PushLayerImmediately
+         * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
+         */
+
+        template<typename L>
         void PushLayerImmediately();
 
-        template<class L>
+        /**
+         * @fn PushOverlayImmediately
+         * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
+         */
+
+        template<typename L>
         void PushOverlayImmediately();
 
-        template<class L>
+        /**
+         * @fn PopLayerImmediately
+         * @brief Templated method which pops a layer from the layer stack as soon as the method is called.
+         */
+
+        template<typename L>
         void PopLayerImmediately();
 
-        template<class L>
+        /**
+         * @fn PopOverlayImmediately
+         * @brief Templated method which pops an overlay from the layer stack as soon as the method is called.
+         */
+
+        template<typename L>
         void PopOverlayImmediately();
 
         /**
-         * @fn                      Create
-         * @brief                   Creates an application. This function should be implemented on the client's side.
-         * @return [Application*]   Pointer to application instance
+         * @fn Create
+         * @brief Creates an application. This function should be implemented on the client's side.
+         * @return [Application*] Pointer to application instance
          */
 
         [[nodiscard]] static Application* Create() noexcept;
 
         /**
-         * @fn                      Create
-         * @brief                   Creates an application. This function should be implemented on the client's side.
-         * @return [Application*]   Pointer to application instance
+         * @fn Create
+         * @brief Creates an application. This function should be implemented on the client's side.
+         * @return [Application*] Pointer to application instance
          */
 
         [[nodiscard]] static Application& GetApplication() noexcept;
 
         /**
-         * @fn                      Run
-         * @brief                   Main loop
+         * @fn Run
+         * @brief Main loop
          */
 
         void Run();
@@ -83,17 +127,17 @@ namespace Bald {
     private:
 
         /**
-         * @fn                      Init
-         * @brief                   Attempts to initialize the application and returns success result (true/false)
-         * @return [bool]           true  -> application has been initialized successfully
-         *                          false -> application couldn't have been initialized
+         * @fn Init
+         * @brief Attempts to initialize the application and returns success result (true/false)
+         * @return [bool] true  -> application has been initialized successfully
+         *                false -> application wasn't initialized
          */
 
         [[nodiscard]] bool Init() noexcept;
 
         /**
-         * @fn                      Shutdown
-         * @brief                   Destroys the application
+         * @fn Shutdown
+         * @brief Destroys the application
          */
 
         void Shutdown();

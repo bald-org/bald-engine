@@ -14,55 +14,174 @@
 
 namespace Bald {
 
+    /**
+     * @class LayerStack
+     * @brief Simple wrapper for std::vector which behaves like a layer stack.
+     */
+
     class LayerStack {
     public:
+
+        /**
+         * @fn LayerStack
+         * @brief Layer stack constructor.
+         */
+
         LayerStack();
 
+        /**
+         * @fn ~LayerStack
+         * @brief Layer stack destructor.
+         */
+
         ~LayerStack();
+
+        /**
+         * @fn PushLayer
+         * @brief Templated method which pushes a layer onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
 
         template<typename L>
         void PushLayer();
 
+        /**
+         * @fn PushOverlay
+         * @brief Templated method which pushes an overlay onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
         template<typename L>
         void PushOverlay();
+
+        /**
+         * @fn PopLayer
+         * @brief Templated method which pops a layer from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
 
         template<typename L>
         void PopLayer();
 
+        /**
+         * @fn PopOverlay
+         * @brief Templated method which pops an1 overlay from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         */
+
         template<typename L>
         void PopOverlay();
+
+        /**
+         * @fn PushLayerImmediately
+         * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
+         */
 
         template<typename L>
         void PushLayerImmediately();
 
+        /**
+         * @fn PushOverlayImmediately
+         * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
+         */
+
         template<typename L>
         void PushOverlayImmediately();
+
+        /**
+         * @fn PopLayerImmediately
+         * @brief Templated method which pops a layer from the layer stack as soon as the method is called.
+         */
 
         template<typename L>
         void PopLayerImmediately();
 
+        /**
+         * @fn PopOverlayImmediately
+         * @brief Templated method which pops an overlay from the layer stack as soon as the method is called.
+         */
+
         template<typename L>
         void PopOverlayImmediately();
 
+        /**
+         * @fn AttachLayers
+         * @brief Method which pushes all layers and overlays from m_ForAddition stack to the main m_LayerStack.
+         */
+
         void AttachLayers();
+
+        /**
+         * @fn DetachLayers
+         * @brief Method which pops all layers and overlays which were added to m_ForRemoval stack from the main m_LayerStack.
+         */
 
         void DetachLayers();
 
+        /**
+         * @fn GetSize
+         * @brief Size getter.
+         * @return [size_t] Current size of layer stack.
+         */
+
         [[nodiscard]] inline size_t GetSize() const noexcept { return m_LayerStack.size(); }
+
+        /**
+         * @fn begin
+         * @brief Begin iterator getter.
+         * @return [std::vector<Layer*>::iterator] Begin iterator.
+         */
 
         inline std::vector<Layer*>::iterator begin() noexcept { return m_LayerStack.begin(); }
 
+        /**
+         * @fn rbegin
+         * @brief Reverse begin iterator getter.
+         * @return [std::vector<Layer*>::reverse_iterator] Reverse begin iterator.
+         */
+
         inline std::vector<Layer*>::reverse_iterator rbegin() noexcept { return m_LayerStack.rbegin(); }
+
+        /**
+         * @fn end
+         * @brief End iterator getter.
+         * @return [std::vector<Layer*>::iterator] End iterator.
+         */
 
         inline std::vector<Layer*>::iterator end() noexcept { return m_LayerStack.end(); }
 
+        /**
+         * @fn rend
+         * @brief Reverse end iterator getter.
+         * @return [std::vector<Layer*>::reverse_iterator] Reverse end iterator.
+         */
+
         inline std::vector<Layer*>::reverse_iterator rend() noexcept { return m_LayerStack.rend(); }
+
+        /**
+         * @fn operator[]
+         * @brief Overloaded operator[].
+         * @param [int] index -> unique identifier.
+         * @return [Layer*] Pointer to layer at given index.
+         */
 
         [[nodiscard]] inline Layer* operator[](size_t index);
 
     private:
 
-        bool Init();
+        /**
+         * @fn Init
+         * @brief A method which attempts to initialize the LayerStack and returns success result (true/false).
+         * @return [bool] true  -> layer stack has been initialized successfully.
+         *                false -> layer stack wasn't initialized.
+         */
+
+        [[nodiscard]] bool Init();
+
+        /**
+         * @fn Shutdown
+         * @brief Destroys the application
+         */
 
         void Shutdown();
 
@@ -74,8 +193,7 @@ namespace Bald {
         std::vector<Layer*> m_ForAddition; /**< Temp layer stack used for holding layers so that they will be pushed AFTER main loop tick */
         unsigned m_ForAdditionAmount = 0; /**< Current number of layers in temp layer stack */
 
-        std::vector<unsigned> m_ForRemoval;
-
+        std::vector<unsigned> m_ForRemoval; /**< Temp layer stack used for holding type ids of layers that will be popped AFTER main loop tick */
 
     }; // END OF CLASS LayerStack
 
