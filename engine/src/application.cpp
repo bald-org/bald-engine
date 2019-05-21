@@ -30,6 +30,7 @@ namespace Bald {
             Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
             EventManager::ClearEventQueue();
         }
+
     }
 
     bool Application::Init() noexcept {
