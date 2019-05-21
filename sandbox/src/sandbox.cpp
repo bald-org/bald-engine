@@ -23,13 +23,9 @@ public:
 
     }
 
-    void OnDetach() noexcept override {
+    void OnDetach() noexcept override {}
 
-    }
-
-    void OnUpdate() noexcept override {
-
-    }
+    void OnUpdate() noexcept override {}
 
     [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
 
@@ -41,26 +37,29 @@ public:
 
     ~GameLayer() override = default;
 
-    void OnAttach() noexcept override {}
+    void OnAttach() noexcept override {
+
+        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyTypedEvent& e) {
+            static bool isMenuUp = false;
+
+            if(e.GetKeyCode() == GLFW_KEY_ESCAPE) {
+                if(!isMenuUp) {
+                    Bald::Application& app = Bald::Application::GetApplication();
+                    app.PushOverlay<DebugLayer>();
+                    isMenuUp = true;
+                } else {
+                    Bald::Application& app = Bald::Application::GetApplication();
+                    app.PopOverlay<DebugLayer>();
+                    isMenuUp = false;
+                }
+            }
+        });
+
+    }
 
     void OnDetach() noexcept override {}
 
-    void OnUpdate() noexcept override {
-        static bool isMenuUp = false;
-
-        if(Bald::Input::InputManager::IsKeyTyped(GLFW_KEY_ESCAPE)) {
-            if(!isMenuUp) {
-                Bald::Application& app = Bald::Application::GetApplication();
-                app.PushOverlay<DebugLayer>();
-                isMenuUp = true;
-            } else {
-                Bald::Application& app = Bald::Application::GetApplication();
-                app.PopOverlay<DebugLayer>();
-                isMenuUp = false;
-            }
-        }
-
-    }
+    void OnUpdate() noexcept override {}
 
     [[nodiscard]] std::type_index GetType() const override { return typeid(decltype(*this)); };
 
