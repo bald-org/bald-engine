@@ -22,12 +22,12 @@ namespace Bald {
     void Application::Run() {
 
         // TODO: This subscribes are temporary, because we still have no layers ~Blinku
-        m_EventManager->Subscribe<KeyTypedEvent>(HandleType::SYNC, [](const KeyTypedEvent&) { CORE_LOG_TRACE("Key Typed Event!"); });
-        m_EventManager->Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&) { CORE_LOG_TRACE("Key Pressed Event!"); });
-        m_EventManager->Subscribe<KeyReleasedEvent>(HandleType::SYNC, [](const KeyReleasedEvent&) { CORE_LOG_TRACE("Key Released Event!"); });
-        m_EventManager->Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&) { CORE_LOG_TRACE("Mouse Moved Event!"); });
-        m_EventManager->Subscribe<MouseScrolledEvent>(HandleType::ASYNC, [](const MouseScrolledEvent&) { CORE_LOG_TRACE("Mouse Scrolled Event!"); });
-        m_EventManager->Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, [](const MouseButtonPressedEvent&) { CORE_LOG_TRACE("Mouse Button Pressed Event!"); } );
+        m_EventManager->Subscribe<KeyTypedEvent>(HandleType::SYNC, [](const KeyTypedEvent&) { CORE_LOG_TRACE("[SYNC] Key Typed Event!"); });
+        m_EventManager->Subscribe<KeyPressedEvent>(HandleType::SYNC, [](const KeyPressedEvent&) { CORE_LOG_TRACE("[SYNC] Key Pressed Event!"); });
+        m_EventManager->Subscribe<KeyReleasedEvent>(HandleType::SYNC, [](const KeyReleasedEvent&) { CORE_LOG_TRACE("[SYNC] Key Released Event!"); });
+        m_EventManager->Subscribe<MouseMovedEvent>(HandleType::ASYNC, [](const MouseMovedEvent&) { CORE_LOG_TRACE("[ASYNC] Mouse Moved Event!"); });
+        m_EventManager->Subscribe<MouseScrolledEvent>(HandleType::ASYNC, [](const MouseScrolledEvent&) { CORE_LOG_TRACE("[ASYNC] Mouse Scrolled Event!"); });
+        m_EventManager->Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, [](const MouseButtonPressedEvent&) { CORE_LOG_TRACE("[SYNC] Mouse Button Pressed Event!"); });
         m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [&](const WindowClosedEvent&) {
             CORE_LOG_TRACE("Window Closed Event!");
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);

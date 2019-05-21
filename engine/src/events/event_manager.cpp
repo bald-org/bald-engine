@@ -3,6 +3,7 @@
 //
 
 #include "event_manager.h"
+#include <future>
 
 namespace Bald {
 
@@ -21,7 +22,7 @@ namespace Bald {
     bool EventManager::Init() {
         CORE_LOG_INFO("[EventManager] Initializing EventManager...");
         ++m_ReferenceCounter;
-        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        CORE_LOG_INFO(( "[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
         return m_ReferenceCounter > 0;
     }
 
@@ -29,8 +30,8 @@ namespace Bald {
         CORE_LOG_INFO("[EventManager] Shutting down EventManager...");
         RemoveAllCallbacks();
         --m_ReferenceCounter;
-        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
-        if(m_ReferenceCounter == 0){
+        CORE_LOG_INFO(( "[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        if (m_ReferenceCounter == 0) {
             CORE_LOG_INFO("[EventManager] This was last one EventManager");
             CORE_LOG_INFO("[EventManager] Clearing event queue...");
             ClearEventsQueue();
@@ -39,38 +40,55 @@ namespace Bald {
         CORE_LOG_INFO("[EventManager] Shutdown was successful");
     }
 
-    void EventManager::Call() noexcept {
-        Event* event = m_EventQueue.front();
+    void EventManager::Flush() noexcept {
+        for (auto it = m_EventQueue.begin(); it != m_EventQueue.end();) {
+            auto async_callbacks = m_CallbacksAsync.find(( *it )->GetType());
+            auto sync_callbacks = m_CallbacksSync.find(( *it )->GetType());
 
-        auto callbacks = m_Callbacks.find(event->GetType());
+            if (async_callbacks == m_CallbacksAsync.end() && sync_callbacks == m_CallbacksSync.end()) {
+                ++it;
+                return;
+            }
+            std::future<void> ft;
+            if (async_callbacks != m_CallbacksAsync.end()) {
+                ft = std::async(std::launch::async, [&it, &async_callbacks]() {
+                    for (auto& fun : async_callbacks->second) fun->Run(**it);
+                });
+            }
 
-        if(callbacks == m_Callbacks.end()) {
-            return;
-        }
+            if (sync_callbacks != m_CallbacksSync.end()) {
+                for (auto& fun : sync_callbacks->second) fun->Run(**it);
+            }
 
-        for(auto& fun : *callbacks->second) fun->Run(*event);
-
-        m_EventQueue.pop_front();
-        delete event;
-    }
-
-    void EventManager::Flush(int n) noexcept {
-        if(n == -1) {
-            while(!m_EventQueue.empty()) Call();
-        } else {
-            for(int i = 0; i < n; ++i) if(m_EventQueue.empty()) return; else Call();
+            if (async_callbacks != m_CallbacksAsync.end()) {
+                ft.wait();
+            }
+            delete *it;
+            it = m_EventQueue.erase(it);
         }
     }
 
     void EventManager::RemoveAllCallbacks() noexcept {
-        std::for_each(m_Callbacks.begin(), m_Callbacks.end(), [](std::pair<unsigned , std::vector<EventHandlerInterface*>*>&& pair) {
-            std::for_each(pair.second->begin(), pair.second->end(), [](EventHandlerInterface* handler) { delete handler; });
-            delete pair.second;
-        });
+
+        for (auto it = m_CallbacksSync.begin(); it != m_CallbacksSync.end(); it = m_CallbacksSync.erase(it)) {
+            for (auto fun = it->second.begin(); fun != it->second.end(); fun = it->second.erase(fun)) {
+                delete *fun;
+            }
+        }
+
+        for (auto it = m_CallbacksAsync.begin(); it != m_CallbacksAsync.end(); it = m_CallbacksAsync.erase(it)) {
+            for (auto fun = it->second.begin(); fun != it->second.end(); fun = it->second.erase(fun)) {
+                delete *fun;
+            }
+        }
     }
 
     void EventManager::ClearEventsQueue() noexcept {
-        std::for_each(m_EventQueue.begin(), m_EventQueue.end(), [](Event* ev) { delete ev; });
+        while (!m_EventQueue.empty()) {
+            auto ev = m_EventQueue.back();
+            delete ev;
+            m_EventQueue.pop_back();
+        }
     }
 
 } //END OF NAMESPACE Bald
