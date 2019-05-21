@@ -10,6 +10,8 @@
 #include "layer.h"
 #include "Log.h"
 
+#include "layer_events.h"
+
 namespace Bald {
 
     class LayerStack {
@@ -42,7 +44,9 @@ namespace Bald {
         template<typename L>
         void PopOverlayImmediately();
 
-        void AttachDetachLayers();
+        void AttachLayers();
+
+        void DetachLayers();
 
         [[nodiscard]] inline size_t GetSize() const noexcept { return m_LayerStack.size(); }
 
@@ -80,24 +84,28 @@ namespace Bald {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{});
         ++m_ForAdditionAmount;
+        EventManager::Emit<LayerPushedEvent>();
     }
 
     template<typename L>
     void LayerStack::PushOverlay() {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace_back(new L{});
+        EventManager::Emit<LayerPushedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopLayer() {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForRemoval.emplace_back(get_type_id<L>());
+        EventManager::Emit<LayerPoppedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
         static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
         m_ForRemoval.emplace_back(get_type_id<L>());
+        EventManager::Emit<LayerPoppedEvent>();
     }
 
     template<typename L>

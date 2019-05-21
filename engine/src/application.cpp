@@ -5,6 +5,7 @@
 #include "application.h"
 #include "input_manager.h"
 #include "window_events.h"
+#include "layer_events.h"
 
 namespace Bald {
 
@@ -39,8 +40,6 @@ namespace Bald {
             Input::InputManager::Update();
 
             m_Window->Update();
-
-            m_LayerStack.AttachDetachLayers();
         }
     }
 
@@ -62,6 +61,15 @@ namespace Bald {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             this->m_Running = false;
         });
+
+        m_EventManager->Subscribe<LayerPushedEvent>(HandleType::SYNC, [this](const LayerPushedEvent&) {
+            m_LayerStack.AttachLayers();
+        });
+
+        m_EventManager->Subscribe<LayerPoppedEvent>(HandleType::SYNC, [this](const LayerPoppedEvent&) {
+            m_LayerStack.DetachLayers();
+        });
+
 
         CORE_LOG_INFO("[Application] Initialization was successful");
 

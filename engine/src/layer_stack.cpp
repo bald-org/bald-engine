@@ -15,7 +15,7 @@ namespace Bald {
         Shutdown();
     }
 
-    void LayerStack::AttachDetachLayers() {
+    void LayerStack::AttachLayers() {
         for(size_t i = 0; i < m_ForAddition.size(); ++i) {
             if(i < m_ForAdditionAmount) {
                 CORE_LOG_INFO("[LayerStack] Pushing layer...");
@@ -31,6 +31,11 @@ namespace Bald {
             }
         }
 
+        m_ForAddition.clear();
+        m_ForAdditionAmount = 0;
+    }
+
+    void LayerStack::DetachLayers() {
         for(size_t i = 0; i < m_ForRemoval.size(); ++i) {
             CORE_LOG_INFO("[LayerStack] Popping layer...");
             auto it = m_LayerStack.begin();
@@ -51,9 +56,7 @@ namespace Bald {
             }
         }
 
-        m_ForAddition.clear();
         m_ForRemoval.clear();
-        m_ForAdditionAmount = 0;
     }
 
     bool LayerStack::Init() {
