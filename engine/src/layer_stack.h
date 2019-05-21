@@ -172,7 +172,7 @@ namespace Bald {
         /**
          * @fn Init
          * @brief A method which attempts to initialize the LayerStack and returns success result (true/false).
-         * @return [bool] true  -> layer stack has been initialized successfully.
+         * @return [bool] true -> layer stack has been initialized successfully.
          *                false -> layer stack wasn't initialized.
          */
 

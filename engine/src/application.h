@@ -129,7 +129,7 @@ namespace Bald {
         /**
          * @fn Init
          * @brief Attempts to initialize the application and returns success result (true/false)
-         * @return [bool] true  -> application has been initialized successfully
+         * @return [bool] true -> application has been initialized successfully
          *                false -> application wasn't initialized
          */
 
