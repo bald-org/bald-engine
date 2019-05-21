@@ -10,7 +10,7 @@ namespace Bald {
 
     /**
      * @class EventHandlerInterface
-     * @brief class which gives us interface for specialized callbacks for events and deals with id's
+     * @brief Class which gives us interface for specialized callbacks for events and deals with id's
      */
 
     class EventHandlerInterface {

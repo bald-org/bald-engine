@@ -34,7 +34,7 @@ namespace Bald {
         if (m_ReferenceCounter == 0) {
             CORE_LOG_INFO("[EventManager] This was last one EventManager");
             CORE_LOG_INFO("[EventManager] Clearing event queue...");
-            ClearEventsQueue();
+            ClearEventQueue();
             CORE_LOG_INFO("[EventManager] Clearing event queue was successful");
         }
         CORE_LOG_INFO("[EventManager] Shutdown was successful");

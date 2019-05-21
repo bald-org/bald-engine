@@ -30,9 +30,9 @@ int main() {
             Bald::EventManager::Emit<Bald::KeyEvent>(static_cast<unsigned >(GLFW_KEY_0));
         }
         em.Flush();
-        Bald::EventManager::ClearEventsQueue();
+        Bald::EventManager::ClearEventQueue();
     }
     high_resolution_clock::time_point t2 = high_resolution_clock::now();
-    std::cout << std::to_string(N) << " events -> " << std::to_string(E) << " times took: " << duration_cast<duration<double>>(t2 - t1).count() << " s\n\n";
+    std::cout << std::to_string(N) << " events -> " << std::to_string(E) << " times took: "
+              << duration_cast<duration<double>>(t2 - t1).count() << " s\n\n";
 }
-

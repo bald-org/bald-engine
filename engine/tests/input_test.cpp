@@ -9,7 +9,7 @@
 #include "input_manager.h"
 
 
-TEST(InputManager, initialization){
+TEST(InputManager, initialization) {
     using namespace Bald;
     using namespace Input;
 
@@ -17,14 +17,11 @@ TEST(InputManager, initialization){
     EXPECT_FALSE(InputManager::IsKeyTyped(GLFW_KEY_1));
     EXPECT_FALSE(InputManager::IsMouseButtonPressed(GLFW_MOUSE_BUTTON_1));
     EXPECT_FALSE(InputManager::IsMouseButtonTyped(GLFW_MOUSE_BUTTON_2));
-
 }
 
-
-TEST(InputManager, callback){
+TEST(InputManager, callback) {
     using namespace Bald;
     using namespace Input;
-
 
     glfwInit();
 
@@ -37,7 +34,5 @@ TEST(InputManager, callback){
 
 
     glfwDestroyWindow(window);
-    glfwTerminate();
-
 }
 
