@@ -83,7 +83,7 @@ namespace Bald {
         }
     }
 
-    void EventManager::ClearEventsQueue() noexcept {
+    void EventManager::ClearEventQueue() noexcept {
         while (!m_EventQueue.empty()) {
             auto ev = m_EventQueue.back();
             delete ev;
