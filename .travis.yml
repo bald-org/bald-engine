@@ -27,6 +27,12 @@ before_install:
   - ./cmake-3.14.3-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
 
 install:
+  - mkdir _gcc && cd _gcc
+  - wget http://mirrors.concertpass.com/gcc/releases/gcc-9.1.0/gcc-9.1.0.tar.gz
+  - tar -xzf gcc-9.1.0.tar.gz
+  - cd gcc-9.1.0
+  - ls
+  - ./configuer
   - cd engine/vendor/glfw/
   - mkdir build && cd build
   - cmake ../
