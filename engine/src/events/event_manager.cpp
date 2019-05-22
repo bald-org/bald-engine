@@ -59,7 +59,7 @@ namespace Bald {
             }
 
             if (sync_callbacks != m_CallbacksSync.end()) {
-                for (auto& fun : sync_callbacks->second) fun->Run(**it);
+                for (const auto& fun : sync_callbacks->second) fun->Run(**it);
             }
 
             for (const auto& f : ft) {
