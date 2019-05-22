@@ -42,27 +42,30 @@ namespace Bald {
 
     void EventManager::Flush() noexcept {
         for (auto it = m_EventQueue.begin(); it != m_EventQueue.end();) {
-            auto async_callbacks = m_CallbacksAsync.find(( *it )->GetType());
-            auto sync_callbacks = m_CallbacksSync.find(( *it )->GetType());
+            const auto& async_callbacks = m_CallbacksAsync.find(( *it )->GetType());
+            const auto& sync_callbacks = m_CallbacksSync.find(( *it )->GetType());
 
             if (async_callbacks == m_CallbacksAsync.end() && sync_callbacks == m_CallbacksSync.end()) {
                 ++it;
-                return;
+                continue;
             }
-            std::future<void> ft;
+            std::vector<std::future<void>> ft;
             if (async_callbacks != m_CallbacksAsync.end()) {
-                ft = std::async(std::launch::async, [&it, &async_callbacks]() {
-                    for (auto& fun : async_callbacks->second) fun->Run(**it);
-                });
+                for (const auto& fun : async_callbacks->second) {
+                    ft.emplace_back(std::async(std::launch::async, [&it, &fun]() {
+                        fun->Run(**it);
+                    }));
+                }
             }
 
             if (sync_callbacks != m_CallbacksSync.end()) {
                 for (auto& fun : sync_callbacks->second) fun->Run(**it);
             }
 
-            if (async_callbacks != m_CallbacksAsync.end()) {
-                ft.wait();
+            for (const auto& f : ft) {
+                f.wait();
             }
+
             delete *it;
             it = m_EventQueue.erase(it);
         }

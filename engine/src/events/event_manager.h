@@ -141,22 +141,25 @@ namespace Bald {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         switch (type) {
-            case HandleType::SYNC:
+            case HandleType::SYNC: {
                 if (m_CallbacksSync.find(get_type_id<T>()) == m_CallbacksSync.end()) {
                     m_CallbacksSync[get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
                 }
                 m_CallbacksSync[get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksSync[get_type_id<T>()].back()->GetID();
-            case HandleType::ASYNC:
+            }
+            case HandleType::ASYNC: {
                 if (m_CallbacksAsync.find(get_type_id<T>()) == m_CallbacksAsync.end()) {
                     m_CallbacksAsync[get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
                 }
                 m_CallbacksAsync[get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksAsync[get_type_id<T>()].back()->GetID();
+            }
+            default:
+                return 0;
         }
-        return 0;
     }
 
     template<class T>
