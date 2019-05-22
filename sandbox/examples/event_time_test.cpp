@@ -2,7 +2,7 @@
 // Created by grzegorz on 10.05.19.
 //
 
-#include <events/event_manager.h>
+#include "events/event_manager.h"
 #include "events/key_events.h"
 #include "events/window_events.h"
 #include "input/input_manager.h"
