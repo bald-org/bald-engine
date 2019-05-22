@@ -4,7 +4,7 @@
 
 #pragma once
 
-namespace Bald {
+namespace Bald::Utils {
 
     /**
      * @fn generator_id

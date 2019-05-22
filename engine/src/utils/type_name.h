@@ -12,7 +12,7 @@
 #include <cxxabi.h>
 #include <typeindex>
 
-namespace Bald {
+namespace Bald::Utils {
 
     /**
      * @fn type_name
