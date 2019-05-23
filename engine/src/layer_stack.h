@@ -41,20 +41,24 @@ namespace Bald {
          * @brief Templated method which pushes a layer onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushLayer();
+        template<typename L, typename ... Args>
+        void PushLayer(Args&& ... args);
 
         /**
          * @fn PushOverlay
          * @brief Templated method which pushes an overlay onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushOverlay();
+        template<typename L, typename ... Args>
+        void PushOverlay(Args&& ... args);
 
         /**
          * @fn PopLayer
@@ -80,19 +84,23 @@ namespace Bald {
          * @fn PushLayerImmediately
          * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushLayerImmediately();
+        template<typename L, typename ... Args>
+        void PushLayerImmediately(Args&& ... args);
 
         /**
          * @fn PushOverlayImmediately
          * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushOverlayImmediately();
+        template<typename L, typename ... Args>
+        void PushOverlayImmediately(Args&& ... args);
 
         /**
          * @fn PopLayerImmediately
@@ -214,18 +222,18 @@ namespace Bald {
 
     }; // END OF CLASS LayerStack
 
-    template<typename L>
-    void LayerStack::PushLayer() {
+    template<typename L, typename ... Args>
+    void LayerStack::PushLayer(Args&& ... args) {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
-        m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{});
+        m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{args ...});
         ++m_ForAdditionAmount;
         EventManager::Emit<LayerPushedEvent>();
     }
 
-    template<typename L>
-    void LayerStack::PushOverlay() {
+    template<typename L, typename ... Args>
+    void LayerStack::PushOverlay(Args&& ... args) {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
-        m_ForAddition.emplace_back(new L{});
+        m_ForAddition.emplace_back(new L{args ...});
         EventManager::Emit<LayerPushedEvent>();
     }
 
@@ -243,12 +251,12 @@ namespace Bald {
         EventManager::Emit<LayerPoppedEvent>();
     }
 
-    template<typename L>
-    void LayerStack::PushLayerImmediately() {
+    template<typename L, typename ... Args>
+    void LayerStack::PushLayerImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing layer immediately...");
 
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
-        auto* layer = new L{};
+        auto* layer = new L{args ...};
         layer->OnAttach();
         m_LayerStack.emplace(m_LayerStack.begin() + m_LayersAmount, layer);
         ++m_LayersAmount;
@@ -256,12 +264,12 @@ namespace Bald {
         CORE_LOG_INFO("[LayerStack] Pushing immediately was successful");
     }
 
-    template<typename L>
-    void LayerStack::PushOverlayImmediately() {
+    template<typename L, typename ... Args>
+    void LayerStack::PushOverlayImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing overlay immediately...");
 
         static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
-        auto* overlay = new L{};
+        auto* overlay = new L{args ...};
         overlay->OnAttach();
         m_LayerStack.emplace_back(overlay);
 
@@ -327,4 +335,3 @@ namespace Bald {
     }
 
 } // END OF NAMESPACE Bald
-

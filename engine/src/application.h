@@ -38,20 +38,24 @@ namespace Bald {
          * @brief Templated method which pushes a layer onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushLayer();
+        template<typename L, typename ... Args>
+        void PushLayer(Args&& ... args);
 
         /**
          * @fn PushOverlay
          * @brief Templated method which pushes an overlay onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushOverlay();
+        template<typename L, typename ... Args>
+        void PushOverlay(Args&& ... args);
 
         /**
          * @fn PopLayer
@@ -77,19 +81,23 @@ namespace Bald {
          * @fn PushLayerImmediately
          * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushLayerImmediately();
+        template<typename L, typename ... Args>
+        void PushLayerImmediately(Args&& ... args);
 
         /**
          * @fn PushOverlayImmediately
          * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
          * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
          */
 
-        template<typename L>
-        void PushOverlayImmediately();
+        template<typename L, typename ... Args>
+        void PushOverlayImmediately(Args&& ... args);
 
         /**
          * @fn PopLayerImmediately
@@ -161,14 +169,14 @@ namespace Bald {
 
     }; // END OF CLASS Application
 
-    template<class L>
-    void Application::PushLayer() {
-        m_LayerStack.PushLayer<L>();
+    template<typename L, typename ... Args>
+    void Application::PushLayer(Args&& ... args) {
+        m_LayerStack.PushLayer<L>(args ...);
     }
 
-    template<class L>
-    void Application::PushOverlay() {
-        m_LayerStack.PushOverlay<L>();
+    template<typename L, typename ... Args>
+    void Application::PushOverlay(Args&& ... args) {
+        m_LayerStack.PushOverlay<L>(args ...);
     }
 
     template<class L>
@@ -181,14 +189,14 @@ namespace Bald {
         m_LayerStack.PopOverlay<L>();
     }
 
-    template<class L>
-    void Application::PushLayerImmediately() {
-        m_LayerStack.PushLayerImmediately<L>();
+    template<typename L, typename ... Args>
+    void Application::PushLayerImmediately(Args&& ... args) {
+        m_LayerStack.PushLayerImmediately<L>(args ...);
     }
 
-    template<class L>
-    void Application::PushOverlayImmediately() {
-        m_LayerStack.PushOverlayImmediately<L>();
+    template<typename L, typename ... Args>
+    void Application::PushOverlayImmediately(Args&& ... args) {
+        m_LayerStack.PushOverlayImmediately<L>(args ...);
     }
 
     template<class L>
