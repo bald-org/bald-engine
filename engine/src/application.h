@@ -65,7 +65,7 @@ namespace Bald {
 
         /**
          * @fn PopOverlay
-         * @brief Templated method which pops an1 overlay from the layer stack.
+         * @brief Templated method which pops an overlay from the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
          * @tparam [L] This template parameter must be a class derived from Layer class.
          */

@@ -34,11 +34,9 @@ namespace Bald {
             }
 
             m_EventManager->Flush();
-
             EventManager::ClearEventQueue();
 
             Input::InputManager::Update();
-
             m_Window->Update();
         }
     }
