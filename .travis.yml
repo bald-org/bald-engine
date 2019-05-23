@@ -12,7 +12,6 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-8
-      - libglfw3
       - libglew-dev
       - xorg-dev
 
@@ -25,13 +24,6 @@ before_install:
   - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.14.3/cmake-3.14.3-Linux-x86_64.sh
   - chmod +x cmake-3.14.3-Linux-x86_64.sh
   - ./cmake-3.14.3-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
-
-install:
-  - cd engine/vendor/glfw/
-  - mkdir build && cd build
-  - cmake ../
-  - make -j 12
-  - sudo make install
 
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8

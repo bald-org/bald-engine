@@ -5,8 +5,10 @@ project(bald_engine)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
 include(${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
+
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
 
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/src
@@ -66,13 +68,13 @@ add_library(bald_engine
 if (APPLE)
     target_link_libraries(bald_engine
             glad
-            glfw3
+            glfw
             "-framework Cocoa"
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine glad glfw GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
