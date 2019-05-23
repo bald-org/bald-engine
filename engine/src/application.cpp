@@ -20,14 +20,18 @@ namespace Bald {
     }
 
     void Application::Run() {
-
+        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [&](const WindowClosedEvent&) {
+            CORE_LOG_TRACE("Window Closed Event!");
+            glfwSetWindowShouldClose(m_Window->GetWindow(), true);
+            m_Running = false;
+        });
         while(m_Running) {
             m_Window->Clear();
 
             // TODO: Update layer stack here
-
             m_Window->Update();
             Input::InputManager::Update(); // TODO: This should probably be called on layer update ~Blinku
+            m_EventManager->Flush();
             EventManager::ClearEventQueue();
         }
 
