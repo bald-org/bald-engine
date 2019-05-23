@@ -75,6 +75,5 @@ public:
 };
 
 Bald::Application* Bald::Application::Create() noexcept {
-    new int[1000];
     return new Sandbox();
 }
