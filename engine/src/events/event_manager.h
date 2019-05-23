@@ -142,20 +142,20 @@ namespace Bald {
 
         switch (type) {
             case HandleType::SYNC: {
-                if (m_CallbacksSync.find(get_type_id<T>()) == m_CallbacksSync.end()) {
-                    m_CallbacksSync[get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
+                if (m_CallbacksSync.find(Utils::get_type_id<T>()) == m_CallbacksSync.end()) {
+                    m_CallbacksSync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
                 }
-                m_CallbacksSync[get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
+                m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
-                return m_CallbacksSync[get_type_id<T>()].back()->GetID();
+                return m_CallbacksSync[Utils::get_type_id<T>()].back()->GetID();
             }
             case HandleType::ASYNC: {
-                if (m_CallbacksAsync.find(get_type_id<T>()) == m_CallbacksAsync.end()) {
-                    m_CallbacksAsync[get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
+                if (m_CallbacksAsync.find(Utils::get_type_id<T>()) == m_CallbacksAsync.end()) {
+                    m_CallbacksAsync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
                 }
-                m_CallbacksAsync[get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
+                m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
-                return m_CallbacksAsync[get_type_id<T>()].back()->GetID();
+                return m_CallbacksAsync[Utils::get_type_id<T>()].back()->GetID();
             }
             default:
                 return 0;
@@ -166,10 +166,10 @@ namespace Bald {
     void EventManager::Unsubscibe(unsigned id) noexcept {
         CORE_LOG_INFO("[EventManager] Unsubscribing to an event...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        auto iter = m_CallbacksSync.find(get_type_id<T>());
+        auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
 
         if (iter == m_CallbacksSync.end()) {
-            iter = m_CallbacksAsync.find(get_type_id<T>());
+            iter = m_CallbacksAsync.find(Utils::get_type_id<T>());
             if (iter == m_CallbacksAsync.end()) {
                 return;
             }
@@ -200,7 +200,7 @@ namespace Bald {
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
         for (auto ev : m_EventQueue) {
-            if (ev->GetType() == get_type_id<T>()) return true;
+            if (ev->GetType() == Utils::get_type_id<T>()) return true;
         }
         return false;
     }
@@ -208,7 +208,7 @@ namespace Bald {
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
         CORE_LOG_INFO("[EventManager] Removing all callbacks by type...");
-        auto iter = m_CallbacksSync.find(get_type_id<T>());
+        auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
         if (iter != m_CallbacksSync.end()) {
             while (!iter->second.empty()) {
                 delete iter->second.back();
@@ -216,7 +216,7 @@ namespace Bald {
             }
         }
 
-        iter = m_CallbacksAsync.find(get_type_id<T>());
+        iter = m_CallbacksAsync.find(Utils::get_type_id<T>());
         if (iter != m_CallbacksAsync.end()) {
             while (!iter->second.empty()) {
                 delete iter->second.back();
