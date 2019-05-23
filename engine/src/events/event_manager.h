@@ -141,18 +141,18 @@ namespace Bald {
         CORE_LOG_INFO("[EventManager] Subscribing function " + Utils::type_name<F>() + " to an " + Utils::type_name<T>() + " ...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
-        switch (type) {
+        switch(type) {
             case HandleType::SYNC: {
-                if (m_CallbacksSync.find(Utils::get_type_id<T>()) == m_CallbacksSync.end()) {
-                    m_CallbacksSync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
+                if(m_CallbacksSync.find(Utils::get_type_id<T>()) == m_CallbacksSync.end()) {
+                    m_CallbacksSync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
                 m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksSync[Utils::get_type_id<T>()].back()->GetID();
             }
             case HandleType::ASYNC: {
-                if (m_CallbacksAsync.find(Utils::get_type_id<T>()) == m_CallbacksAsync.end()) {
-                    m_CallbacksAsync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{ };
+                if(m_CallbacksAsync.find(Utils::get_type_id<T>()) == m_CallbacksAsync.end()) {
+                    m_CallbacksAsync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
                 m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
@@ -167,19 +167,18 @@ namespace Bald {
     void EventManager::Unsubscibe(unsigned id) noexcept {
         CORE_LOG_INFO("[EventManager] Unsubscribing to an event...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
 
-        if (iter == m_CallbacksSync.end()) {
+        auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
+        if(iter == m_CallbacksSync.end()) {
             iter = m_CallbacksAsync.find(Utils::get_type_id<T>());
-            if (iter == m_CallbacksAsync.end()) {
+            if(iter == m_CallbacksAsync.end()) {
                 return;
             }
         }
 
         auto& vector = iter->second;
-
-        for (auto it = vector.begin(); it != vector.end(); ++it) {
-            if (( **it ) == id) {
+        for(auto it = vector.begin(); it != vector.end(); ++it) {
+            if((**it) == id) {
                 delete *it;
                 vector.erase(it);
                 CORE_LOG_INFO("[EventManager] Unsubscribed was successful...");
@@ -200,26 +199,30 @@ namespace Bald {
     template<class T>
     bool EventManager::IsEventInQueue() noexcept {
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
-        for (auto ev : m_EventQueue) {
-            if (ev->GetType() == Utils::get_type_id<T>()) return true;
+
+        for(auto ev : m_EventQueue) {
+            if(ev->GetType() == Utils::get_type_id<T>()) return true;
         }
+
         return false;
     }
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
         CORE_LOG_INFO("[EventManager] Removing all callbacks by type...");
+        static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
+
         auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
-        if (iter != m_CallbacksSync.end()) {
-            while (!iter->second.empty()) {
+        if(iter != m_CallbacksSync.end()) {
+            while(!iter->second.empty()) {
                 delete iter->second.back();
                 iter->second.pop_back();
             }
         }
 
         iter = m_CallbacksAsync.find(Utils::get_type_id<T>());
-        if (iter != m_CallbacksAsync.end()) {
-            while (!iter->second.empty()) {
+        if(iter != m_CallbacksAsync.end()) {
+            while(!iter->second.empty()) {
                 delete iter->second.back();
                 iter->second.pop_back();
             }
