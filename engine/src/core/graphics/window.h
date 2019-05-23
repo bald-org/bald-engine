@@ -6,7 +6,7 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <Log.h>
+#include <core/debug/logger.h>
 
 namespace Bald::Graphics {
 

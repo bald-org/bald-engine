@@ -6,7 +6,7 @@
 
 #include <vector>
 #include <functional>
-#include "Log.h"
+#include "core/debug/logger.h"
 #include "event_handler_interface.h"
 
 namespace Bald {

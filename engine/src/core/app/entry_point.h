@@ -11,7 +11,7 @@
 #ifdef LINUX
 
 int main() {
-    Bald::Log::Init();
+    Bald::Logger::Init();
 
     auto* application = Bald::Application::Create();
 

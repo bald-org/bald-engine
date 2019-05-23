@@ -4,17 +4,18 @@
 
 #pragma once
 
+#include "core.h"
 #include "event.h"
-#include "event_manager.h"
 
 namespace Bald {
 
     /**
      * @class LayerPushedEvent
-     * @brief Specific event implementation for layer pushed type event
+     * @brief Specific event implementation for layer pushed type event.
      */
 
     class LayerPushedEvent : public Event {
+        GENERATE_BODY()
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -26,24 +27,15 @@ namespace Bald {
 
         LayerPushedEvent() = default;
 
-    public:
-
-        /**
-        * @fn                           GetType
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [unsigned]            Type index
-        */
-
-        [[nodiscard]] inline unsigned GetType() const override { return Utils::get_type_id(*this); }
-
     }; // END OF CLASS LayerPushedEvent
 
     /**
      * @class LayerPoppedEvent
-     * @brief Specific event implementation for layer popped type event
+     * @brief Specific event implementation for layer popped type event.
      */
 
     class LayerPoppedEvent : public Event {
+        GENERATE_BODY()
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -54,16 +46,6 @@ namespace Bald {
         */
 
         LayerPoppedEvent() = default;
-
-    public:
-
-        /**
-        * @fn                           GetType
-        * @brief                        This method returns type index of this specific class. This is used for polymorphism
-        * @return [unsigned]            Type index
-        */
-
-        [[nodiscard]] inline unsigned GetType() const override { return Utils::get_type_id(*this); }
 
     }; // END OF CLASS LayerPoppedEvent
 

@@ -5,6 +5,7 @@
 #include "bald.h"
 
 class DebugLayer : public Bald::Layer {
+GENERATE_BODY()
 public:
     DebugLayer() = default;
 
@@ -27,11 +28,10 @@ public:
 
     void OnUpdate() noexcept override {}
 
-    [[nodiscard]] inline unsigned GetType() const override { return Bald::Utils::get_type_id(*this); }
-
 };
 
 class GameLayer : public Bald::Layer {
+GENERATE_BODY()
 public:
     GameLayer() = default;
 
@@ -60,8 +60,6 @@ public:
     void OnDetach() noexcept override {}
 
     void OnUpdate() noexcept override {}
-
-    [[nodiscard]] inline unsigned GetType() const override { return Bald::Utils::get_type_id(*this); }
 
 };
 

@@ -2,7 +2,7 @@
 // Created by grzegorz on 17.05.19.
 //
 
-#include "pch.h"
+#include "core/pch.h"
 #include "gtest/gtest.h"
 
 #include "utils/type_id.h"

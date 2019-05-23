@@ -2,7 +2,7 @@
 // Created by grzegorz on 17.12.18.
 //
 
-#include "pch.h"
+#include "core/pch.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 

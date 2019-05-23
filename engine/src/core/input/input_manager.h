@@ -6,10 +6,10 @@
 
 #include <array>
 
-#include "events/event.h"
-#include "events/event_manager.h"
+#include "core/events/event.h"
+#include "core/events/event_manager.h"
 #include "GLFW/glfw3.h"
-#include "pch.h"
+#include "core/pch.h"
 
 #include "event_manager.h"
 #include "key_events.h"
