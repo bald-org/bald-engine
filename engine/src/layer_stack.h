@@ -40,6 +40,7 @@ namespace Bald {
          * @fn PushLayer
          * @brief Templated method which pushes a layer onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -49,6 +50,7 @@ namespace Bald {
          * @fn PushOverlay
          * @brief Templated method which pushes an overlay onto the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -58,6 +60,7 @@ namespace Bald {
          * @fn PopLayer
          * @brief Templated method which pops a layer from the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -67,6 +70,7 @@ namespace Bald {
          * @fn PopOverlay
          * @brief Templated method which pops an1 overlay from the layer stack.
          *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -75,6 +79,7 @@ namespace Bald {
         /**
          * @fn PushLayerImmediately
          * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -83,6 +88,7 @@ namespace Bald {
         /**
          * @fn PushOverlayImmediately
          * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -91,6 +97,7 @@ namespace Bald {
         /**
          * @fn PopLayerImmediately
          * @brief Templated method which pops a layer from the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
@@ -99,6 +106,7 @@ namespace Bald {
         /**
          * @fn PopOverlayImmediately
          * @brief Templated method which pops an overlay from the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
          */
 
         template<typename L>
