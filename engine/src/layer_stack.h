@@ -175,6 +175,15 @@ namespace Bald {
 
         [[nodiscard]] inline Layer* operator[](size_t index);
 
+        /**
+         * @fn operator[]
+         * @brief Overloaded operator[].
+         * @param [int] index -> unique identifier.
+         * @return [const Layer*] Pointer to const layer at given index.
+         */
+
+        [[nodiscard]] inline const Layer* operator[](size_t index) const;
+
     private:
 
         /**
@@ -308,6 +317,11 @@ namespace Bald {
     }
 
     inline Layer* LayerStack::operator[](size_t index) {
+        assert(index < m_LayerStack.size());
+        return m_LayerStack[index];
+    }
+
+    inline const Layer* LayerStack::operator[](size_t index) const {
         assert(index < m_LayerStack.size());
         return m_LayerStack[index];
     }
