@@ -215,14 +215,14 @@ namespace Bald {
     template<typename L>
     void LayerStack::PopLayer() {
         static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
-        m_ForRemoval.emplace_back(get_type_id<L>());
+        m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
         static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
-        m_ForRemoval.emplace_back(get_type_id<L>());
+        m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
 
@@ -260,7 +260,7 @@ namespace Bald {
         auto it = m_LayerStack.begin();
 
         for(; it != m_LayerStack.end(); ++it) {
-            if((*it)->GetType() == get_type_id<L>()) {
+            if((*it)->GetType() == Utils::get_type_id<L>()) {
                 break;
             }
         }
@@ -284,7 +284,7 @@ namespace Bald {
         auto it = m_LayerStack.begin();
 
         for(; it != m_LayerStack.end(); ++it) {
-            if((*it)->GetType() == get_type_id<L>()) {
+            if((*it)->GetType() == Utils::get_type_id<L>()) {
                 break;
             }
         }

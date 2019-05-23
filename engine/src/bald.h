@@ -20,5 +20,8 @@
 #include "key_events.h"
 #include "window_events.h"
 
+#include "type_id.h"
+#include "type_name.h"
+
 // Entry Point
 #include "entry_point.h"
