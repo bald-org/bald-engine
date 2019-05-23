@@ -13,7 +13,7 @@ addons:
     packages:
       - g++-8
       #- libglfw3
-      #- libglew-dev
+      - libglew-dev
       - xorg-dev
 
 services:
