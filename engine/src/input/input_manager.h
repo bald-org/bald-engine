@@ -246,8 +246,7 @@ namespace Bald::Input {
         static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsTyped;               /**< mouse buttons witch were typed*/
     };
 
-    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action,
-                             [[maybe_unused]] int mods) {
+    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != GLFW_RELEASE;
 
         switch (action) {

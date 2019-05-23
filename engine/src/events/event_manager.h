@@ -96,7 +96,7 @@ namespace Bald {
         void RemoveAllCallbacks() noexcept;
 
         /**
-         * @fn ClearEventsQueue
+         * @fn ClearEventQueue
          * @brief deletes all events form queue
          */
 
@@ -116,7 +116,7 @@ namespace Bald {
         /**
          * @fn Init
          * @brief Initialize Event Manager object
-         * @return [bool]  true if initialization was successful otherwise false
+         * @return [bool] true if initialization was successful otherwise false
          */
 
         bool Init();
@@ -133,6 +133,7 @@ namespace Bald {
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksAsync; /**< Unordered map of events' type indexes and associated functions which will be called asynchronously */
         static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
         static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
+
     }; // END OF CLASS EventManager
 
     template<class T, class F, class... Args>

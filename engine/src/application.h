@@ -6,7 +6,7 @@
 
 #include <memory>
 #include "window.h"
-#include "event_manager.h"
+#include "layer_stack.h"
 
 namespace Bald {
 
@@ -20,30 +20,122 @@ namespace Bald {
     public:
 
         /**
-         * @fn                      Application
-         * @brief                   Application constructor
+         * @fn Application
+         * @brief Application constructor
          */
 
         Application();
 
         /**
-         * @fn                      ~Application
-         * @brief                   Application destructor
+         * @fn ~Application
+         * @brief Application destructor
          */
 
         virtual ~Application();
 
         /**
-         * @fn                      Create
-         * @brief                   Creates an application. This function should be implemented on the client's side.
-         * @return [Application*]   Pointer to application instance
+         * @fn PushLayer
+         * @brief Templated method which pushes a layer onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
+         */
+
+        template<typename L, typename ... Args>
+        void PushLayer(Args&& ... args);
+
+        /**
+         * @fn PushOverlay
+         * @brief Templated method which pushes an overlay onto the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
+         */
+
+        template<typename L, typename ... Args>
+        void PushOverlay(Args&& ... args);
+
+        /**
+         * @fn PopLayer
+         * @brief Templated method which pops a layer from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         */
+
+        template<typename L>
+        void PopLayer();
+
+        /**
+         * @fn PopOverlay
+         * @brief Templated method which pops an overlay from the layer stack.
+         *        It does it at the AFTER all OnUpdate/RunEvent calls.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         */
+
+        template<typename L>
+        void PopOverlay();
+
+        /**
+         * @fn PushLayerImmediately
+         * @brief Templated method which pushes a layer onto the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
+         */
+
+        template<typename L, typename ... Args>
+        void PushLayerImmediately(Args&& ... args);
+
+        /**
+         * @fn PushOverlayImmediately
+         * @brief Templated method which pushes an overlay onto the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         * @tparam [... Args] This template parameter is optional. It is used to pass right arguments to the Layer's constructor.
+         * @param [Args&& ...] args -> This parameter is optional. Variadic number of arguments for Layer's constructor.
+         */
+
+        template<typename L, typename ... Args>
+        void PushOverlayImmediately(Args&& ... args);
+
+        /**
+         * @fn PopLayerImmediately
+         * @brief Templated method which pops a layer from the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         */
+
+        template<typename L>
+        void PopLayerImmediately();
+
+        /**
+         * @fn PopOverlayImmediately
+         * @brief Templated method which pops an overlay from the layer stack as soon as the method is called.
+         * @tparam [L] This template parameter must be a class derived from Layer class.
+         */
+
+        template<typename L>
+        void PopOverlayImmediately();
+
+        /**
+         * @fn Create
+         * @brief Creates an application. This function should be implemented on the client's side.
+         * @return [Application*] Pointer to application instance
          */
 
         [[nodiscard]] static Application* Create() noexcept;
 
         /**
-         * @fn                      Run
-         * @brief                   Main loop
+         * @fn Create
+         * @brief Creates an application. This function should be implemented on the client's side.
+         * @return [Application*] Pointer to application instance
+         */
+
+        [[nodiscard]] static Application& GetApplication() noexcept;
+
+        /**
+         * @fn Run
+         * @brief Main loop
          */
 
         void Run();
@@ -51,17 +143,17 @@ namespace Bald {
     private:
 
         /**
-         * @fn                      Init
-         * @brief                   Attempts to initialize the application and returns success result (true/false)
-         * @return [bool]           true  -> application has been initialized successfully
-         *                          false -> application couldn't have been initialized
+         * @fn Init
+         * @brief Attempts to initialize the application and returns success result (true/false)
+         * @return [bool] true -> application has been initialized successfully
+         *                false -> application wasn't initialized
          */
 
         [[nodiscard]] bool Init() noexcept;
 
         /**
-         * @fn                      Shutdown
-         * @brief                   Destroys the application
+         * @fn Shutdown
+         * @brief Destroys the application
          */
 
         void Shutdown();
@@ -70,11 +162,52 @@ namespace Bald {
         bool m_Running; /**< State of the application */
         std::unique_ptr<EventManager> m_EventManager; /** < Pointer to Main Event Manager >*/
         std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
+        LayerStack m_LayerStack; /**< Main layer stack */
 
     private:
-        static const Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
+        static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
 
     }; // END OF CLASS Application
+
+    template<typename L, typename ... Args>
+    void Application::PushLayer(Args&& ... args) {
+        m_LayerStack.PushLayer<L>(args ...);
+    }
+
+    template<typename L, typename ... Args>
+    void Application::PushOverlay(Args&& ... args) {
+        m_LayerStack.PushOverlay<L>(args ...);
+    }
+
+    template<class L>
+    void Application::PopLayer() {
+        m_LayerStack.PopLayer<L>();
+    }
+
+    template<class L>
+    void Application::PopOverlay() {
+        m_LayerStack.PopOverlay<L>();
+    }
+
+    template<typename L, typename ... Args>
+    void Application::PushLayerImmediately(Args&& ... args) {
+        m_LayerStack.PushLayerImmediately<L>(args ...);
+    }
+
+    template<typename L, typename ... Args>
+    void Application::PushOverlayImmediately(Args&& ... args) {
+        m_LayerStack.PushOverlayImmediately<L>(args ...);
+    }
+
+    template<class L>
+    void Application::PopLayerImmediately() {
+        m_LayerStack.PopLayerImmediately<L>();
+    }
+
+    template<class L>
+    void Application::PopOverlayImmediately() {
+        m_LayerStack.PopOverlayImmediately<L>();
+    }
 
 } // END OF NAMESPACE Bald
 

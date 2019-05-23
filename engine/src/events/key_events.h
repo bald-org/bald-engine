@@ -26,7 +26,7 @@ namespace Bald {
         */
 
         explicit KeyEvent(unsigned keycode)
-                : m_KeyCode{keycode} { }
+            : m_KeyCode{keycode} {}
 
     public:
 
@@ -68,8 +68,8 @@ namespace Bald {
         */
 
         explicit KeyPressedEvent(unsigned keycode)
-                :
-                KeyEvent{keycode} { }
+            :
+            KeyEvent{keycode} {}
 
     public:
 
@@ -100,8 +100,8 @@ namespace Bald {
         */
 
         explicit KeyReleasedEvent(unsigned keycode)
-                :
-                KeyEvent{keycode} { }
+            :
+            KeyEvent{keycode} {}
 
     public:
 
@@ -132,8 +132,8 @@ namespace Bald {
         */
 
         explicit KeyTypedEvent(unsigned keycode)
-                :
-                KeyEvent{keycode} { }
+            :
+            KeyEvent{keycode} {}
 
     public:
 
