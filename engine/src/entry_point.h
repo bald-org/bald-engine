@@ -11,6 +11,19 @@
 #ifdef LINUX
 
 int main() {
+    Bald::Log::Init();
+
+    auto* application = Bald::Application::Create();
+
+    application->Run();
+
+    delete application;
+}
+
+#elif
+
+int main() {
+    Bald::Log::Init();
 
     auto* application = Bald::Application::Create();
 
