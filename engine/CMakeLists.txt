@@ -55,6 +55,7 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/window.cpp

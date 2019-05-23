@@ -137,7 +137,7 @@ namespace Bald {
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-        CORE_LOG_INFO("[EventManager] Subscribing function " + type_name<F>() + " to an " + type_name<T>() + " ...");
+        CORE_LOG_INFO("[EventManager] Subscribing function " + Utils::type_name<F>() + " to an " + Utils::type_name<T>() + " ...");
         static_assert(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         switch (type) {

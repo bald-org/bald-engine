@@ -26,7 +26,7 @@ namespace Bald {
         * @return [unsigned]            Type index
         */
 
-        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
+        [[nodiscard]] inline unsigned GetType() const override { return Utils::get_type_id(*this); }
 
     }; // END OF CLASS WindowEvent
 
@@ -58,7 +58,7 @@ namespace Bald {
         * @return [unsigned]            Type index
         */
 
-        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
+        [[nodiscard]] inline unsigned GetType() const override { return Utils::get_type_id(*this); }
 
     public:
 
@@ -106,7 +106,7 @@ namespace Bald {
         * @return [unsigned]     Type index
         */
 
-        [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
+        [[nodiscard]] inline unsigned GetType() const override { return Utils::get_type_id(*this); }
 
     }; // END OF CLASS WindowClosedEvent
 
