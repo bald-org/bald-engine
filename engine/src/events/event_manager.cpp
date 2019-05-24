@@ -13,6 +13,7 @@ namespace Bald {
     EventManager::EventManager() {
         [[maybe_unused]] bool state = Init();
         assert(state);
+        BALD_ASSERT(state, "mess")
     }
 
     EventManager::~EventManager() {
