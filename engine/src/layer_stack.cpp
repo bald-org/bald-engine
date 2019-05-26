@@ -8,7 +8,7 @@ namespace Bald {
 
     LayerStack::LayerStack() {
         [[maybe_unused]] bool state = Init();
-        assert(state);
+        BALD_ASSERT(state, "[LayerStack] Failed to initialized LayerStack")
     }
 
     LayerStack::~LayerStack() {

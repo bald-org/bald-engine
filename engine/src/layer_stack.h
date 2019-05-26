@@ -224,7 +224,7 @@ namespace Bald {
 
     template<typename L, typename ... Args>
     void LayerStack::PushLayer(Args&& ... args) {
-        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{args ...});
         ++m_ForAdditionAmount;
         EventManager::Emit<LayerPushedEvent>();
@@ -232,21 +232,21 @@ namespace Bald {
 
     template<typename L, typename ... Args>
     void LayerStack::PushOverlay(Args&& ... args) {
-        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         m_ForAddition.emplace_back(new L{args ...});
         EventManager::Emit<LayerPushedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopLayer() {
-        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
-        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
@@ -255,7 +255,7 @@ namespace Bald {
     void LayerStack::PushLayerImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing layer immediately...");
 
-        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         auto* layer = new L{args ...};
         layer->OnAttach();
         m_LayerStack.emplace(m_LayerStack.begin() + m_LayersAmount, layer);
@@ -268,7 +268,7 @@ namespace Bald {
     void LayerStack::PushOverlayImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing overlay immediately...");
 
-        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         auto* overlay = new L{args ...};
         overlay->OnAttach();
         m_LayerStack.emplace_back(overlay);
@@ -280,7 +280,7 @@ namespace Bald {
     void LayerStack::PopLayerImmediately() {
         CORE_LOG_INFO("[LayerStack] Popping layer immediately...");
 
-        static_assert(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
 
         auto it = m_LayerStack.begin();
 
@@ -302,9 +302,9 @@ namespace Bald {
 
     template<typename L>
     void LayerStack::PopOverlayImmediately() {
+        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
         CORE_LOG_INFO("[LayerStack] Popping overlay immediately...");
 
-        static_assert(std::is_base_of<Layer, L>::value, "Overlay is not the base of L");
 
         auto it = m_LayerStack.begin();
 
@@ -325,12 +325,12 @@ namespace Bald {
     }
 
     inline Layer* LayerStack::operator[](size_t index) {
-        assert(index < m_LayerStack.size());
+        BALD_ASSERT(index < m_LayerStack.size(), "[LayerStack] Index out of boundary")
         return m_LayerStack[index];
     }
 
     inline const Layer* LayerStack::operator[](size_t index) const {
-        assert(index < m_LayerStack.size());
+        BALD_ASSERT(index < m_LayerStack.size(), "[LayerStack] Index out of boundary")
         return m_LayerStack[index];
     }
 
