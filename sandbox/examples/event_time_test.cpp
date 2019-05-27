@@ -42,5 +42,5 @@ int main() {
     timer.Stop();
 
     std::cout << std::to_string(N) << " events -> " << std::to_string(E) << " times took: " << timer.ElapsedSeconds()
-              << " s\n\n";
+              << " s\n";
 }
