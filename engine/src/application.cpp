@@ -6,6 +6,7 @@
 #include "input_manager.h"
 #include "window_events.h"
 #include "layer_events.h"
+#include "utils/timer.h"
 
 namespace Bald {
 
@@ -22,8 +23,19 @@ namespace Bald {
 
     void Application::Run() {
 
+#ifdef TRAVIS
+        Utils::Timer timer;
+        timer.Start();
+#endif
+
         while(m_Running) {
             m_Window->Clear();
+
+#ifdef TRAVIS
+            if(timer.ElapsedSeconds() > 1.0){
+                EventManager::Emit<WindowClosedEvent>();
+            }
+#endif
 
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate();
