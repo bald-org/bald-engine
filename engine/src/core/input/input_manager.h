@@ -254,6 +254,7 @@ namespace Bald::Input {
 
         switch (action) {
             case GLFW_PRESS: {
+                InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key));
                 InputManager::EmitKeyTypedEvent(static_cast<unsigned>(key));
                 break;
             }
