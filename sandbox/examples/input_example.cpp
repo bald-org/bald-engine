@@ -5,7 +5,7 @@
 #include "bald.h"
 
 class InputExample : public Bald::Application {
-GENERATE_BODY()
+GENERATE_BODY(DERIVED)
 public:
     InputExample() = default;
     ~InputExample() override = default;

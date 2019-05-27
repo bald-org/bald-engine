@@ -66,7 +66,7 @@ public:
 };
 
 class Sandbox : public Bald::Application {
-GENERATE_BODY()
+GENERATE_BODY(DERIVED)
 public:
     Sandbox() {
         PushLayer<GameLayer>();

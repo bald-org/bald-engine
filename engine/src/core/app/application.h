@@ -17,7 +17,7 @@ namespace Bald {
      */
 
     class Application {
-    GENERATE_BODY()
+    GENERATE_BODY(BASE)
     public:
 
         /**
