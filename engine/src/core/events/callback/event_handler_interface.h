@@ -14,6 +14,7 @@ namespace Bald {
      */
 
     class EventHandlerInterface {
+    GENERATE_BODY(BASE)
     public:
 
         /**

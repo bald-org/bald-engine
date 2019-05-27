@@ -15,6 +15,7 @@ namespace Bald {
 
     template <typename E>
     class EventFunctionHandler : public EventHandler<E> {
+    GENERATE_BODY(DERIVED)
     public:
 
         /**

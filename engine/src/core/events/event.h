@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <typeindex>
-#include "type_id.h"
+#include "core.h"
 
 namespace Bald {
 
@@ -15,6 +14,7 @@ namespace Bald {
      */
 
     class Event {
+    GENERATE_BODY(BASE)
     protected:
 
         /**
@@ -32,17 +32,6 @@ namespace Bald {
         */
 
         virtual ~Event() = default;
-
-    public:
-
-        /**
-        * @fn       GetType
-        * @brief    This method queries specific object for its type.
-        *           This function MUST be overwritten in every single specific event class implementation
-        *           Overwrite it like this: [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
-        */
-
-        [[nodiscard]] virtual unsigned GetType() const = 0;
 
     }; //END OF CLASS Event
 

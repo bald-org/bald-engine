@@ -5,7 +5,9 @@
 #include "bald.h"
 
 class DebugLayer : public Bald::Layer {
-GENERATE_BODY(DERIVED)
+//GENERATE_BODY(DERIVED)
+public:
+    [[nodiscard]] inline unsigned GetType() const override { return Bald::Utils::get_type_id(*this); }
 public:
     DebugLayer() = default;
 
