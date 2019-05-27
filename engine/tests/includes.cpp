@@ -7,7 +7,7 @@
 
 int main(int argc, char** argv) {
 
-    Bald::logger::Init();
+    Bald::Logger::Init();
 
     ::testing::InitGoogleTest(&argc, argv);
     return RUN_ALL_TESTS();

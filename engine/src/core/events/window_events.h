@@ -15,7 +15,7 @@ namespace Bald {
      */
 
     class WindowEvent : public Event {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -35,7 +35,7 @@ namespace Bald {
      */
 
     class WindowResizedEvent : public WindowEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:

@@ -15,7 +15,7 @@ namespace Bald {
      */
 
     class KeyEvent : public Event {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -48,7 +48,7 @@ namespace Bald {
      */
 
     class KeyPressedEvent : public KeyEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -71,7 +71,7 @@ namespace Bald {
      */
 
     class KeyReleasedEvent : public KeyEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -94,7 +94,7 @@ namespace Bald {
      */
 
     class KeyTypedEvent : public KeyEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:

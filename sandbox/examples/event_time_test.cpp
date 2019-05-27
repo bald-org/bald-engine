@@ -22,7 +22,7 @@ int main() {
 
     using namespace Bald;
 
-    logger::Init();
+    Logger::Init();
 
     EventManager em;
     int x = 0;

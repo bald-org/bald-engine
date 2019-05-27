@@ -5,7 +5,7 @@
 #include "bald.h"
 
 class DebugLayer : public Bald::Layer {
-GENERATE_BODY()
+GENERATE_BODY(DERIVED)
 public:
     DebugLayer() = default;
 
@@ -31,7 +31,7 @@ public:
 };
 
 class GameLayer : public Bald::Layer {
-GENERATE_BODY()
+GENERATE_BODY(DERIVED)
 public:
     GameLayer() = default;
 
@@ -64,6 +64,7 @@ public:
 };
 
 class Sandbox : public Bald::Application {
+GENERATE_BODY()
 public:
     Sandbox() {
         PushLayer<GameLayer>();

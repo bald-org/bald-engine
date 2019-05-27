@@ -6,7 +6,8 @@
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include <core/debug/logger.h>
+#include "core/debug/logger.h"
+#include "core.h"
 
 namespace Bald::Graphics {
 
@@ -16,6 +17,7 @@ namespace Bald::Graphics {
      */
 
     class Window {
+    GENERATE_BODY()
     public:
 
         /**

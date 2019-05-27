@@ -20,6 +20,7 @@ namespace Bald {
      */
 
     class LayerStack {
+    GENERATE_BODY()
     public:
 
         /**

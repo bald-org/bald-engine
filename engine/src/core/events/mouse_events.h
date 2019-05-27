@@ -16,7 +16,7 @@ namespace Bald {
      */
 
     class MouseEvent : public Event {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
     protected:
 
@@ -35,7 +35,7 @@ namespace Bald {
      */
 
     class MouseMovedEvent : public MouseEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -88,7 +88,7 @@ namespace Bald {
      */
 
     class MouseScrolledEvent : public MouseEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -139,7 +139,7 @@ namespace Bald {
      */
 
     class MouseButtonPressedEvent : public MouseEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -173,7 +173,7 @@ namespace Bald {
      */
 
     class MouseButtonReleasedEvent : public MouseEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
@@ -207,7 +207,7 @@ namespace Bald {
      */
 
     class MouseButtonTypedEvent : public MouseEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:
