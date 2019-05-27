@@ -57,16 +57,16 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_library(bald_engine
-        src/core/app/application.cpp
-        src/core/app/layer_stack.cpp
-        src/core/utils/file_manager.cpp
-        src/core/utils/split_string.cpp
-        src/core/utils/timer.cpp
-        src/core/input/input_manager.cpp
-        src/core/debug/logger.cpp
-        src/core/graphics/window.cpp
-        src/core/events/event_manager.cpp
-        src/core/events/callback/event_handler_interface.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp)
 
 if (APPLE)
     target_link_libraries(bald_engine
