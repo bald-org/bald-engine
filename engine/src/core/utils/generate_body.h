@@ -31,7 +31,7 @@
  */
 
 #define DEF_CLASS_TYPE_IS_DERIVED public: \
-                                [[nodiscard]] inline unsigned GetType() const override { return Bald::Utils::get_type_id(*this); }
+                                [[nodiscard]] inline unsigned GetType() const noexcept override { return Bald::Utils::get_type_id(*this); }
 
 /*
 * @def DEF_CLASS_TYPE_IS_BASE
@@ -39,7 +39,7 @@
 */
 
 #define DEF_CLASS_TYPE_IS_BASE public: \
-                             [[nodiscard]] virtual unsigned GetType() const = 0;
+                             [[nodiscard]] virtual unsigned GetType() const noexcept = 0;
 
 /*
 * @def DEF_CLASS_TYPE_
@@ -47,7 +47,7 @@
 */
 
 #define DEF_CLASS_TYPE_ public: \
-                      [[nodiscard]] inline unsigned GetType() const { return Bald::Utils::get_type_id(*this); }
+                      [[nodiscard]] inline unsigned GetType() const noexcept { return Bald::Utils::get_type_id(*this); }
 
 /*
 * @def GENERATE_BODY
