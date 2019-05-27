@@ -6,14 +6,16 @@
 
 #include <array>
 
+#include <GLFW/glfw3.h>
+
 #include "events/event.h"
 #include "events/event_manager.h"
-#include "GLFW/glfw3.h"
-#include "pch.h"
+#include "events/event_manager.h"
+#include "events/key_events.h"
+#include "events/mouse_events.h"
 
-#include "event_manager.h"
-#include "key_events.h"
-#include "mouse_events.h"
+#include "core.h"
+#include "pch.h"
 
 namespace Bald::Input {
 
@@ -26,6 +28,7 @@ namespace Bald::Input {
      */
 
     class InputManager {
+    GENERATE_BODY()
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 

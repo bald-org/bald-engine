@@ -13,4 +13,12 @@ namespace Bald::Utils {
         second = copy;
     }
 
+    constexpr bool ConstexprStringCmp(const char* lhs, const char* rhs) {
+        return *lhs == *rhs && (*lhs == '\0' || ConstexprStringCmp(lhs + 1, rhs + 1));
+    }
+
 } // END OF NAMESPACE Bald::Utils
+
+#include "type_id.h"
+#include "type_name.h"
+#include "generate_body.h"

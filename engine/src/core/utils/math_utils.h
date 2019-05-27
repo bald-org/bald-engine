@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <cmath>
+
 namespace Bald::Utils {
 
     constexpr float ToRadians(float angleInDegrees) {

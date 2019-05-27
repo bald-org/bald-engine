@@ -50,7 +50,7 @@ namespace Bald::Utils {
      */
 
     template<typename T>
-    inline unsigned get_type_id() { return TypeInfo<T>::type_id(); }
+    inline unsigned get_type_id() noexcept { return TypeInfo<T>::type_id(); }
 
     /**
      * @fn get_type_id(const T&)
@@ -60,7 +60,7 @@ namespace Bald::Utils {
      */
 
     template<typename T>
-    inline unsigned get_type_id(const T&) {
+    inline unsigned get_type_id(const T&) noexcept {
         return TypeInfo<T>::type_id();
     }
 

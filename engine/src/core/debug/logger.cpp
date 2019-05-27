@@ -2,14 +2,14 @@
 // Created by grzegorz on 15.12.18.
 //
 
-#include "Log.h"
+#include "logger.h"
 
 namespace Bald {
 
-    std::shared_ptr<spdlog::logger> Log::m_CoreLogger;
-    std::shared_ptr<spdlog::logger> Log::m_GameLogger;
+    std::shared_ptr<spdlog::logger> Logger::m_CoreLogger;
+    std::shared_ptr<spdlog::logger> Logger::m_GameLogger;
 
-    void Log::Init() {
+    void Logger::Init() {
 
         spdlog::set_pattern("%^[%T] %n: %v%$"); /** < sets pattern %^ [start color range], %T [time HH::MM::SS], %n [logger name], %v [text to log] %$[ends color range]*/
 

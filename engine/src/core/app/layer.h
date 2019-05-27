@@ -15,6 +15,7 @@ namespace Bald {
      */
 
     class Layer {
+    GENERATE_BODY(BASE)
     public:
 
         /**
@@ -84,15 +85,6 @@ namespace Bald {
          */
 
         [[nodiscard]] inline bool IsEnabled() const noexcept { return m_IsEnabled; };
-
-        /**
-        * @fn       GetType
-        * @brief    This method queries specific object for its type.
-        *           This function MUST be overwritten in every single specific layer class implementation
-        *           Overwrite it like this: [[nodiscard]] inline unsigned GetType() const override { return get_type_id(*this); }
-        */
-
-        [[nodiscard]] virtual unsigned GetType() const = 0;
 
     protected:
         EventManager m_EventManager; /**< Layer-specific EventManager*/

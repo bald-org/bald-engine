@@ -2,7 +2,7 @@
 // Created by Piotr Moszkowicz on 2018-12-16.
 //
 
-#include "pch.h"
+#include "core/pch.h"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 #include "utils/split_string.h"
