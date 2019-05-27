@@ -8,20 +8,22 @@
  * This header must be included in every application that wants to use Bald Engine.
  */
 
+// Core include
+#include "core/core.h"
+
 // Includes
-#include "application.h"
+#include "core/app/application.h"
+#include "core/app/entry_point.h"
+#include "core/app/layer.h"
+#include "core/app/layer_stack.h"
 
-#include "layer.h"
+#include "core/debug/logger.h"
 
-#include "input_manager.h"
+#include "core/events/event.h"
+#include "core/events/event_manager.h"
+#include "core/events/key_events.h"
+#include "core/events/layer_events.h"
+#include "core/events/mouse_events.h"
+#include "core/events/window_events.h"
 
-#include "event_manager.h"
-#include "mouse_events.h"
-#include "key_events.h"
-#include "window_events.h"
-
-#include "type_id.h"
-#include "type_name.h"
-
-// Entry Point
-#include "entry_point.h"
+#include "core/input/input_manager.h"
