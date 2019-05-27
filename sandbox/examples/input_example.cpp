@@ -3,6 +3,7 @@
 //
 
 #include "bald.h"
+
 #include "glm/glm.hpp"
 
 class ExampleLayer : public Bald::Layer {
