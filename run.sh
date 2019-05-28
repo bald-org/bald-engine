@@ -1,6 +1,6 @@
 #!/bin/bash
 
-for i in `ls engine/build_debug/bin`;
+for i in `ls build_debug/bin`;
 do
     ./engine/build_debug/bin/${i}
     if [[ $? != 0 ]]
@@ -9,7 +9,7 @@ do
     fi
 done
 
-for i in `ls engine/build_release/bin`;
+for i in `ls build_release/bin`;
 do
     ./engine/build_debug/bin/${i}
     if [[ $? != 0 ]]
