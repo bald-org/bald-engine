@@ -4,10 +4,12 @@
 
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include "core/debug/logger.h"
 #include "core.h"
+
+#include "glad/glad.h"
+#include "logger.h"
+
+class GLFWwindow;
 
 namespace Bald::Graphics {
 
