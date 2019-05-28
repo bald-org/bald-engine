@@ -70,7 +70,6 @@ public:
         PushLayer<GameLayer>();
         new int[1000];
     }
-
     ~Sandbox() override = default;
 };
 
