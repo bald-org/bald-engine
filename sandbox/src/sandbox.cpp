@@ -69,7 +69,6 @@ public:
     Sandbox() {
         PushLayer<GameLayer>();
     }
-
     ~Sandbox() override = default;
 };
 

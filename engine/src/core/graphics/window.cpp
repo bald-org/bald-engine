@@ -2,10 +2,14 @@
 // Created by ajer on 11.02.19.
 //
 
+
 #include "window.h"
 #include "input_manager.h"
 #include "event_manager.h"
 #include "window_events.h"
+
+#include "GLFW/glfw3.h"
+
 
 namespace Bald::Graphics {
 
