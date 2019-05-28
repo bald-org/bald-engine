@@ -7,7 +7,7 @@
 #include "events/window_events.h"
 #include "input/input_manager.h"
 #include "utils/timer.h"
-#include "Log.h"
+#include "core/debug/logger.h"
 
 #include <iostream>
 
@@ -22,7 +22,7 @@ int main() {
 
     using namespace Bald;
 
-    Log::Init();
+    Logger::Init();
 
     EventManager em;
     int x = 0;
@@ -42,5 +42,5 @@ int main() {
     timer.Stop();
 
     std::cout << std::to_string(N) << " events -> " << std::to_string(E) << " times took: " << timer.ElapsedSeconds()
-              << " s\n\n";
+              << " s\n";
 }

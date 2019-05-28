@@ -5,6 +5,7 @@
 #include "bald.h"
 
 class ApplicationExample : public Bald::Application {
+GENERATE_BODY(DERIVED)
 public:
     ApplicationExample() = default;
     ~ApplicationExample() override = default;

@@ -5,6 +5,7 @@
 #include "bald.h"
 
 class EventsExample : public Bald::Application {
+GENERATE_BODY(DERIVED)
 public:
     EventsExample() = default;
     ~EventsExample() override = default;
