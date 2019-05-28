@@ -14,7 +14,7 @@ namespace Bald {
 
     Application::Application() : m_Running(true) {
         [[maybe_unused]] bool state = Init();
-        BALD_ASSERT(state, "[Application] Failed to initialized application")
+        BALD_ASSERT(state, "[Application] %s", "Failed to initialized application")(state)
     }
 
     Application::~Application() {
@@ -60,7 +60,7 @@ namespace Bald {
     bool Application::Init() noexcept {
         CORE_LOG_INFO("[Application] Initializing application...");
 
-        BALD_ASSERT(m_Instance != nullptr, "[Application] Instance of Application already initialized")
+        BALD_ASSERT(m_Instance == nullptr, "[Application] %s", "Instance of Application already initialized")(m_Instance)
 
         m_Instance = this;
 
