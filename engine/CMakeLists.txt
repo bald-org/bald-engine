@@ -13,19 +13,21 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 
 set(${PROJECT_NAME}_include_dirs
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/input
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/math
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/events
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/
-        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
-        CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/math
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
+    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/
+    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${bald_engine_include_dirs})
 
@@ -60,14 +62,16 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_library(bald_engine
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/application.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/file_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/split_string.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/Log.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics/window.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/event_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback/event_handler_interface.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp)
 
 if (APPLE)
     target_link_libraries(bald_engine
@@ -75,6 +79,7 @@ if (APPLE)
             glad
             glfw
             spdlog
+            glfw
             "-framework Cocoa"
             "-framework OpenGL"
             "-framework IOKit"
@@ -108,9 +113,11 @@ cotire(bald_engine)
 
 #### TESTING
 enable_testing()
-file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
+file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger.cpp)
 
 add_executable(runUnitTests ${TEST_SRC_FILES})
+set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+cotire(runUnitTests)
 
 target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
