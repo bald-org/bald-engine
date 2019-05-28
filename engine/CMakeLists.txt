@@ -101,10 +101,10 @@ endif()
 #### PCH
 
 if(DEFINE_DEBUG)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
     set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g")
 elseif(DEFINE_RELEASE)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
     set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
 endif()
 cotire(bald_engine)
@@ -116,17 +116,9 @@ enable_testing()
 file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger.cpp)
 
 add_executable(runUnitTests ${TEST_SRC_FILES})
-set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-cotire(runUnitTests)
 
 target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
-
-if(DEFINE_DEBUG)
-    target_compile_options(runUnitTests PUBLIC ${DEBUG_COMPILE_FLAGS})
-elseif(DEFINE_RELEASE)
-    target_compile_options(runUnitTests PUBLIC ${RELEASE_COMPILE_FLAGS})
-endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 

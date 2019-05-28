@@ -4,8 +4,10 @@
 
 #pragma once
 
+#include "core.h"
+
 #include "glad/glad.h"
-#include "Log.h"
+#include "logger.h"
 
 class GLFWwindow;
 
