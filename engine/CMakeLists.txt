@@ -18,6 +18,7 @@ set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/math
@@ -65,6 +66,7 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp)
 
@@ -103,6 +105,8 @@ target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
 
 add_test(UnitTests runUnitTests)
 

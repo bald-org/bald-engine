@@ -22,8 +22,8 @@ namespace Bald::Utils {
         FILE* file = fopen(filePath, "r");
 
         if (!file) {
-            CORE_LOG_WARN("Couldn't open the file at path: " + static_cast<std::string>(filePath));
-            return std::string("Error!");
+            CORE_LOG_WARN("[FileManager] Couldn't open the file at path: " + static_cast<std::string>(filePath));
+            return "[FileManager] Couldn't open the file at path: " + static_cast<std::string>(filePath);
         }
 
         fseek(file, 0, SEEK_END);
@@ -35,15 +35,15 @@ namespace Bald::Utils {
             buffer = new char[stringSize + 1];
         }
         catch (std::bad_alloc& ba) {
-            CORE_LOG_ERROR("[FILE_MANAGER] Error: bad_alloc caught: " + static_cast<std::string>(ba.what()));
+            CORE_LOG_ERROR("[FileManager] bad_alloc caught: " + static_cast<std::string>(ba.what()));
             return std::string("Error!");
         }
 
         if (fread(buffer, sizeof(char), stringSize, file) < stringSize) {
             delete[] buffer;
             fclose(file);
-            CORE_LOG_ERROR("[FILE_MANAGER] Error: Could not read whole file: " + static_cast<std::string>(filePath));
-            return "ERROR: COULD NOT READ WHOLE FILE, NAME: " + static_cast<std::string>(filePath);
+            CORE_LOG_ERROR("[FileManager] Could not read whole file: " + static_cast<std::string>(filePath));
+            return "[FileManager] Could not read whole file: " + static_cast<std::string>(filePath);
         }
 
         buffer[stringSize] = '\0';
@@ -61,9 +61,8 @@ namespace Bald::Utils {
         struct stat sb{};
 
         if (fstat(fileDescriptor, &sb) == -1) {
-            CORE_LOG_WARN("[FILE_MANAGER] Error: Couldn't get size of the file. Check if the file exists at path: " +
-                          static_cast<std::string>(filePath));
-            return std::string("Error!");
+            CORE_LOG_WARN("[FileManager] Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath));
+            return "[FileManager] Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath);
         }
 
         auto* buffer = static_cast<char*>(mmap(nullptr, static_cast<unsigned long>(sb.st_size), PROT_READ, MAP_PRIVATE, fileDescriptor, 0));
