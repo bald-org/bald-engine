@@ -69,6 +69,7 @@ class Sandbox : public Bald::Application {
 public:
     Sandbox() {
         PushLayer<GameLayer>();
+        new int[1000];
     }
 
     ~Sandbox() override = default;
