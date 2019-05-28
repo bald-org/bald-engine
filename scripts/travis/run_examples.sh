@@ -10,7 +10,7 @@ do
             echo "Failed -> "${i}
             exit ${exit_code}
     fi
-    echo Ending -> ${i}
+    echo "Ending ->" ${i}
 done
 
 exit 0
