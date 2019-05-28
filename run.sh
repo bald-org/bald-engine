@@ -3,18 +3,20 @@
 for i in `ls build_debug/bin`;
 do
     ./build_debug/bin/${i}
-    if [[ $? != 0 ]]
+    exit_code=$?
+    if [[ exit_code != 0 ]]
         then
-            exit $?
+            exit exit_code
     fi
 done
 
 for i in `ls build_release/bin`;
 do
     ./build_debug/bin/${i}
-    if [[ $? != 0 ]]
+    exit_code=$?
+    if [[ exit_code != 0 ]]
         then
-            exit $?
+            exit exit_code
     fi
 done
 
