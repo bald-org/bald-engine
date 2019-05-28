@@ -34,10 +34,10 @@ script:
   - cmake -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_C_FLAGS=" -fsanitize=leak"  -DCMAKE_EXE_LINKER_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_MODULE_LINKER_FLAGS="  -fsanitize=leak  -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" ../
   - make -j 12
   - cd bin
-  - for i in `ls`; do echo "Running -> " $i; ./$i; echo "Ending -> " $i; done
+  - ./../../scripts/travis/run_examples.sh
   - cd ../../
   - mkdir build_release && cd build_release
   - cmake -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast -Werror" ../
   - make -j 12
   - cd bin
-  - for i in `ls`; do echo "Running -> " $i; ./$i; echo "Ending -> " $i; done
+  - ./../../scripts/travis/run_examples.sh
