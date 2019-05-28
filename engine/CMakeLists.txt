@@ -6,6 +6,7 @@ project(bald_engine)
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
 include(cotire)
 
+set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
 
