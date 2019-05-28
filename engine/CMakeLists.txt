@@ -4,31 +4,34 @@ project(bald_engine)
 #### LIBRARIES
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
-include(${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/cotire.cmake)
+include(cotire)
+
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 
 set(${PROJECT_NAME}_include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/input
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/math
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/events
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
-    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/graphics
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/input
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/events/callback
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/glm/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui
+        CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${bald_engine_include_dirs})
 
 #### END-LIBRARIES
 
-### DEFINITIONS
+### DEFINITIONS/FLAGS
 
 if(DEFINE_DEBUG)
     add_definitions(-DDEBUG)
@@ -44,7 +47,10 @@ if(LINUX_BUILD)
     add_definitions(-DLINUX)
 endif()
 
-#### END DEFINITIONS
+set(DEBUG_COMPILE_FLAGS -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g)
+set(RELEASE_COMPILE_FLAGS -Ofast -Werror)
+
+#### END DEFINITIONS/FLAGS
 
 #### CONFIG
 
@@ -65,37 +71,55 @@ add_library(bald_engine
 
 if (APPLE)
     target_link_libraries(bald_engine
+            imgui
             glad
-            glfw3
+            glfw
+            spdlog
             "-framework Cocoa"
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine glad glfw3 GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine imgui glad glfw spdlog GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+if(DEFINE_DEBUG)
+    target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
+elseif(DEFINE_RELEASE)
+    target_compile_options(bald_engine PUBLIC ${RELEASE_COMPILE_FLAGS})
+endif()
 
 #### END CONFIG
 
 #### PCH
 
-set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+if(DEFINE_DEBUG)
+    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g")
+elseif(DEFINE_RELEASE)
+    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
+    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+endif()
 cotire(bald_engine)
 
-#### END-PCH
+#### END PCH
 
 #### TESTING
 enable_testing()
 file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/Log.cpp)
 
 add_executable(runUnitTests ${TEST_SRC_FILES})
-set_target_properties(runUnitTests PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/pch.h")
-cotire(runUnitTests)
 
 target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
+
+if(DEFINE_DEBUG)
+    target_compile_options(runUnitTests PUBLIC ${DEBUG_COMPILE_FLAGS})
+elseif(DEFINE_RELEASE)
+    target_compile_options(runUnitTests PUBLIC ${RELEASE_COMPILE_FLAGS})
+endif()
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 
