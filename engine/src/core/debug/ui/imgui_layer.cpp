@@ -42,18 +42,18 @@ namespace Bald {
         io.KeyMap[ImGuiKey_Y] = GLFW_KEY_Y;
         io.KeyMap[ImGuiKey_Z] = GLFW_KEY_Z;
 
-        ImGui_ImplOpenGL3_Init("#version 330");
+        ImGui_ImplOpenGL3_Init("#version 130");
 
-        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [this](const KeyPressedEvent& e) { OnKeyPressedEvent(e); });
-        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::SYNC, [this](const KeyTypedEvent& e) { OnKeyTypedEvent(e); });
-        m_EventManager.Subscribe<Bald::KeyReleasedEvent>(Bald::HandleType::SYNC, [this](const KeyReleasedEvent& e) { OnKeyReleasedEvent(e); });
+        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [](const KeyPressedEvent& e) { OnKeyPressedEvent(e); });
+        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::SYNC, [](const KeyTypedEvent& e) { OnKeyTypedEvent(e); });
+        m_EventManager.Subscribe<Bald::KeyReleasedEvent>(Bald::HandleType::SYNC, [](const KeyReleasedEvent& e) { OnKeyReleasedEvent(e); });
 
-        m_EventManager.Subscribe<Bald::MouseButtonPressedEvent>(Bald::HandleType::SYNC, [this](const MouseButtonPressedEvent& e) { OnMouseButtonPressedEvent(e); });
-        m_EventManager.Subscribe<Bald::MouseButtonReleasedEvent>(Bald::HandleType::SYNC, [this](const MouseButtonReleasedEvent& e) { OnMouseButtonReleasedEvent(e); });
-        m_EventManager.Subscribe<Bald::MouseScrolledEvent>(Bald::HandleType::SYNC, [this](const MouseScrolledEvent& e) { OnMouseScrolledEvent(e); });
-        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::SYNC, [this](const MouseMovedEvent& e) { OnMouseMovedEvent(e); });
+        m_EventManager.Subscribe<Bald::MouseButtonPressedEvent>(Bald::HandleType::SYNC, [](const MouseButtonPressedEvent& e) { OnMouseButtonPressedEvent(e); });
+        m_EventManager.Subscribe<Bald::MouseButtonReleasedEvent>(Bald::HandleType::SYNC, [](const MouseButtonReleasedEvent& e) { OnMouseButtonReleasedEvent(e); });
+        m_EventManager.Subscribe<Bald::MouseScrolledEvent>(Bald::HandleType::SYNC, [](const MouseScrolledEvent& e) { OnMouseScrolledEvent(e); });
+        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::SYNC, [](const MouseMovedEvent& e) { OnMouseMovedEvent(e); });
 
-        m_EventManager.Subscribe<Bald::WindowResizedEvent>(Bald::HandleType::SYNC, [this](const WindowResizedEvent& e) { OnWindowResizedEvent(e); });
+        m_EventManager.Subscribe<Bald::WindowResizedEvent>(Bald::HandleType::SYNC, [](const WindowResizedEvent& e) { OnWindowResizedEvent(e); });
     }
 
     void ImGuiLayer::OnDetach() noexcept {}
