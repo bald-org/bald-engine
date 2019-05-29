@@ -326,12 +326,12 @@ namespace Bald {
     }
 
     inline Layer* LayerStack::operator[](size_t index) {
-        BALD_ASSERT(index < m_LayerStack.size(), "[LayerStack] %s", "Index out of boundary")(index)
+        BALD_ASSERT(index < m_LayerStack.size(), "LayerStack","Index out of boundary", index)
         return m_LayerStack[index];
     }
 
     inline const Layer* LayerStack::operator[](size_t index) const {
-        BALD_ASSERT(index < m_LayerStack.size(), "[LayerStack] %s", "Index out of boundary")(index)
+        BALD_ASSERT(index < m_LayerStack.size(), "LayerStack", "Index out of boundary", index)
         return m_LayerStack[index];
     }
 
