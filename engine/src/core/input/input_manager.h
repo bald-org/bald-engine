@@ -32,6 +32,8 @@ namespace Bald::Input {
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
+        friend inline void char_callback(GLFWwindow* window, unsigned character);
+
         friend inline void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
         friend inline void cursor_position_callback(GLFWwindow* window, double xpos, double ypos);
@@ -272,12 +274,17 @@ namespace Bald::Input {
         }
     }
 
+    inline void char_callback([[maybe_unused]] GLFWwindow* window, unsigned character) {
+        InputManager::EmitKeyTypedEvent(character);
+    }
+
     inline void
     mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != GLFW_RELEASE;
 
         switch (action) {
             case GLFW_PRESS: {
+                InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button));
                 InputManager::EmitMouseButtonTypedEvent(static_cast<unsigned>(button));
                 break;
             }

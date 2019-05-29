@@ -4,6 +4,8 @@
 
 #include "bald.h"
 
+#include "imgui_layer.h"
+
 class DebugLayer : public Bald::Layer {
 GENERATE_BODY(DERIVED)
 public:
@@ -66,9 +68,12 @@ public:
 class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
 public:
+
     Sandbox() {
         PushLayer<GameLayer>();
+        PushOverlay<Bald::ImGuiLayer>();
     }
+
     ~Sandbox() override = default;
 };
 

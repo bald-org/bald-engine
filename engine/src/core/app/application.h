@@ -119,6 +119,14 @@ namespace Bald {
         void PopOverlayImmediately();
 
         /**
+         * @fn GetWindow
+         * @brief Window getter.
+         * @return [std::unique_ptr<Graphics::Window>] Pointer to window instance
+         */
+
+        [[nodiscard]] inline std::unique_ptr<Graphics::Window>& GetWindow() noexcept;
+
+        /**
          * @fn Create
          * @brief Creates an application. This function should be implemented on the client's side.
          * @return [Application*] Pointer to application instance
@@ -132,7 +140,7 @@ namespace Bald {
          * @return [Application*] Pointer to application instance
          */
 
-        [[nodiscard]] static Application& GetApplication() noexcept;
+        [[nodiscard]] inline static Application& GetApplication() noexcept;
 
         /**
          * @fn Run
@@ -208,6 +216,14 @@ namespace Bald {
     template<class L>
     void Application::PopOverlayImmediately() {
         m_LayerStack.PopOverlayImmediately<L>();
+    }
+
+    inline std::unique_ptr<Graphics::Window>& Application::GetWindow() noexcept {
+        return m_Window;
+    }
+
+    inline Application& Application::GetApplication() noexcept {
+        return *m_Instance;
     }
 
 } // END OF NAMESPACE Bald
