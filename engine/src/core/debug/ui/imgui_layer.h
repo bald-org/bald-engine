@@ -27,16 +27,16 @@ namespace Bald {
 
     private:
 
-        void OnKeyPressedEvent(const KeyPressedEvent& e);
-        void OnKeyTypedEvent(const KeyTypedEvent& e);
-        void OnKeyReleasedEvent(const KeyReleasedEvent& e);
+        static void OnKeyPressedEvent(const KeyPressedEvent& e);
+        static void OnKeyTypedEvent(const KeyTypedEvent& e);
+        static void OnKeyReleasedEvent(const KeyReleasedEvent& e);
 
-        void OnMouseButtonPressedEvent(const MouseButtonPressedEvent& e);
-        void OnMouseButtonReleasedEvent(const MouseButtonReleasedEvent& e);
-        void OnMouseScrolledEvent(const MouseScrolledEvent& e);
-        void OnMouseMovedEvent(const MouseMovedEvent& e);
+        static void OnMouseButtonPressedEvent(const MouseButtonPressedEvent& e);
+        static void OnMouseButtonReleasedEvent(const MouseButtonReleasedEvent& e);
+        static void OnMouseScrolledEvent(const MouseScrolledEvent& e);
+        static void OnMouseMovedEvent(const MouseMovedEvent& e);
 
-        void OnWindowResizedEvent(const WindowResizedEvent& e);
+        static void OnWindowResizedEvent(const WindowResizedEvent& e);
 
     }; // END OF CLASS ImGuiLayer
 

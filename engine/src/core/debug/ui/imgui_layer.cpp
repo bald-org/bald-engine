@@ -79,8 +79,8 @@ namespace Bald {
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
     }
 
-    void ImGuiLayer::OnKeyPressedEvent([[maybe_unused]] const KeyPressedEvent& e) {
-        [[maybe_unused]] ImGuiIO& io = ImGui::GetIO();
+    void ImGuiLayer::OnKeyPressedEvent(const KeyPressedEvent& e) {
+        ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[e.GetKeyCode()] = true;
 
         io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
@@ -89,13 +89,13 @@ namespace Bald {
         io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
     }
 
-    void ImGuiLayer::OnKeyTypedEvent([[maybe_unused]] const KeyTypedEvent& e) {
-        [[maybe_unused]] ImGuiIO& io = ImGui::GetIO();
+    void ImGuiLayer::OnKeyTypedEvent(const KeyTypedEvent& e) {
+        ImGuiIO& io = ImGui::GetIO();
         io.AddInputCharacter(static_cast<unsigned short>(e.GetKeyCode()));
     }
 
-    void ImGuiLayer::OnKeyReleasedEvent([[maybe_unused]] const KeyReleasedEvent& e) {
-        [[maybe_unused]] ImGuiIO& io = ImGui::GetIO();
+    void ImGuiLayer::OnKeyReleasedEvent(const KeyReleasedEvent& e) {
+        ImGuiIO& io = ImGui::GetIO();
         io.KeysDown[e.GetKeyCode()] = false;
     }
 
@@ -120,8 +120,8 @@ namespace Bald {
         io.MousePos = ImVec2(static_cast<float>(e.GetX()), static_cast<float>(e.GetY()));
     }
 
-    void ImGuiLayer::OnWindowResizedEvent([[maybe_unused]] const WindowResizedEvent& e) {
-        [[maybe_unused]] ImGuiIO& io = ImGui::GetIO();
+    void ImGuiLayer::OnWindowResizedEvent(const WindowResizedEvent& e) {
+        ImGuiIO& io = ImGui::GetIO();
         io.DisplaySize = ImVec2(static_cast<float>(e.GetWidth()), static_cast<float>(e.GetHeight()));
         io.DisplayFramebufferScale = ImVec2(1.0f, 1.0f);
     }
