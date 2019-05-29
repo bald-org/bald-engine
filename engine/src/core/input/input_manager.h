@@ -112,7 +112,7 @@ namespace Bald::Input {
         /**
          * @fn SetKeyPressedCallback
          * @brief sets function which will be called on key pressed event
-         * @param [F&&] fun fu-> nction pointer
+         * @param [F&&] fun -> function pointer
          * @param [Args&& ...] args -> arguments for function
          */
 
@@ -123,7 +123,7 @@ namespace Bald::Input {
          * @fn SetKeyTypedCallback
          * @brief sets function which will be called on key typed event
          * @param keycode [int] GLFW key id
-         * @param [F&&] fun -> function pointers
+         * @param [F&&] fun -> function pointer
          * @param [Args&& ...] args -> arguments for function
          */
 
@@ -133,7 +133,7 @@ namespace Bald::Input {
         /**
          * @fn SetKeyReleasedCallback
          * @brief sets function which will be called on key released event
-         * @param [F&&] fun -> function pointers
+         * @param [F&&] fun -> function pointer
          * @param [Args&& ...] args -> arguments for function
          */
 
