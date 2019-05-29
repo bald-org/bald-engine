@@ -73,12 +73,16 @@ public:
 #define BALD_BREAKPOINT std::raise(SIGTRAP);
 #define BALD_SOURCE_INFO SourceInfo(__FILE__, __LINE__)
 
-#define BALD_PP_EXPAND_ARGS_1(op, a1)                op(a1)
-#define BALD_PP_EXPAND_ARGS_2(op, a1, a2)            op(a1) op(a2)
-#define BALD_PP_EXPAND_ARGS_3(op, a1, a2, a3)        op(a1) op(a2) op(a3)
-#define BALD_PP_EXPAND_ARGS_4(op, a1, a2, a3, a4)    op(a1) op(a2) op(a3) op(a4)
+#define BALD_PP_EXPAND_ARGS_1(op, a1)                                op(a1)
+#define BALD_PP_EXPAND_ARGS_2(op, a1, a2)                            op(a1) op(a2)
+#define BALD_PP_EXPAND_ARGS_3(op, a1, a2, a3)                        op(a1) op(a2) op(a3)
+#define BALD_PP_EXPAND_ARGS_4(op, a1, a2, a3, a4)                    op(a1) op(a2) op(a3) op(a4)
+#define BALD_PP_EXPAND_ARGS_5(op, a1, a2, a3, a4, a5)                op(a1) op(a2) op(a3) op(a4) op(a5)
+#define BALD_PP_EXPAND_ARGS_6(op, a1, a2, a3, a4, a5, a6)            op(a1) op(a2) op(a3) op(a4) op(a5) op(a6)
+#define BALD_PP_EXPAND_ARGS_7(op, a1, a2, a3, a4, a5, a6, a7)        op(a1) op(a2) op(a3) op(a4) op(a5) op(a6) op(a7)
+#define BALD_PP_EXPAND_ARGS_8(op, a1, a2, a3, a4, a5, a6, a7, a8)    op(a1) op(a2) op(a3) op(a4) op(a5) op(a6) op(a7) op(a8)
 
-#define BALD_PP_NUM_ARGS(...)                        BALD_PP_NUM_ARGS_HELPER(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
+#define BALD_PP_NUM_ARGS(...)  BALD_PP_NUM_ARGS_HELPER(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1)
 #define BALD_PP_NUM_ARGS_HELPER(_1, _2, _3, _4, _5, _6, _7, _8, _9, _10, N, ...)    N
 #define BALD_PP_EXPAND_ARGS(op, ...) BALD_PP_JOIN(BALD_PP_EXPAND_ARGS_, BALD_PP_NUM_ARGS(__VA_ARGS__))(op, __VA_ARGS__)
 
@@ -91,8 +95,7 @@ public:
 
 
 #define BALD_PP_JOIN(x, y)                    BALD_JOIN_HELPER(x, y)
-#define BALD_JOIN_HELPER(x, y)                BALD_JOIN_HELPER_HELPER(x, y)
-#define BALD_JOIN_HELPER_HELPER(x, y)         x##y
+#define BALD_JOIN_HELPER(x, y)                x##y
 
 
 #else
