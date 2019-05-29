@@ -41,9 +41,9 @@ namespace Bald::Input {
         std::memcpy(m_MouseButtonsState.begin(), m_MouseButtons.begin(), MAX_MOUSE_BUTTONS * sizeof(m_MouseButtons[0]));
     }
 
-    void InputManager::EmitKeyPressedEvent(unsigned keycode) noexcept {
+    void InputManager::EmitKeyPressedEvent(unsigned keycode, bool isRepeated) noexcept {
         if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
-        else Bald::EventManager::Emit<KeyPressedEvent>(keycode);
+        else Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
     }
 
     void InputManager::EmitKeyTypedEvent(unsigned keycode) noexcept {
@@ -56,14 +56,9 @@ namespace Bald::Input {
         else Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
     }
 
-    void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode) noexcept {
+    void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated) noexcept {
         if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-        else Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode);
-    }
-
-    void InputManager::EmitMouseButtonTypedEvent(unsigned buttoncode) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-        else Bald::EventManager::Emit<MouseButtonTypedEvent>(buttoncode);
+        else Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
     }
 
     void InputManager::EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept {
