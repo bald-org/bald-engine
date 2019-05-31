@@ -18,6 +18,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 
 set(${PROJECT_NAME}_include_dirs
+    ${CMAKE_CURRENT_SOURCE_DIR}
     ${CMAKE_CURRENT_SOURCE_DIR}/src
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app

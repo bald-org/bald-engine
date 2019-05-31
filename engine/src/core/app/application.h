@@ -5,8 +5,8 @@
 #pragma once
 
 #include <memory>
-#include "window.h"
 #include "layer_stack.h"
+#include "graphics/window.h"
 
 namespace Bald {
 

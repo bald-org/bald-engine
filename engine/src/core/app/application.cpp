@@ -3,10 +3,11 @@
 //
 
 #include "application.h"
-#include "input_manager.h"
-#include "window_events.h"
-#include "layer_events.h"
+#include "input/input_manager.h"
+#include "events/window_events.h"
+#include "events/layer_events.h"
 #include "utils/timer.h"
+#include "debug/ui/imgui_layer.h"
 
 namespace Bald {
 
@@ -36,6 +37,12 @@ namespace Bald {
                 EventManager::Emit<WindowClosedEvent>();
             }
 #endif
+
+            Debug::ImGuiLayer::Begin();
+            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
+                m_LayerStack[i]->OnRender();
+            }
+            Debug::ImGuiLayer::End();
 
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate();
@@ -76,6 +83,7 @@ namespace Bald {
             m_LayerStack.DetachLayers();
         });
 
+        PushOverlayImmediately<Debug::ImGuiLayer>();
 
         CORE_LOG_INFO("[Application] Initialization was successful");
 

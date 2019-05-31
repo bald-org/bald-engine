@@ -30,6 +30,8 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class GameLayer : public Bald::Layer {
@@ -63,6 +65,8 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class Sandbox : public Bald::Application {
@@ -71,7 +75,6 @@ public:
 
     Sandbox() {
         PushLayer<GameLayer>();
-        PushOverlay<Bald::ImGuiLayer>();
     }
 
     ~Sandbox() override = default;

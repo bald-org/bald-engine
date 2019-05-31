@@ -11,9 +11,10 @@
 #include "events/key_events.h"
 #include "events/mouse_events.h"
 
-namespace Bald {
+namespace Bald::Debug {
 
     class ImGuiLayer : public Layer {
+    friend class Application;
     GENERATE_BODY(DERIVED)
     public:
         ImGuiLayer() = default;
@@ -25,19 +26,12 @@ namespace Bald {
 
         void OnUpdate() noexcept override;
 
-    private:
+        void OnRender() noexcept override;
 
-        static void OnKeyPressedEvent(const KeyPressedEvent& e);
-        static void OnKeyTypedEvent(const KeyTypedEvent& e);
-        static void OnKeyReleasedEvent(const KeyReleasedEvent& e);
+        static void Begin() noexcept;
 
-        static void OnMouseButtonPressedEvent(const MouseButtonPressedEvent& e);
-        static void OnMouseButtonReleasedEvent(const MouseButtonReleasedEvent& e);
-        static void OnMouseScrolledEvent(const MouseScrolledEvent& e);
-        static void OnMouseMovedEvent(const MouseMovedEvent& e);
-
-        static void OnWindowResizedEvent(const WindowResizedEvent& e);
-
+        static void End() noexcept;
     }; // END OF CLASS ImGuiLayer
 
-} // END OF NAMESPACE Bald
+} // END OF NAMESPACE Bald::Debug
+

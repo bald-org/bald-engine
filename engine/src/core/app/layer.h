@@ -57,6 +57,14 @@ namespace Bald {
         virtual void OnUpdate() noexcept = 0;
 
         /**
+         * @fn OnRender
+         * @brief A pure virtual method which must be implemented on the client's side.
+         *        It is updated in every iteration of the core engine loop.
+         */
+
+        virtual void OnRender() noexcept = 0;
+
+        /**
          * @fn RunEvents
          * @brief A method that flushes layer's event manager.
          */
