@@ -13,3 +13,6 @@
 [submodule "engine/vendor/glm"]
 	path = engine/vendor/glm
 	url = https://github.com/bald-org/glm
+[submodule "engine/vendor/imgui"]
+	path = engine/vendor/imgui
+	url = https://github.com/bald-org/imgui
