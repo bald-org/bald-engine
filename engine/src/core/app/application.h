@@ -13,7 +13,7 @@ namespace Bald {
     /**
      * @class Application
      * @brief Simple application interface. This is the class that one should derive from
-     *        when building an application using Bald Engine
+     *        when building an application using Bald Engine.
      */
 
     class Application {
