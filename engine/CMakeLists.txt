@@ -77,7 +77,7 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/utils/bald_assert.cpp)
+        )
 
 
 if (APPLE)

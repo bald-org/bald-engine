@@ -13,7 +13,7 @@
 #include "callback/event_handler.h"
 #include "callback/event_function_handler.h"
 #include "type_name.h"
-#include "utils/bald_assert.h"
+#include "core/debug/bald_assert.h"
 
 namespace Bald {
 
