@@ -8,8 +8,8 @@
 #include "event_manager.h"
 #include "window_events.h"
 
+#include "glad/glad.h"
 #include "GLFW/glfw3.h"
-
 
 namespace Bald::Graphics {
 
