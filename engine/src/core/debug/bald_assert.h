@@ -94,21 +94,21 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_BREAKPOINT
- * @brief A macro definition. Instruction that emits SIGTRAP signal.
+ * @brief Instruction that emits SIGTRAP signal.
  */
 
 #define BALD_BREAKPOINT std::raise(SIGTRAP);
 
 /**
  * @def BALD_SOURCE_INFO
- * @brief A macro definition. Creat a SourceInfo object.
+ * @brief Creat a SourceInfo object.
  */
 
 #define BALD_SOURCE_INFO ::Bald::Debug::SourceInfo(__FILE__, __LINE__)
 
 /**
  * @def BALD_PP_EXPAND_ARGS_N
- * @brief A macro definitions. Creates N function calls to op
+ * @brief Creates N function calls to op
  * @param op -> Function to which calls will be generated
  * @param aN -> Parameter which will be passed to N-th function call
  */
@@ -123,8 +123,16 @@ namespace Bald::Debug {
 #define BALD_PP_EXPAND_ARGS_8(op, a1, a2, a3, a4, a5, a6, a7, a8)    op(a1) op(a2) op(a3) op(a4) op(a5) op(a6) op(a7) op(a8)
 
 /**
+ * @def BALD_PP_JOIN
+ * @brief joins two params
+ */
+
+#define BALD_PP_JOIN(x, y)                    BALD_JOIN_HELPER(x, y)
+#define BALD_JOIN_HELPER(x, y)                x##y
+
+/**
  * @def BALD_PP_NUM_ARGS
- * @brief A macro definitions. Returns number of arguments passed to a macro, but no more than 10
+ * @brief Returns number of arguments passed to a macro, but no more than 10
  */
 
 #define BALD_PP_NUM_ARGS(...)  BALD_PP_NUM_ARGS_HELPER(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -132,31 +140,44 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_PP_EXPAND_ARGS
- * @brief A macro definition. Expands arguments to function calls.
+ * @brief Expands arguments to function calls.
  */
 
 #define BALD_PP_EXPAND_ARGS(op, ...) BALD_PP_JOIN(BALD_PP_EXPAND_ARGS_, BALD_PP_NUM_ARGS(__VA_ARGS__))(op, __VA_ARGS__)
 
 /**
  * @def BALD_ASSERT_IMPL_VARS
- * @brief A macro definition. Expands arguments and puts a breakpoint after assert is printed
+ * @brief Expands arguments and puts a breakpoint after assert is printed
  */
 
 #define BALD_ASSERT_IMPL_VARS(...)                             BALD_PP_EXPAND_ARGS(BALD_ASSERT_IMPL_VAR, __VA_ARGS__), BALD_BREAKPOINT; }
 
 /**
  * @def BALD_ASSERT_IMPL_VAR
- * @brief A macro definition. Generates a call to a function which will print the name and value of the variable
+ * @brief Generates a call to a function which will print the name and value of the variable
  */
 
 #define BALD_ASSERT_IMPL_VAR(variable)                         .Variable("" #variable "", variable)
-#define BALD_ASSERT_IMPL(condition, format, name, message)     if(!(condition))  { ::Bald::Debug::Assert(BALD_SOURCE_INFO, "Assertion \"" #condition "\" failed. " format, name, message) BALD_ASSERT_IMPL_VARS
+
+/**
+ * @def BALD_ASSERT_IMPL
+ * @brief Implements code to handle an assertion
+ * @param condition -> A condition which we want to assure is true
+ * @param format -> The format(in printf style) in which message will be printed
+ * @param ... -> Variables which will be put into the massage
+ */
+
+#define BALD_ASSERT_IMPL(condition, format, ...)     if(!(condition))  { ::Bald::Debug::Assert(BALD_SOURCE_INFO, "Assertion \"" #condition "\" failed. " format, __VA_ARGS__) BALD_ASSERT_IMPL_VARS
+
+/**
+ * @def BALD_ASSERT
+ * @brief Interface to use bald assertions, and provides default formatting -> "[name] \n [message]". If you want to use your own formatting use  BALD_ASSERT_IMPL
+ * @param condition -> A condition which we want to assure is true
+ * @param name -> A name of function/class/method in which assert is used
+ * @param message -> A message that will be printed if a condition is false
+ */
 
 #define BALD_ASSERT(condition, name, message, ...) BALD_ASSERT_IMPL(condition, "[%s]\n%s ", name, message)(__VA_ARGS__)
-
-
-#define BALD_PP_JOIN(x, y)                    BALD_JOIN_HELPER(x, y)
-#define BALD_JOIN_HELPER(x, y)                x##y
 
 
 #else
