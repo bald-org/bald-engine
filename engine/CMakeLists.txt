@@ -3,9 +3,6 @@ project(bald_engine)
 
 #### LIBRARIES
 
-list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
-include(cotire)
-
 set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
@@ -115,7 +112,6 @@ elseif(DEFINE_RELEASE)
     set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
     set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
 endif()
-cotire(bald_engine)
 
 #### END PCH
 
