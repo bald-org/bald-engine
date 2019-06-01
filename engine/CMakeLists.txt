@@ -70,12 +70,12 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
+        src/core/utils/time/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
         src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp src/core/debug/logger/logger.cpp src/core/debug/logger/logger.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp src/core/debug/logger/logger.cpp src/core/debug/logger/logger.h src/core/utils/time/time.h)
 
 if (APPLE)
     target_link_libraries(bald_engine

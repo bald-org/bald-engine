@@ -2,9 +2,10 @@
 // Created by grzegorz on 01.06.19.
 //
 
-#include "logger.h"
-
 #include <cstdio>
+
+#include "logger.h"
+#include "core/utils/time/time.h"
 
 namespace Bald::Debug {
 
@@ -45,6 +46,8 @@ namespace Bald::Debug {
     }
 
     void Logger::print(const std::string& mess) const noexcept {
+        std::string time = static_cast<std::string>(Utils::Time::GetCurrentTime());
+        printf("[%s] ", time.c_str());
         printf("%s: %s\n", m_Name.c_str(), mess.c_str()); //TODO: Log time
         reset();
     }
