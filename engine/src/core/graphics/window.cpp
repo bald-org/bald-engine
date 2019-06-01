@@ -9,13 +9,14 @@
 #include "window_events.h"
 
 #include "GLFW/glfw3.h"
-
+#include <assert.h>
 
 namespace Bald::Graphics {
 
     bool Window::m_GLFWInitialized = false;
 
     Window::Window(const char* title, int width, int height, bool VSync) :
+        m_Window(nullptr),
         m_Title(title),
         m_Width(width),
         m_Height(height),

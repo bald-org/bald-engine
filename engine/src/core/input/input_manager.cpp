@@ -37,8 +37,8 @@ namespace Bald::Input {
             m_MouseButtonsTyped[i] = !m_MouseButtonsState[i] && m_MouseButtons[i];
         }
 
-        std::memcpy(m_KeysState.begin(), m_Keys.begin(), MAX_KEYS * sizeof(m_Keys[0]));
-        std::memcpy(m_MouseButtonsState.begin(), m_MouseButtons.begin(), MAX_MOUSE_BUTTONS * sizeof(m_MouseButtons[0]));
+        m_KeysState = m_Keys;
+        m_MouseButtonsState = m_MouseButtons;
     }
 
     void InputManager::EmitKeyPressedEvent(unsigned keycode) noexcept {

@@ -72,10 +72,10 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
+        src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp src/core/debug/logger/logger.cpp src/core/debug/logger/logger.h)
 
 if (APPLE)
     target_link_libraries(bald_engine
@@ -117,7 +117,7 @@ endif()
 
 #### TESTING
 enable_testing()
-file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger.cpp)
+file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger/log_manager.cpp)
 
 add_executable(runUnitTests ${TEST_SRC_FILES})
 

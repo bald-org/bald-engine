@@ -7,7 +7,7 @@
 #include "events/window_events.h"
 #include "input/input_manager.h"
 #include "utils/timer.h"
-#include "core/debug/logger.h"
+#include "core/debug/logger/log_manager.h"
 
 #include <iostream>
 
@@ -21,8 +21,8 @@ void sub(const Bald::Event&, int& i) {
 int main() {
 
     using namespace Bald;
-
-    Logger::Init();
+    using namespace Debug;
+    LogManager::Init();
 
     EventManager em;
     int x = 0;

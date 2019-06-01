@@ -7,7 +7,7 @@
 #include "core.h"
 
 #include "glad/glad.h"
-#include "logger.h"
+#include "core/debug/logger/log_manager.h"
 
 class GLFWwindow;
 

@@ -8,7 +8,10 @@
 
 #ifdef LINUX
     #include <sys/mman.h>
+    #include <sys/stat.h>
+    #include <fcntl.h>
 #endif
+
 
 namespace Bald::Utils {
 
