@@ -48,7 +48,7 @@ namespace Bald::Debug {
     void Logger::print(const std::string& mess) const noexcept {
         std::string time = static_cast<std::string>(Utils::Time::GetCurrentTime());
         printf("[%s] ", time.c_str());
-        printf("%s: %s\n", m_Name.c_str(), mess.c_str()); //TODO: Log time
+        printf("%s: %s\n", m_Name.c_str(), mess.c_str());
         reset();
     }
 
