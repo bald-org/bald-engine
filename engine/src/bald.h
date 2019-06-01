@@ -9,9 +9,11 @@
  */
 
 // Core include
+
 #include "core/core.h"
 
 // Includes
+
 #include "core/app/application.h"
 #include "core/app/entry_point.h"
 #include "core/app/layer.h"
