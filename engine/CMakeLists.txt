@@ -9,7 +9,6 @@ set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
@@ -83,14 +82,13 @@ if (APPLE)
             glad
             glfw
             glm
-            spdlog
             glfw
             "-framework Cocoa"
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine imgui glad glfw glm spdlog GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine imgui glad glfw glm GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
