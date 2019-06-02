@@ -14,6 +14,7 @@ addons:
       - g++-8
       - libglew-dev
       - xorg-dev
+      - ninja-build
 
 services:
   - xvfb
@@ -31,13 +32,13 @@ before_script:
 script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build_debug && cd build_debug
-  - cmake -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-  - make -j 12
+  - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
+  - ninja
   - cd bin
   - ./../../scripts/travis/run_examples.sh
   - cd ../../
   - mkdir build_release && cd build_release
-  - cmake -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-  - make -j 12
+  - cmake -GNinja -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
+  - ninja
   - cd bin
   - ./../../scripts/travis/run_examples.sh
