@@ -7,7 +7,6 @@
 
 namespace Bald::Input {
 
-    EventManager* InputManager::m_EventManager = nullptr;
     std::pair<double, double> InputManager::m_MousePos;
     std::pair<double, double> InputManager::m_MouseOff;
     std::array<bool, MAX_KEYS> InputManager::m_Keys;
@@ -16,16 +15,6 @@ namespace Bald::Input {
     std::array<bool, MAX_MOUSE_BUTTONS> InputManager::m_MouseButtons;
     std::array<bool, MAX_MOUSE_BUTTONS> InputManager::m_MouseButtonsState;
     std::array<bool, MAX_MOUSE_BUTTONS> InputManager::m_MouseButtonsTyped;
-
-    void InputManager::Init(EventManager& ev){
-        m_EventManager = &ev;
-        std::fill(m_Keys.begin(), m_Keys.end(), false);
-        std::fill(m_KeysState.begin(), m_KeysState.end(), false);
-        std::fill(m_KeysTyped.begin(), m_KeysTyped.end(), false);
-        std::fill(m_MouseButtons.begin(), m_MouseButtons.end(), false);
-        std::fill(m_MouseButtonsState.begin(), m_MouseButtonsState.end(), false);
-        std::fill(m_MouseButtonsTyped.begin(), m_MouseButtonsTyped.end(), false);
-    }
 
     void InputManager::Update() noexcept {
 
