@@ -49,7 +49,7 @@ namespace Bald {
         * @brief Templated function which allows you to subscribe to any kind of engine's event
         * @param [HandleType] type -> Manner in which the function will be handled e.g. synchronous/asynchronous
         * @param [F&&] callback -> Function with which you subscribe to an event. It MUST take Event reference as the first parameter
-        * @param [Args& ...]    args -> Function's arguments
+        * @param [Args&& ...]    args -> Function's arguments
         */
 
         template<class T, class F, class... Args>
@@ -67,7 +67,7 @@ namespace Bald {
         /**
         * @fn Emit
         * @brief Templated function which is used to emit events of any kind
-        * @param [Args& ...]    args -> Arguments for event's constructor (can be left blank)
+        * @param [Args&& ...]    args -> Arguments for event's constructor (can be left blank)
         */
 
         template<class T, class... Args>
