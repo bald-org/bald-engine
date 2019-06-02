@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <vector>
+
 #include "event.h"
 
 namespace Bald {
