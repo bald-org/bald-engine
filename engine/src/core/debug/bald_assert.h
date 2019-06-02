@@ -20,27 +20,27 @@ namespace Bald::Debug {
 
     /**
      * @class SourceInfo
-     * @brief Simple class to store information about failed assert
+     * @brief Simple class to store information about failed assert.
      */
 
     class SourceInfo {
     public:
         /**
          * @fn SourceInfo
-         * @brief Constructs new SourceInfo object
-         * @param file [std::string] name of a file where assertion occurred
-         * @param line [int] number of line where assertion occurred
+         * @brief Constructs new SourceInfo object.
+         * @param file [std::string] name of a file where assertion occurred.
+         * @param line [int] number of line where assertion occurred.
          */
 
         SourceInfo(std::string&& file, int line) :
                 _file(std::move(file)), _line(line) { };
-        const std::string _file; /**< name of a file where assertion occurred >*/
-        const int _line;         /**< number of line where assertion occurred >*/
+        const std::string _file; /**< name of a file where assertion occurred. >*/
+        const int _line;         /**< number of line where assertion occurred. >*/
     };
 
     /**
      * @class Assert
-     * @brief Class which prints information about failed assert
+     * @brief Class which prints information about failed assert.
      */
 
     class Assert {
@@ -48,11 +48,11 @@ namespace Bald::Debug {
 
         /**
          * @fn Assert
-         * @brief Constructs new Asserts objects and prints information about it
-         * @tparam Args -> Types of arguments passed to a constructor
-         * @param sourceInfo [SourceInfo] Information about the source of the assertion
-         * @param format [const char*] Format of a message that will be printed
-         * @param args Arguments that will be printed in the message
+         * @brief Constructs new Asserts objects and prints information about it.
+         * @tparam Args -> Types of arguments passed to a constructor.
+         * @param sourceInfo [SourceInfo] Information about the source of the assertion.
+         * @param format [const char*] Format of a message that will be printed.
+         * @param args Arguments that will be printed in the message.
          */
 
         template<typename... Args>
@@ -64,11 +64,11 @@ namespace Bald::Debug {
 
         /**
          * @fn Variable
-         * @brief Prints value and name of a variable
-         * @tparam T -> Type of a variable
-         * @param name [const char*] Name of a variable
-         * @param value [T] A variable which will be printed
-         * @return [Assert&] reference to Assert object
+         * @brief Prints value and name of a variable.
+         * @tparam T -> Type of a variable.
+         * @param name [const char*] Name of a variable.
+         * @param value [T] A variable which will be printed.
+         * @return [Assert&] reference to Assert object.
          */
 
         template<typename T>
@@ -79,10 +79,10 @@ namespace Bald::Debug {
 
         /**
          * @fn Variable
-         * @brief Specialization for bool type
-         * @param name [const char*] Name of a variable
-         * @param value [bool] A variable which will be printed
-         * @return [Assert&] reference to Assert object
+         * @brief Specialization for bool type.
+         * @param name [const char*] Name of a variable.
+         * @param value [bool] A variable which will be printed.
+         * @return [Assert&] reference to Assert object.
          */
 
         Assert& Variable(const char* const name, bool value) {
@@ -108,9 +108,9 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_PP_EXPAND_ARGS_N
- * @brief Creates N function calls to op
- * @param op -> Function to which calls will be generated
- * @param aN -> Parameter which will be passed to N-th function call
+ * @brief Creates N function calls to op.
+ * @param op -> Function to which calls will be generated.
+ * @param aN -> Parameter which will be passed to N-th function call.
  */
 
 #define BALD_PP_EXPAND_ARGS_1(op, a1)                                op(a1)
@@ -124,7 +124,7 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_PP_JOIN
- * @brief joins two params
+ * @brief joins two params.
  */
 
 #define BALD_PP_JOIN(x, y)                    BALD_JOIN_HELPER(x, y)
@@ -132,7 +132,7 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_PP_NUM_ARGS
- * @brief Returns number of arguments passed to a macro, but no more than 10
+ * @brief Returns number of arguments passed to a macro, but no more than 10.
  */
 
 #define BALD_PP_NUM_ARGS(...)  BALD_PP_NUM_ARGS_HELPER(__VA_ARGS__, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0)
@@ -147,34 +147,34 @@ namespace Bald::Debug {
 
 /**
  * @def BALD_ASSERT_IMPL_VARS
- * @brief Expands arguments and puts a breakpoint after assert is printed
+ * @brief Expands arguments and puts a breakpoint after assert is printed.
  */
 
 #define BALD_ASSERT_IMPL_VARS(...)                             BALD_PP_EXPAND_ARGS(BALD_ASSERT_IMPL_VAR, __VA_ARGS__), BALD_BREAKPOINT; }
 
 /**
  * @def BALD_ASSERT_IMPL_VAR
- * @brief Generates a call to a function which will print the name and value of the variable
+ * @brief Generates a call to a function which will print the name and value of the variable.
  */
 
 #define BALD_ASSERT_IMPL_VAR(variable)                         .Variable("" #variable "", variable)
 
 /**
  * @def BALD_ASSERT_IMPL
- * @brief Implements code to handle an assertion
- * @param condition -> A condition which we want to assure is true
- * @param format -> The format(in printf style) in which message will be printed
- * @param ... -> Variables which will be put into the massage
+ * @brief Implements code to handle an assertion.
+ * @param condition -> A condition which we want to assure is true.
+ * @param format -> The format(in printf style) in which message will be printed.
+ * @param ... -> Variables which will be put into the massage.
  */
 
 #define BALD_ASSERT_IMPL(condition, format, ...)     if(!(condition))  { ::Bald::Debug::Assert(BALD_SOURCE_INFO, "Assertion \"" #condition "\" failed. " format, __VA_ARGS__) BALD_ASSERT_IMPL_VARS
 
 /**
  * @def BALD_ASSERT
- * @brief Interface to use bald assertions, and provides default formatting -> "[name] \n [message]". If you want to use your own formatting use  BALD_ASSERT_IMPL
- * @param condition -> A condition which we want to assure is true
- * @param name -> A name of function/class/method in which assert is used
- * @param message -> A message that will be printed if a condition is false
+ * @brief Interface to use bald assertions, and provides default formatting -> "[name] \n [message]". If you want to use your own formatting use  BALD_ASSERT_IMPL.
+ * @param condition -> A condition which we want to assure is true.
+ * @param name -> A name of function/class/method in which assert is used.
+ * @param message -> A message that will be printed if a condition is false.
  */
 
 #define BALD_ASSERT(condition, name, message, ...) BALD_ASSERT_IMPL(condition, "[%s]\n%s ", name, message)(__VA_ARGS__)
