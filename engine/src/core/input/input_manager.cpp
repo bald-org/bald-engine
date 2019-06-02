@@ -42,27 +42,42 @@ namespace Bald::Input {
     }
 
     void InputManager::EmitKeyPressedEvent(unsigned keycode, bool isRepeated) noexcept {
-        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        if(keycode >= MAX_KEYS) {
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            assert(keycode >= MAX_KEYS);
+        }
         else Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
     }
 
     void InputManager::EmitKeyTypedEvent(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        if(keycode >= MAX_KEYS) {
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            assert(keycode >= MAX_KEYS);
+        }
         else Bald::EventManager::Emit<KeyTypedEvent>(keycode);
     }
 
     void InputManager::EmitKeyReleasedEvent(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) CORE_LOG_WARN("[InputManager] Wrong key id");
+        if(keycode >= MAX_KEYS) {
+            CORE_LOG_WARN("[InputManager] Wrong key id");
+            assert(keycode >= MAX_KEYS);
+        }
         else Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
     }
 
     void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        if(buttoncode >= MAX_MOUSE_BUTTONS) {
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            assert(buttoncode >= MAX_MOUSE_BUTTONS);
+        }
         else Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
     }
 
     void InputManager::EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+        if(buttoncode >= MAX_MOUSE_BUTTONS) {
+            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
+            assert(buttoncode >= MAX_MOUSE_BUTTONS);
+        }
         else Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
     }
 
