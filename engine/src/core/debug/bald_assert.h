@@ -86,7 +86,7 @@ namespace Bald::Debug {
          */
 
         Assert& Variable(const char* const name, bool value) {
-            std::cout << name << " = " << ( value ? "true" : "false" );
+            std::cout << name << " = " << ( value ? "true" : "false" ) << std::endl;
             return *this;
         }
     };
@@ -97,7 +97,7 @@ namespace Bald::Debug {
  * @brief Instruction that emits SIGTRAP signal.
  */
 
-#define BALD_BREAKPOINT std::raise(SIGTRAP);
+#define BALD_BREAKPOINT std::raise(SIGTRAP)
 
 /**
  * @def BALD_SOURCE_INFO
@@ -150,7 +150,7 @@ namespace Bald::Debug {
  * @brief Expands arguments and puts a breakpoint after assert is printed.
  */
 
-#define BALD_ASSERT_IMPL_VARS(...)                             BALD_PP_EXPAND_ARGS(BALD_ASSERT_IMPL_VAR, __VA_ARGS__), BALD_BREAKPOINT; }
+#define BALD_ASSERT_IMPL_VARS(...)                             BALD_PP_EXPAND_ARGS(BALD_ASSERT_IMPL_VAR, __VA_ARGS__), BALD_BREAKPOINT
 
 /**
  * @def BALD_ASSERT_IMPL_VAR
@@ -167,7 +167,7 @@ namespace Bald::Debug {
  * @param ... -> Variables which will be put into the massage.
  */
 
-#define BALD_ASSERT_IMPL(condition, format, ...)     if(!(condition))  { ::Bald::Debug::Assert(BALD_SOURCE_INFO, "Assertion \"" #condition "\" failed. " format, __VA_ARGS__) BALD_ASSERT_IMPL_VARS
+#define BALD_ASSERT_IMPL(condition, format, ...)     if(!(condition))   ::Bald::Debug::Assert(BALD_SOURCE_INFO, "Assertion \"" #condition "\" failed. " format, __VA_ARGS__) BALD_ASSERT_IMPL_VARS
 
 /**
  * @def BALD_ASSERT
@@ -177,7 +177,7 @@ namespace Bald::Debug {
  * @param message -> A message that will be printed if a condition is false.
  */
 
-#define BALD_ASSERT(condition, name, message, ...) BALD_ASSERT_IMPL(condition, "[%s]\n%s ", name, message)(__VA_ARGS__)
+#define BALD_ASSERT(condition, name, message, ...) BALD_ASSERT_IMPL(condition, "[%s] %s ", name, message)(__VA_ARGS__)
 
 
 #else
