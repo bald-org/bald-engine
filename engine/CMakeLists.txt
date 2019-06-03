@@ -11,10 +11,10 @@ set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
 
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -75,7 +75,6 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/graphics/opengl/imgui/imgui_impl_opengl3.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
@@ -94,7 +93,7 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine  glad glfw glm spdlog imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine glad glfw glm spdlog imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
