@@ -31,9 +31,7 @@ namespace Bald::Debug {
 
         // Setup Dear ImGui style
         ImGui::StyleColorsDark();
-        //ImGui::StyleColorsClassic();
 
-        // When viewports are enabled we tweak WindowRounding/WindowBg so platform windows can look identical to regular ones.
         ImGuiStyle& style = ImGui::GetStyle();
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
@@ -42,24 +40,22 @@ namespace Bald::Debug {
         }
 
         Application& app = Application::GetApplication();
-
-        // Setup Platform/Renderer bindings
         ImGui_ImplGlfw_InitForOpenGL(app.GetWindow()->GetWindow(), true);
 
-#ifdef TRAVIS
+        #ifdef TRAVIS
         ImGui_ImplOpenGL2_Init();
-#else
+        #else
         ImGui_ImplOpenGL3_Init("#version 330");
-#endif
+        #endif
 
     }
 
     void ImGuiLayer::OnDetach() noexcept {
-#ifdef TRAVIS
+        #ifdef TRAVIS
         ImGui_ImplOpenGL2_Shutdown();
-#else
+        #else
         ImGui_ImplOpenGL3_Shutdown();
-#endif
+        #endif
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
@@ -68,15 +64,46 @@ namespace Bald::Debug {
 
     void ImGuiLayer::OnRender() noexcept {
         static bool show = true;
+        static bool my_tool_active = true;
+        static float my_color[4];
+
         ImGui::ShowDemoWindow(&show);
+
+        ImGui::Begin("My First Tool", &my_tool_active, ImGuiWindowFlags_MenuBar);
+        if (ImGui::BeginMenuBar())
+        {
+            if (ImGui::BeginMenu("File"))
+            {
+                if (ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+                if (ImGui::MenuItem("Save", "Ctrl+S"))   { /* Do stuff */ }
+                if (ImGui::MenuItem("Close", "Ctrl+W"))  { my_tool_active = false; }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+
+        // Edit a color (stored as ~4 floats)
+        ImGui::ColorEdit4("Color", my_color);
+
+        // Plot some values
+        const float my_values[] = { 0.2f, 0.1f, 1.0f, 0.5f, 0.9f, 2.2f };
+        ImGui::PlotLines("Frame Times", my_values, IM_ARRAYSIZE(my_values));
+
+        // Display contents in a scrolling region
+        ImGui::TextColored(ImVec4(1,1,0,1), "Important Stuff");
+        ImGui::BeginChild("Scrolling");
+        for (int n = 0; n < 50; n++)
+            ImGui::Text("%04d: Some text", n);
+        ImGui::EndChild();
+        ImGui::End();
     }
 
     void ImGuiLayer::Begin() noexcept {
-#ifdef TRAVIS
+        #ifdef TRAVIS
         ImGui_ImplOpenGL2_NewFrame();
-#else
+        #else
         ImGui_ImplOpenGL3_NewFrame();
-#endif
+        #endif
 
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
@@ -89,11 +116,11 @@ namespace Bald::Debug {
         io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow()->GetWidth()), static_cast<float>(app.GetWindow()->GetHeight()));
 
         ImGui::Render();
-#ifdef TRAVIS
+        #ifdef TRAVIS
         ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
-#else
+        #else
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-#endif
+        #endif
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
