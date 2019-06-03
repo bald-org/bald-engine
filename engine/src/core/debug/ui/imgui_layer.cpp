@@ -104,6 +104,4 @@ namespace Bald::Debug {
         }
     }
 
-
-
 } // END OF NAMESPACE Bald::Debug
