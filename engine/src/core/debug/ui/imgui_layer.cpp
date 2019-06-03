@@ -4,7 +4,13 @@
 
 #include "imgui_layer.h"
 #include "imgui.h"
+
+#ifdef TRAVIS
+#include "vendor/imgui/examples/imgui_impl_opengl2.h"
+#else
 #include "vendor/imgui/examples/imgui_impl_opengl3.h"
+#endif
+
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 #include "application.h"
 
@@ -39,11 +45,21 @@ namespace Bald::Debug {
 
         // Setup Platform/Renderer bindings
         ImGui_ImplGlfw_InitForOpenGL(app.GetWindow()->GetWindow(), true);
+
+#ifdef TRAVIS
+        ImGui_ImplOpenGL2_Init();
+#else
         ImGui_ImplOpenGL3_Init("#version 330");
+#endif
+
     }
 
     void ImGuiLayer::OnDetach() noexcept {
+#ifdef TRAVIS
+        ImGui_ImplOpenGL2_Shutdown();
+#else
         ImGui_ImplOpenGL3_Shutdown();
+#endif
         ImGui_ImplGlfw_Shutdown();
         ImGui::DestroyContext();
     }
@@ -56,7 +72,12 @@ namespace Bald::Debug {
     }
 
     void ImGuiLayer::Begin() noexcept {
+#ifdef TRAVIS
+        ImGui_ImplOpenGL2_NewFrame();
+#else
         ImGui_ImplOpenGL3_NewFrame();
+#endif
+
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
     }
@@ -68,7 +89,11 @@ namespace Bald::Debug {
         io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow()->GetWidth()), static_cast<float>(app.GetWindow()->GetHeight()));
 
         ImGui::Render();
+#ifdef TRAVIS
+        ImGui_ImplOpenGL2_RenderDrawData(ImGui::GetDrawData());
+#else
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
 
         if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
         {
