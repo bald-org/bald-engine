@@ -100,6 +100,9 @@ namespace Bald::Graphics {
 
         glfwSetScrollCallback(m_Window, Input::scroll_callback);
 
+
+        m_VSync ? glfwSwapInterval(1) : glfwSwapInterval(0);
+
         CORE_LOG_INFO("[Window] Initialization was successful");
 
         return true;

@@ -81,7 +81,7 @@ namespace Bald::Debug {
 
         ImGui::BeginChild("FPS");
         if(timer.ElapsedSeconds() >= 1.0) {
-            fps = frameCounter;
+            fps = static_cast<unsigned>(frameCounter/timer.ElapsedSeconds());
             frameCounter = 0;
             timer.Reset();
         }
