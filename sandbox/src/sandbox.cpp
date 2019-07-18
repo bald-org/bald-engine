@@ -43,10 +43,10 @@ public:
 
     void OnAttach() noexcept override {
 
-        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyTypedEvent& e) {
+        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyPressedEvent& e) {
             static bool isMenuUp = false;
 
-            if(e.GetKeyCode() == GLFW_KEY_ESCAPE) {
+            if(e.GetKeyCode() == GLFW_KEY_ESCAPE && !e.IsRepeated()) {
                 if(!isMenuUp) {
                     Bald::Application& app = Bald::Application::GetApplication();
                     app.PushOverlay<DebugLayer>();
