@@ -32,8 +32,8 @@ namespace Bald {
     public:
 
         /**
-        * @fn       EventManager
-        * @brief    EventManager constructor. Its role is to increase the static reference counter variable
+        * @fn EventManager
+        * @brief EventManager constructor. Its role is to increase the static reference counter variable
         */
 
         EventManager();
@@ -46,10 +46,10 @@ namespace Bald {
         ~EventManager();
 
         /**
-        * @fn                    Subscribe
-        * @brief                 Templated function which allows you to subscribe to any kind of engine's event
-        * @param [HandleType]    type -> Manner in which the function will be handled e.g. synchronous/asynchronous
-        * @param [F&&]           callback -> Function with which you subscribe to an event. It MUST take Event reference as the first parameter
+        * @fn Subscribe
+        * @brief Templated function which allows you to subscribe to any kind of engine's event
+        * @param [HandleType] type -> Manner in which the function will be handled e.g. synchronous/asynchronous
+        * @param [F&&] callback -> Function with which you subscribe to an event. It MUST take Event reference as the first parameter
         * @param [Args&& ...]    args -> Function's arguments
         */
 
@@ -57,17 +57,17 @@ namespace Bald {
         unsigned Subscribe(HandleType type, F&& callback, Args&& ... args);
 
         /**
-        * @fn                    Unsubscribe
-        * @brief                 Templated function which allows you to unsubscribe from any kind of engine's event
-        * @param [unsigned]      id -> Handler id, meaning id of a function you want to get rid of
+        * @fn Unsubscribe
+        * @brief Templated function which allows you to unsubscribe from any kind of engine's event
+        * @param [unsigned] id -> Handler id, meaning id of a function you want to get rid of
         */
 
         template<class T>
         void Unsubscibe(unsigned id) noexcept;
 
         /**
-        * @fn                    Emit
-        * @brief                 Templated function which is used to emit events of any kind
+        * @fn Emit
+        * @brief Templated function which is used to emit events of any kind
         * @param [Args&& ...]    args -> Arguments for event's constructor (can be left blank)
         */
 
@@ -75,16 +75,16 @@ namespace Bald {
         static void Emit(Args&& ... args);
 
         /**
-        * @fn                    IsEventInQueue
-        * @brief                 Templated function checks whether or not certain event was emitted
+        * @fn IsEventInQueue
+        * @brief Templated function checks whether or not certain event was emitted
         */
 
         template<class T>
         [[nodiscard]] static bool IsEventInQueue() noexcept;
 
         /**
-        * @fn                    RemoveAllCallbacksByType
-        * @brief                 Templated function which removes all event handlers for a specified event
+        * @fn RemoveAllCallbacksByType
+        * @brief Templated function which removes all event handlers for a specified event
         */
 
         template<class T>
@@ -105,9 +105,9 @@ namespace Bald {
         static void ClearEventQueue() noexcept;
 
         /**
-        * @fn                    Flush
-        * @brief                 This function runs callbacks for all events that are currently in an event queue
-        * @param [int]           n -> Number of events you want to proceed. If n == -1 (or argumeter left blank)
+        * @fn Flush
+        * @brief This function runs callbacks for all events that are currently in an event queue
+        * @param [int] n -> Number of events you want to proceed. If n == -1 (or argumeter left blank)
         *                             this will iterate through whole queue
         */
 
@@ -118,7 +118,8 @@ namespace Bald {
         /**
          * @fn Init
          * @brief Initialize Event Manager object
-         * @return [bool] true if initialization was successful otherwise false
+         * @return [bool] true -> if initialization was successful
+         *                false -> if initialization was not successful
          */
 
         bool Init();

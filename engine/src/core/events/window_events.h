@@ -21,8 +21,8 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   WindowEvent
-        * @brief                Default constructor.
+        * @fn WindowEvent
+        * @brief Default constructor.
         */
 
         WindowEvent() = default;
@@ -41,10 +41,10 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   WindowResizedEvent
-        * @brief                Constructor.
-        * @param [int]          width  -> Window's width.
-        * @param [int]          height -> Window's height.
+        * @fn WindowResizedEvent
+        * @brief Constructor.
+        * @param [int] width  -> Window's width.
+        * @param [int] height -> Window's height.
         */
 
         explicit WindowResizedEvent(int windowWidth, int windowHeight)
@@ -53,25 +53,25 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   GetWidth
-        * @brief                Width getter.
-        * @return [int]         Window's width during event emission.
+        * @fn GetWidth
+        * @brief Width getter.
+        * @return [int] Window's width during event emission.
         */
 
         [[nodiscard]] inline int GetWidth() const noexcept { return m_WindowSize.first; }
 
         /**
-        * @fn                   GetHeight
-        * @brief                Height getter.
-        * @return [int]         Window's height during event emission.
+        * @fn GetHeight
+        * @brief Height getter.
+        * @return [int] Window's height during event emission.
         */
 
         [[nodiscard]] inline int GetHeight() const noexcept { return m_WindowSize.second; }
 
         /**
-        * @fn                               GetSize
-        * @brief                            Returns window's width and height as pair.
-        * @return [std::pair<int,int>]      width, height coordinates as pair.
+        * @fn GetSize
+        * @brief Returns window's width and height as pair.
+        * @return [std::pair<int,int>] width, height coordinates as pair.
         */
 
         [[nodiscard]] inline std::pair<int, int> GetSize() const noexcept { return m_WindowSize; }
@@ -92,8 +92,8 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   WindowClosedEvent
-        * @brief                Default constructor.
+        * @fn WindowClosedEvent
+        * @brief Default constructor.
         */
 
         WindowClosedEvent() = default;
