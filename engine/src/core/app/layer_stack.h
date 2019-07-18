@@ -225,7 +225,7 @@ namespace Bald {
 
     template<typename L, typename ... Args>
     void LayerStack::PushLayer(Args&& ... args) {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{args ...});
         ++m_ForAdditionAmount;
         EventManager::Emit<LayerPushedEvent>();
@@ -233,21 +233,21 @@ namespace Bald {
 
     template<typename L, typename ... Args>
     void LayerStack::PushOverlay(Args&& ... args) {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace_back(new L{args ...});
         EventManager::Emit<LayerPushedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopLayer() {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
         EventManager::Emit<LayerPoppedEvent>();
     }
@@ -269,7 +269,7 @@ namespace Bald {
     void LayerStack::PushOverlayImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing overlay immediately...");
 
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         auto* overlay = new L{args ...};
         overlay->OnAttach();
         m_LayerStack.emplace_back(overlay);
@@ -281,7 +281,7 @@ namespace Bald {
     void LayerStack::PopLayerImmediately() {
         CORE_LOG_INFO("[LayerStack] Popping layer immediately...");
 
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
 
         auto it = m_LayerStack.begin();
 
@@ -303,7 +303,7 @@ namespace Bald {
 
     template<typename L>
     void LayerStack::PopOverlayImmediately() {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         CORE_LOG_INFO("[LayerStack] Popping overlay immediately...");
 
 

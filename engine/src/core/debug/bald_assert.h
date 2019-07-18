@@ -10,7 +10,7 @@
 #include <cstdio>
 #include "logger.h"
 
-#define BALD_STATIC_ASSERT(expr, mess) static_assert(expr, mess)
+#define BALD_STATIC_ASSERT static_assert
 
 #ifdef DEBUG
 
@@ -33,9 +33,9 @@ namespace Bald::Debug {
          */
 
         SourceInfo(std::string&& file, int line) :
-                _file(std::move(file)), _line(line) { };
-        const std::string _file; /**< name of a file where assertion occurred. >*/
-        const int _line;         /**< number of line where assertion occurred. >*/
+                m_file(std::move(file)), m_line(line) { };
+        const std::string m_file; /**< name of a file where assertion occurred. >*/
+        const int m_line;         /**< number of line where assertion occurred. >*/
     };
 
     /**
@@ -57,7 +57,7 @@ namespace Bald::Debug {
 
         template<typename... Args>
         Assert(const SourceInfo& sourceInfo, const char* format, Args... args) {
-            CORE_LOG_ERROR(sourceInfo._file + " (" + std::to_string(sourceInfo._line) + ") ");
+            CORE_LOG_ERROR(sourceInfo.m_file + " (" + std::to_string(sourceInfo.m_line) + ") ");
             printf(format, args...);
             printf("\n");
         }
@@ -187,7 +187,3 @@ namespace Bald::Debug {
 #define BALD_ASSERT_IMPL_VARS
 
 #endif
-
-
-
-
