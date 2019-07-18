@@ -21,8 +21,8 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   LayerPushedEvent
-        * @brief                Default constructor.
+        * @fn LayerPushedEvent
+        * @brief Default constructor.
         */
 
         LayerPushedEvent() = default;
@@ -41,8 +41,8 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   LayerPoppedEvent
-        * @brief                Default constructor.
+        * @fn LayerPoppedEvent
+        * @brief Default constructor.
         */
 
         LayerPoppedEvent() = default;
