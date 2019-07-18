@@ -41,10 +41,10 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   MouseMovedEvent
-        * @brief                Constructor.
-        * @param [int]          xpos -> specific mouse position.
-        * @param [int]          ypos -> specific mouse position.
+        * @fn MouseMovedEvent
+        * @brief Constructor.
+        * @param [int] xpos -> specific mouse position.
+        * @param [int] ypos -> specific mouse position.
         */
 
         explicit MouseMovedEvent(int mouseX, int mouseY)
@@ -53,24 +53,24 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   GetX
-        * @brief                Mouse x coordinate getter.
+        * @fn GetX
+        * @brief Mouse x coordinate getter.
         * @return [int]         Mouse x coordinate.
         */
 
         [[nodiscard]] inline int GetX() const noexcept { return m_MousePos.first; }
 
         /**
-        * @fn                   GetY
-        * @brief                Mouse y coordinate getter.
+        * @fn GetY
+        * @brief Mouse y coordinate getter.
         * @return [int]         Mouse y coordinate.
         */
 
         [[nodiscard]] inline int GetY() const noexcept { return m_MousePos.second; }
 
         /**
-        * @fn                               GetMousePosition
-        * @brief                            Mouse x, y coordinates getter.
+        * @fn GetMousePosition
+        * @brief Mouse x, y coordinates getter.
         * @return [std::pair<int,int>]      x, y coordinates as pair.
         */
 
@@ -94,10 +94,10 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   MouseScrolledEvent
-        * @brief                Constructor.
-        * @param [double]       xoffset -> specific mouse offset.
-        * @param [double]       yoffset -> specific mouse offset.
+        * @fn MouseScrolledEvent
+        * @brief Constructor.
+        * @param [double] xoffset -> specific mouse offset.
+        * @param [double] yoffset -> specific mouse offset.
         */
 
         explicit MouseScrolledEvent(double xoffset, double yoffset)
@@ -106,24 +106,24 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   GetOffsetX
-        * @brief                Mouse x offset getter.
+        * @fn GetOffsetX
+        * @brief Mouse x offset getter.
         * @return [double]      Mouse x offset.
         */
 
         [[nodiscard]] inline double GetOffsetX() const noexcept { return m_MouseOff.first; }
 
         /**
-        * @fn                   GetOffsetY
-        * @brief                Mouse y offset getter.
+        * @fn GetOffsetY
+        * @brief Mouse y offset getter.
         * @return [double]      Mouse y offset.
         */
 
         [[nodiscard]] inline double GetOffsetY() const noexcept { return m_MouseOff.second; }
 
         /**
-        * @fn                                   GetMouseOffset
-        * @brief                                Mouse x, y offset getter.
+        * @fn GetMouseOffset
+        * @brief Mouse x, y offset getter.
         * @return [std::pair<double,double>]    x, y offset as pair.
         */
 
@@ -145,26 +145,36 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   MouseButtonPressedEvent
-        * @brief                Constructor.
-        * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn MouseButtonPressedEvent
+        * @brief Constructor.
+        * @param [int] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
-        explicit MouseButtonPressedEvent(unsigned buttoncode)
-            : m_ButtonCode{buttoncode} {}
+        explicit MouseButtonPressedEvent(unsigned buttoncode, bool isRepeated = false)
+            : m_ButtonCode{buttoncode}, m_IsRepeated(isRepeated) {}
 
     public:
 
         /**
-        * @fn                   GetKeyCode
-        * @brief                Key code getter.
+        * @fn GetButtonCode
+        * @brief Key code getter.
         * @return [int]         Key code.
         */
 
-        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
+        [[nodiscard]] inline unsigned GetButtonCode() const noexcept { return m_ButtonCode; }
+
+        /**
+        * @fn IsRepeated
+        * @brief Getter which tells you whether or not the key press was a repeated one.
+        * @return [bool] true -> key is in repeated state
+        *                false -> key is in non repeated state
+        */
+
+        [[nodiscard]] bool IsRepeated() const noexcept { return m_IsRepeated; }
 
     private:
         const unsigned m_ButtonCode; /* < We save key code simply as an integer. */
+        const bool m_IsRepeated; /* < Bool which holds repeated state */
     }; // END OF CLASS MouseButtonPressedEvent
 
     /**
@@ -179,9 +189,9 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   MouseButtonReleasedEvent
-        * @brief                Constructor.
-        * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn MouseButtonReleasedEvent
+        * @brief Constructor.
+        * @param [int] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
         explicit MouseButtonReleasedEvent(unsigned buttoncode)
@@ -190,48 +200,15 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   GetKeyCode
-        * @brief                Key code getter.
+        * @fn GetButtonCode
+        * @brief Key code getter.
         * @return [int]         Key code.
         */
 
-        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
+        [[nodiscard]] inline unsigned GetButtonCode() const noexcept { return m_ButtonCode; }
 
     private:
         const unsigned m_ButtonCode; /* < We save key code simply as an integer. */
     }; // END OF CLASS MouseButtonReleasedEvent
-
-    /**
-     * @class MouseButtonTypedEvent
-     * @brief Specific event implementation for mouse button typed type event.
-     */
-
-    class MouseButtonTypedEvent : public MouseEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    protected:
-
-        /**
-        * @fn                   MouseButtonTypedEvent
-        * @brief                Constructor.
-        * @param [int]          keycode -> Specific key code. Right now this is GLFW's key id.
-        */
-
-        explicit MouseButtonTypedEvent(unsigned buttoncode)
-            : m_ButtonCode{buttoncode} {}
-
-    public:
-
-        /**
-        * @fn                   GetKeyCode
-        * @brief                Key code getter.
-        * @return [int]         Key code.
-        */
-
-        [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_ButtonCode; }
-    private:
-        const unsigned m_ButtonCode; /* < We save key code simply as an integer. */
-    }; // END OF CLASS MouseButtonTypedEvent
 
 } // END OF NAMESPACE Bald
