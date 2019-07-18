@@ -67,6 +67,7 @@ namespace Bald::Graphics {
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+        glfwSetWindowUserPointer(m_Window, this);
         if(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
             CORE_LOG_ERROR("[Window] Failed to load GLAD!");
             exit(1);
