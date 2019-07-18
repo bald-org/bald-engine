@@ -9,12 +9,12 @@ set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}

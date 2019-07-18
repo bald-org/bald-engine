@@ -18,6 +18,7 @@ namespace Bald::Debug {
     GENERATE_BODY(DERIVED)
     public:
         ImGuiLayer() = default;
+
         ~ImGuiLayer() override = default;
 
         void OnAttach() noexcept override;
