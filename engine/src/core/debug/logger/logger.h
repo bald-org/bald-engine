@@ -8,20 +8,78 @@
 
 namespace Bald::Debug {
 
+    /**
+     * @class Logger
+     * @brief Prints formatted messages to console.
+     */
+
     class Logger {
     public:
+
+        /**
+         * @fn Logger
+         * @brief Constructs new logger object.
+         * @param name [std::string] -> Name of logger.
+         */
+
         explicit Logger(std::string name): m_Name(std::move(name)) {}
+
+        /**
+         * @fn Logger
+         * @brief Default constructor of logger class
+         */
+
         explicit Logger() = default;
 
-        void setName(const std::string& name);
+        /**
+         * @fn setName
+         * @brief Updates logger's name.
+         * @param name
+         */
+
+        void SetName(const std::string& name);
+
+        /**
+         * @fn trace
+         * @brief Prints message with white color.
+         * @param mess [std::string] content of the message.
+         */
 
         void trace(const std::string& mess) const noexcept;
+
+        /**
+         * @fn info
+         * @brief Prints message with green color.
+         * @param mess [std::string] content of the message.
+         */
+
         void info(const std::string& mess) const noexcept;
+
+        /**
+         * @fn warn
+         * @brief Prints message with yellow color.
+         * @param mess [std::string] content of the message.
+         */
+
         void warn(const std::string& mess) const noexcept;
+
+        /**
+         * @fn error
+         * @brief Prints message with red color.
+         * @param mess [std::string] content of the message.
+         */
+
         void error(const std::string& mess) const noexcept;
 
     private:
-        void print(const std::string& mess) const noexcept;
+
+        /**
+         * @fn Print
+         *
+         * @param mess
+         */
+
+        void Print(const std::string& mess) const noexcept;
 
     private:
         std::string m_Name;

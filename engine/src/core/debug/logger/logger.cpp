@@ -27,32 +27,32 @@ namespace Bald::Debug {
 
     void Logger::trace(const std::string& mess) const noexcept {
         reset();
-        print(mess);
+        Print(mess);
     }
 
     void Logger::info(const std::string& mess) const noexcept {
         green();
-        print(mess);
+        Print(mess);
     }
 
     void Logger::warn(const std::string& mess) const noexcept {
         yellow();
-        print(mess);
+        Print(mess);
     }
 
     void Logger::error(const std::string& mess) const noexcept {
         red();
-        print(mess);
+        Print(mess);
     }
 
-    void Logger::print(const std::string& mess) const noexcept {
+    void Logger::Print(const std::string& mess) const noexcept {
         std::string time = static_cast<std::string>(Utils::Time::GetCurrentTime());
         printf("[%s] ", time.c_str());
         printf("%s: %s\n", m_Name.c_str(), mess.c_str());
         reset();
     }
 
-    void Logger::setName(const std::string& name) {
+    void Logger::SetName(const std::string& name) {
         m_Name = name;
     }
 

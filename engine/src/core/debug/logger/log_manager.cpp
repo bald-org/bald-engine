@@ -15,11 +15,9 @@ namespace Bald::Debug {
         m_CoreLogger = std::make_shared<Logger>();
         m_GameLogger = std::make_shared<Logger>();
 
-        m_CoreLogger->setName("BALD");
+        m_CoreLogger->SetName("BALD");
 
-        m_GameLogger->setName("App");
-
-
+        m_GameLogger->SetName("App");
     }
 
-} // END OF NAMESPACE Bald
+}
