@@ -41,7 +41,8 @@ namespace Bald::Debug {
         }
 
         Application& app = Application::GetApplication();
-        ImGui_ImplGlfw_InitForOpenGL(app.GetWindow()->GetWindow(), true);
+        auto window = app.GetWindow().lock();
+        ImGui_ImplGlfw_InitForOpenGL(window->GetWindow(), true);
 
         #ifdef TRAVIS
         ImGui_ImplOpenGL2_Init();
@@ -104,9 +105,10 @@ namespace Bald::Debug {
 
     void ImGuiLayer::End() noexcept {
         Application& app = Application::GetApplication();
+        auto window = app.GetWindow().lock();
 
         ImGuiIO& io = ImGui::GetIO();
-        io.DisplaySize = ImVec2(static_cast<float>(app.GetWindow()->GetWidth()), static_cast<float>(app.GetWindow()->GetHeight()));
+        io.DisplaySize = ImVec2(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight()));
 
         ImGui::Render();
         #ifdef TRAVIS

@@ -124,7 +124,7 @@ namespace Bald {
          * @return [std::unique_ptr<Graphics::Window>] Pointer to window instance
          */
 
-        [[nodiscard]] inline std::unique_ptr<Graphics::Window>& GetWindow() noexcept;
+        [[nodiscard]] inline std::weak_ptr<Graphics::Window> GetWindow() noexcept;
 
         /**
          * @fn Create
@@ -170,7 +170,7 @@ namespace Bald {
     private:
         bool m_Running; /**< State of the application */
         std::unique_ptr<EventManager> m_EventManager; /** < Pointer to Main Event Manager >*/
-        std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
+        std::shared_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
         LayerStack m_LayerStack; /**< Main layer stack */
 
     private:
@@ -218,7 +218,7 @@ namespace Bald {
         m_LayerStack.PopOverlayImmediately<L>();
     }
 
-    inline std::unique_ptr<Graphics::Window>& Application::GetWindow() noexcept {
+    inline std::weak_ptr<Graphics::Window> Application::GetWindow() noexcept {
         return m_Window;
     }
 
