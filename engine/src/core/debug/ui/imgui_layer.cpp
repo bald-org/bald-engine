@@ -106,8 +106,8 @@ namespace Bald::Debug {
 
     void ImGuiLayer::End() noexcept {
         Application& app = Application::GetApplication();
+        ImGuiIO& io = ImGui::GetIO();
         if(auto window = app.GetWindow().lock()) {
-            ImGuiIO& io = ImGui::GetIO();
             io.DisplaySize = ImVec2(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight()));
         }
 
