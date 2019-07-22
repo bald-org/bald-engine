@@ -5,15 +5,15 @@
 #pragma once
 
 #include <memory>
-#include "window.h"
 #include "layer_stack.h"
+#include "graphics/window.h"
 
 namespace Bald {
 
     /**
      * @class Application
      * @brief Simple application interface. This is the class that one should derive from
-     *        when building an application using Bald Engine
+     *        when building an application using Bald Engine.
      */
 
     class Application {
@@ -119,6 +119,14 @@ namespace Bald {
         void PopOverlayImmediately();
 
         /**
+         * @fn GetWindow
+         * @brief Window getter.
+         * @return [std::unique_ptr<Graphics::Window>] Pointer to window instance
+         */
+
+        [[nodiscard]] inline std::weak_ptr<Graphics::Window> GetWindow() noexcept;
+
+        /**
          * @fn Create
          * @brief Creates an application. This function should be implemented on the client's side.
          * @return [Application*] Pointer to application instance
@@ -132,7 +140,7 @@ namespace Bald {
          * @return [Application*] Pointer to application instance
          */
 
-        [[nodiscard]] static Application& GetApplication() noexcept;
+        [[nodiscard]] inline static Application& GetApplication() noexcept;
 
         /**
          * @fn Run
@@ -162,7 +170,7 @@ namespace Bald {
     private:
         bool m_Running; /**< State of the application */
         std::unique_ptr<EventManager> m_EventManager; /** < Pointer to Main Event Manager >*/
-        std::unique_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
+        std::shared_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
         LayerStack m_LayerStack; /**< Main layer stack */
 
     private:
@@ -208,6 +216,14 @@ namespace Bald {
     template<class L>
     void Application::PopOverlayImmediately() {
         m_LayerStack.PopOverlayImmediately<L>();
+    }
+
+    inline std::weak_ptr<Graphics::Window> Application::GetWindow() noexcept {
+        return m_Window;
+    }
+
+    inline Application& Application::GetApplication() noexcept {
+        return *m_Instance;
     }
 
 } // END OF NAMESPACE Bald

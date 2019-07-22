@@ -4,6 +4,8 @@
 
 #include "bald.h"
 
+#include "imgui_layer.h"
+
 class DebugLayer : public Bald::Layer {
 GENERATE_BODY(DERIVED)
 public:
@@ -27,6 +29,8 @@ public:
     void OnDetach() noexcept override {}
 
     void OnUpdate() noexcept override {}
+
+    void OnRender() noexcept override {}
 
 };
 
@@ -61,14 +65,18 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
 public:
+
     Sandbox() {
         PushLayer<GameLayer>();
     }
+
     ~Sandbox() override = default;
 };
 

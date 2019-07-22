@@ -10,7 +10,6 @@
 
 #include "GLFW/glfw3.h"
 
-
 namespace Bald::Graphics {
 
     bool Window::m_GLFWInitialized = false;
@@ -101,6 +100,9 @@ namespace Bald::Graphics {
         glfwSetCursorPosCallback(m_Window, Input::cursor_position_callback);
 
         glfwSetScrollCallback(m_Window, Input::scroll_callback);
+
+
+        m_VSync ? glfwSwapInterval(1) : glfwSwapInterval(0);
 
         CORE_LOG_INFO("[Window] Initialization was successful");
 
