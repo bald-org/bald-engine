@@ -9,22 +9,22 @@
 namespace Bald::Platform::Graphics {
 
     /**
-     * @class Buffer
-     * @brief Simple OpenGL buffer abstraction.
+     * @class OpenGLBuffer
+     * @brief Simple OpenGL buffer implementation.
      */
 
-class OpenGLBuffer : public Bald::Graphics::Buffer {
+    class OpenGLBuffer : public Bald::Graphics::Buffer {
     public:
 
         /**
          * @fn OpenGLBuffer
          * @brief Creates a buffer object and initializes its data.
-         * @param [float*] data -> to initialize buffer
-         * @param [int] count -> number of elements in data
-         * @param [int] component_count -> number of components in data
+         * @param [float*] data -> to initialize buffer.
+         * @param [unsigned] count -> number of elements in data.
+         * @param [unsigned] component_count -> number of components in data.
          */
 
-        OpenGLBuffer(float* data, int count, int component_count) noexcept;
+        OpenGLBuffer(float* data, unsigned count, unsigned component_count) noexcept;
 
         /**
          * @fn ~OpenGLBuffer
@@ -53,11 +53,11 @@ class OpenGLBuffer : public Bald::Graphics::Buffer {
          * @return [unsigned int]
          */
 
-        [[nodiscard]] inline int GetComponentCount() const noexcept override { return m_ComponentCount; }
+        [[nodiscard]] inline unsigned GetComponentCount() const noexcept override { return m_ComponentCount; }
 
     private:
         unsigned m_BufferID;
-        int m_ComponentCount;
+        unsigned m_ComponentCount;
     }; // END OF CLASS OpenGLBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics
