@@ -31,7 +31,7 @@ public:
                 Bald::EventManager::Emit<Bald::WindowClosedEvent>();
             }
 
-            CORE_LOG_TRACE(std::string("Current position: [")
+            GAME_LOG_TRACE(std::string("Current position: [")
                                .append(std::to_string(position.x))
                                .append(", ")
                                .append(std::to_string(position.y))
@@ -43,6 +43,8 @@ public:
     void OnDetach() noexcept override {}
 
     void OnUpdate() noexcept override {}
+
+    void OnRender() noexcept override {}
 
 };
 

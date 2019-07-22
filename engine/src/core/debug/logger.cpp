@@ -17,7 +17,7 @@ namespace Bald {
         m_CoreLogger->set_level(spdlog::level::trace);
 
         m_GameLogger = spdlog::stdout_color_mt("APP");
-        m_CoreLogger->set_level(spdlog::level::trace);
+        m_GameLogger->set_level(spdlog::level::trace);
 
     }
 

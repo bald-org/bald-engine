@@ -4,16 +4,17 @@
 
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-#include "core/debug/logger.h"
 #include "core.h"
+#include "logger.h"
+#include "glad/glad.h"
+
+class GLFWwindow;
 
 namespace Bald::Graphics {
 
     /**
      * @class Window
-     * @brief Implementation of simple Window
+     * @brief Implementation of simple Window.
      */
 
     class Window {
@@ -21,12 +22,12 @@ namespace Bald::Graphics {
     public:
 
         /**
-         * @fn                      Window
-         * @brief                   window constructor
-         * @param [const char*]     title
-         * @param [int]             width
-         * @param [int]             height
-         * @param [bool]            vsync
+         * @fn Window
+         * @brief Window constructor.
+         * @param [const char*] title.
+         * @param [int] width.
+         * @param [int] height.
+         * @param [bool] vsync.
          */
 
         explicit Window(const char* title = "Window",
@@ -35,90 +36,90 @@ namespace Bald::Graphics {
                         bool VSync = false);
 
         /**
-         * @fn                      ~Window
-         * @brief                   destructor - terminates the m_Window
+         * @fn ~Window
+         * @brief Destructor - terminates the m_Window.
          */
 
         ~Window() noexcept;
 
 
         /**
-         * @fn                      Update
-         * @brief                   updates the window data i.a. poll events & swap buffers
+         * @fn Update
+         * @brief Updates the window data i.a. poll events & swap buffers.
          */
 
         void Update() noexcept;
 
 
         /**
-         * @fn                      Clear
-         * @brief                   clears buffer bit
+         * @fn Clear
+         * @brief Clears buffer bit.
          */
 
         void Clear() const noexcept;
 
 
         /**
-         * @fn                      SetVSync
-         * @param [bool]            enabled
-         * @brief                   sets VSync
+         * @fn SetVSync
+         * @brief Enables/disables VSync.
+         * @param [bool] enabled -> true/false.
          */
 
         void WindowSetVSync(bool enabled) noexcept;
 
 
         /**
-         * @fn                      ShouldClose
-         * @brief                   sets VSync
-         * @return [int]            glfwWindowShouldClose(m_Window)
+         * @fn ShouldClose
+         * @brief Sets VSync.
+         * @return [int] glfwWindowShouldClose(m_Window).
          */
 
         int ShouldClose() const noexcept;
 
         /**
-         * @fn                      GetWindow
-         * @brief                   returns m_Window component
-         * @return [GLFWwindow*]    pointer to the m_Window
+         * @fn GetWindow
+         * @brief GLFWwindow getter.
+         * @return [GLFWwindow*] pointer to the m_Window.
          */
 
         [[nodiscard]] inline GLFWwindow* GetWindow() const noexcept { return m_Window; }
 
         /**
-         * @fn                      GetTitle
-         * @brief                   returns m_Title component
-         * @return [const char*]    pointer to the m_Title
+         * @fn GetTitle
+         * @brief Title getter.
+         * @return [const char*] pointer to the m_Title.
          */
 
         [[nodiscard]] inline const char* GetTitle() const noexcept { return m_Title; }
 
         /**
-         * @fn                      GetWidth
-         * @brief                   returns the width of the Window
-         * @return [int]            m_Width component
+         * @fn GetWidth
+         * @brief Width getter.
+         * @return [int] m_Width component.
          */
 
         [[nodiscard]] inline int GetWidth() const noexcept { return m_Width; }
 
         /**
-         * @fn                      GetHeight
-         * @brief                   returns the height of the Window
-         * @return [int]            m_Height component
+         * @fn GetHeight
+         * @brief Height getter.
+         * @return [int] m_Height component.
          */
 
         [[nodiscard]] inline int GetHeight() const noexcept { return m_Height; }
 
         /**
-         * @fn                      GetVSync
-         * @brief                   returns the m_VSync
-         * @return [int]            m_VSync component
+         * @fn GetVSync
+         * @brief VSync Getter.
+         * @return [int] m_VSync component.
          */
 
         [[nodiscard]] inline int GetVSync() const noexcept { return m_VSync; }
 
         /**
-         * @fn                      GetAspectRatio
-         * @brief                   returns aspect ratio: width / height
-         * @return [float]
+         * @fn GetAspectRatio
+         * @brief Aspect ratio getter.
+         * @return [float] Aspect ratio.
          */
 
         [[nodiscard]] inline float GetAspectRatio() const noexcept {
@@ -128,17 +129,17 @@ namespace Bald::Graphics {
     private:
 
         /**
-         * @fn                      Init
-         * @brief                   attempts to initialize the window and returns success result (true/false)
-         * @return [bool]           true  -> Window has been initialized successfully
-         *                          false -> Window couldn't have been initialized
+         * @fn Init
+         * @brief Attempts to initialize the window and returns success result (true/false).
+         * @return [bool] true -> Window has been initialized successfully.
+         *                false -> Window couldn't have been initialized.
          */
 
         [[nodiscard]] bool Init() noexcept;
 
        /**
-        * @fn                      Shutdown
-        * @brief                   destroys the window
+        * @fn Shutdown
+        * @brief Destroys the window.
         */
 
        void Shutdown();

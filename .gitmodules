@@ -1,9 +1,6 @@
 [submodule "engine/vendor/google/googletest"]
 	path = engine/vendor/google/googletest
 	url = https://github.com/google/googletest.git
-[submodule "engine/vendor/cotire"]
-	path = engine/vendor/cotire
-	url = https://github.com/sakra/cotire
 [submodule "engine/vendor/glfw"]
 	path = engine/vendor/glfw
 	url = https://github.com/glfw/glfw.git
@@ -13,3 +10,6 @@
 [submodule "engine/vendor/glm"]
 	path = engine/vendor/glm
 	url = https://github.com/bald-org/glm
+[submodule "engine/vendor/imgui"]
+	path = engine/vendor/imgui
+	url = https://github.com/bald-org/imgui

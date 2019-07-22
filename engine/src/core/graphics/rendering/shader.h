@@ -4,8 +4,8 @@
 
 #pragma once
 
-class unordered_map;
-class string;
+#include "unordered_map"
+#include "string"
 
 namespace Bald::Graphics {
 

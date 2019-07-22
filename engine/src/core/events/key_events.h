@@ -21,9 +21,9 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   KeyEvent
-        * @brief                Constructor.
-        * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn KeyEvent
+        * @brief Constructor.
+        * @param [unsigned] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
         explicit KeyEvent(unsigned keycode)
@@ -32,8 +32,8 @@ namespace Bald {
     public:
 
         /**
-        * @fn                   GetKeyCode
-        * @brief                Key code getter
+        * @fn GetKeyCode
+        * @brief Key code getter
         */
 
         [[nodiscard]] inline unsigned GetKeyCode() const noexcept { return m_KeyCode; }
@@ -54,15 +54,27 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   KeyPressedEvent
-        * @brief                Constructor.
-        * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn KeyPressedEvent
+        * @brief Constructor.
+        * @param [unsigned] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
-        explicit KeyPressedEvent(unsigned keycode)
-            :
-            KeyEvent{keycode} {}
+        explicit KeyPressedEvent(unsigned keycode, bool isRepeated = false)
+            : KeyEvent{keycode}, m_IsRepeated{isRepeated} {}
 
+    public:
+
+        /**
+        * @fn IsRepeated
+        * @brief Getter which tells you whether or not the key press was a repeated one.
+        * @return [bool] true -> key is in repeated state.
+        *                false -> key is in non repeated state.
+        */
+
+        [[nodiscard]] bool IsRepeated() const noexcept { return m_IsRepeated; }
+
+    private:
+        const bool m_IsRepeated; /* < Bool which holds repeated state */
     }; // END OF CLASS KeyPressedEvent
 
     /**
@@ -77,9 +89,9 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   KeyReleasedEvent
-        * @brief                Constructor.
-        * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn KeyReleasedEvent
+        * @brief Constructor.
+        * @param [unsigned] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
         explicit KeyReleasedEvent(unsigned keycode)
@@ -100,9 +112,9 @@ namespace Bald {
     protected:
 
         /**
-        * @fn                   KeyTypedEvent
-        * @brief                Constructor.
-        * @param [unsigned]     keycode -> Specific key code. Right now this is GLFW's key id.
+        * @fn KeyTypedEvent
+        * @brief Constructor.
+        * @param [unsigned] keycode -> Specific key code. Right now this is GLFW's key id.
         */
 
         explicit KeyTypedEvent(unsigned keycode)

@@ -24,13 +24,15 @@ namespace Bald::Input {
 
     /**
      * @class InputManager
-     * @brief Manages users input
+     * @brief Manages user's input.
      */
 
     class InputManager {
     GENERATE_BODY()
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
+
+        friend inline void char_callback(GLFWwindow* window, unsigned character);
 
         friend inline void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
@@ -41,8 +43,8 @@ namespace Bald::Input {
     public:
 
         /**
-         * @fn    constructor
-         * @brief deleted
+         * @fn InputManager
+         * @brief Default constructor deleted.
          */
 
         InputManager() = delete;
@@ -56,197 +58,109 @@ namespace Bald::Input {
         static void Init(EventManager& ev);
 
         /**
-         * @fn    Update
-         * @brief function updating information about input events should be called every frame
+         * @fn Update
+         * @brief function updating information about input events should be called every frame.
          */
 
         static void Update() noexcept; //TODO: have to be called in Window class Update
 
         /**
-         * @fn                   IsKeyPressed
-         * @brief                function that checks if key was pressed
-         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
-         * @return        [bool] true if key was pressed otherwise false
+         * @fn IsKeyPressed
+         * @brief function that checks if key was pressed.
+         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE.
+         * @return [bool] true if key was pressed otherwise false.
          */
 
         [[nodiscard]] inline static bool IsKeyPressed(unsigned keycode) noexcept;
 
         /**
-         * @fn                   IsKeyTyped
-         * @brief                function that checks if key was typed
-         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE
-         * @return        [bool] true if key was typed otherwise false
+         * @fn IsKeyTyped
+         * @brief function that checks if key was typed.
+         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE.
+         * @return [bool] true if key was typed otherwise false.
          */
 
         [[nodiscard]] inline static bool IsKeyTyped(unsigned keycode) noexcept;
 
         /**
-         * @fn                      IsMouseButtonPressed
-         * @brief                   function that checks if mouse button was pressed
-         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
-         * @return           [bool] true if button was pressed otherwise false
+         * @fn IsMouseButtonPressed
+         * @brief function that checks if mouse button was pressed.
+         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1.
+         * @return [bool] true if button was pressed otherwise false.
          */
 
         [[nodiscard]] inline static bool IsMouseButtonPressed(unsigned buttoncode) noexcept;
 
         /**
-         * @fn                      IsMouseButtonTyped
-         * @brief                   function that checks if mouse button was typed
-         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1
-         * @return           [bool] true if button was typed otherwise false
+         * @fn IsMouseButtonTyped
+         * @brief function that checks if mouse button was typed.
+         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1.
+         * @return [bool] true if button was typed otherwise false.
          */
 
         [[nodiscard]] inline static bool IsMouseButtonTyped(unsigned buttoncode) noexcept;
 
         /**
-         * @fn                  GetMousePos
-         * @brief               sets two variables on current mouse position
-         * @param xpos [double] x-coordinate
-         * @param ypos [double] y-coordinate
+         * @fn GetMousePos
+         * @brief sets two variables on current mouse position.
+         * @param xpos [double] x-coordinate.
+         * @param ypos [double] y-coordinate.
          */
 
         inline static void GetMousePos(double& xpos, double& ypos) noexcept;
 
         /**
-         * @fn                  SetKeyPressedCallback
-         * @brief               sets function which will be called on key pressed event
-         * @param fun           function pointer
-         * @param args          arguments for function
+         * @fn EmitKeyPressedEvent
+         * @brief Emits KeyPressedEvent.
+         * @param [int] keycode -> GLFW key id.
          */
 
-        template<class F, class... Args>
-        static void SetKeyPressedCallback(F&& fun, Args&& ... args) noexcept;
+        static void EmitKeyPressedEvent(unsigned keycode, bool isRepeated = false) noexcept;
 
         /**
-         * @fn                  SetKeyTypedCallback
-         * @brief               sets function which will be called on key typed event
-         * @param keycode [int] GLFW key id
-         * @param fun           function pointers
-         * @param args          arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetKeyTypedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                  SetKeyReleasedCallback
-         * @brief               sets function which will be called on key released event
-         * @param fun           function pointers
-         * @param args          arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetKeyReleasedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                     SetMouseMovedCallback
-         * @brief                  sets function which will be called on mouse moved event
-         * @param fun              function pointer
-         * @param args             arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetMouseMovedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                     SetMouseScrolledCallback
-         * @brief                  sets function which will be called on mouse scrolled event
-         * @param fun              function pointer
-         * @param args             arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetMouseScrolledCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                     SetMouseButtonPressedCallback
-         * @brief                  sets function which will be called on mouse button pressed event
-         * @param buttoncode [int] GLFW mouse button id
-         * @param fun              function pointer
-         * @param args             arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetMouseButtonPressedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                     SetMouseButtonTypedCallback
-         * @brief                  sets function which will be called on mouse button Typed event
-         * @param fun              function pointer
-         * @param args             arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetMouseButtonTypedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                     SetMouseButtonReleasedCallback
-         * @brief                  sets function which will be called on mouse button released event
-         * @param fun              function pointer
-         * @param args             arguments for function
-         */
-
-        template<class F, class... Args>
-        static void SetMouseButtonReleasedCallback(F&& fun, Args&& ... args) noexcept;
-
-        /**
-         * @fn                  EmitKeyPressedEvent
-         * @brief               Emits KeyPressedEvent
-         * @param keycode [int] GLFW key id
-         */
-
-        static void EmitKeyPressedEvent(unsigned keycode) noexcept;
-
-        /**
-         * @fn                  EmitKeyTypedEvent
-         * @brief               Emits KeyTypedEvent
-         * @param keycode [int] GLFW key id
+         * @fn EmitKeyTypedEvent
+         * @brief Emits KeyTypedEvent.
+         * @param [int] keycode -> GLFW key id.
          */
 
         static void EmitKeyTypedEvent(unsigned keycode) noexcept;
 
         /**
-         * @fn                  EmitKeyReleasedEvent
-         * @brief               Emits KeyRelasedEvent
-         * @param keycode [int] GLFW key id
+         * @fn EmitKeyReleasedEvent
+         * @brief Emits KeyRelasedEvent.
+         * @param [int] keycode -> GLFW key id.
          */
 
         static void EmitKeyReleasedEvent(unsigned keycode) noexcept;
 
         /**
-         * @fn                     EmitMouseButtonTypedEvent
-         * @brief                  Emits MouseButtonTypedEvent
-         * @param buttoncode [int] GLFW key id
+         * @fn EmitMouseButtonPressedEvent
+         * @brief Emits MouseButtonPressedEvent.
+         * @param [int] buttoncode -> GLFW key id.
+         * @param [bool] isRepeated -> true - Key is being pressed repeatedly.
+         *                             false - Key is not being pressed repeatedly.
          */
 
-        static void EmitMouseButtonTypedEvent(unsigned buttoncode) noexcept;
+        static void EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated = false) noexcept;
 
         /**
-         * @fn                  EmitMouseButtonPressedEvent
-         * @brief               Emits MouseButtonPressedEvent
-         * @param keycode [int] GLFW key id
-         */
-
-        static void EmitMouseButtonPressedEvent(unsigned buttoncode) noexcept;
-
-        /**
-         * @fn                  EmitMouseButtonReleasedEvent
-         * @brief               Emits MouseButtonReleasedEvent
-         * @param keycode [int] GLFW key id
+         * @fn EmitMouseButtonReleasedEvent
+         * @brief Emits MouseButtonReleasedEvent.
+         * @param [bool] isRepeated -> true - Key is being pressed repeatedly.
+         *                             false - Key is not being pressed repeatedly.
          */
 
         static void EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept;
 
     private:
-        static EventManager* m_EventManager;
-        static std::pair<double, double> m_MousePos;                      /**< current mouse x, y - coordinate*/
-        static std::pair<double, double> m_MouseOff;                      /**< current scroll x, y - offset*/
-        static std::array<bool, MAX_KEYS> m_Keys;                         /**< current keys states*/
-        static std::array<bool, MAX_KEYS> m_KeysState;                                /**< keys states in previous frame*/
-        static std::array<bool, MAX_KEYS> m_KeysTyped;                                /**< keys witch were typed*/
-        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtons;                    /**< current mouse buttons states*/
-        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsState;               /**< mouse buttons states in previous frame*/
-        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsTyped;               /**< mouse buttons witch were typed*/
+        static std::pair<double, double> m_MousePos; /**< current mouse x, y - coordinate*/
+        static std::pair<double, double> m_MouseOff; /**< current scroll x, y - offset*/
+        static std::array<bool, MAX_KEYS> m_Keys; /**< current keys states*/
+        static std::array<bool, MAX_KEYS> m_KeysState; /**< keys states in previous frame*/
+        static std::array<bool, MAX_KEYS> m_KeysTyped; /**< keys witch were typed*/
+        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtons; /**< current mouse buttons states*/
+        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsState; /**< mouse buttons states in previous frame*/
+        static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsTyped; /**< mouse buttons witch were typed*/
     };
 
     inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
@@ -255,7 +169,6 @@ namespace Bald::Input {
         switch (action) {
             case GLFW_PRESS: {
                 InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key));
-                InputManager::EmitKeyTypedEvent(static_cast<unsigned>(key));
                 break;
             }
             case GLFW_RELEASE: {
@@ -263,7 +176,7 @@ namespace Bald::Input {
                 break;
             }
             case GLFW_REPEAT: {
-                InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key));
+                InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key), true);
                 break;
             }
             default: {
@@ -272,13 +185,16 @@ namespace Bald::Input {
         }
     }
 
-    inline void
-    mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
+    inline void char_callback([[maybe_unused]] GLFWwindow* window, unsigned character) {
+        InputManager::EmitKeyTypedEvent(character);
+    }
+
+    inline void mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
         Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != GLFW_RELEASE;
 
         switch (action) {
             case GLFW_PRESS: {
-                InputManager::EmitMouseButtonTypedEvent(static_cast<unsigned>(button));
+                InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button));
                 break;
             }
             case GLFW_RELEASE: {
@@ -286,7 +202,7 @@ namespace Bald::Input {
                 break;
             }
             case GLFW_REPEAT: {
-                InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button));
+                InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button), true);
                 break;
             }
             default: {
@@ -330,46 +246,6 @@ namespace Bald::Input {
     void InputManager::GetMousePos(double& xpos, double& ypos) noexcept {
         xpos = InputManager::m_MousePos.first;
         ypos = InputManager::m_MousePos.second;
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetKeyPressedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<KeyPressedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetKeyTypedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<KeyTypedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetKeyReleasedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<KeyReleasedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetMouseMovedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<MouseMovedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetMouseScrolledCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<MouseScrolledEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetMouseButtonPressedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<MouseButtonPressedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetMouseButtonTypedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<MouseButtonTypedEvent>(HandleType::SYNC, fun, args ...);
-    }
-
-    template<class F, class... Args>
-    void InputManager::SetMouseButtonReleasedCallback(F&& fun, Args&& ... args) noexcept {
-        m_EventManager->Subscribe<MouseButtonReleasedEvent>(HandleType::SYNC, fun, args ...);
     }
 
 } // END OF NAMESPACE Bald::Input
