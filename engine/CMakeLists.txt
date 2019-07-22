@@ -129,6 +129,8 @@ target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
