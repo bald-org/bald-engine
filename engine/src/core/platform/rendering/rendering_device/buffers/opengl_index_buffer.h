@@ -1,34 +1,34 @@
 //
-// Created by blinku on 08.05.19.
+// Created by blinku on 22.07.19.
 //
 
 #pragma once
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
 
     /**
-     * @class IndexBuffer
+     * @class OpenGLIndexBuffer
      * @brief Simple OpenGL index buffer abstraction
      */
 
-    class IndexBuffer {
+    class OpenGLIndexBuffer {
     public:
 
         /**
-         * @fn                      IndexBuffer
+         * @fn                      OpenGLIndexBuffer
          * @brief                   creates a index buffer object and initializes its data
          * @param [unsigned short*] data -> to initialize buffer
          * @param [unsigned]        count -> number of elements in data
          */
 
-        IndexBuffer(unsigned short* data, unsigned count) noexcept;
+        OpenGLIndexBuffer(unsigned short* data, unsigned count) noexcept;
 
         /**
-         * @fn ~IndexBuffer
-         * @brief destructor of IndexBuffer
+         * @fn ~OpenGLIndexBuffer
+         * @brief destructor of OpenGLIndexBuffer
          */
 
-        ~IndexBuffer();
+        ~OpenGLIndexBuffer();
 
         /**
          * @fn    Bind
@@ -55,8 +55,8 @@ namespace Bald::Graphics {
     private:
         unsigned m_BufferID; /**< identifier of Index Buffer object >*/
         unsigned m_Count; /**< number of elements in buffer's data >*/
-    }; // END OF CLASS IndexBuffer
+    }; // END OF CLASS OpenGLIndexBuffer
 
     unsigned IndexBuffer::GetCount() const noexcept { return m_Count; }
 
-} // END OF NAMESPACE Bald::Graphics
+} // END OF NAMESPACE Bald::Platform::Graphics

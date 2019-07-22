@@ -1,11 +1,11 @@
 //
-// Created by blinku on 08.05.19.
+// Created by blinku on 22.07.19.
 //
 
-#include "buffer.h"
+#include "opengl_buffer.h"
 #include "glad/glad.h"
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
 
     Buffer::Buffer(float* data, int count, unsigned component_count) noexcept : m_BufferID(0),
                                                                                 m_ComponentCount(component_count) {
@@ -27,4 +27,4 @@ namespace Bald::Graphics {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-} // END OF NAMESPACE Bald::Graphics
+} // END OF NAMESPACE Bald::Platform::Graphics
