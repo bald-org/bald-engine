@@ -2,13 +2,13 @@
 // Created by grzegorz on 16.12.18.
 //
 
-#include "pch.h"
+#include "core/pch.h"
 #include "gtest/gtest.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-TEST(GLFW_GLAD, GLFW_GLAD_Initialization){
+TEST(GLFW_GLAD, GLFW_GLAD_Initialization) {
 
     EXPECT_EQ(glfwInit(), GLFW_TRUE);
 
@@ -19,5 +19,4 @@ TEST(GLFW_GLAD, GLFW_GLAD_Initialization){
     EXPECT_EQ(gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)), true);
 
     glfwDestroyWindow(window);
-
 }

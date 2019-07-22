@@ -12,9 +12,9 @@ addons:
       - ubuntu-toolchain-r-test
     packages:
       - g++-8
-      - libglfw3
       - libglew-dev
       - xorg-dev
+      - ninja-build
 
 services:
   - xvfb
@@ -26,26 +26,19 @@ before_install:
   - chmod +x cmake-3.14.3-Linux-x86_64.sh
   - ./cmake-3.14.3-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
 
-install:
-  - cd engine/vendor/glfw/
-  - mkdir build && cd build
-  - cmake ../
-  - make -j 12
-  - sudo make install
-
 before_script:
   - CXX=/usr/bin/g++-8 CC=/usr/bin/gcc-8
 
 script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build_debug && cd build_debug
-  - cmake -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_C_FLAGS=" -fsanitize=leak"  -DCMAKE_EXE_LINKER_FLAGS=" -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" -DCMAKE_MODULE_LINKER_FLAGS="  -fsanitize=leak  -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wold-style-cast -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wduplicated-branches -Wlogical-op -g" ../
-  - make -j 12
+  - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
+  - ninja
   - cd bin
-  - ./runUnitTests
+  - ./../../scripts/travis/run_examples.sh
   - cd ../../
   - mkdir build_release && cd build_release
-  - cmake -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON -DCMAKE_CXX_FLAGS="-Ofast -Werror" -DCMAKE_C_FLAGS="-Ofast -Werror"  -DCMAKE_EXE_LINKER_FLAGS="-Ofast -Werror" -DCMAKE_MODULE_LINKER_FLAGS=" -Ofast -Werror" ../
-  - make -j 12
+  - cmake -GNinja -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
+  - ninja
   - cd bin
-  - ./runUnitTests
+  - ./../../scripts/travis/run_examples.sh

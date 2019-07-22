@@ -4,9 +4,57 @@
 
 #include "bald.h"
 
-class EventsExample : public Bald::Application {
+#include "glm/glm.hpp"
+
+class ExampleLayer : public Bald::Layer {
+GENERATE_BODY(DERIVED)
+
 public:
-    EventsExample() = default;
+    ExampleLayer() = default;
+
+    ~ExampleLayer() override = default;
+
+    void OnAttach() noexcept override {
+        static glm::vec2 position{0.0f, 0.0f};
+
+        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [&](const Bald::KeyPressedEvent& e) {
+
+            if(e.GetKeyCode() == GLFW_KEY_W) {
+                position.y += 0.5f;
+            } else if(e.GetKeyCode() == GLFW_KEY_A) {
+                position.x -= 0.5f;
+            } else if(e.GetKeyCode() == GLFW_KEY_S) {
+                position.y -= 0.5f;
+            } else if(e.GetKeyCode() == GLFW_KEY_D) {
+                position.x += 0.5f;
+            } else if(e.GetKeyCode() == GLFW_KEY_ESCAPE) {
+                Bald::EventManager::Emit<Bald::WindowClosedEvent>();
+            }
+
+            GAME_LOG_TRACE(std::string("Current position: [")
+                               .append(std::to_string(position.x))
+                               .append(", ")
+                               .append(std::to_string(position.y))
+                               .append("]"));
+
+        });
+    }
+
+    void OnDetach() noexcept override {}
+
+    void OnUpdate() noexcept override {}
+
+    void OnRender() noexcept override {}
+
+};
+
+class EventsExample : public Bald::Application {
+GENERATE_BODY(DERIVED)
+public:
+    EventsExample() {
+        PushLayer<ExampleLayer>();
+    }
+
     ~EventsExample() override = default;
 };
 
