@@ -41,6 +41,8 @@ public:
                            .append("]"));
     }
 
+    void OnRender() noexcept override {}
+
 };
 
 class InputExample : public Bald::Application {

@@ -44,6 +44,8 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class EventsExample : public Bald::Application {

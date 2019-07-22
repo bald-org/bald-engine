@@ -3,10 +3,11 @@
 //
 
 #include "application.h"
-#include "input_manager.h"
-#include "window_events.h"
-#include "layer_events.h"
+#include "input/input_manager.h"
+#include "events/window_events.h"
+#include "events/layer_events.h"
 #include "utils/timer.h"
+#include "debug/ui/imgui_layer.h"
 
 namespace Bald {
 
@@ -37,6 +38,12 @@ namespace Bald {
             }
 #endif
 
+            Debug::ImGuiLayer::Begin();
+            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
+                m_LayerStack[i]->OnRender();
+            }
+            Debug::ImGuiLayer::End();
+
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate();
             }
@@ -53,10 +60,6 @@ namespace Bald {
         }
     }
 
-    Application& Application::GetApplication() noexcept {
-        return *m_Instance;
-    }
-
     bool Application::Init() noexcept {
         CORE_LOG_INFO("[Application] Initializing application...");
 
@@ -65,7 +68,7 @@ namespace Bald {
         m_Instance = this;
 
         m_EventManager = std::make_unique<EventManager>();
-        m_Window = std::make_unique<Graphics::Window>("Bald Engine");
+        m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720);
 
         m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this](const WindowClosedEvent&) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
@@ -80,6 +83,7 @@ namespace Bald {
             m_LayerStack.DetachLayers();
         });
 
+        PushOverlayImmediately<Debug::ImGuiLayer>();
 
         CORE_LOG_INFO("[Application] Initialization was successful");
 

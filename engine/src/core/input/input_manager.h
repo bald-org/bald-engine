@@ -32,7 +32,7 @@ namespace Bald::Input {
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
-        friend inline void char_callback([[maybe_unused]] GLFWwindow* window, unsigned character);
+        friend inline void char_callback(GLFWwindow* window, unsigned character);
 
         friend inline void mouse_button_callback(GLFWwindow* window, int button, int action, int mods);
 
@@ -48,6 +48,14 @@ namespace Bald::Input {
          */
 
         InputManager() = delete;
+
+        /**
+         * @fn Init
+         * @brief Initialize InputManager
+         * @param [EventManager&] ev -> reference on main event manager
+         */
+
+        static void Init(EventManager& ev);
 
         /**
          * @fn Update
