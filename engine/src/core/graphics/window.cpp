@@ -94,8 +94,7 @@ namespace Bald::Graphics {
 
         glfwSetKeyCallback(m_Window, Input::key_callback);
 
-        // TODO: Not really sure how to decouple text handling from input handling right now.
-        //       We do not need it now though. This callback will have to be set in the future: glfwSetCharCallback
+        glfwSetCharCallback(m_Window, Input::char_callback);
 
         glfwSetMouseButtonCallback(m_Window, Input::mouse_button_callback);
 
