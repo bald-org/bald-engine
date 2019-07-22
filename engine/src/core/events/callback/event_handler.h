@@ -58,6 +58,17 @@ namespace Bald {
 
     private:
 
+        /**
+         * @fn Unpack
+         * @brief Method which allows separating object form the rest of arguments.
+         * @tparam F -> Method type
+         * @tparam O -> Object type
+         * @tparam Args -> Arguments types
+         * @param fun -> Method pointer
+         * @param obj -> Object reference or pointer to object
+         * @param args -> Arguments that will be bound to the method.
+         */
+
         template <class F, class O, class ...Args>
         void Unpack(F&& fun, O& obj, Args&& ...args) {
             if constexpr (std::is_pointer<O>::value){
