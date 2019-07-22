@@ -15,11 +15,11 @@ namespace Bald::Graphics {
 
     class Buffer {
     public:
-        static std::unique_ptr<Buffer> Create(float* data, int count, unsigned component_count) noexcept;
+        static Buffer* Create(float* data, int count, unsigned component_count) noexcept;
         virtual ~Buffer() = default;
         virtual void Bind() const noexcept = 0;
         virtual void Unbind() const noexcept = 0;
-        [[nodiscard]] inline virtual unsigned GetComponentCount() const noexcept = 0;
+        [[nodiscard]] virtual int GetComponentCount() const noexcept = 0;
     }; // END OF CLASS Buffer
 
 } // END OF NAMESPACE Bald::Graphics

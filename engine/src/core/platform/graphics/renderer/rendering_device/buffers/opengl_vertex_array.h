@@ -5,13 +5,12 @@
 #pragma once
 
 #include <vector>
-#include "graphics/renderer/rendering_device/vertex_array.h"
+#include "graphics/renderer/rendering_device/buffers/vertex_array.h"
+#include "graphics/renderer/rendering_device/buffers/buffer.h"
 
 namespace Bald::Platform::Graphics {
 
-    class Buffer;
-
-    class OpenGLOpenGLVertexArray : public Bald::Graphics::VertexArray {
+    class OpenGLVertexArray : public Bald::Graphics::VertexArray {
     public:
 
         /**
@@ -26,7 +25,7 @@ namespace Bald::Platform::Graphics {
          * @brief OpenGLVertexArray destructor
          */
 
-        ~OpenGLVertexArray();
+        ~OpenGLVertexArray() override;
 
         /**
          * @fn                              AddBuffer
@@ -35,25 +34,25 @@ namespace Bald::Platform::Graphics {
          * @param [GLuint aka unsinged int] index -> Specifies the index of the generic vertex attribute to be enabled
          */
 
-        void AddBuffer(Buffer* buffer, unsigned index) noexcept;
+        void AddBuffer(Bald::Graphics::Buffer* buffer, unsigned index) noexcept override;
 
         /**
          * @fn    Bind
          * @brief binds a vertex array object
          */
 
-        void Bind() noexcept;
+        void Bind() noexcept override;
 
         /**
          * @fn    Unbind
          * @brief unbind a vertex array object
          */
 
-        void Unbind() noexcept;
+        void Unbind() noexcept override;
 
     private:
         unsigned m_ArrayID;             /**< identifier of Vertex Array object >*/
-        std::vector<Buffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/
+        std::vector<Bald::Graphics::Buffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/
     }; // END OF CLASS OpenGLVertexArray
 
 } // END OF NAMESPACE Bald::Platform::Graphics

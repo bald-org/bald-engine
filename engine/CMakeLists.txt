@@ -81,9 +81,9 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/renderer/rendering_device/buffers/index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/renderer/rendering_device/buffers/vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/renderer/rendering_device/buffers/opengl_buffer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/renderer/rendering_device/buffers/opengl_index_buffer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/renderer/rendering_device/buffers/opengl_vertex_array.cpp
+        src/core/platform/graphics/renderer/rendering_device/buffers/opengl_buffer.cpp
+        src/core/platform/graphics/renderer/rendering_device/buffers/opengl_index_buffer.cpp
+        src/core/platform/graphics/renderer/rendering_device/buffers/opengl_vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp)

@@ -3,11 +3,12 @@
 //
 
 #include "index_buffer.h"
+#include "platform/graphics/renderer/rendering_device/buffers/opengl_index_buffer.h"
 #include "glad/glad.h"
 
 namespace Bald::Graphics {
 
-    std::unique_ptr<IndexBuffer> IndexBuffer::Create(unsigned short* data, unsigned count) noexcept {
-        return std::make_unique<Bald::Platform::Graphics::OpenGLIndexBuffer>((data, count));
+    IndexBuffer* IndexBuffer::Create(unsigned short* data, unsigned count) noexcept {
+        return new Bald::Platform::Graphics::OpenGLIndexBuffer(data, count);
     }
 } // END OF NAMESPACE Bald::Graphics

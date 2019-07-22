@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "graphics/renderer/rendering_device/index_buffer.h"
+#include <graphics/renderer/rendering_device/buffers/index_buffer.h>
 
 namespace Bald::Platform::Graphics {
 
@@ -13,7 +13,7 @@ namespace Bald::Platform::Graphics {
      * @brief Simple OpenGL index buffer abstraction
      */
 
-    class OpenGLIndexBuffer : Bald::Graphics::IndexBuffer {
+    class OpenGLIndexBuffer : public Bald::Graphics::IndexBuffer {
     public:
 
         /**
@@ -30,21 +30,21 @@ namespace Bald::Platform::Graphics {
          * @brief destructor of OpenGLIndexBuffer
          */
 
-        ~OpenGLIndexBuffer();
+        ~OpenGLIndexBuffer() override;
 
         /**
          * @fn    Bind
          * @brief binds a index buffer object
          */
 
-        void Bind() const noexcept;
+        void Bind() const noexcept override;
 
         /**
          * @fn    Unbind
          * @brief unbinds a index buffer object
          */
 
-        void Unbind() const noexcept;
+        void Unbind() const noexcept override;
 
         /**
          * @fn     GetCount
@@ -52,13 +52,11 @@ namespace Bald::Platform::Graphics {
          * @return [unsigned int]
          */
 
-        [[nodiscard]] inline unsigned GetCount() const noexcept;
+        [[nodiscard]] inline unsigned GetCount() const noexcept override { return m_Count; }
 
     private:
         unsigned m_BufferID; /**< identifier of Index Buffer object >*/
         unsigned m_Count; /**< number of elements in buffer's data >*/
     }; // END OF CLASS OpenGLIndexBuffer
-
-    unsigned IndexBuffer::GetCount() const noexcept { return m_Count; }
 
 } // END OF NAMESPACE Bald::Platform::Graphics

@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/rendering_device/opengl/buffers/index_buffer.h"
+#include "graphics/renderer/rendering_device/buffers/index_buffer.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -22,11 +22,11 @@ TEST(index_buffer, index_buffer_initialisation_Test) {
         1, 2, 3, 4
     };
 
-    IndexBuffer buf(data, 4);
-    buf.Bind();
-    buf.Unbind();
+    auto buf = IndexBuffer::Create(data, 4);
+    buf->Bind();
+    buf->Unbind();
 
-    EXPECT_EQ(4, buf.GetCount());
+    EXPECT_EQ(4, buf->GetCount());
 
     glfwDestroyWindow(window);
 }

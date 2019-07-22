@@ -7,23 +7,24 @@
 
 namespace Bald::Platform::Graphics {
 
-    Buffer::Buffer(float* data, int count, unsigned component_count) noexcept : m_BufferID(0),
-                                                                                m_ComponentCount(component_count) {
+    OpenGLBuffer::OpenGLBuffer(float* data, int count, int component_count) noexcept
+    :   m_BufferID(0),
+        m_ComponentCount(component_count) {
         glGenBuffers(1, &m_BufferID);
         glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
-        glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, count * static_cast<int>(sizeof(float)), data, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
-    Buffer::~Buffer() {
+    OpenGLBuffer::~OpenGLBuffer() {
         glDeleteBuffers(1, &m_BufferID);
     }
 
-    void Buffer::Bind() const noexcept {
+    void OpenGLBuffer::Bind() const noexcept {
         glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
     }
 
-    void Buffer::Unbind() const noexcept {
+    void OpenGLBuffer::Unbind() const noexcept {
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 

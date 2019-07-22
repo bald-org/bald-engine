@@ -4,8 +4,8 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/rendering_device/opengl/buffers/buffer.h"
-#include "graphics/rendering/rendering_device/opengl/buffers/vertex_array.h"
+#include "graphics/renderer/rendering_device/buffers/buffer.h"
+#include "graphics/renderer/rendering_device/buffers/vertex_array.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -28,16 +28,15 @@ TEST(vertex_array, vertex_array_init_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto* buf = new Buffer(data, 4, 1);
+    auto buf = Buffer::Create(data, 4, 1);
     buf->Bind();
     buf->Unbind();
 
-    VertexArray VAO;
+    auto VAO = VertexArray::Create();
 
-    VAO.AddBuffer(new Buffer(data, 4, 1), 1);
-    VAO.AddBuffer(buf, 1);
-    VAO.Bind();
-    VAO.Unbind();
+    VAO->AddBuffer(Buffer::Create(data, 4, 1), 1);
+    VAO->Bind();
+    VAO->Unbind();
 
     glfwDestroyWindow(window);
 

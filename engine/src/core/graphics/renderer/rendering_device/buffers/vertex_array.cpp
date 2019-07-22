@@ -3,13 +3,13 @@
 //
 
 #include "vertex_array.h"
-#include "buffer.h"
+#include "platform/graphics/renderer/rendering_device/buffers/opengl_vertex_array.h"
 #include "glad/glad.h"
 
 namespace Bald::Graphics {
 
-    std::unique_ptr<VertexArray> VertexArray::Create() noexcept {
-        return std::make_unique<Bald::Platform::Graphics::OpenGLVertexArray>();
+    VertexArray* VertexArray::Create() noexcept {
+        return new Bald::Platform::Graphics::OpenGLVertexArray();
     }
 
 } // END OF NAMESPACE Bald::Graphics

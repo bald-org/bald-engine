@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/rendering_device/opengl/buffers/buffer.h"
+#include "graphics/renderer/rendering_device/buffers/buffer.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -22,12 +22,11 @@ TEST(buffer, buffer_initialisation_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto* buf = new Buffer(data, 4, 1);
+    auto buf = Bald::Graphics::Buffer::Create(data, 4, 1);
     buf->Bind();
     buf->Unbind();
 
     EXPECT_EQ(1, buf->GetComponentCount());
 
-    delete buf;
     glfwDestroyWindow(window);
 }

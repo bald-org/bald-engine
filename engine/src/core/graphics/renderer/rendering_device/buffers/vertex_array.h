@@ -18,7 +18,7 @@ namespace Bald::Graphics {
          * @brief Create Vertex Array Object
          */
 
-        std::unique_ptr<VertexArray> Create() noexcept;
+        static VertexArray* Create() noexcept;
 
         /**
          * @fn    ~VertexArray
