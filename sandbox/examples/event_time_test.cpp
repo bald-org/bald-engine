@@ -18,6 +18,11 @@ void sub(const Bald::Event&, int& i) {
     i++;
 }
 
+struct A {
+    void met(const Bald::Event&) { i++; };
+    int i = 0;
+};
+
 int main() {
 
     using namespace Bald;
@@ -26,7 +31,9 @@ int main() {
 
     EventManager em;
     int x = 0;
+    A a;
     em.Subscribe<KeyEvent>(HandleType::SYNC, sub, std::reference_wrapper(x));
+    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
 
     Utils::Timer timer;
     timer.Start();
@@ -41,6 +48,6 @@ int main() {
 
     timer.Stop();
 
-    std::cout << std::to_string(N) << " events -> " << std::to_string(E) << " times took: " << timer.ElapsedSeconds()
+    std::cout << std::to_string(N) << " events -> " << std::to_string(2 * E) << " times took: " << timer.ElapsedSeconds()
               << " s\n";
 }

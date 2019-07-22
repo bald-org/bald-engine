@@ -31,7 +31,7 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventHandler(F&& fun, Args&& ... args) :
+        explicit EventHandler(F fun, Args&& ... args) :
                 EventHandlerInterface() {
             if (this->m_ID != 0) {
                 if constexpr (std::is_member_function_pointer<F>::value){
@@ -59,10 +59,10 @@ namespace Bald {
     private:
 
         template <class F, class O, class ...Args>
-        void Unpack(F&& fun, O& obj, Args... args) {
+        void Unpack(F&& fun, O& obj, Args&& ...args) {
             if constexpr (std::is_pointer<O>::value){
-                m_Function = [fun, &obj, args...](const E& ev) {
-                    (obj->*fun)(ev, args...);
+                m_Function = [fun, obj, args...](const E& ev) {
+                    ((*obj).*fun)(ev, args...);
                 };
             } else {
                 m_Function = [fun, &obj, args...](const E& ev) {
