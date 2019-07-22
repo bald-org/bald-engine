@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "graphics/renderer/rendering_device/index_buffer.h"
+
 namespace Bald::Platform::Graphics {
 
     /**
@@ -11,7 +13,7 @@ namespace Bald::Platform::Graphics {
      * @brief Simple OpenGL index buffer abstraction
      */
 
-    class OpenGLIndexBuffer {
+    class OpenGLIndexBuffer : Bald::Graphics::IndexBuffer {
     public:
 
         /**
