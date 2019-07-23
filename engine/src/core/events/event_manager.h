@@ -141,7 +141,7 @@ namespace Bald {
 
     template<class T, class F, class... Args>
     unsigned EventManager::Subscribe(HandleType type, F&& callback, Args&& ... args) {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Event, T>::value), "Event is not the base of T");
+        BALD_STATIC_ASSERT(std::is_base_of<Event, T>::value, "Event is not the base of T");
         CORE_LOG_INFO("[EventManager] Subscribing function " + Utils::type_name<F>() + " to an " + Utils::type_name<T>() + " ...");
 
         switch(type) {
@@ -168,7 +168,7 @@ namespace Bald {
 
     template<class T>
     void EventManager::Unsubscibe(unsigned id) noexcept {
-        BALD_STATIC_ASSERT(static_cast<bool>(std::is_base_of<Event, T>::value), "Event is not the base of T");
+        BALD_STATIC_ASSERT(std::is_base_of<Event, T>::value, "Event is not the base of T");
         CORE_LOG_INFO("[EventManager] Unsubscribing to an event...");
 
         auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());
@@ -193,7 +193,7 @@ namespace Bald {
 
     template<class T, class... Args>
     void EventManager::Emit(Args&& ... args) {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Event, T>::value), "Event is not the base of T");
+        BALD_STATIC_ASSERT(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         T* event = new T{args...};
         m_EventQueue.push_back(event);
@@ -201,7 +201,7 @@ namespace Bald {
 
     template<class T>
     bool EventManager::IsEventInQueue() noexcept {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Event, T>::value), "Event is not the base of T");
+        BALD_STATIC_ASSERT(std::is_base_of<Event, T>::value, "Event is not the base of T");
 
         for(auto ev : m_EventQueue) {
             if(ev->GetType() == Utils::get_type_id<T>()) return true;
@@ -212,7 +212,7 @@ namespace Bald {
 
     template<class T>
     void EventManager::RemoveAllCallbacksByType() noexcept {
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Event, T>::value), "Event is not the base of T");
+        BALD_STATIC_ASSERT(std::is_base_of<Event, T>::value, "Event is not the base of T");
         CORE_LOG_INFO("[EventManager] Removing all callbacks by type...");
 
         auto iter = m_CallbacksSync.find(Utils::get_type_id<T>());

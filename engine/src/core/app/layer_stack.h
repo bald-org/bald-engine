@@ -256,7 +256,7 @@ namespace Bald {
     void LayerStack::PushLayerImmediately(Args&& ... args) {
         CORE_LOG_INFO("[LayerStack] Pushing layer immediately...");
 
-        BALD_STATIC_ASSERT(static_cast<bool >(std::is_base_of<Layer, L>::value), "Layer is not the base of L");
+        BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         auto* layer = new L{args ...};
         layer->OnAttach();
         m_LayerStack.emplace(m_LayerStack.begin() + m_LayersAmount, layer);
