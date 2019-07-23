@@ -12,6 +12,8 @@
 
 TEST(Shader, ShaderInitialization) { //NOLINT
 
+    using namespace Bald::Graphics;
+
     if(!glfwInit()) {
         std::cout << "Failed to initialize GLFW!" << std::endl;
         exit(1);
@@ -38,14 +40,15 @@ TEST(Shader, ShaderInitialization) { //NOLINT
         exit(1);
     }
 
-    Bald::Graphics::Shader shader("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
+    std::unique_ptr<Shader> shader(Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
 
-    EXPECT_TRUE(shader.GetShaderID());
-
+    EXPECT_TRUE(shader->GetShaderID());
 }
 
 TEST(Shader, WrongShaderInitialization) { //NOLINT
 
+    using namespace Bald::Graphics;
+
     if(!glfwInit()) {
         std::cout << "Failed to initialize GLFW!" << std::endl;
         exit(1);
@@ -73,8 +76,7 @@ TEST(Shader, WrongShaderInitialization) { //NOLINT
         exit(1);
     }
 
-    Bald::Graphics::Shader shader("../engine/res/shaders/no_such_shader.vert", "../engine/res/shaders/no_such_shader.frag");
-
-    EXPECT_FALSE(shader.GetShaderID());
+    std::unique_ptr<Shader> shader(Shader::Create("../engine/res/shaders/no_such_shader.vert", "../engine/res/shaders/no_such_shader.frag"));
+    EXPECT_FALSE(shader->GetShaderID());
 
 }

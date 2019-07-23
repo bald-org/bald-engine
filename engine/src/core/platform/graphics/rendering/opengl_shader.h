@@ -4,75 +4,76 @@
 
 #pragma once
 
-#include "unordered_map"
-#include "string"
+#include "graphics/rendering/shader.h"
+#include <unordered_map>
+#include <string>
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
 
     /**
-     * @class Shader
+     * @class OpenGLShader
      * @brief Simple OpenGL shader implementation.
      */
 
-    class Shader {
+class OpenGLShader : public Bald::Graphics::Shader {
     public:
         /**
-         * @fn Shader
-         * @brief default constructor deleted
+         * @fn OpenGLShader
+         * @brief Default constructor deleted.
          */
-        Shader() = delete;
+        OpenGLShader() = delete;
 
         /**
-         * @fn Shader
-         * @brief Constructs a shader object based on Vertex Shader and Fragment Shader
-         * @param vertexPath    Path to vertex shader
-         * @param fragmentPath  Path to fragment shader
+         * @fn OpenGLShader
+         * @brief Constructs a shader object based on Vertex Shader and Fragment Shader.
+         * @param vertexPath -> Path to vertex shader.
+         * @param fragmentPath -> Path to fragment shader.
          */
-        explicit Shader(const char* vertexPath, const char* fragmentPath);
+        explicit OpenGLShader(const char* vertexPath, const char* fragmentPath);
 
         /**
          * @fn ~Shader
          * @brief Destructs (deletes) shader program.
          */
-        ~Shader();
+        ~OpenGLShader() override;
 
         /**
          * @fn Bind
          * @brief Binds (enables) shader.
          */
-        void Bind() const;
+        void Bind() const override;
 
         /**
          * @fn Unbind
          * @brief Unbinds (Disables) shader.
          */
-        void Unbind() const;
+        void Unbind() const override;
 
         /**
          * @fn SetUniform4f
          * @brief Sets uniform of type vec4 with name uniformName with given values.
          * @param uniformName -> Name of uniform we want to set.
-         * @param v0 -> Value
-         * @param v1 -> Value
-         * @param v2 -> Value
-         * @param v3 -> Value
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         * @param v2 -> Value.
+         * @param v3 -> Value.
          */
-        void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const;
+        void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const override;
 
         /**
          * @fn GetShaderID
          * @brief Returns shader's ID.
-         * @return  unsigned int
+         * @return [unsigned] Shader ID.
          */
-        unsigned int GetShaderID() const;
+        unsigned GetShaderID() const override;
 
     private:
         /**
          * @fn CreateShader
          * @brief Creates and compiles both Vertex and Fragment Shaders, then returns Shader Program.
-         * @return  unsigned int
+         * @return [unsigned int] Shader program ID.
          */
-        unsigned int CreateShader() const;
+        unsigned CreateShader() const;
 
         /**
          * @fn GetUniformLocation
@@ -87,6 +88,6 @@ namespace Bald::Graphics {
         const char* m_FragmentPath; /**< Relative path to Fragment Shader */
         mutable std::unordered_map<std::string, int> m_UniformLocationCache; /**< Unordered map of Uniform Locations for better performance*/
 
-    }; // END OF CLASS Shader
+    }; // END OF CLASS OpenGLShader
 
-} // END OF NAMESPACE Bald::Graphics
+} // END OF NAMESPACE Bald::Platform::Graphics

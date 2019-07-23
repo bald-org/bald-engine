@@ -11,81 +11,55 @@ namespace Bald::Graphics {
 
     /**
      * @class Shader
-     * @brief Implementation of simple Shader class
+     * @brief Simple OpenGL shader implementation.
      */
 
     class Shader {
     public:
-        /**
-         * @fn      Shader
-         * @brief   default constructor deleted
-         */
-        Shader() = delete;
 
         /**
-         * @fn      Shader
-         * @brief   Constructs a shader object based on Vertex Shader and Fragment Shader
-         * @param   vertexPath    Path to vertex shader
-         * @param   fragmentPath  Path to fragment shader
+         * @fn Shader
+         * @brief Constructs a shader object based on Vertex Shader and Fragment Shader.
+         * @param vertexPath -> Path to vertex shader.
+         * @param fragmentPath -> Path to fragment shader.
          */
-        explicit Shader(const char* vertexPath, const char* fragmentPath);
+        static Shader* Create(const char* vertexPath, const char* fragmentPath);
 
         /**
-         * @fn      ~Shader
-         * @brief   Destructs (deletes) shader program
+         * @fn ~Shader
+         * @brief Destructs (deletes) shader program.
          */
-        ~Shader();
+        virtual ~Shader() = default;
 
         /**
-         * @fn      Bind
-         * @brief   Binds (enables) shader.
+         * @fn Bind
+         * @brief Binds (enables) shader.
          */
-        void Bind() const;
+        virtual void Bind() const = 0;
 
         /**
-         * @fn      Unbind
-         * @brief   Uninds (Disables) shader.
+         * @fn Unbind
+         * @brief Unbinds (Disables) shader.
          */
-        void Unbind() const;
+        virtual void Unbind() const = 0;
 
         /**
-         * @fn      SetUniform4f
-         * @brief   Sets uniform of type vec4 with name uniformName with given values
-         * @param   uniformName     Name of uniform we want to set
-         * @param   v0              Value
-         * @param   v1              Value
-         * @param   v2              Value
-         * @param   v3              Value
+         * @fn SetUniform4f
+         * @brief Sets uniform of type vec4 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         * @param v2 -> Value.
+         * @param v3 -> Value.
          */
-        void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const;
+        virtual void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const = 0;
 
         /**
-         * @fn      GetShaderID
-         * @brief   Returns shader's ID
-         * @return  unsigned int
+         * @fn GetShaderID
+         * @brief Returns shader's ID.
+         * @return [unsigned] Shader ID.
          */
-        unsigned int GetShaderID() const;
-
-    private:
-        /**
-         * @fn      CreateShader
-         * @brief   Creates and compiles both Vertex and Fragment Shaders, then returns Shader Program
-         * @return  unsigned int
-         */
-        unsigned int CreateShader() const;
-
-        /**
-         * @fn      GetUniformLocation
-         * @brief   Used to retrieve Uniforms Locations. Uses unordered map (hash table) for improved performance
-         * @return  int
-         */
-        [[nodiscard]] int GetUniformLocation(const char* uniformName) const;
-
-    private:
-        unsigned int m_ShaderID; /**< Shader ID */
-        const char* m_VertexPath; /**< Relative path to Vertex Shader */
-        const char* m_FragmentPath; /**< Relative path to Fragment Shader */
-        mutable std::unordered_map<std::string, int> m_UniformLocationCache; /**< Unordered map of Uniform Locations for better performance*/
+        virtual unsigned GetShaderID() const = 0;
 
     }; // END OF CLASS Shader
 

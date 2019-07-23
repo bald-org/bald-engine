@@ -9,34 +9,34 @@
 #include "pch.h"
 #include "glad/glad.h"
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
 
-    Shader::Shader(const char* vertexPath, const char* fragmentPath)
+    OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
         : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath) {
         m_ShaderID = CreateShader();
     }
 
-    Shader::~Shader() {
+    OpenGLShader::~OpenGLShader() {
         glDeleteProgram(m_ShaderID);
     }
 
-    void Shader::Bind() const {
+    void OpenGLShader::Bind() const {
         glUseProgram(m_ShaderID);
     }
 
-    void Shader::Unbind() const {
+    void OpenGLShader::Unbind() const {
         glUseProgram(0);
     }
 
-    void Shader::SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const {
+    void OpenGLShader::SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const {
         glUniform4f(GetUniformLocation(uniformName), v0, v1, v2, v3);
     }
 
-    unsigned int Shader::GetShaderID() const {
+    unsigned OpenGLShader::GetShaderID() const {
         return m_ShaderID;
     }
 
-    unsigned int Shader::CreateShader() const {
+    unsigned OpenGLShader::CreateShader() const {
         int success = 0;
 
         unsigned int vertexShader;
@@ -124,7 +124,7 @@ namespace Bald::Graphics {
         return id;
     }
 
-    int Shader::GetUniformLocation(const char* uniformName) const {
+    int OpenGLShader::GetUniformLocation(const char* uniformName) const {
         if(m_UniformLocationCache.find(uniformName) != m_UniformLocationCache.end()) {
             return m_UniformLocationCache[uniformName];
         }
