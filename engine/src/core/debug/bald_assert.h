@@ -8,7 +8,7 @@
 #include <string>
 #include <csignal>
 #include <cstdio>
-#include "logger.h"
+#include "logger/logger.h"
 
 #define BALD_STATIC_ASSERT static_assert
 

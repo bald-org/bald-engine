@@ -5,7 +5,7 @@
 #pragma once
 
 #include "core.h"
-#include "logger.h"
+#include "logger/logger.h"
 #include "glad/glad.h"
 
 class GLFWwindow;

@@ -73,9 +73,10 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/time/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
