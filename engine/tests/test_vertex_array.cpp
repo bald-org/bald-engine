@@ -4,8 +4,8 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/renderer/rendering_device/buffers/buffer.h"
-#include "graphics/renderer/rendering_device/buffers/vertex_array.h"
+#include "graphics/rendering/rendering_device/buffers/buffer.h"
+#include "graphics/rendering/rendering_device/buffers/vertex_array.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -20,7 +20,7 @@ TEST(vertex_array, vertex_array_init_Test) {
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
 
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
 

@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/renderer/rendering_device/buffers/buffer.h"
+#include "graphics/rendering/rendering_device/buffers/buffer.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -14,7 +14,7 @@ TEST(buffer, buffer_initialisation_Test) {
     using namespace Graphics;
 
     glfwInit();
-    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(800, 600, "LearnOpenGL", nullptr, nullptr);
     glfwMakeContextCurrent(window);
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
 
