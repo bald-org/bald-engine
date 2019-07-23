@@ -25,7 +25,7 @@ namespace Bald::Graphics {
          * @return [Buffer*] Pointer to the buffer object.
          */
 
-        static Buffer* Create(float* data, unsigned count, unsigned component_count) noexcept;
+        static Buffer* Create(float* data, unsigned count, unsigned component_count);
 
         /**
          * @fn ~Buffer

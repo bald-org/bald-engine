@@ -24,7 +24,7 @@ namespace Bald::Graphics {
         * @return [IndexBuffer*] Pointer to the index buffer object.
         */
 
-        static IndexBuffer* Create(unsigned short* data, unsigned count) noexcept;
+        static IndexBuffer* Create(unsigned short* data, unsigned count);
 
         /**
          * @fn ~IndexBuffer

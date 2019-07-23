@@ -8,7 +8,7 @@
 
 namespace Bald::Graphics {
 
-    Buffer* Buffer::Create(float* data, unsigned count, unsigned component_count) noexcept {
+    Buffer* Buffer::Create(float* data, unsigned count, unsigned component_count) {
         return new Bald::Platform::Graphics::OpenGLBuffer(data, count, component_count);
     }
 

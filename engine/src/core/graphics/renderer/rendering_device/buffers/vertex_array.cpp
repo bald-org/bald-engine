@@ -8,7 +8,7 @@
 
 namespace Bald::Graphics {
 
-    VertexArray* VertexArray::Create() noexcept {
+    VertexArray* VertexArray::Create() {
         return new Bald::Platform::Graphics::OpenGLVertexArray();
     }
 

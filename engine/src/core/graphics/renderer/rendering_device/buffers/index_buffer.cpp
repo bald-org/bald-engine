@@ -8,7 +8,7 @@
 
 namespace Bald::Graphics {
 
-    IndexBuffer* IndexBuffer::Create(unsigned short* data, unsigned count) noexcept {
+    IndexBuffer* IndexBuffer::Create(unsigned short* data, unsigned count) {
         return new Bald::Platform::Graphics::OpenGLIndexBuffer(data, count);
     }
 } // END OF NAMESPACE Bald::Graphics

@@ -24,7 +24,7 @@ namespace Bald::Graphics {
          * @return [VertexArray*] Pointer to the vertex array object.
          */
 
-        static VertexArray* Create() noexcept;
+        static VertexArray* Create();
 
         /**
          * @fn ~VertexArray
