@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include <graphics/rendering/rendering_device/buffers/index_buffer.h>
+#include <graphics/rendering/buffers/index_buffer.h>
 
 namespace Bald::Platform::Graphics {
 

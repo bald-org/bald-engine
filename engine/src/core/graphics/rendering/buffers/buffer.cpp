@@ -3,8 +3,7 @@
 //
 
 #include "buffer.h"
-#include "platform/graphics/rendering/rendering_device/buffers/opengl_buffer.h"
-#include "glad/glad.h"
+#include "platform/opengl/buffers/opengl_buffer.h"
 
 namespace Bald::Graphics {
 

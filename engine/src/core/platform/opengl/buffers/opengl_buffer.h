@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "graphics/rendering/rendering_device/buffers/buffer.h"
+#include "graphics/rendering/buffers/buffer.h"
 
 namespace Bald::Platform::Graphics {
 

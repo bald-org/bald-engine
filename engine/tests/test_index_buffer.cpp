@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/rendering_device/buffers/index_buffer.h"
+#include "graphics/rendering/buffers/index_buffer.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
