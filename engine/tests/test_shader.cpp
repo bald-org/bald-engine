@@ -8,7 +8,7 @@
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "graphics/rendering/shader.h"
+#include "src/core/graphics/rendering/shaders/shader.h"
 
 TEST(Shader, ShaderInitialization) { //NOLINT
 

@@ -3,7 +3,7 @@
 //
 
 #include "shader.h"
-#include "platform/graphics/rendering/opengl_shader.h"
+#include "src/core/platform/opengl/shaders/opengl_shader.h"
 
 
 namespace Bald::Graphics {
