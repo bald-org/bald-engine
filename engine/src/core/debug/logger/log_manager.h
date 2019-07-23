@@ -11,11 +11,13 @@ namespace Bald::Debug {
 
 /**
  * @class Logger
- * @brief implementation of basic logging system
+ * @brief Implementation of basic logging system.
  * */
 
     class LogManager {
     public:
+
+        LogManager() = delete;
 
         /**
          * @fn Init

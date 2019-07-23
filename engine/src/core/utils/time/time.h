@@ -16,11 +16,11 @@ namespace Bald::Utils {
 
         [[nodiscard]] static Time GetCurrentTime();
 
-        [[nodiscard]] inline int hours() const noexcept { return m_Hour; }
+        [[nodiscard]] inline int Hours() const noexcept { return m_Hour; }
 
-        [[nodiscard]] inline int minutes() const noexcept { return m_Min; }
+        [[nodiscard]] inline int Minutes() const noexcept { return m_Min; }
 
-        [[nodiscard]] inline int seconds() const noexcept { return m_Sec; }
+        [[nodiscard]] inline int Seconds() const noexcept { return m_Sec; }
 
         explicit operator std::string() const;
 
@@ -40,14 +40,14 @@ namespace Bald::Utils {
     Time::operator std::string() const {
         std::string result;
 
-        if (hours() <= 9) result += "0";
-        result += std::to_string(hours()) + ":";
+        if (Hours() <= 9) result += "0";
+        result += std::to_string(Hours()) + ":";
 
-        if (minutes() <= 9) result += "0";
-        result += std::to_string(minutes()) + ":";
+        if (Minutes() <= 9) result += "0";
+        result += std::to_string(Minutes()) + ":";
 
-        if (seconds() <= 9) result += "0";
-        result += std::to_string(seconds());
+        if (Seconds() <= 9) result += "0";
+        result += std::to_string(Seconds());
 
         return result;
     }

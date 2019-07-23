@@ -10,13 +10,10 @@ namespace Bald::Debug {
     std::shared_ptr<Logger> LogManager::m_GameLogger;
 
     void LogManager::Init() {
-
-        /** < sets pattern %^ [start color range], %T [time HH::MM::SS], %n [logger name], %v [text to log] %$[ends color range]*/
         m_CoreLogger = std::make_shared<Logger>();
         m_GameLogger = std::make_shared<Logger>();
 
         m_CoreLogger->SetName("BALD");
-
         m_GameLogger->SetName("App");
     }
 
