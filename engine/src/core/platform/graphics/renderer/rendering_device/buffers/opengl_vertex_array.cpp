@@ -27,7 +27,7 @@ namespace Bald::Platform::Graphics {
         buffer->Bind();
 
         glEnableVertexAttribArray(index);
-        glVertexAttribPointer(index, buffer->GetComponentCount(), GL_FLOAT, GL_FALSE, 0, nullptr);
+        glVertexAttribPointer(index, static_cast<int>(buffer->GetComponentCount()), GL_FLOAT, GL_FALSE, static_cast<int>(buffer->GetComponentCount() * sizeof(float)), nullptr);
 
         m_Buffers.push_back(buffer);
 
