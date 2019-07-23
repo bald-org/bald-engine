@@ -75,14 +75,14 @@ namespace Bald::Debug {
 
         /**
          * @fn Print
-         *
-         * @param mess
+         * @brief Prints message.
+         * @param mess [std::string] content of the message.
          */
 
         void Print(const std::string& mess) const noexcept;
 
     private:
-        std::string m_Name;
+        std::string m_Name; /*< Name of the logger.*/
     };
 
 }
