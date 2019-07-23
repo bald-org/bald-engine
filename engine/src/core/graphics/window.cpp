@@ -9,20 +9,18 @@
 #include "window_events.h"
 
 #include "GLFW/glfw3.h"
-#include <assert.h>
 
 namespace Bald::Graphics {
 
     bool Window::m_GLFWInitialized = false;
 
     Window::Window(const char* title, int width, int height, bool VSync) :
-        m_Window(nullptr),
         m_Title(title),
         m_Width(width),
         m_Height(height),
         m_VSync(VSync) {
         [[maybe_unused]] bool state = Init();
-        assert(state);
+        BALD_ASSERT(state, "Window", "Failed to initialized application", state);
     }
 
     Window::~Window() noexcept {
@@ -68,6 +66,7 @@ namespace Bald::Graphics {
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
+        glfwSetWindowUserPointer(m_Window, this);
         if(!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress))) {
             CORE_LOG_ERROR("[Window] Failed to load GLAD!");
             exit(1);
@@ -94,14 +93,16 @@ namespace Bald::Graphics {
 
         glfwSetKeyCallback(m_Window, Input::key_callback);
 
-        // TODO: Not really sure how to decouple text handling from input handling right now.
-        //       We do not need it now though. This callback will have to be set in the future: glfwSetCharCallback
+        glfwSetCharCallback(m_Window, Input::char_callback);
 
         glfwSetMouseButtonCallback(m_Window, Input::mouse_button_callback);
 
         glfwSetCursorPosCallback(m_Window, Input::cursor_position_callback);
 
         glfwSetScrollCallback(m_Window, Input::scroll_callback);
+
+
+        m_VSync ? glfwSwapInterval(1) : glfwSwapInterval(0);
 
         CORE_LOG_INFO("[Window] Initialization was successful");
 

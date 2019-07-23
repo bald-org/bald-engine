@@ -4,6 +4,8 @@
 
 #include "bald.h"
 
+#include "imgui_layer.h"
+
 class DebugLayer : public Bald::Layer {
 GENERATE_BODY(DERIVED)
 public:
@@ -28,6 +30,8 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class GameLayer : public Bald::Layer {
@@ -39,10 +43,10 @@ public:
 
     void OnAttach() noexcept override {
 
-        m_EventManager.Subscribe<Bald::KeyTypedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyTypedEvent& e) {
+        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyPressedEvent& e) {
             static bool isMenuUp = false;
 
-            if(e.GetKeyCode() == GLFW_KEY_ESCAPE) {
+            if(e.GetKeyCode() == GLFW_KEY_ESCAPE && !e.IsRepeated()) {
                 if(!isMenuUp) {
                     Bald::Application& app = Bald::Application::GetApplication();
                     app.PushOverlay<DebugLayer>();
@@ -61,14 +65,18 @@ public:
 
     void OnUpdate() noexcept override {}
 
+    void OnRender() noexcept override {}
+
 };
 
 class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
 public:
+
     Sandbox() {
         PushLayer<GameLayer>();
     }
+
     ~Sandbox() override = default;
 };
 
