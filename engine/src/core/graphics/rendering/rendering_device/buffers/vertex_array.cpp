@@ -3,7 +3,7 @@
 //
 
 #include "vertex_array.h"
-#include "platform/graphics/renderer/rendering_device/buffers/opengl_vertex_array.h"
+#include "platform/graphics/rendering/rendering_device/buffers/opengl_vertex_array.h"
 #include "glad/glad.h"
 
 namespace Bald::Graphics {

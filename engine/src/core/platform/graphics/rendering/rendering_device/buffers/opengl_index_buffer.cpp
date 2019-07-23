@@ -7,7 +7,7 @@
 
 namespace Bald::Platform::Graphics {
 
-    OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned short* data, unsigned count) noexcept : m_Count(count) {
+    OpenGLIndexBuffer::OpenGLIndexBuffer(unsigned short* data, unsigned count) noexcept : m_BufferID(0), m_Count(count) {
         glGenBuffers(1, &m_BufferID);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_BufferID);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(unsigned short), data, GL_STATIC_DRAW);
