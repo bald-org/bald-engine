@@ -55,6 +55,14 @@ namespace Bald::Platform::Graphics {
 
         [[nodiscard]] inline unsigned GetComponentCount() const noexcept override { return m_ComponentCount; }
 
+        /**
+         * @fn GetID
+         * @brief ID getter.
+         * @return [unsigned] Buffer id.
+         */
+
+        [[nodiscard]] inline unsigned GetID() const noexcept override { return m_BufferID; };
+
     private:
         unsigned m_BufferID;
         unsigned m_ComponentCount;

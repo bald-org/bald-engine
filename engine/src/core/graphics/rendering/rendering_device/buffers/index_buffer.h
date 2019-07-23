@@ -48,9 +48,17 @@ namespace Bald::Graphics {
         /**
          * @fn GetComponentCount
          * @brief Component count getter.
-         * @return [int] Number of components in the buffer.
+         * @return [unsigned] Number of components in the buffer.
          */
         [[nodiscard]] virtual unsigned GetCount() const noexcept = 0;
+
+        /**
+         * @fn GetID
+         * @brief ID getter.
+         * @return [unsigned] Index buffer id.
+         */
+
+        [[nodiscard]] virtual unsigned GetID() const noexcept = 0;
 
     }; // END OF CLASS IndexBuffer
 

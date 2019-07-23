@@ -55,6 +55,14 @@ namespace Bald::Platform::Graphics {
 
         void Unbind() const noexcept override;
 
+        /**
+         * @fn GetID
+         * @brief ID getter.
+         * @return [int] Vertex array id.
+         */
+
+        [[nodiscard]] inline unsigned GetID() const noexcept override { return m_ArrayID; };
+
     private:
         unsigned m_ArrayID; /**< identifier of Vertex Array object >*/
         std::vector<Bald::Graphics::Buffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/

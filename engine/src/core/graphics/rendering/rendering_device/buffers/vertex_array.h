@@ -53,6 +53,15 @@ namespace Bald::Graphics {
          */
 
         virtual void Unbind() const noexcept = 0;
+
+        /**
+         * @fn GetID
+         * @brief ID getter.
+         * @return [unsigned] Vertex array id.
+         */
+
+        [[nodiscard]] virtual unsigned GetID() const noexcept = 0;
+
     }; // END OF CLASS VertexArray
 
 } // END OF NAMESPACE Bald::Graphics

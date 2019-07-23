@@ -54,6 +54,14 @@ namespace Bald::Platform::Graphics {
 
         [[nodiscard]] inline unsigned GetCount() const noexcept override { return m_Count; }
 
+        /**
+         * @fn GetID
+         * @brief ID getter.
+         * @return [unsigned] Index buffer id.
+         */
+
+        [[nodiscard]] inline unsigned GetID() const noexcept override { return m_BufferID; };
+
     private:
         unsigned m_BufferID; /**< identifier of Index Buffer object >*/
         unsigned m_Count; /**< number of elements in buffer's data >*/

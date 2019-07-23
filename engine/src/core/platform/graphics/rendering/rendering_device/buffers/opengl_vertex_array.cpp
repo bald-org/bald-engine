@@ -31,10 +31,8 @@ namespace Bald::Platform::Graphics {
 
         m_Buffers.push_back(buffer);
 
-        // As far as I remember we shouldn't unbind the buffer here. This will end up in it not being bound to vertex array object.
-        // Gotta check this.
-        // buffer->Unbind();
         Unbind();
+        buffer->Unbind();
 
     }
 
