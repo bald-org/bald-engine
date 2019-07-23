@@ -20,7 +20,7 @@ namespace Bald::Graphics {
         m_Height(height),
         m_VSync(VSync) {
         [[maybe_unused]] bool state = Init();
-        assert(state);
+        BALD_ASSERT(state, "Window", "Failed to initialized application", state);
     }
 
     Window::~Window() noexcept {
