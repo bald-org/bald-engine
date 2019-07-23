@@ -38,11 +38,11 @@ namespace Bald::Platform::Graphics {
 
     }
 
-    void OpenGLVertexArray::Bind() noexcept {
+    void OpenGLVertexArray::Bind() const noexcept {
         glBindVertexArray(m_ArrayID);
     }
 
-    void OpenGLVertexArray::Unbind() noexcept {
+    void OpenGLVertexArray::Unbind()const noexcept {
         glBindVertexArray(0);
     }
 

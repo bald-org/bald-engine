@@ -46,14 +46,14 @@ namespace Bald::Platform::Graphics {
          * @brief Binds a vertex array object.
          */
 
-        void Bind() noexcept override;
+        void Bind() const noexcept override;
 
         /**
          * @fn Unbind
          * @brief Unbind a vertex array object.
          */
 
-        void Unbind() noexcept override;
+        void Unbind() const noexcept override;
 
     private:
         unsigned m_ArrayID; /**< identifier of Vertex Array object >*/

@@ -4,8 +4,6 @@
 
 #pragma once
 
-#include <memory>
-
 namespace Bald::Graphics {
 
     class Buffer;
@@ -47,14 +45,14 @@ namespace Bald::Graphics {
          * @brief Binds the vertex array object.
          */
 
-        virtual void Bind() noexcept = 0;
+        virtual void Bind() const noexcept = 0;
 
         /**
          * @fn Unbind
          * @brief Unbind the vertex array object.
          */
 
-        virtual void Unbind() noexcept = 0;
+        virtual void Unbind() const noexcept = 0;
     }; // END OF CLASS VertexArray
 
 } // END OF NAMESPACE Bald::Graphics
