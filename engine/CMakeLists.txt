@@ -99,6 +99,9 @@ else ()
     target_link_libraries(bald_engine pthread glad glfw glm spdlog imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m  dl)
 endif ()
 
+find_package (Threads)
+target_link_libraries (bald_engine ${CMAKE_THREAD_LIBS_INIT})
+
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 if(DEFINE_DEBUG)
