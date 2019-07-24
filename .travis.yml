@@ -33,8 +33,6 @@ script:
   - cd $TRAVIS_BUILD_DIR
   - mkdir build_debug && cd build_debug
   - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-  - cat /home/travis/build/bald-org/bald-engine/build_debug/CMakeFiles/CMakeError.log
-  - cat /home/travis/build/bald-org/bald-engine/build_debug/CMakeFiles/CMakeOutput.log
   - ninja
   - cd bin
   - ./../../scripts/travis/run_examples.sh
