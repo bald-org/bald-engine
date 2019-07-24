@@ -59,6 +59,7 @@ namespace Bald {
         virtual void Run(const Event& ev) const = 0;
 
     protected:
+
         static std::vector<bool> m_TakenID; /**< Vector of currently used IDs. We use IDs to differentiate functions and
                                                      for ex. remove one of such from some type of queue */
         unsigned m_ID;                      /**< This instance's id. When this value is 0 it means that handler is not used. */
