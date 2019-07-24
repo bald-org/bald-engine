@@ -26,6 +26,7 @@ set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/math
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
@@ -79,8 +80,17 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp
-        )
-
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/index_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_index_buffer.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp)
 
 if (APPLE)
     target_link_libraries(bald_engine
