@@ -9,18 +9,62 @@
 
 namespace Bald::Utils {
 
+    /**
+     * @class Time
+     * @brief Simple class for time handling.
+     */
+
     class Time {
     public:
+
+        /**
+         * @fn Time
+         * @brief Constructs new Time object.
+         * @param h [int] -> hours
+         * @param m [int] -> minutes
+         * @param s [int] -> seconds
+         */
+
         Time(int h, int m, int s) :
-                m_Hour(h), m_Min(m), m_Sec(s) { }
+                m_Hour(h), m_Min(m), m_Sec(s)
+                { }
+
+        /**
+         * @fn GetCurrentTime
+         * @return New Time object which holds current time.
+         */
 
         [[nodiscard]] static Time GetCurrentTime();
 
+        /**
+         * @fn Hours
+         * @brief Getter for hours.
+         * @return [int] Hours
+         */
+
         [[nodiscard]] inline int Hours() const noexcept { return m_Hour; }
+
+        /**
+         * @fn Minutes
+         * @brief Getter for minutes.
+         * @return [int] Minutes
+         */
 
         [[nodiscard]] inline int Minutes() const noexcept { return m_Min; }
 
+        /**
+         * @fn Seconds
+         * @brief Getter for seconds.
+         * @return [int] Seconds
+         */
+
         [[nodiscard]] inline int Seconds() const noexcept { return m_Sec; }
+
+        /**
+         * @fn operator std::string()
+         * @brief Converts time in to standard string.
+         * @return [std::string] time in format 00:00:00.
+         */
 
         explicit operator std::string() const;
 
