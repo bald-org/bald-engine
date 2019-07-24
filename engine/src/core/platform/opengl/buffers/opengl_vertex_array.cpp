@@ -2,10 +2,8 @@
 // Created by blinku on 22.07.19.
 //
 
-#include <algorithm>
 #include "opengl_vertex_array.h"
 #include "opengl_vertex_buffer.h"
-
 #include "glad/glad.h"
 
 namespace Bald::Platform::Graphics {
@@ -15,8 +13,9 @@ namespace Bald::Platform::Graphics {
     }
 
     OpenGLVertexArray::~OpenGLVertexArray() {
-
-        std::for_each(m_Buffers.begin(), m_Buffers.end(), [](Bald::Graphics::VertexBuffer* buffer) { delete buffer; });
+        for(auto* buffer : m_Buffers) {
+            delete buffer;
+        }
 
         glDeleteVertexArrays(1, &m_ArrayID);
     }

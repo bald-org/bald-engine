@@ -27,6 +27,7 @@ TEST(index_buffer, index_buffer_initialisation_Test) {
     buf->Unbind();
 
     EXPECT_EQ(4, buf->GetCount());
+    EXPECT_TRUE(buf->GetID());
 
     glfwDestroyWindow(window);
 }
