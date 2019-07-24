@@ -20,10 +20,10 @@ int main() {
     delete application;
 }
 
-#elif
+#else
 
 int main() {
-    Bald::Log::Init();
+    Bald::Logger::Init();
 
     auto* application = Bald::Application::Create();
 
