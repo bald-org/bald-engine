@@ -3,7 +3,7 @@
 for i in `ls`;
 do
     echo "Running ->" ${i}
-    ./${i} 2> output.txt
+    ./${i} > output.txt
     exit_code=$?
     if [[ ${exit_code} != 0 ]]
         then
