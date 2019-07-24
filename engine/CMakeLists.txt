@@ -29,7 +29,6 @@ set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
     ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
     ${CMAKE_CURRENT_SOURCE_DIR}/src/math
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
@@ -96,11 +95,8 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine pthread glad glfw glm spdlog imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m  dl)
+    target_link_libraries(bald_engine pthread glad glfw glm imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m  dl)
 endif ()
-
-find_package (Threads)
-target_link_libraries (bald_engine ${CMAKE_THREAD_LIBS_INIT})
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
