@@ -21,7 +21,7 @@ namespace Bald::Platform::Graphics {
         glDeleteVertexArrays(1, &m_ArrayID);
     }
 
-    void OpenGLVertexArray::AddBuffer(Bald::Graphics::VertexBuffer* buffer, [[maybe_unused]] unsigned index) noexcept {
+    void OpenGLVertexArray::AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, [[maybe_unused]] unsigned index) noexcept {
 
         Bind();
         buffer->Bind();

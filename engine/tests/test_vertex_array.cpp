@@ -34,10 +34,9 @@ TEST(vertex_array, vertex_array_init_Test) {
 
     auto VAO = VertexArray::Create();
 
-    VAO->AddBuffer(VertexBuffer::Create(data, 4, 1), 1);
+    VAO->AddVertexBuffer(VertexBuffer::Create(data, 4, 1), 1);
     VAO->Bind();
     VAO->Unbind();
 
     glfwDestroyWindow(window);
-
 }

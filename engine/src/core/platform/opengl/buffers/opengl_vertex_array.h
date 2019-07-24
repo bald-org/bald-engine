@@ -33,13 +33,13 @@ namespace Bald::Platform::Graphics {
         ~OpenGLVertexArray() override;
 
         /**
-         * @fn AddBuffer
+         * @fn AddVertexBuffer
          * @brief Adds buffer to vertex array.
          * @param [Buffer*] buffer -> Pointer to dynamically created buffer.
          * @param [GLuint aka unsinged int] index -> Specifies the index of the generic vertex attribute to be enabled.
          */
 
-        void AddBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept override;
+        void AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept override;
 
         /**
          * @fn Bind

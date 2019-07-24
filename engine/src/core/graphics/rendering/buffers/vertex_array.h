@@ -32,13 +32,13 @@ namespace Bald::Graphics {
         virtual ~VertexArray() = default;
 
         /**
-         * @fn AddBuffer
-         * @brief Adds buffer to vertex array.
+         * @fn AddVertexBuffer
+         * @brief Adds vertex buffer to vertex array.
          * @param [Buffer*] buffer -> Pointer to dynamically created buffer.
          * @param [unsinged] index -> Specifies the index of the generic vertex attribute to be enabled.
          */
 
-        virtual void AddBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept = 0;
+        virtual void AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept = 0;
 
         /**
          * @fn Bind
