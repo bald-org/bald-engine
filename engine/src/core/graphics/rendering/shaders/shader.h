@@ -35,13 +35,13 @@ namespace Bald::Graphics {
          * @fn Bind
          * @brief Binds (enables) shader.
          */
-        virtual void Bind() const = 0;
+        virtual void Bind() const noexcept = 0;
 
         /**
          * @fn Unbind
          * @brief Unbinds (Disables) shader.
          */
-        virtual void Unbind() const = 0;
+        virtual void Unbind() const noexcept = 0;
 
         /**
          * @fn SetUniform1f
@@ -49,7 +49,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param v0 -> Value.
          */
-        virtual void SetUniform1f(const char* uniformName, float v0) const = 0;
+        virtual void SetUniform1f(const char* uniformName, float v0) const noexcept = 0;
 
         /**
          * @fn SetUniform1f
@@ -57,7 +57,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec1<float>] vec -> Vector of values.
          */
-        virtual void SetUniform1f(const char* uniformName, const glm::tvec1<float>& vec) const = 0;
+        virtual void SetUniform1f(const char* uniformName, const glm::tvec1<float>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform2f
@@ -66,7 +66,7 @@ namespace Bald::Graphics {
          * @param v0 -> Value.
          * @param v0 -> Value.
          */
-        virtual void SetUniform2f(const char* uniformName, float v0, float v1) const = 0;
+        virtual void SetUniform2f(const char* uniformName, float v0, float v1) const noexcept = 0;
 
         /**
          * @fn SetUniform2f
@@ -74,7 +74,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec2<float>] vec -> Vector of values.
          */
-        virtual void SetUniform2f(const char* uniformName, const glm::tvec2<float>& vec) const = 0;
+        virtual void SetUniform2f(const char* uniformName, const glm::tvec2<float>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform3f
@@ -84,7 +84,7 @@ namespace Bald::Graphics {
          * @param v1 -> Value.
          * @param v2 -> Value.
          */
-        virtual void SetUniform3f(const char* uniformName, float v0, float v1, float v2) const = 0;
+        virtual void SetUniform3f(const char* uniformName, float v0, float v1, float v2) const noexcept = 0;
 
         /**
          * @fn SetUniform3f
@@ -92,7 +92,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec3<float>] vec -> Vector of values.
          */
-        virtual void SetUniform3f(const char* uniformName, const glm::tvec3<float>& vec) const = 0;
+        virtual void SetUniform3f(const char* uniformName, const glm::tvec3<float>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform4f
@@ -103,7 +103,7 @@ namespace Bald::Graphics {
          * @param v2 -> Value.
          * @param v3 -> Value.
          */
-        virtual void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const = 0;
+        virtual void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const noexcept = 0;
 
         /**
          * @fn SetUniform4f
@@ -111,7 +111,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec4<float>] vec4 -> Vector of values.
          */
-        virtual void SetUniform4f(const char* uniformName, const glm::tvec4<float>& vec) const = 0;
+        virtual void SetUniform4f(const char* uniformName, const glm::tvec4<float>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform1i
@@ -119,7 +119,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param v0 -> Value.
          */
-        virtual void SetUniform1i(const char* uniformName, int v0) const = 0;
+        virtual void SetUniform1i(const char* uniformName, int v0) const noexcept = 0;
 
         /**
          * @fn SetUniform1i
@@ -127,7 +127,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec4<int>] vec1 -> Vector of values.
          */
-        virtual void SetUniform1i(const char* uniformName, const glm::tvec1<int>& vec) const = 0;
+        virtual void SetUniform1i(const char* uniformName, const glm::tvec1<int>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform2i
@@ -136,7 +136,7 @@ namespace Bald::Graphics {
          * @param v0 -> Value.
          * @param v1 -> Value.
          */
-        virtual void SetUniform2i(const char* uniformName, int v0, int v1) const = 0;
+        virtual void SetUniform2i(const char* uniformName, int v0, int v1) const noexcept = 0;
 
         /**
          * @fn SetUniform2i
@@ -144,7 +144,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec4<int>] vec2 -> Vector of values.
          */
-        virtual void SetUniform2i(const char* uniformName, const glm::tvec2<int>& vec) const = 0;
+        virtual void SetUniform2i(const char* uniformName, const glm::tvec2<int>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform3i
@@ -154,7 +154,7 @@ namespace Bald::Graphics {
          * @param v1 -> Value.
          * @param v2 -> Value.
          */
-        virtual void SetUniform3i(const char* uniformName, int v0, int v1, int v2) const = 0;
+        virtual void SetUniform3i(const char* uniformName, int v0, int v1, int v2) const noexcept = 0;
 
         /**
          * @fn SetUniform3i
@@ -162,7 +162,7 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec4<int>] vec3 -> Vector of values.
          */
-        virtual void SetUniform3i(const char* uniformName, const glm::tvec3<int>& vec) const = 0;
+        virtual void SetUniform3i(const char* uniformName, const glm::tvec3<int>& vec) const noexcept = 0;
 
         /**
          * @fn SetUniform4i
@@ -173,7 +173,7 @@ namespace Bald::Graphics {
          * @param v2 -> Value.
          * @param v3 -> Value.
          */
-        virtual void SetUniform4i(const char* uniformName, int v0, int v1, int v2, int v3) const = 0;
+        virtual void SetUniform4i(const char* uniformName, int v0, int v1, int v2, int v3) const noexcept = 0;
 
         /**
          * @fn SetUniform4i
@@ -181,14 +181,14 @@ namespace Bald::Graphics {
          * @param uniformName -> Name of uniform we want to set.
          * @param [glm::tvec4<int>] vec4 -> Vector of values.
          */
-        virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const = 0;
+        virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept = 0;
 
         /**
          * @fn GetShaderID
          * @brief Returns shader's ID.
          * @return [unsigned] Shader ID.
          */
-        virtual unsigned GetShaderID() const = 0;
+        virtual unsigned GetShaderID() const noexcept = 0;
 
     }; // END OF CLASS Shader
 
