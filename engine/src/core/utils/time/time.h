@@ -34,7 +34,7 @@ namespace Bald::Utils {
          * @return New Time object which holds current time.
          */
 
-        [[nodiscard]] static Time GetCurrentTime();
+        [[nodiscard]] static Time GetCurrentTime() noexcept;
 
         /**
          * @fn Hours
@@ -74,7 +74,7 @@ namespace Bald::Utils {
         int m_Sec;
     };
 
-    Time Time::GetCurrentTime() {
+    Time Time::GetCurrentTime() noexcept {
         auto now = std::chrono::system_clock::now();
         auto now_c = std::chrono::system_clock::to_time_t(now);
         auto time = std::localtime(&now_c);
