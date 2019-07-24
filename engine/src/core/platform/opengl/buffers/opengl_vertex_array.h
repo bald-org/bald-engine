@@ -6,7 +6,7 @@
 
 #include <vector>
 #include "graphics/rendering/buffers/vertex_array.h"
-#include "graphics/rendering/buffers/buffer.h"
+#include "graphics/rendering/buffers/vertex_buffer.h"
 
 namespace Bald::Platform::Graphics {
 
@@ -39,7 +39,7 @@ namespace Bald::Platform::Graphics {
          * @param [GLuint aka unsinged int] index -> Specifies the index of the generic vertex attribute to be enabled.
          */
 
-        void AddBuffer(Bald::Graphics::Buffer* buffer, unsigned index) noexcept override;
+        void AddBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept override;
 
         /**
          * @fn Bind
@@ -65,7 +65,7 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_ArrayID; /**< identifier of Vertex Array object >*/
-        std::vector<Bald::Graphics::Buffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/
+        std::vector<Bald::Graphics::VertexBuffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/
     }; // END OF CLASS OpenGLVertexArray
 
 } // END OF NAMESPACE Bald::Platform::Graphics

@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "graphics/rendering/buffers/buffer.h"
+#include "graphics/rendering/buffers/vertex_buffer.h"
 
 namespace Bald::Platform::Graphics {
 
@@ -13,25 +13,25 @@ namespace Bald::Platform::Graphics {
      * @brief Simple OpenGL buffer implementation.
      */
 
-    class OpenGLBuffer : public Bald::Graphics::Buffer {
+    class OpenGLVertexBuffer : public Bald::Graphics::VertexBuffer {
     public:
 
         /**
-         * @fn OpenGLBuffer
-         * @brief Creates a buffer object and initializes its data.
+         * @fn OpenGLVertexBuffer
+         * @brief Creates an opengl vertex buffer object and initializes it's data.
          * @param [float*] data -> to initialize buffer.
          * @param [unsigned] count -> number of elements in data.
          * @param [unsigned] component_count -> number of components in data.
          */
 
-        OpenGLBuffer(float* data, unsigned count, unsigned component_count) noexcept;
+        OpenGLVertexBuffer(float* data, unsigned count, unsigned component_count) noexcept;
 
         /**
          * @fn ~OpenGLBuffer
          * @brief Destructor of OpenGLBuffer.
          */
 
-        ~OpenGLBuffer() override;
+        ~OpenGLVertexBuffer() override;
 
         /**
          * @fn Bind
@@ -66,6 +66,6 @@ namespace Bald::Platform::Graphics {
     private:
         unsigned m_BufferID;
         unsigned m_ComponentCount;
-    }; // END OF CLASS OpenGLBuffer
+    }; // END OF CLASS OpenGLVertexBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics

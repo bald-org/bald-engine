@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/buffers/buffer.h"
+#include "graphics/rendering/buffers/vertex_buffer.h"
 #include "graphics/rendering/buffers/vertex_array.h"
 
 #include "glad/glad.h"
@@ -28,13 +28,13 @@ TEST(vertex_array, vertex_array_init_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto buf = Buffer::Create(data, 4, 1);
+    auto buf = VertexBuffer::Create(data, 4, 1);
     buf->Bind();
     buf->Unbind();
 
     auto VAO = VertexArray::Create();
 
-    VAO->AddBuffer(Buffer::Create(data, 4, 1), 1);
+    VAO->AddBuffer(VertexBuffer::Create(data, 4, 1), 1);
     VAO->Bind();
     VAO->Unbind();
 

@@ -6,7 +6,7 @@
 
 namespace Bald::Graphics {
 
-    class Buffer;
+    class VertexBuffer;
 
     /**
      * @class VertexArray
@@ -38,7 +38,7 @@ namespace Bald::Graphics {
          * @param [unsinged] index -> Specifies the index of the generic vertex attribute to be enabled.
          */
 
-        virtual void AddBuffer(Buffer* buffer, unsigned index) noexcept = 0;
+        virtual void AddBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept = 0;
 
         /**
          * @fn Bind

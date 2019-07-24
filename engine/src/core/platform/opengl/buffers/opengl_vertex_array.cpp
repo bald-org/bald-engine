@@ -4,7 +4,7 @@
 
 #include <algorithm>
 #include "opengl_vertex_array.h"
-#include "opengl_buffer.h"
+#include "opengl_vertex_buffer.h"
 
 #include "glad/glad.h"
 
@@ -16,12 +16,12 @@ namespace Bald::Platform::Graphics {
 
     OpenGLVertexArray::~OpenGLVertexArray() {
 
-        std::for_each(m_Buffers.begin(), m_Buffers.end(), [](Bald::Graphics::Buffer* buffer) { delete buffer; });
+        std::for_each(m_Buffers.begin(), m_Buffers.end(), [](Bald::Graphics::VertexBuffer* buffer) { delete buffer; });
 
         glDeleteVertexArrays(1, &m_ArrayID);
     }
 
-    void OpenGLVertexArray::AddBuffer(Bald::Graphics::Buffer* buffer, [[maybe_unused]] unsigned index) noexcept {
+    void OpenGLVertexArray::AddBuffer(Bald::Graphics::VertexBuffer* buffer, [[maybe_unused]] unsigned index) noexcept {
 
         Bind();
         buffer->Bind();

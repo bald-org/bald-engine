@@ -11,26 +11,26 @@ namespace Bald::Graphics {
      * @brief Simple buffer abstraction.
      */
 
-    class Buffer {
+    class VertexBuffer {
     public:
 
         /**
          * @fn Create
-         * @brief Creates data buffer based on currently chosen rendering API.
+         * @brief Creates vertex buffer based on currently chosen rendering API.
          * @param [float*] data -> Pointer to the memory containing data (eg. triangle vertices)
          * @param [int] count -> Number of data points.
          * @param [int] component_count -> Number of components in data.
          * @return [Buffer*] Pointer to the buffer object.
          */
 
-        static Buffer* Create(float* data, unsigned count, unsigned component_count);
+        static VertexBuffer* Create(float* data, unsigned count, unsigned component_count);
 
         /**
-         * @fn ~Buffer
+         * @fn ~VertexBuffer
          * @brief Default virtual destructor.
          */
 
-        virtual ~Buffer() = default;
+        virtual ~VertexBuffer() = default;
 
         /**
          * @fn Bind
@@ -57,11 +57,11 @@ namespace Bald::Graphics {
         /**
          * @fn GetID
          * @brief ID getter.
-         * @return [unsigned] Buffer id.
+         * @return [unsigned] VertexBuffer id.
          */
 
         [[nodiscard]] virtual unsigned GetID() const noexcept = 0;
 
-    }; // END OF CLASS Buffer
+    }; // END OF CLASS VertexBuffer
 
 } // END OF NAMESPACE Bald::Graphics

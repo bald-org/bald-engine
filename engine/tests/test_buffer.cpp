@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/buffers/buffer.h"
+#include "graphics/rendering/buffers/vertex_buffer.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
@@ -22,7 +22,7 @@ TEST(buffer, buffer_initialisation_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto buf = Bald::Graphics::Buffer::Create(data, 4, 1);
+    auto buf = Bald::Graphics::VertexBuffer::Create(data, 4, 1);
     buf->Bind();
     buf->Unbind();
 
