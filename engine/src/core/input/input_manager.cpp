@@ -32,28 +32,28 @@ namespace Bald::Input {
     }
 
     void InputManager::EmitKeyPressedEvent(unsigned keycode, bool isRepeated) noexcept {
-        BALD_ASSERT(keycode >= MAX_KEYS, "InputManager", "Wrong key id", keycode >= MAX_KEYS);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
         Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
     }
 
     void InputManager::EmitKeyTypedEvent(unsigned keycode) noexcept {
-        BALD_ASSERT(keycode >= MAX_KEYS, "InputManager", "Wrong key id", keycode >= MAX_KEYS);
-        else Bald::EventManager::Emit<KeyTypedEvent>(keycode);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
+        Bald::EventManager::Emit<KeyTypedEvent>(keycode);
     }
 
     void InputManager::EmitKeyReleasedEvent(unsigned keycode) noexcept {
-        BALD_ASSERT(keycode >= MAX_KEYS, "InputManager", "Wrong key id", keycode >= MAX_KEYS);
-        else Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
+        Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
     }
 
     void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated) noexcept {
-        BALD_ASSERT(buttoncode >= MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode >= MAX_MOUSE_BUTTONS);
+        BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
         Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
     }
 
     void InputManager::EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept {
-        BALD_ASSERT(buttoncode >= MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode >= MAX_MOUSE_BUTTONS);
-        else Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
+        BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
+        Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
     }
 
 } // END OF NAMESPACE Bald::Input
