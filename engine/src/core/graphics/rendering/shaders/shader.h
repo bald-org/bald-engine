@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include "unordered_map"
-#include "string"
+#include "glm/glm.hpp"
 
 namespace Bald::Graphics {
 
@@ -15,6 +14,7 @@ namespace Bald::Graphics {
      */
 
     class Shader {
+
     public:
 
         /**
@@ -44,6 +44,57 @@ namespace Bald::Graphics {
         virtual void Unbind() const = 0;
 
         /**
+         * @fn SetUniform1f
+         * @brief Sets uniform of type vec1 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         */
+        virtual void SetUniform1f(const char* uniformName, float v0) const = 0;
+
+        /**
+         * @fn SetUniform1f
+         * @brief Sets uniform of type vec1 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec1<float>] vec -> Vector of values.
+         */
+        virtual void SetUniform1f(const char* uniformName, const glm::tvec1<float>& vec) const = 0;
+
+        /**
+         * @fn SetUniform2f
+         * @brief Sets uniform of type vec2 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v0 -> Value.
+         */
+        virtual void SetUniform2f(const char* uniformName, float v0, float v1) const = 0;
+
+        /**
+         * @fn SetUniform2f
+         * @brief Sets uniform of type vec2 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec2<float>] vec -> Vector of values.
+         */
+        virtual void SetUniform2f(const char* uniformName, const glm::tvec2<float>& vec) const = 0;
+
+        /**
+         * @fn SetUniform3f
+         * @brief Sets uniform of type vec3 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         * @param v2 -> Value.
+         */
+        virtual void SetUniform3f(const char* uniformName, float v0, float v1, float v2) const = 0;
+
+        /**
+         * @fn SetUniform3f
+         * @brief Sets uniform of type vec3 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec3<float>] vec -> Vector of values.
+         */
+        virtual void SetUniform3f(const char* uniformName, const glm::tvec3<float>& vec) const = 0;
+
+        /**
          * @fn SetUniform4f
          * @brief Sets uniform of type vec4 with name uniformName with given values.
          * @param uniformName -> Name of uniform we want to set.
@@ -53,6 +104,84 @@ namespace Bald::Graphics {
          * @param v3 -> Value.
          */
         virtual void SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const = 0;
+
+        /**
+         * @fn SetUniform4f
+         * @brief Sets uniform of type vec4 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec4<float>] vec4 -> Vector of values.
+         */
+        virtual void SetUniform4f(const char* uniformName, const glm::tvec4<float>& vec) const = 0;
+
+        /**
+         * @fn SetUniform1i
+         * @brief Sets uniform of type vec1 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         */
+        virtual void SetUniform1i(const char* uniformName, int v0) const = 0;
+
+        /**
+         * @fn SetUniform1i
+         * @brief Sets uniform of type vec4 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec4<int>] vec1 -> Vector of values.
+         */
+        virtual void SetUniform1i(const char* uniformName, const glm::tvec1<int>& vec) const = 0;
+
+        /**
+         * @fn SetUniform2i
+         * @brief Sets uniform of type vec2 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         */
+        virtual void SetUniform2i(const char* uniformName, int v0, int v1) const = 0;
+
+        /**
+         * @fn SetUniform2i
+         * @brief Sets uniform of type vec2 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec4<int>] vec2 -> Vector of values.
+         */
+        virtual void SetUniform2i(const char* uniformName, const glm::tvec2<int>& vec) const = 0;
+
+        /**
+         * @fn SetUniform3i
+         * @brief Sets uniform of type vec3 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         * @param v2 -> Value.
+         */
+        virtual void SetUniform3i(const char* uniformName, int v0, int v1, int v2) const = 0;
+
+        /**
+         * @fn SetUniform3i
+         * @brief Sets uniform of type vec3 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec4<int>] vec3 -> Vector of values.
+         */
+        virtual void SetUniform3i(const char* uniformName, const glm::tvec3<int>& vec) const = 0;
+
+        /**
+         * @fn SetUniform4i
+         * @brief Sets uniform of type vec4 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param v0 -> Value.
+         * @param v1 -> Value.
+         * @param v2 -> Value.
+         * @param v3 -> Value.
+         */
+        virtual void SetUniform4i(const char* uniformName, int v0, int v1, int v2, int v3) const = 0;
+
+        /**
+         * @fn SetUniform4i
+         * @brief Sets uniform of type vec4 with name uniformName with given values.
+         * @param uniformName -> Name of uniform we want to set.
+         * @param [glm::tvec4<int>] vec4 -> Vector of values.
+         */
+        virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const = 0;
 
         /**
          * @fn GetShaderID

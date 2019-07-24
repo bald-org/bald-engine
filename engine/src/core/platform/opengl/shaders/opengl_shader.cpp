@@ -3,8 +3,7 @@
 //
 
 #include "opengl_shader.h"
-
-#include "opengl_shader.h"
+#include <unordered_map>
 #include "file_manager.h"
 #include "pch.h"
 #include "glad/glad.h"
@@ -12,9 +11,7 @@
 namespace Bald::Platform::Graphics {
 
     OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
-        : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath) {
-        m_ShaderID = CreateShader();
-    }
+        : m_ShaderID(CreateShader()), m_VertexPath(vertexPath), m_FragmentPath(fragmentPath) {}
 
     OpenGLShader::~OpenGLShader() {
         glDeleteProgram(m_ShaderID);
@@ -28,8 +25,69 @@ namespace Bald::Platform::Graphics {
         glUseProgram(0);
     }
 
+
+    void OpenGLShader::SetUniform1f(const char* uniformName, float v0) const {
+        glUniform1f(GetUniformLocation(uniformName), v0);
+    }
+
+    void OpenGLShader::SetUniform1f(const char* uniformName, const glm::tvec1<float>& vec) const {
+        glUniform1f(GetUniformLocation(uniformName), vec.x);
+    }
+
+    void OpenGLShader::SetUniform2f(const char* uniformName, float v0, float v1) const {
+        glUniform2f(GetUniformLocation(uniformName), v0, v1);
+    }
+
+    void OpenGLShader::SetUniform2f(const char* uniformName, const glm::tvec2<float>& vec) const {
+        glUniform2f(GetUniformLocation(uniformName), vec.x, vec.y);
+    }
+
+    void OpenGLShader::SetUniform3f(const char* uniformName, float v0, float v1, float v2) const {
+        glUniform3f(GetUniformLocation(uniformName), v0, v1, v2);
+    }
+
+    void OpenGLShader::SetUniform3f(const char* uniformName, const glm::tvec3<float>& vec) const {
+        glUniform3f(GetUniformLocation(uniformName), vec.x, vec.y, vec.z);
+    }
+
     void OpenGLShader::SetUniform4f(const char* uniformName, float v0, float v1, float v2, float v3) const {
         glUniform4f(GetUniformLocation(uniformName), v0, v1, v2, v3);
+    }
+
+    void OpenGLShader::SetUniform4f(const char* uniformName, const glm::vec4& vec) const {
+        glUniform4f(GetUniformLocation(uniformName), vec.x, vec.y, vec.z, vec.w);
+    }
+
+    void OpenGLShader::SetUniform1i(const char* uniformName, int v0) const {
+        glUniform1i(GetUniformLocation(uniformName), v0);
+    }
+
+    void OpenGLShader::SetUniform1i(const char* uniformName, const glm::tvec1<int>& vec) const {
+        glUniform1i(GetUniformLocation(uniformName), vec.x);
+    }
+
+    void OpenGLShader::SetUniform2i(const char* uniformName, int v0, int v1) const {
+        glUniform2i(GetUniformLocation(uniformName), v0,v1);
+    }
+
+    void OpenGLShader::SetUniform2i(const char* uniformName, const glm::tvec2<int>& vec) const {
+        glUniform2i(GetUniformLocation(uniformName), vec.x, vec.y);
+    }
+
+    void OpenGLShader::SetUniform3i(const char* uniformName, int v0, int v1, int v2) const {
+        glUniform3i(GetUniformLocation(uniformName), v0, v1, v2);
+    }
+
+    void OpenGLShader::SetUniform3i(const char* uniformName, const glm::tvec3<int>& vec) const {
+        glUniform3i(GetUniformLocation(uniformName), vec.x, vec.y, vec.z);
+    }
+
+    void OpenGLShader::SetUniform4i(const char* uniformName, int v0, int v1, int v2, int v3) const {
+        glUniform4i(GetUniformLocation(uniformName), v0, v1, v2, v3);
+    }
+
+    void OpenGLShader::SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const {
+        glUniform4i(GetUniformLocation(uniformName), vec.x, vec.y, vec.z, vec.w);
     }
 
     unsigned OpenGLShader::GetShaderID() const {
@@ -125,11 +183,15 @@ namespace Bald::Platform::Graphics {
     }
 
     int OpenGLShader::GetUniformLocation(const char* uniformName) const {
-        if(m_UniformLocationCache.find(uniformName) != m_UniformLocationCache.end()) {
-            return m_UniformLocationCache[uniformName];
+        auto iter = m_UniformLocationCache.find(uniformName);
+
+        if(iter != m_UniformLocationCache.end()) {
+            return iter->second;
         }
+
         int location = glGetUniformLocation(m_ShaderID, uniformName);
         m_UniformLocationCache[uniformName] = location;
+
         return location;
     }
 
