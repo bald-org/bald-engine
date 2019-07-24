@@ -9,19 +9,19 @@
 
 namespace Bald::Debug {
 
-    void red () {
+    void Logger::red() noexcept {
         printf("\033[1;31m");
     }
 
-    void yellow() {
+    void Logger::yellow() noexcept {
         printf("\033[1;33m");
     }
 
-    void green() {
+    void Logger::green() noexcept {
         printf("\033[1;32m");
     }
 
-    void reset () {
+    void Logger::reset() noexcept {
         printf("\033[0m");
     }
 
