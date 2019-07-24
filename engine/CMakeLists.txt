@@ -80,10 +80,12 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/shaders/shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_array.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/shaders/opengl_shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/timer.cpp)
@@ -135,6 +137,8 @@ target_link_libraries(runUnitTests gtest gmock_main)
 target_link_libraries(runUnitTests bald_engine)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
