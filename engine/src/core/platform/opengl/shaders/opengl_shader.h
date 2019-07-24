@@ -191,11 +191,11 @@ class OpenGLShader : public Bald::Graphics::Shader {
         void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept override;
 
         /**
-         * @fn GetShaderID
+         * @fn GetID
          * @brief Returns shader's ID.
          * @return [unsigned] Shader ID.
          */
-        unsigned GetShaderID() const noexcept override;
+        unsigned GetID() const noexcept override;
 
     private:
         /**
@@ -213,9 +213,9 @@ class OpenGLShader : public Bald::Graphics::Shader {
         [[nodiscard]] int GetUniformLocation(const char* uniformName) const noexcept;
 
     private:
-        unsigned int m_ShaderID; /**< Shader ID */
         const char* m_VertexPath; /**< Relative path to Vertex Shader */
         const char* m_FragmentPath; /**< Relative path to Fragment Shader */
+        unsigned int m_ShaderID; /**< Shader ID */
         mutable std::unordered_map<std::string, int> m_UniformLocationCache; /**< Unordered map of Uniform Locations for better performance*/
 
     }; // END OF CLASS OpenGLShader

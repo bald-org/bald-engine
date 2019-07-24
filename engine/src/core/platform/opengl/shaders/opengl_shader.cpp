@@ -11,7 +11,7 @@
 namespace Bald::Platform::Graphics {
 
     OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
-        : m_ShaderID(CreateShader()), m_VertexPath(vertexPath), m_FragmentPath(fragmentPath) {}
+        : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath), m_ShaderID(CreateShader()) {}
 
     OpenGLShader::~OpenGLShader() {
         glDeleteProgram(m_ShaderID);
@@ -90,7 +90,7 @@ namespace Bald::Platform::Graphics {
         glUniform4i(GetUniformLocation(uniformName), vec.x, vec.y, vec.z, vec.w);
     }
 
-    unsigned OpenGLShader::GetShaderID() const noexcept {
+    unsigned OpenGLShader::GetID() const noexcept {
         return m_ShaderID;
     }
 

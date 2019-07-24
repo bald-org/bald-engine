@@ -8,7 +8,7 @@
 
 namespace Bald::Graphics {
 
-    Shader* Graphics::Shader::Create(const char* vertexPath, const char* fragmentPath) {
+    Shader* Shader::Create(const char* vertexPath, const char* fragmentPath) {
         return new Bald::Platform::Graphics::OpenGLShader(vertexPath, fragmentPath);
     }
 } // END OF NAMESPACE Bald::Graphics
