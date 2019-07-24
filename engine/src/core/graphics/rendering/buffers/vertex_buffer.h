@@ -4,7 +4,11 @@
 
 #pragma once
 
+#include <vector>
+
 namespace Bald::Graphics {
+
+    class VertexBufferLayout;
 
     /**
      * @class Buffer
@@ -18,12 +22,11 @@ namespace Bald::Graphics {
          * @fn Create
          * @brief Creates vertex buffer based on currently chosen rendering API.
          * @param [float*] data -> Pointer to the memory containing data (eg. triangle vertices)
-         * @param [int] count -> Number of data points.
-         * @param [int] component_count -> Number of components in data.
-         * @return [Buffer*] Pointer to the buffer object.
+         * @param [unsigned] size -> Size of data array in bytes.
+         * @return [VertexBuffer*] Pointer to the vertex buffer object.
          */
 
-        static VertexBuffer* Create(float* data, unsigned count, unsigned component_count);
+        static VertexBuffer* Create(float* data, unsigned size);
 
         /**
          * @fn ~VertexBuffer
@@ -31,6 +34,22 @@ namespace Bald::Graphics {
          */
 
         virtual ~VertexBuffer() = default;
+
+        /**
+         * @fn SetLayout
+         * @brief Sets vertex buffer layout.
+         * @param [const Bald::Graphics::VertexBufferLayout&] Vertex buffer layout object.
+         */
+
+        virtual void SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept = 0;
+
+        /**
+         * @fn GetLayout
+         * @brief Vertex buffer layout getter
+         * @return [Bald::Graphics::VertexBufferLayout&] Vertex buffer layout.
+         */
+
+        virtual const Bald::Graphics::VertexBufferLayout& GetLayout() const noexcept = 0;
 
         /**
          * @fn Bind
@@ -45,14 +64,6 @@ namespace Bald::Graphics {
          */
 
         virtual void Unbind() const noexcept = 0;
-
-        /**
-         * @fn GetComponentCount
-         * @brief Component count getter.
-         * @return [unsigned] Number of components in the buffer.
-         */
-
-        [[nodiscard]] virtual unsigned GetComponentCount() const noexcept = 0;
 
         /**
          * @fn GetID

@@ -17,12 +17,12 @@ namespace Bald::Graphics {
         /**
         * @fn Create
         * @brief Creates data buffer based on currently chosen rendering API.
-        * @param [unsigned short*] data -> Pointer to the memory containing data (eg. triangle indices)
-        * @param [unsigned] count -> Number of data points.
+        * @param [unsigned*] data -> Pointer to the memory containing data (eg. triangle indices)
+        * @param [unsigned] size -> Size of data array in bytes.
         * @return [IndexBuffer*] Pointer to the index buffer object.
         */
 
-        static IndexBuffer* Create(unsigned short* data, unsigned count);
+        static IndexBuffer* Create(unsigned* data, unsigned size);
 
         /**
          * @fn ~IndexBuffer

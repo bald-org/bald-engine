@@ -7,17 +7,26 @@
 
 namespace Bald::Platform::Graphics {
 
-    OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, unsigned count, unsigned component_count) noexcept
-    :   m_BufferID(0),
-        m_ComponentCount(component_count) {
+    OpenGLVertexBuffer::OpenGLVertexBuffer(float* data, unsigned size) noexcept
+    :   m_BufferID(0) {
         glGenBuffers(1, &m_BufferID);
         glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
-        glBufferData(GL_ARRAY_BUFFER, count * sizeof(float), data, GL_STATIC_DRAW);
+        glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
     OpenGLVertexBuffer::~OpenGLVertexBuffer() {
         glDeleteBuffers(1, &m_BufferID);
+    }
+
+    void OpenGLVertexBuffer::SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept {
+        m_Layout = layout;
+
+        uint32_t offset = 0;
+        for(auto& layoutElement: m_Layout) {
+            layoutElement.SetOffset(offset);
+            offset += layoutElement.GetStride();
+        }
     }
 
     void OpenGLVertexBuffer::Bind() const noexcept {

@@ -5,8 +5,14 @@
 #pragma once
 
 #include <memory>
+#include <src/core/graphics/rendering/shaders/shader.h>
 #include "layer_stack.h"
 #include "graphics/window.h"
+
+#include "graphics/rendering/buffers/vertex_array.h"
+#include "graphics/rendering/buffers/vertex_buffer.h"
+#include "graphics/rendering/buffers/index_buffer.h"
+#include "graphics/rendering/shaders/shader.h"
 
 namespace Bald {
 
@@ -175,6 +181,13 @@ namespace Bald {
 
     private:
         static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
+
+    private:
+        Graphics::VertexArray* m_TriangleVAO = nullptr;
+        Graphics::VertexBuffer* m_TriangleVBO = nullptr;
+        Graphics::IndexBuffer* m_TriangleIBO = nullptr;
+
+        Graphics::Shader* m_RedShader = nullptr;
 
     }; // END OF CLASS Application
 

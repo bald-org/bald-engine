@@ -22,11 +22,10 @@ TEST(buffer, buffer_initialisation_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto buf = Bald::Graphics::VertexBuffer::Create(data, 4, 1);
+    auto buf = Bald::Graphics::VertexBuffer::Create(data, sizeof(data));
     buf->Bind();
     buf->Unbind();
 
-    EXPECT_EQ(1, buf->GetComponentCount());
     EXPECT_TRUE(buf->GetID());
 
     glfwDestroyWindow(window);

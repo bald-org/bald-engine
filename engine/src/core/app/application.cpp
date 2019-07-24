@@ -9,6 +9,10 @@
 #include "utils/timer.h"
 #include "debug/ui/imgui_layer.h"
 
+// TRIANGLE
+#include "graphics/rendering/buffers/vertex_buffer_layout.h"
+// END TRIANGLE
+
 namespace Bald {
 
     Application* Application::m_Instance = nullptr;
@@ -31,6 +35,12 @@ namespace Bald {
 
         while(m_Running) {
             m_Window->Clear();
+
+            // TRIANGLE
+            m_RedShader->Bind();
+            m_TriangleVAO->Bind();
+            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            // END TRIANGLE
 
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0){
@@ -86,6 +96,37 @@ namespace Bald {
         PushOverlayImmediately<Debug::ImGuiLayer>();
 
         CORE_LOG_INFO("[Application] Initialization was successful");
+
+        // TRIANGLE
+        float vertices[] = {
+            //layout(location = 0)       layout(location = 1)
+            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,
+             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,
+             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f
+        };
+
+        unsigned indices[] = {
+            0, 1, 2, // first triangle
+            0, 2, 3  // second triangle
+        };
+
+        Graphics::VertexBufferLayout layout = {
+            {0, Graphics::ShaderBuiltInType::Vec3f, "in_Position"},
+            {1, Graphics::ShaderBuiltInType::Vec4f, "in_Color"}
+        };
+
+        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
+        m_TriangleVBO->SetLayout(layout);
+
+        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
+
+        m_TriangleVAO = Graphics::VertexArray::Create();
+        m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
+        m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
+
+        m_RedShader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
+        // END OF TRIANGLE
 
         return true;
     }

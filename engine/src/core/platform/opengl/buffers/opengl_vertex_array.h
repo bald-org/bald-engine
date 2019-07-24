@@ -7,6 +7,7 @@
 #include <vector>
 #include "graphics/rendering/buffers/vertex_array.h"
 #include "graphics/rendering/buffers/vertex_buffer.h"
+#include "graphics/rendering/buffers/index_buffer.h"
 
 namespace Bald::Platform::Graphics {
 
@@ -34,12 +35,20 @@ namespace Bald::Platform::Graphics {
 
         /**
          * @fn AddVertexBuffer
-         * @brief Adds buffer to vertex array.
-         * @param [Buffer*] buffer -> Pointer to dynamically created buffer.
-         * @param [GLuint aka unsinged int] index -> Specifies the index of the generic vertex attribute to be enabled.
+         * @brief Adds vertex buffer to vertex array.
+         * @param [Bald::Graphics::VertexBuffer*] vertexBuffer -> Pointer to dynamically created vertex buffer.
          */
 
-        void AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept override;
+        void AddVertexBuffer(Bald::Graphics::VertexBuffer* vertexBuffer) noexcept override;
+
+        /**
+         * @fn AddIndexBuffer
+         * @brief Adds index buffer to vertex array.
+         * @param [IndexBuffer*] indexBuffer -> Pointer to dynamically created index buffer.
+         * @param [unsinged] index -> Specifies the index of the generic vertex attribute to be enabled.
+         */
+
+        void AddIndexBuffer(Bald::Graphics::IndexBuffer* indexBuffer) noexcept override;
 
         /**
          * @fn Bind

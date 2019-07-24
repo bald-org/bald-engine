@@ -7,8 +7,7 @@
 
 namespace Bald::Graphics {
 
-    VertexBuffer* VertexBuffer::Create(float* data, unsigned count, unsigned component_count) {
-        return new Bald::Platform::Graphics::OpenGLVertexBuffer(data, count, component_count);
+    VertexBuffer* VertexBuffer::Create(float* data, unsigned size) {
+        return new Bald::Platform::Graphics::OpenGLVertexBuffer(data, size);
     }
-
 } // END OF NAMESPACE Bald::Graphics

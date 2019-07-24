@@ -4,9 +4,14 @@
 
 #pragma once
 
+#include <vector>
+
+#include "graphics/rendering/buffers/vertex_buffer_layout.h"
 #include "graphics/rendering/buffers/vertex_buffer.h"
 
 namespace Bald::Platform::Graphics {
+
+
 
     /**
      * @class OpenGLBuffer
@@ -19,12 +24,11 @@ namespace Bald::Platform::Graphics {
         /**
          * @fn OpenGLVertexBuffer
          * @brief Creates an opengl vertex buffer object and initializes it's data.
-         * @param [float*] data -> to initialize buffer.
-         * @param [unsigned] count -> number of elements in data.
-         * @param [unsigned] component_count -> number of components in data.
+         * @param [float*] data -> Pointer to the memory containing data (eg. triangle vertices)
+         * @param [unsigned] size -> Size of data array in bytes.
          */
 
-        OpenGLVertexBuffer(float* data, unsigned count, unsigned component_count) noexcept;
+        OpenGLVertexBuffer(float* data, unsigned count) noexcept;
 
         /**
          * @fn ~OpenGLBuffer
@@ -32,6 +36,21 @@ namespace Bald::Platform::Graphics {
          */
 
         ~OpenGLVertexBuffer() override;
+
+        /**
+         * @fn SetLayout
+         * @brief Sets vertex buffer layout.
+         */
+
+        void SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept override;
+
+        /**
+         * @fn GetLayout
+         * @brief Vertex buffer layout getter
+         * @return [Bald::Graphics::VertexBufferLayout&] Vertex buffer layout.
+         */
+
+        [[nodiscard]] inline const Bald::Graphics::VertexBufferLayout& GetLayout() const noexcept override { return m_Layout; }
 
         /**
          * @fn Bind
@@ -48,14 +67,6 @@ namespace Bald::Platform::Graphics {
         void Unbind() const noexcept override;
 
         /**
-         * @fn GetComponentCount
-         * @brief Returns number of components in buffer's data.
-         * @return [unsigned int]
-         */
-
-        [[nodiscard]] inline unsigned GetComponentCount() const noexcept override { return m_ComponentCount; }
-
-        /**
          * @fn GetID
          * @brief ID getter.
          * @return [unsigned] Buffer id.
@@ -65,7 +76,7 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_BufferID;
-        unsigned m_ComponentCount;
+        Bald::Graphics::VertexBufferLayout m_Layout;
     }; // END OF CLASS OpenGLVertexBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics

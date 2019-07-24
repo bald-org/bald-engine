@@ -20,19 +20,33 @@ namespace Bald::Platform::Graphics {
         glDeleteVertexArrays(1, &m_ArrayID);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, [[maybe_unused]] unsigned index) noexcept {
-
+    void OpenGLVertexArray::AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer) noexcept {
         Bind();
         buffer->Bind();
 
-        glEnableVertexAttribArray(index);
-        glVertexAttribPointer(index, static_cast<int>(buffer->GetComponentCount()), GL_FLOAT, GL_FALSE, static_cast<int>(buffer->GetComponentCount() * sizeof(float)), nullptr);
+        const auto& layout = buffer->GetLayout();
+        for(const auto& layoutElement : layout) {
+
+            glEnableVertexAttribArray(layoutElement.GetShaderLayoutLocation());
+            glVertexAttribPointer(layoutElement.GetShaderLayoutLocation(),
+                                  static_cast<int>(layoutElement.GetComponentCount()),
+                                  layoutElement.GetOpenGLType(),
+                                  layoutElement.IsNormalized() ? GL_TRUE : GL_FALSE,
+                                  static_cast<int>(layout.GetStride()),
+                                  reinterpret_cast<const void*>(layoutElement.GetOffset()));
+        }
 
         m_Buffers.push_back(buffer);
 
         Unbind();
         buffer->Unbind();
+    }
 
+    void OpenGLVertexArray::AddIndexBuffer(Bald::Graphics::IndexBuffer* indexBuffer) noexcept {
+        Bind();
+        indexBuffer->Bind();
+        Unbind();
+        indexBuffer->Unbind();
     }
 
     void OpenGLVertexArray::Bind() const noexcept {
