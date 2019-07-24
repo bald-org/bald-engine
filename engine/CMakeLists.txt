@@ -9,7 +9,6 @@ set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
 
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
@@ -88,7 +87,6 @@ if (APPLE)
             glad
             glfw
             glm
-            spdlog
             imgui
             "-framework Cocoa"
             "-framework OpenGL"
