@@ -13,7 +13,7 @@
 namespace Bald::Utils {
 
     std::string FileManager::ReadFile(const char* filePath, Size size) {
-        if (size == Size::SMALL_FILE)
+        if (size == Size::small_file)
             return ReadSmallFile(filePath);
         return ReadBigFile(filePath);
     }
@@ -74,10 +74,32 @@ namespace Bald::Utils {
         return result;
     }
 
-#elif WINDOWS
+#else
+#include <fstream>
     std::string FileManager::ReadBigFile(const char *filePath) {
-        CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
-        ReadSmallFile(filePath);
+//        CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
+//        ReadSmallFile(filePath);
+    std::streampos begin,end;
+    std::ifstream file(filePath, std::ios::in);
+    char* buffer;
+    if(file.is_open()){
+        begin = file.tellg();
+        file.seekg (0, std::ios::end);
+        end = file.tellg();
+        auto size = static_cast<size_t>(end-begin);
+        buffer = new char[static_cast<unsigned long>(size)];
+        std::memset(buffer, '\0', static_cast<unsigned long>(size));
+        file.seekg(0, std::ios::beg);
+        file.read(buffer, static_cast<std::streamsize>(size));
+        file.close();
+        std::string result(buffer);
+        delete[] buffer;
+        return result;
+    }
+
+    CORE_LOG_WARN("[FileManager] Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath));
+    return "[FileManager] Couldn't get size of the file. Check if the file exists at path: " + static_cast<std::string>(filePath);
+
     }
 #endif
 
