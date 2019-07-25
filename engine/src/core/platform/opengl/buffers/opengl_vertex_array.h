@@ -82,8 +82,8 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_ArrayID; /**< identifier of Vertex Array object >*/
-        std::vector<std::shared_ptr<Bald::Graphics::VertexBuffer>> m_VertexBuffers; /**< pointers to buffers added to Vertex Array >*/
-        std::shared_ptr<Bald::Graphics::IndexBuffer> m_IndexBuffer; /**< pointers to buffers added to Vertex Array >*/
+        std::vector<std::shared_ptr<Bald::Graphics::VertexBuffer>> m_VertexBuffers; /**< pointers to vertex buffers added to Vertex Array >*/
+        std::shared_ptr<Bald::Graphics::IndexBuffer> m_IndexBuffer; /**< pointer to index buffers added to Vertex Array >*/
     }; // END OF CLASS OpenGLVertexArray
 
 } // END OF NAMESPACE Bald::Platform::Graphics
