@@ -45,7 +45,7 @@ namespace Bald::Graphics {
               m_TypeSize(typeSize),
               m_Name(std::move(name)),
               m_ComponentCount(CalculateComponentCount()),
-              m_Stride(CalculateStride()) {}
+              m_Stride(static_cast<uint32_t>(m_TypeSize)) {}
 
     public:
         inline void SetOffset(uint32_t offset) noexcept { m_Offset = offset; }
@@ -65,18 +65,13 @@ namespace Bald::Graphics {
     private:
         [[nodiscard]] uint32_t CalculateComponentCount() const noexcept {
             switch(m_Type) {
-                case ShaderBuiltInType::Float :
-                    return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float);
-                case ShaderBuiltInType::Int   :
-                    return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int);
-                default:
-                    BALD_ASSERT(static_cast<uint32_t>(m_Type), "VertexBufferLayoutElement",
-                                "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
+                case ShaderBuiltInType::Float : return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float);
+                case ShaderBuiltInType::Int   : return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int);
+                default: BALD_ASSERT(static_cast<uint32_t>(m_Type), "VertexBufferLayoutElement",
+                                    "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
             }
             return 0;
         }
-
-        [[nodiscard]] uint32_t CalculateStride() const noexcept { return static_cast<uint32_t>(m_TypeSize); }
 
     private:
         bool m_IsNormalized;
