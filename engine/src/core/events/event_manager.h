@@ -47,7 +47,10 @@ namespace Bald {
 
         /**
         * @fn Subscribe
-        * @brief Templated function which allows you to subscribe to any kind of engine's event
+        * @brief Templated function which allows you to subscribe to any kind of engine's event.
+         * For example:
+         * with lambda: Subscribe<type of event>(HandleType::SYNC, [](const type of event&){ do something; });
+         * with method: Subscribe<type of event>(HandleType::SYNC, method pointer, object on which method will be called, rest of arguments that will be needed to call the method);
         * @param [HandleType] type -> Manner in which the function will be handled e.g. synchronous/asynchronous
         * @param [F&&] callback -> Function with which you subscribe to an event. It MUST take Event reference as the first parameter
         * @param [Args&& ...]    args -> Function's arguments
