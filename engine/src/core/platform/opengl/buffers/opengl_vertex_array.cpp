@@ -13,14 +13,14 @@ namespace Bald::Platform::Graphics {
     }
 
     OpenGLVertexArray::~OpenGLVertexArray() {
-        for(auto* buffer : m_Buffers) {
-            delete buffer;
-        }
+//        for(auto* buffer : m_Buffers) {
+//            delete buffer;
+//        }
 
         glDeleteVertexArrays(1, &m_ArrayID);
     }
 
-    void OpenGLVertexArray::AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer) noexcept {
+    void OpenGLVertexArray::AddVertexBuffer(const std::shared_ptr<Bald::Graphics::VertexBuffer>& buffer) noexcept {
         Bind();
         buffer->Bind();
 
@@ -36,17 +36,24 @@ namespace Bald::Platform::Graphics {
                                   reinterpret_cast<const void*>(layoutElement.GetOffset()));
         }
 
-        m_Buffers.push_back(buffer);
+        m_VertexBuffers.push_back(buffer);
 
         Unbind();
         buffer->Unbind();
     }
 
-    void OpenGLVertexArray::AddIndexBuffer(Bald::Graphics::IndexBuffer* indexBuffer) noexcept {
+    void OpenGLVertexArray::AddIndexBuffer(const std::shared_ptr<Bald::Graphics::IndexBuffer>& indexBuffer) noexcept {
         Bind();
         indexBuffer->Bind();
+
+        m_IndexBuffer = indexBuffer;
+
         Unbind();
         indexBuffer->Unbind();
+    }
+
+    const std::shared_ptr<Bald::Graphics::IndexBuffer>& OpenGLVertexArray::GetIndexBuffer() const noexcept {
+        return m_IndexBuffer;
     }
 
     void OpenGLVertexArray::Bind() const noexcept {

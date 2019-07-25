@@ -9,10 +9,6 @@
 #include "utils/timer.h"
 #include "debug/ui/imgui_layer.h"
 
-// TRIANGLE
-#include "graphics/rendering/buffers/vertex_buffer_layout.h"
-// END TRIANGLE
-
 namespace Bald {
 
     Application* Application::m_Instance = nullptr;
@@ -37,9 +33,9 @@ namespace Bald {
             m_Window->Clear();
 
             // TRIANGLE
-            m_RedShader->Bind();
+            m_Shader->Bind();
             m_TriangleVAO->Bind();
-            glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr);
+            glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
             // END TRIANGLE
 
 #ifdef TRAVIS
@@ -116,16 +112,16 @@ namespace Bald {
             {1, Graphics::ShaderBuiltInType::Vec4f, "in_Color"}
         };
 
-        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
+        m_TriangleVBO.reset(Graphics::VertexBuffer::Create(vertices, sizeof(vertices)));
         m_TriangleVBO->SetLayout(layout);
 
-        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
+        m_TriangleIBO.reset(Graphics::IndexBuffer::Create(indices, sizeof(indices)));
 
-        m_TriangleVAO = Graphics::VertexArray::Create();
+        m_TriangleVAO.reset(Graphics::VertexArray::Create());
         m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
-        m_RedShader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
+        m_Shader.reset(Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
         // END OF TRIANGLE
 
         return true;

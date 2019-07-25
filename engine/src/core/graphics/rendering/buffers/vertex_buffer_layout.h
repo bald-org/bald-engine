@@ -120,9 +120,9 @@ namespace Bald::Graphics {
 
         std::vector<VertexBufferLayoutElement>::iterator end() { return m_Layout.end(); }
 
-        std::vector<VertexBufferLayoutElement>::const_iterator begin() const { return m_Layout.begin(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator begin() const { return m_Layout.begin(); }
 
-        std::vector<VertexBufferLayoutElement>::const_iterator end() const { return m_Layout.end(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator end() const { return m_Layout.end(); }
 
     private:
         std::vector<VertexBufferLayoutElement> m_Layout;

@@ -32,9 +32,9 @@ TEST(vertex_array, vertex_array_init_Test) {
     buf->Bind();
     buf->Unbind();
 
-    auto VAO = VertexArray::Create();
+    std::shared_ptr<VertexArray> VAO{VertexArray::Create()};
+    std::shared_ptr<VertexBuffer> VBO{VertexBuffer::Create(data, sizeof(data))};
 
-    VAO->AddVertexBuffer(VertexBuffer::Create(data, 4), 1);
     VAO->Bind();
     VAO->Unbind();
 

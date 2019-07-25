@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <memory>
+
 namespace Bald::Graphics {
 
     class VertexBuffer;
@@ -35,19 +37,27 @@ namespace Bald::Graphics {
         /**
          * @fn AddVertexBuffer
          * @brief Adds vertex buffer to vertex array.
-         * @param [Bald::Graphics::VertexBuffer*] vertexBuffer -> Pointer to dynamically created vertex buffer.
+         * @param [const std::shared_ptr<Bald::Graphics::VertexBuffer>&] vertexBuffer -> Pointer to dynamically created vertex buffer.
          */
 
-        virtual void AddVertexBuffer(Bald::Graphics::VertexBuffer* vertexBuffer) noexcept = 0;
+        virtual void AddVertexBuffer(const std::shared_ptr<Bald::Graphics::VertexBuffer>& vertexBuffer) noexcept = 0;
 
         /**
          * @fn AddIndexBuffer
          * @brief Adds index buffer to vertex array.
-         * @param [IndexBuffer*] indexBuffer -> Pointer to dynamically created index buffer.
+         * @param [const std::shared_ptr<Bald::Graphics::IndexBuffer>&] indexBuffer -> Pointer to dynamically created index buffer.
          * @param [unsinged] index -> Specifies the index of the generic vertex attribute to be enabled.
          */
 
-        virtual void AddIndexBuffer(Bald::Graphics::IndexBuffer* indexBuffer) noexcept = 0;
+        virtual void AddIndexBuffer(const std::shared_ptr<Bald::Graphics::IndexBuffer>& indexBuffer) noexcept = 0;
+
+        /**
+         * @fn GetIndexBuffer
+         * @brief Index buffer getter.
+         * @return [const std::shared_ptr<Bald::Graphics::IndexBuffer>&] Index buffer currently connected with this vertex array object.
+         */
+
+        [[nodiscard]] virtual const std::shared_ptr<Bald::Graphics::IndexBuffer>& GetIndexBuffer() const noexcept = 0;
 
         /**
          * @fn Bind
