@@ -111,11 +111,5 @@ namespace Bald::Debug {
 
     private:
         std::string m_Name; /*< Name of the logger.*/
-    };
-
-}
-
-
-
-
-
+    }; //END OF CLASS Logger
+} //END OF NAMESPACE Bald::Debug
