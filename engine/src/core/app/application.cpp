@@ -108,8 +108,8 @@ namespace Bald {
         };
 
         Graphics::VertexBufferLayout layout = {
-            {0, Graphics::ShaderBuiltInType::Vec3f, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Vec4f, "in_Color"}
+            {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
+            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"}
         };
 
         m_TriangleVBO.reset(Graphics::VertexBuffer::Create(vertices, sizeof(vertices)));

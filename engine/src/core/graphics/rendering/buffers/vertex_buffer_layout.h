@@ -8,25 +8,41 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-
+#include "utils/types.h"
 #include "debug/bald_assert.h"
 #include "glad/glad.h"
 
 namespace Bald::Graphics {
 
-    enum class ShaderBuiltInType : uint8_t {
-        Unknown = 0, Vec1f, Vec2f, Vec3f, Vec4f, Vec1i, Vec2i, Vec3i, Vec4i
+    constexpr uint32_t CalculateFloatOffset(uint32_t x) { return x * static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float); }
+    constexpr uint32_t CalculateIntOffset(uint32_t x) { return x * static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int); }
+
+    enum class ShaderBuiltInType : uint32_t {
+        Unknown = 0,
+        Float = GL_FLOAT,
+        Int = GL_INT
+    };
+
+    // TODO: Examine differences in int vs float sizes in bytes on GPU
+    enum class ShaderBuiltInTypeSize : uint32_t {
+        Unknown = 0,
+        Vec1 = CalculateFloatOffset(1),
+        Vec2 = CalculateFloatOffset(2),
+        Vec3 = CalculateFloatOffset(3),
+        Vec4 = CalculateFloatOffset(4)
     };
 
     class VertexBufferLayoutElement {
     public:
         VertexBufferLayoutElement() = delete;
 
-        VertexBufferLayoutElement(uint8_t shaderLayoutLocation, ShaderBuiltInType type, std::string name,
+        VertexBufferLayoutElement(uint8_t shaderLayoutLocation, ShaderBuiltInType type, ShaderBuiltInTypeSize typeSize,
+                                  std::string name,
                                   bool isNormalized = false)
             : m_IsNormalized(isNormalized),
               m_ShaderLayoutLocation(shaderLayoutLocation),
               m_Type(type),
+              m_TypeSize(typeSize),
               m_Name(std::move(name)),
               m_ComponentCount(CalculateComponentCount()),
               m_Stride(CalculateStride()) {}
@@ -44,64 +60,34 @@ namespace Bald::Graphics {
 
         [[nodiscard]] inline uint32_t GetOffset() const noexcept { return m_Offset; }
 
-        [[nodiscard]] uint32_t GetOpenGLType() const noexcept {
+        [[nodiscard]] inline uint32_t GetOpenGLType() const noexcept { return static_cast<uint32_t>(m_Type); }
+
+    private:
+        [[nodiscard]] uint32_t CalculateComponentCount() const noexcept {
             switch(m_Type) {
-                case ShaderBuiltInType::Vec1f : return GL_FLOAT;
-                case ShaderBuiltInType::Vec2f : return GL_FLOAT;
-                case ShaderBuiltInType::Vec3f : return GL_FLOAT;
-                case ShaderBuiltInType::Vec4f : return GL_FLOAT;
-                case ShaderBuiltInType::Vec1i : return GL_INT;
-                case ShaderBuiltInType::Vec2i : return GL_INT;
-                case ShaderBuiltInType::Vec3i : return GL_INT;
-                case ShaderBuiltInType::Vec4i : return GL_INT;
+                case ShaderBuiltInType::Float :
+                    return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float);
+                case ShaderBuiltInType::Int   :
+                    return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int);
                 default:
-                    BALD_ASSERT(static_cast<uint8_t>(m_Type), "VertexBufferLayoutElement",
+                    BALD_ASSERT(static_cast<uint32_t>(m_Type), "VertexBufferLayoutElement",
                                 "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
             }
             return 0;
         }
 
-    private:
-        [[nodiscard]] uint32_t CalculateComponentCount() const noexcept {
-            switch(m_Type) {
-                case ShaderBuiltInType::Vec1f : return 1;
-                case ShaderBuiltInType::Vec2f : return 2;
-                case ShaderBuiltInType::Vec3f : return 3;
-                case ShaderBuiltInType::Vec4f : return 4;
-                case ShaderBuiltInType::Vec1i : return 1;
-                case ShaderBuiltInType::Vec2i : return 2;
-                case ShaderBuiltInType::Vec3i : return 3;
-                case ShaderBuiltInType::Vec4i : return 4;
-                default: BALD_ASSERT(static_cast<uint8_t>(m_Type), "VertexBufferLayoutElement",
-                                     "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
-            }
-            return 0;
-        }
-
-        [[nodiscard]] uint32_t CalculateStride() const noexcept {
-            switch(m_Type) {
-                case ShaderBuiltInType::Vec1f : return 1 * sizeof(float);
-                case ShaderBuiltInType::Vec2f : return 2 * sizeof(float);
-                case ShaderBuiltInType::Vec3f : return 3 * sizeof(float);
-                case ShaderBuiltInType::Vec4f : return 4 * sizeof(float);
-                case ShaderBuiltInType::Vec1i : return 1 * sizeof(uint32_t);
-                case ShaderBuiltInType::Vec2i : return 2 * sizeof(uint32_t);
-                case ShaderBuiltInType::Vec3i : return 3 * sizeof(uint32_t);
-                case ShaderBuiltInType::Vec4i : return 4 * sizeof(uint32_t);
-                default: BALD_ASSERT(static_cast<uint8_t>(m_Type), "VertexBufferLayoutElement",
-                                     "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
-            }
-            return 0;
-        }
+        [[nodiscard]] uint32_t CalculateStride() const noexcept { return static_cast<uint32_t>(m_TypeSize); }
 
     private:
         bool m_IsNormalized;
         uint8_t m_ShaderLayoutLocation = 0;
         ShaderBuiltInType m_Type = ShaderBuiltInType::Unknown;
+        ShaderBuiltInTypeSize m_TypeSize = ShaderBuiltInTypeSize::Unknown;
         std::string m_Name;
         uint32_t m_ComponentCount;
         uint32_t m_Stride;
         uint32_t m_Offset = 0;
+
     }; // END OF CLASS VertexBufferLayoutElement
 
     class VertexBufferLayout {
@@ -127,7 +113,7 @@ namespace Bald::Graphics {
     private:
         std::vector<VertexBufferLayoutElement> m_Layout;
         uint32_t m_Stride = 0;
-        
+
     }; // END OF CLASS VertexBufferLayout
 
 } // END OF NAMESPACE Bald::Graphics

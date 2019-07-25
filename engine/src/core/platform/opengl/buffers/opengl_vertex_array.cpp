@@ -13,10 +13,6 @@ namespace Bald::Platform::Graphics {
     }
 
     OpenGLVertexArray::~OpenGLVertexArray() {
-//        for(auto* buffer : m_Buffers) {
-//            delete buffer;
-//        }
-
         glDeleteVertexArrays(1, &m_ArrayID);
     }
 
