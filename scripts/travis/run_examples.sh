@@ -3,11 +3,12 @@
 for i in `ls`;
 do
     echo "Running ->" ${i}
-    ./${i}
+    ./${i} > output.txt
     exit_code=$?
     if [[ ${exit_code} != 0 ]]
         then
             echo "Failed -> "${i}
+            cat output.txt
             exit ${exit_code}
     fi
     echo "Ending ->" ${i}
