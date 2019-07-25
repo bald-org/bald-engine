@@ -6,6 +6,7 @@
 
 #include <vector>
 #include <functional>
+#include <type_traits>
 #include "core/debug/logger.h"
 #include "event_handler_interface.h"
 
@@ -30,12 +31,17 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventHandler(F&& fun, Args&& ... args) :
+        explicit EventHandler(F fun, Args&& ... args) :
                 EventHandlerInterface() {
             if (this->m_ID != 0) {
-                m_Function = [=](const E& ev) {
-                    fun(ev, args...);
-                };
+                if constexpr (std::is_member_function_pointer<F>::value){
+                    Unpack(fun, args...);
+                } else {
+                    m_Function = [=](const E& ev) {
+                        fun(ev, args...);
+                    };
+                }
+
             } else {
                 CORE_LOG_WARN("[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
             }
@@ -49,6 +55,33 @@ namespace Bald {
         */
 
         void Run(const Event&) const override = 0;
+
+    private:
+
+        /**
+         * @fn Unpack
+         * @brief Method which allows separating object form the rest of arguments.
+         * @tparam F -> Method type
+         * @tparam O -> Object type
+         * @tparam Args -> Arguments types
+         * @param fun -> Method pointer
+         * @param obj -> Object reference or pointer to object
+         * @param args -> Arguments that will be bound to the method.
+         */
+
+        template <class F, class O, class ...Args>
+        void Unpack(F&& fun, O& obj, Args&& ...args) {
+            if constexpr (std::is_pointer<O>::value){
+                m_Function = [fun, obj, args...](const E& ev) {
+                    ((*obj).*fun)(ev, args...);
+                };
+            } else {
+                m_Function = [fun, &obj, args...](const E& ev) {
+                    (obj.*fun)(ev, args...);
+                };
+            }
+
+        }
 
     protected:
         std::function<void(const E& ev)> m_Function; /**< Function wrapper */
