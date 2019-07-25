@@ -4,7 +4,7 @@
 
 #include "opengl_shader.h"
 #include <unordered_map>
-#include "file_manager.h"
+#include "src/core/utils/file_manager/file_manager.h"
 #include "pch.h"
 #include "glad/glad.h"
 
@@ -101,7 +101,7 @@ namespace Bald::Platform::Graphics {
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
         std::string vertexShaderSource = Utils::FileManager::ReadFile(m_VertexPath,
-                                                                      Utils::FileManager::Size::SMALL_FILE);
+                                                                      Utils::FileManager::Size::small_file);
         const char* vertexData = vertexShaderSource.c_str();
 
         glShaderSource(vertexShader, 1, &vertexData, nullptr);
@@ -127,7 +127,7 @@ namespace Bald::Platform::Graphics {
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
 
         std::string fragmentShaderSource = Utils::FileManager::ReadFile(m_FragmentPath,
-                                                                        Utils::FileManager::Size::SMALL_FILE);
+                                                                        Utils::FileManager::Size::small_file);
         const char* fragmentData = fragmentShaderSource.c_str();
 
         glShaderSource(fragmentShader, 1, &fragmentData, nullptr);
