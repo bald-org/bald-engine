@@ -54,10 +54,10 @@ namespace Bald::Graphics {
         /**
          * @fn GetIndexBuffer
          * @brief Index buffer getter.
-         * @return [const std::shared_ptr<Bald::Graphics::IndexBuffer>&] Index buffer currently connected with this vertex array object.
+         * @return [std::shared_ptr<Bald::Graphics::IndexBuffer>] Index buffer currently connected with this vertex array object.
          */
 
-        [[nodiscard]] virtual const std::shared_ptr<Bald::Graphics::IndexBuffer>& GetIndexBuffer() const noexcept = 0;
+        [[nodiscard]] virtual std::shared_ptr<Bald::Graphics::IndexBuffer> GetIndexBuffer() noexcept = 0;
 
         /**
          * @fn Bind

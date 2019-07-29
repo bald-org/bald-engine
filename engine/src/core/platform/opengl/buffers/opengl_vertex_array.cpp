@@ -48,7 +48,7 @@ namespace Bald::Platform::Graphics {
         indexBuffer->Unbind();
     }
 
-    const std::shared_ptr<Bald::Graphics::IndexBuffer>& OpenGLVertexArray::GetIndexBuffer() const noexcept {
+    std::shared_ptr<Bald::Graphics::IndexBuffer> OpenGLVertexArray::GetIndexBuffer() noexcept {
         return m_IndexBuffer;
     }
 

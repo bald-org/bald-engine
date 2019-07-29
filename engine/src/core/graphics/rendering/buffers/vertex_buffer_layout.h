@@ -14,8 +14,8 @@
 
 namespace Bald::Graphics {
 
-    constexpr uint32_t CalculateFloatOffset(uint32_t x) { return x * static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float); }
-    constexpr uint32_t CalculateIntOffset(uint32_t x) { return x * static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int); }
+    constexpr uint32_t CalculateFloatOffset(uint32_t x) { return x * static_cast<uint32_t>(Utils::BuiltInTypeSize::Float); }
+    constexpr uint32_t CalculateIntOffset(uint32_t x) { return x * static_cast<uint32_t>(Utils::BuiltInTypeSize::Int); }
 
     enum class ShaderBuiltInType : uint32_t {
         Unknown = 0,
@@ -36,9 +36,9 @@ namespace Bald::Graphics {
     public:
         VertexBufferLayoutElement() = delete;
 
-        VertexBufferLayoutElement(uint8_t shaderLayoutLocation, ShaderBuiltInType type, ShaderBuiltInTypeSize typeSize,
-                                  std::string name,
-                                  bool isNormalized = false)
+        VertexBufferLayoutElement(const uint8_t shaderLayoutLocation, const ShaderBuiltInType type, const ShaderBuiltInTypeSize typeSize,
+                                  const std::string name,
+                                  const bool isNormalized = false)
             : m_IsNormalized(isNormalized),
               m_ShaderLayoutLocation(shaderLayoutLocation),
               m_Type(type),
@@ -67,7 +67,7 @@ namespace Bald::Graphics {
             switch(m_Type) {
                 case ShaderBuiltInType::Float : return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Float);
                 case ShaderBuiltInType::Int   : return static_cast<uint32_t>(m_TypeSize) / static_cast<uint32_t>(Bald::Utils::BuiltInTypeSize::Int);
-                default: BALD_ASSERT(static_cast<uint32_t>(m_Type), "VertexBufferLayoutElement",
+                default: BALD_ASSERT(static_cast<bool>(m_Type), "VertexBufferLayoutElement",
                                     "Shader built-in type is unknown", static_cast<uint8_t>(m_Type));
             }
             return 0;
@@ -98,11 +98,8 @@ namespace Bald::Graphics {
         [[nodiscard]] inline uint32_t GetStride() const noexcept { return m_Stride; }
 
         std::vector<VertexBufferLayoutElement>::iterator begin() { return m_Layout.begin(); }
-
         std::vector<VertexBufferLayoutElement>::iterator end() { return m_Layout.end(); }
-
         [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator begin() const { return m_Layout.begin(); }
-
         [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator end() const { return m_Layout.end(); }
 
     private:

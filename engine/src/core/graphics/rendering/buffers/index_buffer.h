@@ -46,7 +46,7 @@ namespace Bald::Graphics {
         virtual void Unbind() const noexcept = 0;
 
         /**
-         * @fn GetComponentCount
+         * @fn GetCount
          * @brief Component count getter.
          * @return [unsigned] Number of components in the buffer.
          */

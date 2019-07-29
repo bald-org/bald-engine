@@ -6,7 +6,7 @@
 
 namespace Bald::Utils {
 
-    enum class BuiltInTypeSize : uint32_t {
+    enum class BuiltInTypeSize : uint8_t {
         Bool            = sizeof(bool),
         Char            = sizeof(char),
         Int             = sizeof(int),
