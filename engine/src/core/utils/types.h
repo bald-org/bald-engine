@@ -18,4 +18,7 @@ namespace Bald::Utils {
         WChar_T         = sizeof(wchar_t)
     };
 
+    constexpr uint32_t CalculateFloatOffset(uint32_t x) { return x * static_cast<uint32_t>(BuiltInTypeSize::Float); }
+    constexpr uint32_t CalculateIntOffset(uint32_t x) { return x * static_cast<uint32_t>(BuiltInTypeSize::Int); }
+
 }
