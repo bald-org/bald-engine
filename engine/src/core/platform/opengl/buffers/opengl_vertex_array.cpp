@@ -27,7 +27,7 @@ namespace Bald::Platform::Graphics {
             glVertexAttribPointer(layoutElement.GetShaderLayoutLocation(),
                                   static_cast<int>(layoutElement.GetComponentCount()),
                                   layoutElement.GetOpenGLType(),
-                                  layoutElement.IsNormalized() ? GL_TRUE : GL_FALSE,
+                                  layoutElement.IsNormalized(),
                                   static_cast<int>(layout.GetStride()),
                                   reinterpret_cast<const void*>(layoutElement.GetOffset()));
         }

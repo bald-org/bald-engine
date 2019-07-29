@@ -47,7 +47,7 @@ namespace Bald::Platform::Graphics {
         void Unbind() const noexcept override;
 
         /**
-         * @fn GetCount
+         * @fn GetCount        Bald::Graphics::VertexBufferLayout m_Layout;
          * @brief Returns number of elements in buffer's data.
          * @return [unsigned int]
          */

@@ -23,7 +23,7 @@ namespace Bald::Platform::Graphics {
 
         /**
          * @fn OpenGLVertexBuffer
-         * @brief Creates an opengl vertex buffer object and initializes it's data.
+         * @brief Creates an OpenGL vertex buffer object and initializes it's data.
          * @param [float*] data -> Pointer to the memory containing data (eg. triangle vertices)
          * @param [unsigned] size -> Size of data array in bytes.
          */
@@ -36,21 +36,6 @@ namespace Bald::Platform::Graphics {
          */
 
         ~OpenGLVertexBuffer() override;
-
-        /**
-         * @fn SetLayout
-         * @brief Sets vertex buffer layout.
-         */
-
-        void SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept override;
-
-        /**
-         * @fn GetLayout
-         * @brief Vertex buffer layout getter
-         * @return [Bald::Graphics::VertexBufferLayout&] Vertex buffer layout.
-         */
-
-        [[nodiscard]] inline const Bald::Graphics::VertexBufferLayout& GetLayout() const noexcept override { return m_Layout; }
 
         /**
          * @fn Bind
@@ -76,7 +61,7 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_BufferID;
-        Bald::Graphics::VertexBufferLayout m_Layout;
+
     }; // END OF CLASS OpenGLVertexBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics

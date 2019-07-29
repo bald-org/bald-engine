@@ -36,9 +36,9 @@ namespace Bald::Graphics {
     public:
         VertexBufferLayoutElement() = delete;
 
-        VertexBufferLayoutElement(const uint8_t shaderLayoutLocation, const ShaderBuiltInType type, const ShaderBuiltInTypeSize typeSize,
-                                  const std::string name,
-                                  const bool isNormalized = false)
+        VertexBufferLayoutElement(uint8_t shaderLayoutLocation, ShaderBuiltInType type, ShaderBuiltInTypeSize typeSize,
+                                  std::string name,
+                                  bool isNormalized = false)
             : m_IsNormalized(isNormalized),
               m_ShaderLayoutLocation(shaderLayoutLocation),
               m_Type(type),
@@ -50,7 +50,7 @@ namespace Bald::Graphics {
     public:
         inline void SetOffset(uint32_t offset) noexcept { m_Offset = offset; }
 
-        [[nodiscard]] inline bool IsNormalized() const noexcept { return m_IsNormalized; }
+        [[nodiscard]] inline uint8_t IsNormalized() const noexcept { return m_IsNormalized; }
 
         [[nodiscard]] inline uint8_t GetShaderLayoutLocation() const noexcept { return m_ShaderLayoutLocation; }
 
@@ -74,10 +74,10 @@ namespace Bald::Graphics {
         }
 
     private:
-        bool m_IsNormalized;
-        uint8_t m_ShaderLayoutLocation = 0;
-        ShaderBuiltInType m_Type = ShaderBuiltInType::Unknown;
-        ShaderBuiltInTypeSize m_TypeSize = ShaderBuiltInTypeSize::Unknown;
+        uint8_t m_IsNormalized;
+        uint8_t m_ShaderLayoutLocation;
+        ShaderBuiltInType m_Type;
+        ShaderBuiltInTypeSize m_TypeSize;
         std::string m_Name;
         uint32_t m_ComponentCount;
         uint32_t m_Stride;
@@ -97,10 +97,10 @@ namespace Bald::Graphics {
 
         [[nodiscard]] inline uint32_t GetStride() const noexcept { return m_Stride; }
 
-        std::vector<VertexBufferLayoutElement>::iterator begin() { return m_Layout.begin(); }
-        std::vector<VertexBufferLayoutElement>::iterator end() { return m_Layout.end(); }
-        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator begin() const { return m_Layout.begin(); }
-        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator end() const { return m_Layout.end(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::iterator begin() { return m_Layout.begin(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::iterator end() { return m_Layout.end(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator begin() const { return m_Layout.cbegin(); }
+        [[nodiscard]] std::vector<VertexBufferLayoutElement>::const_iterator end() const { return m_Layout.cend(); }
 
     private:
         std::vector<VertexBufferLayoutElement> m_Layout;

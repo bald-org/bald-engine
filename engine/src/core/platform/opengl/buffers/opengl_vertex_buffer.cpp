@@ -19,16 +19,6 @@ namespace Bald::Platform::Graphics {
         glDeleteBuffers(1, &m_BufferID);
     }
 
-    void OpenGLVertexBuffer::SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept {
-        m_Layout = layout;
-
-        uint32_t offset = 0;
-        for(auto& layoutElement: m_Layout) {
-            layoutElement.SetOffset(offset);
-            offset += layoutElement.GetStride();
-        }
-    }
-
     void OpenGLVertexBuffer::Bind() const noexcept {
         glBindBuffer(GL_ARRAY_BUFFER, m_BufferID);
     }

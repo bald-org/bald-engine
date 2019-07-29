@@ -5,10 +5,9 @@
 #pragma once
 
 #include <vector>
+#include "vertex_buffer_layout.h"
 
 namespace Bald::Graphics {
-
-    class VertexBufferLayout;
 
     /**
      * @class Buffer
@@ -41,7 +40,7 @@ namespace Bald::Graphics {
          * @param [const Bald::Graphics::VertexBufferLayout&] Vertex buffer layout object.
          */
 
-        virtual void SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept = 0;
+        void SetLayout(const VertexBufferLayout& layout) noexcept;
 
         /**
          * @fn GetLayout
@@ -49,7 +48,7 @@ namespace Bald::Graphics {
          * @return [Bald::Graphics::VertexBufferLayout&] Vertex buffer layout.
          */
 
-        virtual const Bald::Graphics::VertexBufferLayout& GetLayout() const noexcept = 0;
+        [[nodiscard]] inline const VertexBufferLayout& GetLayout() const noexcept { return m_Layout; }
 
         /**
          * @fn Bind
@@ -72,6 +71,10 @@ namespace Bald::Graphics {
          */
 
         [[nodiscard]] virtual unsigned GetID() const noexcept = 0;
+
+    private:
+
+        VertexBufferLayout m_Layout; /**< Buffer layout, it is uninitialized by default => You MUST set it via setter! */
 
     }; // END OF CLASS VertexBuffer
 
