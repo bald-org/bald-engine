@@ -85,7 +85,8 @@ namespace Bald::Platform::Graphics {
                 case Bald::Graphics::TextureFilterMethod::Linear:               glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR); break;
                 case Bald::Graphics::TextureFilterMethod::NearestMipmapNearest: glTexParameteri(GL_TEXTURE_2D, mode, GL_NEAREST_MIPMAP_NEAREST); break;
                 case Bald::Graphics::TextureFilterMethod::NearestMipmapLinear:  glTexParameteri(GL_TEXTURE_2D, mode, GL_NEAREST_MIPMAP_LINEAR); break;
-                case Bald::Graphics::TextureFilterMethod::LinearMipmapNearest:  glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR_MIPMAP_LINEAR); break;
+                case Bald::Graphics::TextureFilterMethod::LinearMipmapNearest:  glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR_MIPMAP_NEAREST); break;
+                case Bald::Graphics::TextureFilterMethod::LinearMipmapLinear:   glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR_MIPMAP_LINEAR); break;
                 default: BALD_ASSERT(false, "OpenGLTexture", "Unknown texture filter method!", filterMethod);
             }
         };
