@@ -8,10 +8,12 @@
 
 extern "C" unsigned char* stbi_load(char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
 extern "C" void stbi_image_free(void* retval_from_stbi_load);
+extern "C" void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip);
 
 namespace Bald::Platform::Graphics {
 
     OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
+        stbi_set_flip_vertically_on_load(true);
         m_Data = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
         if(m_Data) {
             uint32_t format = 0;

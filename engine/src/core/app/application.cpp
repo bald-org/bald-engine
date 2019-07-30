@@ -125,7 +125,7 @@ namespace Bald {
 
         m_Shader.reset(Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
 
-        m_Texture.reset(Graphics::Texture::Create("../engine/res/textures/fabric.jpg"));
+        m_Texture.reset(Graphics::Texture::Create("../engine/res/textures/lena.jpg"));
         // END OF TRIANGLE
 
         return true;
