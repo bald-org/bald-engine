@@ -8,6 +8,22 @@
 
 namespace Bald::Graphics {
 
+    enum class TextureWrapMode : uint8_t {
+        Unknown = 0, Repeat, MirroredRepeat, ClampToEdge, ClampToBorder
+    };
+
+    enum class TextureFilterMethod : uint8_t {
+        Unknown = 0, Nearest, Linear, NearestMipmapNearest, NearestMipmapLinear, LinearMipmapNearest, LinearMipmapLinear
+    };
+
+    enum class TextureFilterMode : uint8_t {
+        Unknown = 0, Min, Mag
+    };
+
+    enum class TextureCoordinate : uint8_t {
+        Unknown = 0, S, T
+    };
+
     class Texture {
     public:
         static Texture* Create(const std::string& filepath);
@@ -18,6 +34,9 @@ namespace Bald::Graphics {
 
         virtual void Bind() const noexcept = 0;
         virtual void Unbind() const noexcept = 0;
+        virtual void SetWrapping(TextureCoordinate texCoord, TextureWrapMode wrappingMode) = 0;
+        virtual void SetFiltering(TextureFilterMode filterMode, TextureFilterMethod filterMethod) = 0;
+
 
         [[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Filepath; }
 

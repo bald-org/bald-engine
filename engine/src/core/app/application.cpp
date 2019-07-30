@@ -95,11 +95,11 @@ namespace Bald {
 
         // TRIANGLE
         float vertices[] = {
-            //layout(location = 0)       layout(location = 1)
-            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,
-             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,
-             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f
+           //layout(location = 0)        layout(location = 1)             layout(location = 2)
+            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f
+            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
+             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
+             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
         };
 
         unsigned indices[] = {
@@ -109,7 +109,8 @@ namespace Bald {
 
         Graphics::VertexBufferLayout layout = {
             {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"}
+            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
+            {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
         m_TriangleVBO.reset(Graphics::VertexBuffer::Create(vertices, sizeof(vertices)));
@@ -122,6 +123,8 @@ namespace Bald {
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
         m_Shader.reset(Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
+
+        m_Texture.reset(Graphics::Texture::Create("../engine/res/textures/fabric.jpg"));
         // END OF TRIANGLE
 
         return true;

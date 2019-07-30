@@ -5,7 +5,6 @@
 #pragma once
 
 #include <memory>
-#include <src/core/graphics/rendering/shaders/shader.h>
 #include "layer_stack.h"
 #include "graphics/window.h"
 
@@ -15,6 +14,7 @@
 #include "graphics/rendering/buffers/vertex_buffer.h"
 #include "graphics/rendering/buffers/index_buffer.h"
 #include "graphics/rendering/shaders/shader.h"
+#include "graphics/rendering/textures/texture.h"
 // END TRIANGLE
 
 namespace Bald {
@@ -190,6 +190,7 @@ namespace Bald {
         std::shared_ptr<Graphics::VertexBuffer> m_TriangleVBO = nullptr;
         std::shared_ptr<Graphics::IndexBuffer> m_TriangleIBO = nullptr;
         std::shared_ptr<Graphics::Shader> m_Shader = nullptr;
+        std::shared_ptr<Graphics::Texture> m_Texture = nullptr;
 
     }; // END OF CLASS Application
 

@@ -18,6 +18,8 @@ namespace Bald::Platform::Graphics {
 
         void Bind() const noexcept override;
         void Unbind() const noexcept override;
+        void SetWrapping(Bald::Graphics::TextureCoordinate texCoord, Bald::Graphics::TextureWrapMode wrappingMode) override;
+        void SetFiltering(Bald::Graphics::TextureFilterMode filterMode, Bald::Graphics::TextureFilterMethod filterMethod) override;
 
     private:
         uint32_t m_ID;

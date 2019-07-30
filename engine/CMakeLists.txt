@@ -18,19 +18,19 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
 
 set(${PROJECT_NAME}_include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/math
+    ${CMAKE_CURRENT_SOURCE_DIR}/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/math/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/spdlog/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
     ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
@@ -143,6 +143,7 @@ target_link_libraries(runUnitTests bald_engine)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
