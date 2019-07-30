@@ -34,6 +34,7 @@ namespace Bald::Graphics {
 
         virtual void Bind() const noexcept = 0;
         virtual void Unbind() const noexcept = 0;
+        virtual void Activate(uint8_t index) const noexcept = 0;
         virtual void SetWrapping(TextureCoordinate texCoord, TextureWrapMode wrappingMode) = 0;
         virtual void SetFiltering(TextureFilterMode filterMode, TextureFilterMethod filterMethod) = 0;
 

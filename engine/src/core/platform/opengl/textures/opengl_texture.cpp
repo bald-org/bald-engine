@@ -61,6 +61,14 @@ namespace Bald::Platform::Graphics {
         glBindTexture(GL_TEXTURE_2D, 0);
     }
 
+    void OpenGLTexture::Activate(uint8_t index) const noexcept {
+        if(index < 16) {
+            glActiveTexture(GL_TEXTURE0 + index);
+        } else {
+            BALD_ASSERT(false, "OpenGLTexture", "OpenGL only guarantees to support 16 textures per shader!", index);
+        }
+    }
+
     void OpenGLTexture::SetWrapping(Bald::Graphics::TextureCoordinate texCoord, Bald::Graphics::TextureWrapMode wrappingMode) {
         auto setTexParameter = [&wrappingMode](uint32_t coord) {
             switch(wrappingMode) {
@@ -100,5 +108,3 @@ namespace Bald::Platform::Graphics {
     }
 
 } // END OF NAMESPACE Bald::Platform::Graphics
-
-
