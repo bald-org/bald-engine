@@ -6,14 +6,13 @@
 #include "bald_assert.h"
 #include "glad/glad.h"
 
-unsigned char* stbi_load(char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
-void stbi_image_free(void* retval_from_stbi_load);
+extern "C" unsigned char* stbi_load(char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
+extern "C" void stbi_image_free(void* retval_from_stbi_load);
 
 namespace Bald::Platform::Graphics {
 
     OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
-        m_Data = stbi_load("container.jpg", &m_Width, &m_Height, &m_NrChannels, 0);
-
+        m_Data = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
         if(m_Data) {
             uint32_t format = 0;
             switch(m_NrChannels) {
@@ -49,6 +48,7 @@ namespace Bald::Platform::Graphics {
     }
 
     OpenGLTexture::~OpenGLTexture() {
+        glDeleteTextures(1, &m_ID);
         stbi_image_free(m_Data);
     }
 
@@ -61,37 +61,39 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::SetWrapping(Bald::Graphics::TextureCoordinate texCoord, Bald::Graphics::TextureWrapMode wrappingMode) {
+        auto setTexParameter = [&wrappingMode](uint32_t coord) {
+            switch(wrappingMode) {
+                case Bald::Graphics::TextureWrapMode::Repeat:           glTexParameteri(GL_TEXTURE_2D, coord, GL_REPEAT); break;
+                case Bald::Graphics::TextureWrapMode::MirroredRepeat:   glTexParameteri(GL_TEXTURE_2D, coord, GL_MIRRORED_REPEAT); break;
+                case Bald::Graphics::TextureWrapMode::ClampToEdge:      glTexParameteri(GL_TEXTURE_2D, coord, GL_CLAMP_TO_EDGE); break;
+                case Bald::Graphics::TextureWrapMode::ClampToBorder:    glTexParameteri(GL_TEXTURE_2D, coord, GL_CLAMP_TO_BORDER); break;
+                default: BALD_ASSERT(false, "OpenGLTexture", "Unknown texture wrapping mode!", wrappingMode); break;
+            }
+        };
+
         switch(texCoord) {
-            case Bald::Graphics::TextureCoordinate::S: glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT); break;
-            case Bald::Graphics::TextureCoordinate::T: glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT); break;
-            default: break;
+            case Bald::Graphics::TextureCoordinate::S: setTexParameter(GL_TEXTURE_WRAP_S); break;
+            case Bald::Graphics::TextureCoordinate::T: setTexParameter(GL_TEXTURE_WRAP_T); break;
+            default: BALD_ASSERT(false, "OpenGLTexture", "Unknown texture coordinate!", texCoord);
         }
-
-        switch(wrappingMode) {
-            case Bald::Graphics::TextureWrapMode::Repeat: break;
-            case Bald::Graphics::TextureWrapMode::ClampToBorder: break;
-            case Bald::Graphics::TextureWrapMode::ClampToEdge: break;
-            case Bald::Graphics::TextureWrapMode::MirroredRepeat: break;
-            default: break;
-        }
-
     }
 
     void OpenGLTexture::SetFiltering(Bald::Graphics::TextureFilterMode filterMode, Bald::Graphics::TextureFilterMethod filterMethod) {
-        switch(filterMode) {
-            case Bald::Graphics::TextureFilterMode::Min: break;
-            case Bald::Graphics::TextureFilterMode::Mag: break;
-            default: break;
-        }
+        auto setFilterMethod = [&filterMethod](uint32_t mode) {
+            switch(filterMethod) {
+                case Bald::Graphics::TextureFilterMethod::Nearest:              glTexParameteri(GL_TEXTURE_2D, mode, GL_NEAREST); break;
+                case Bald::Graphics::TextureFilterMethod::Linear:               glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR); break;
+                case Bald::Graphics::TextureFilterMethod::NearestMipmapNearest: glTexParameteri(GL_TEXTURE_2D, mode, GL_NEAREST_MIPMAP_NEAREST); break;
+                case Bald::Graphics::TextureFilterMethod::NearestMipmapLinear:  glTexParameteri(GL_TEXTURE_2D, mode, GL_NEAREST_MIPMAP_LINEAR); break;
+                case Bald::Graphics::TextureFilterMethod::LinearMipmapNearest:  glTexParameteri(GL_TEXTURE_2D, mode, GL_LINEAR_MIPMAP_LINEAR); break;
+                default: BALD_ASSERT(false, "OpenGLTexture", "Unknown texture filter method!", filterMethod);
+            }
+        };
 
-        switch(filterMethod) {
-            case Bald::Graphics::TextureFilterMethod::Nearest: break;
-            case Bald::Graphics::TextureFilterMethod::Linear: break;
-            case Bald::Graphics::TextureFilterMethod::NearestMipmapNearest: break;
-            case Bald::Graphics::TextureFilterMethod::NearestMipmapLinear: break;
-            case Bald::Graphics::TextureFilterMethod::LinearMipmapNearest: break;
-            case Bald::Graphics::TextureFilterMethod::LinearMipmapLinear: break;
-            default: break;
+        switch(filterMode) {
+            case Bald::Graphics::TextureFilterMode::Min: setFilterMethod(GL_TEXTURE_MIN_FILTER);
+            case Bald::Graphics::TextureFilterMode::Mag: setFilterMethod(GL_TEXTURE_MAG_FILTER);
+            default: BALD_ASSERT(false, "OpenGLTexture", "Unknown texture filter mode!", filterMode);
         }
     }
 

@@ -34,6 +34,7 @@ namespace Bald {
 
             // TRIANGLE
             m_Shader->Bind();
+            m_Texture->Bind();
             m_TriangleVAO->Bind();
             glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
             // END TRIANGLE
@@ -96,11 +97,11 @@ namespace Bald {
         // TRIANGLE
         float vertices[] = {
            //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f
+            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
             -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
              0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
              0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
-        };
+        };//
 
         unsigned indices[] = {
             0, 1, 2, // first triangle
