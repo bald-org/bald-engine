@@ -121,7 +121,7 @@ namespace Bald {
         m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
-        m_Shader.reset(Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
+        m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
         // END OF TRIANGLE
 
         return true;
