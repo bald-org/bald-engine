@@ -19,7 +19,8 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLVertexBuffer : public Bald::Graphics::VertexBuffer {
-    public:
+    friend class Bald::Graphics::VertexBuffer;
+    private:
 
         /**
          * @fn OpenGLVertexBuffer
@@ -30,6 +31,7 @@ namespace Bald::Platform::Graphics {
 
         OpenGLVertexBuffer(float* data, unsigned count) noexcept;
 
+    public:
         /**
          * @fn ~OpenGLBuffer
          * @brief Destructor of OpenGLBuffer.

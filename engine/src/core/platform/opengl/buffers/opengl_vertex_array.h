@@ -17,7 +17,8 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLVertexArray : public Bald::Graphics::VertexArray {
-    public:
+    friend class Bald::Graphics::VertexArray;
+    private:
 
         /**
          * @fn OpenGLVertexArray
@@ -26,6 +27,7 @@ namespace Bald::Platform::Graphics {
 
         OpenGLVertexArray() noexcept;
 
+    public:
         /**
          * @fn ~OpenGLVertexArray
          * @brief OpenGLVertexArray destructor.

@@ -25,7 +25,7 @@ namespace Bald::Graphics {
          * @return [VertexArray*] Pointer to the vertex array object.
          */
 
-        static VertexArray* Create();
+        static std::shared_ptr<VertexArray> Create();
 
         /**
          * @fn ~VertexArray

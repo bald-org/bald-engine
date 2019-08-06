@@ -112,12 +112,12 @@ namespace Bald {
             {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"}
         };
 
-        m_TriangleVBO.reset(Graphics::VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
         m_TriangleVBO->SetLayout(layout);
 
-        m_TriangleIBO.reset(Graphics::IndexBuffer::Create(indices, sizeof(indices)));
+        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
 
-        m_TriangleVAO.reset(Graphics::VertexArray::Create());
+        m_TriangleVAO = Graphics::VertexArray::Create();
         m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 

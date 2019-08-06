@@ -5,6 +5,7 @@
 #pragma once
 
 #include <vector>
+#include <memory>
 #include "vertex_buffer_layout.h"
 
 namespace Bald::Graphics {
@@ -25,7 +26,7 @@ namespace Bald::Graphics {
          * @return [VertexBuffer*] Pointer to the vertex buffer object.
          */
 
-        static VertexBuffer* Create(float* data, unsigned size);
+        static std::shared_ptr<VertexBuffer> Create(float* data, unsigned size);
 
         /**
          * @fn ~VertexBuffer
