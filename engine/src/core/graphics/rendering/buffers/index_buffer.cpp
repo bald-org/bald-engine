@@ -4,10 +4,11 @@
 
 #include "index_buffer.h"
 #include "platform/opengl/buffers/opengl_index_buffer.h"
+#include <memory>
 
 namespace Bald::Graphics {
 
-    IndexBuffer* IndexBuffer::Create(unsigned short* data, unsigned count) {
-        return new Bald::Platform::Graphics::OpenGLIndexBuffer(data, count);
+    std::shared_ptr<IndexBuffer> IndexBuffer::Create(unsigned* data, unsigned size) {
+        return std::shared_ptr<Bald::Platform::Graphics::OpenGLIndexBuffer>(new Bald::Platform::Graphics::OpenGLIndexBuffer(data, size));
     }
 } // END OF NAMESPACE Bald::Graphics

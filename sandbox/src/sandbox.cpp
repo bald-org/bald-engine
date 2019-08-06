@@ -4,62 +4,15 @@
 
 #include "bald.h"
 
-#include "imgui_layer.h"
-
-class DebugLayer : public Bald::Layer {
-GENERATE_BODY(DERIVED)
-public:
-    DebugLayer() = default;
-
-    ~DebugLayer() override = default;
-
-    void OnAttach() noexcept override {
-
-        m_EventManager.Subscribe<Bald::MouseMovedEvent>(Bald::HandleType::SYNC, [](const Bald::MouseMovedEvent& e) {
-            CORE_LOG_TRACE(std::string("MouseMovedEvent: [")
-                               .append(std::to_string(e.GetX()))
-                               .append(", ")
-                               .append(std::to_string(e.GetY()))
-                               .append("]")
-            );
-        });
-
-    }
-
-    void OnDetach() noexcept override {}
-
-    void OnUpdate() noexcept override {}
-
-    void OnRender() noexcept override {}
-
-};
-
 class GameLayer : public Bald::Layer {
 GENERATE_BODY(DERIVED)
 public:
+
     GameLayer() = default;
 
     ~GameLayer() override = default;
 
-    void OnAttach() noexcept override {
-
-        m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [](const Bald::KeyPressedEvent& e) {
-            static bool isMenuUp = false;
-
-            if(e.GetKeyCode() == GLFW_KEY_ESCAPE && !e.IsRepeated()) {
-                if(!isMenuUp) {
-                    Bald::Application& app = Bald::Application::GetApplication();
-                    app.PushOverlay<DebugLayer>();
-                    isMenuUp = true;
-                } else {
-                    Bald::Application& app = Bald::Application::GetApplication();
-                    app.PopOverlay<DebugLayer>();
-                    isMenuUp = false;
-                }
-            }
-        });
-
-    }
+    void OnAttach() noexcept override {}
 
     void OnDetach() noexcept override {}
 
@@ -78,6 +31,7 @@ public:
     }
 
     ~Sandbox() override = default;
+
 };
 
 Bald::Application* Bald::Application::Create() noexcept {

@@ -7,6 +7,7 @@
 #include <vector>
 #include "graphics/rendering/buffers/vertex_array.h"
 #include "graphics/rendering/buffers/vertex_buffer.h"
+#include "graphics/rendering/buffers/index_buffer.h"
 
 namespace Bald::Platform::Graphics {
 
@@ -16,7 +17,8 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLVertexArray : public Bald::Graphics::VertexArray {
-    public:
+    friend class Bald::Graphics::VertexArray;
+    private:
 
         /**
          * @fn OpenGLVertexArray
@@ -25,6 +27,7 @@ namespace Bald::Platform::Graphics {
 
         OpenGLVertexArray() noexcept;
 
+    public:
         /**
          * @fn ~OpenGLVertexArray
          * @brief OpenGLVertexArray destructor.
@@ -34,12 +37,28 @@ namespace Bald::Platform::Graphics {
 
         /**
          * @fn AddVertexBuffer
-         * @brief Adds buffer to vertex array.
-         * @param [Buffer*] buffer -> Pointer to dynamically created buffer.
-         * @param [GLuint aka unsinged int] index -> Specifies the index of the generic vertex attribute to be enabled.
+         * @brief Adds vertex buffer to vertex array.
+         * @param [Bald::Graphics::VertexBuffer*] vertexBuffer -> Pointer to dynamically created vertex buffer.
          */
 
-        void AddVertexBuffer(Bald::Graphics::VertexBuffer* buffer, unsigned index) noexcept override;
+        void AddVertexBuffer(const std::shared_ptr<Bald::Graphics::VertexBuffer>& vertexBuffer) noexcept override;
+
+        /**
+         * @fn AddIndexBuffer
+         * @brief Adds index buffer to vertex array.
+         * @param [const std::shared_ptr<Bald::Graphics::IndexBuffer>&] indexBuffer -> Pointer to dynamically created index buffer.
+         * @param [unsinged] index -> Specifies the index of the generic vertex attribute to be enabled.
+         */
+
+        void AddIndexBuffer(const std::shared_ptr<Bald::Graphics::IndexBuffer>& indexBuffer) noexcept override;
+
+        /**
+         * @fn GetIndexBuffer
+         * @brief Index buffer getter.
+         * @return [std::shared_ptr<Bald::Graphics::IndexBuffer>] Index buffer currently connected with this vertex array object.
+         */
+
+        [[nodiscard]] std::shared_ptr<Bald::Graphics::IndexBuffer> GetIndexBuffer() noexcept override;
 
         /**
          * @fn Bind
@@ -65,7 +84,8 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_ArrayID; /**< identifier of Vertex Array object >*/
-        std::vector<Bald::Graphics::VertexBuffer*> m_Buffers; /**< pointers to buffers added to Vertex Array >*/
+        std::vector<std::shared_ptr<Bald::Graphics::VertexBuffer>> m_VertexBuffers; /**< pointers to vertex buffers added to Vertex Array >*/
+        std::shared_ptr<Bald::Graphics::IndexBuffer> m_IndexBuffer; /**< pointer to index buffers added to Vertex Array >*/
     }; // END OF CLASS OpenGLVertexArray
 
 } // END OF NAMESPACE Bald::Platform::Graphics

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <memory>
+
 namespace Bald::Graphics {
 
     /**
@@ -17,12 +19,36 @@ namespace Bald::Graphics {
         /**
         * @fn Create
         * @brief Creates data buffer based on currently chosen rendering API.
-        * @param [unsigned short*] data -> Pointer to the memory containing data (eg. triangle indices)
-        * @param [unsigned] count -> Number of data points.
+        * @param [unsigned*] data -> Pointer to the memory containing data (eg. triangle indices)
+        * @param [unsigned] size -> Size of data array in bytes.
         * @return [IndexBuffer*] Pointer to the index buffer object.
         */
 
-        static IndexBuffer* Create(unsigned short* data, unsigned count);
+        static std::shared_ptr<IndexBuffer> Create(unsigned* data, unsigned size);
+
+        /**
+         * @fn IndexBuffer
+         * @brief Default constructor.
+         */
+
+        IndexBuffer() = default;
+
+        /**
+         * @fn IndexBuffer
+         * @brief Deleted copy constructor.
+         * @param [const IndexBuffer&]
+         */
+
+        IndexBuffer(const IndexBuffer&) = delete;
+
+        /**
+         * @fn operator=
+         * @brief Deleted operator=.
+         * @param [const IndexBuffer&]
+         * @return IndexBuffer&
+         */
+
+        IndexBuffer& operator=(const IndexBuffer&) = delete;
 
         /**
          * @fn ~IndexBuffer
@@ -46,7 +72,7 @@ namespace Bald::Graphics {
         virtual void Unbind() const noexcept = 0;
 
         /**
-         * @fn GetComponentCount
+         * @fn GetCount
          * @brief Component count getter.
          * @return [unsigned] Number of components in the buffer.
          */

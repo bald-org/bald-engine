@@ -18,11 +18,11 @@ TEST(index_buffer, index_buffer_initialisation_Test) {
     glfwMakeContextCurrent(window);
     gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress));
 
-    unsigned short data[4] = {
+    unsigned data[4] = {
         1, 2, 3, 4
     };
 
-    auto buf = IndexBuffer::Create(data, 4);
+    auto buf = IndexBuffer::Create(data, sizeof(data));
     buf->Bind();
     buf->Unbind();
 

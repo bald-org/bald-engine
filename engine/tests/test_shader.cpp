@@ -40,7 +40,7 @@ TEST(Shader, ShaderInitialization) { //NOLINT
         exit(1);
     }
 
-    std::unique_ptr<Shader> shader(Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
+    std::shared_ptr<Shader> shader = Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
 
     EXPECT_TRUE(shader->GetID());
 }
@@ -76,6 +76,6 @@ TEST(Shader, WrongShaderInitialization) { //NOLINT
         exit(1);
     }
 
-    std::unique_ptr<Shader> shader(Shader::Create("../engine/res/shaders/no_such_shader.vert", "../engine/res/shaders/no_such_shader.frag"));
+    std::shared_ptr<Shader> shader = Shader::Create("../engine/res/shaders/no_such_shader.vert", "../engine/res/shaders/no_such_shader.frag");
     EXPECT_FALSE(shader->GetID());
 }
