@@ -82,32 +82,32 @@ namespace Bald::Debug {
         void Print(const std::string& mess) const noexcept;
 
         /**
-         * @fn red
+         * @fn Red
          * @brief Changes color of the message to red
          */
 
-        static void red() noexcept;
+        static void Red() noexcept;
 
         /**
-         * @fn yellow
+         * @fn Yellow
          * @brief Changes color of the message to yellow
          */
 
-        static void yellow() noexcept;
+        static void Yellow() noexcept;
 
         /**
-         * @fn green
+         * @fn Green
          * @brief Changes color of the message to green
          */
 
-        static void green() noexcept;
+        static void Green() noexcept;
 
         /**
-         * @fn reset
+         * @fn Reset
          * @brief Changes color of the message to white
          */
 
-        static void reset() noexcept;
+        static void Reset() noexcept;
 
     private:
         std::string m_Name; /*< Name of the logger.*/

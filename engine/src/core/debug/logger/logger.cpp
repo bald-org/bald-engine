@@ -9,39 +9,39 @@
 
 namespace Bald::Debug {
 
-    void Logger::red() noexcept {
+    void Logger::Red() noexcept {
         printf("\033[1;31m");
     }
 
-    void Logger::yellow() noexcept {
+    void Logger::Yellow() noexcept {
         printf("\033[1;33m");
     }
 
-    void Logger::green() noexcept {
+    void Logger::Green() noexcept {
         printf("\033[1;32m");
     }
 
-    void Logger::reset() noexcept {
+    void Logger::Reset() noexcept {
         printf("\033[0m");
     }
 
     void Logger::trace(const std::string& mess) const noexcept {
-        reset();
+        Reset();
         Print(mess);
     }
 
     void Logger::info(const std::string& mess) const noexcept {
-        green();
+        Green();
         Print(mess);
     }
 
     void Logger::warn(const std::string& mess) const noexcept {
-        yellow();
+        Yellow();
         Print(mess);
     }
 
     void Logger::error(const std::string& mess) const noexcept {
-        red();
+        Red();
         Print(mess);
     }
 
@@ -49,7 +49,7 @@ namespace Bald::Debug {
         const std::string time = static_cast<std::string>(Utils::Time::GetCurrentTime());
         printf("[%s] ", time.c_str());
         printf("%s: %s\n", m_Name.c_str(), mess.c_str());
-        reset();
+        Reset();
     }
 
     void Logger::SetName(const std::string& name) {
