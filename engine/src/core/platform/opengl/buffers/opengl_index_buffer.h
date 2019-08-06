@@ -14,17 +14,19 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLIndexBuffer : public Bald::Graphics::IndexBuffer {
-    public:
+    friend class IndexBuffer;
+    private:
 
         /**
          * @fn OpenGLIndexBuffer
          * @brief creates a index buffer object and initializes its data.
-         * @param [unsigned short*] data -> to initialize buffer.
-         * @param [unsigned] count -> number of elements in data.
+        * @param [unsigned*] data -> Pointer to the memory containing data (eg. triangle indices)
+        * @param [unsigned] size -> Size of data array in bytes.
          */
 
-        OpenGLIndexBuffer(unsigned short* data, unsigned count) noexcept;
+        OpenGLIndexBuffer(unsigned* data, unsigned size) noexcept;
 
+    public:
         /**
          * @fn ~OpenGLIndexBuffer
          * @brief Destructor of OpenGLIndexBuffer.
@@ -47,12 +49,12 @@ namespace Bald::Platform::Graphics {
         void Unbind() const noexcept override;
 
         /**
-         * @fn GetCount
+         * @fn GetCount        Bald::Graphics::VertexBufferLayout m_Layout;
          * @brief Returns number of elements in buffer's data.
          * @return [unsigned int]
          */
 
-        [[nodiscard]] inline unsigned GetCount() const noexcept override { return m_Count; }
+        [[nodiscard]] inline unsigned GetCount() const noexcept override { return static_cast<unsigned>(m_Size/sizeof(unsigned)); }
 
         /**
          * @fn GetID
@@ -64,7 +66,7 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_BufferID; /**< identifier of Index Buffer object >*/
-        unsigned m_Count; /**< number of elements in buffer's data >*/
+        unsigned m_Size; /**< Size of elements in buffer's data in bytes>*/
     }; // END OF CLASS OpenGLIndexBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics

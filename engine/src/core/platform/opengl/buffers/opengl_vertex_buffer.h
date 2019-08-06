@@ -4,9 +4,14 @@
 
 #pragma once
 
+#include <vector>
+
+#include "graphics/rendering/buffers/vertex_buffer_layout.h"
 #include "graphics/rendering/buffers/vertex_buffer.h"
 
 namespace Bald::Platform::Graphics {
+
+
 
     /**
      * @class OpenGLBuffer
@@ -14,18 +19,19 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLVertexBuffer : public Bald::Graphics::VertexBuffer {
-    public:
+    friend class Bald::Graphics::VertexBuffer;
+    private:
 
         /**
          * @fn OpenGLVertexBuffer
-         * @brief Creates an opengl vertex buffer object and initializes it's data.
-         * @param [float*] data -> to initialize buffer.
-         * @param [unsigned] count -> number of elements in data.
-         * @param [unsigned] component_count -> number of components in data.
+         * @brief Creates an OpenGL vertex buffer object and initializes it's data.
+         * @param [float*] data -> Pointer to the memory containing data (eg. triangle vertices)
+         * @param [unsigned] size -> Size of data array in bytes.
          */
 
-        OpenGLVertexBuffer(float* data, unsigned count, unsigned component_count) noexcept;
+        OpenGLVertexBuffer(float* data, unsigned count) noexcept;
 
+    public:
         /**
          * @fn ~OpenGLBuffer
          * @brief Destructor of OpenGLBuffer.
@@ -48,14 +54,6 @@ namespace Bald::Platform::Graphics {
         void Unbind() const noexcept override;
 
         /**
-         * @fn GetComponentCount
-         * @brief Returns number of components in buffer's data.
-         * @return [unsigned int]
-         */
-
-        [[nodiscard]] inline unsigned GetComponentCount() const noexcept override { return m_ComponentCount; }
-
-        /**
          * @fn GetID
          * @brief ID getter.
          * @return [unsigned] Buffer id.
@@ -65,7 +63,7 @@ namespace Bald::Platform::Graphics {
 
     private:
         unsigned m_BufferID;
-        unsigned m_ComponentCount;
+
     }; // END OF CLASS OpenGLVertexBuffer
 
 } // END OF NAMESPACE Bald::Platform::Graphics

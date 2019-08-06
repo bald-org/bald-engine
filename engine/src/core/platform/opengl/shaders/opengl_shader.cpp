@@ -25,7 +25,6 @@ namespace Bald::Platform::Graphics {
         glUseProgram(0);
     }
 
-
     void OpenGLShader::SetUniform1f(const char* uniformName, float v0) const noexcept {
         glUniform1f(GetUniformLocation(uniformName), v0);
     }

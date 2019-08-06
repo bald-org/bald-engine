@@ -28,13 +28,13 @@ TEST(vertex_array, vertex_array_init_Test) {
         1.0f, 2.0f, 3.0f, 4.0f
     };
 
-    auto buf = VertexBuffer::Create(data, 4, 1);
+    auto buf = VertexBuffer::Create(data, 4);
     buf->Bind();
     buf->Unbind();
 
-    auto VAO = VertexArray::Create();
+    std::shared_ptr<VertexArray> VAO{VertexArray::Create()};
+    std::shared_ptr<VertexBuffer> VBO{VertexBuffer::Create(data, sizeof(data))};
 
-    VAO->AddVertexBuffer(VertexBuffer::Create(data, 4, 1), 1);
     VAO->Bind();
     VAO->Unbind();
 
