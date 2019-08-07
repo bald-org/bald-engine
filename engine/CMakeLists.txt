@@ -131,7 +131,7 @@ endif()
 
 #### TESTING
 enable_testing()
-file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger.cpp)
+file(GLOB TEST_SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp src/core/debug/logger/logger.cpp)
 
 add_executable(runUnitTests ${TEST_SRC_FILES})
 
