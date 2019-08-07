@@ -16,4 +16,4 @@
 #include <typeindex>
 #include <typeinfo>
 
-#include "core/debug/logger.h"
+#include "core/debug/logger/log_manager.h"

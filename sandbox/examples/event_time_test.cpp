@@ -6,8 +6,8 @@
 #include "events/key_events.h"
 #include "events/window_events.h"
 #include "input/input_manager.h"
-#include "utils/timer.h"
-#include "core/debug/logger.h"
+#include "core/utils/time/timer.h"
+#include "core/debug/logger/log_manager.h"
 
 #include <iostream>
 
@@ -26,8 +26,8 @@ struct A {
 int main() {
 
     using namespace Bald;
-
-    Logger::Init();
+    using namespace Debug;
+    LogManager::Init();
 
     EventManager em;
     int x = 0;

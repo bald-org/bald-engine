@@ -6,8 +6,9 @@
 
 #include <vector>
 #include <functional>
+#include "core/debug/logger/log_manager.h"
 #include <type_traits>
-#include "core/debug/logger.h"
+#include "core/debug/logger/logger.h"
 #include "event_handler_interface.h"
 
 namespace Bald {

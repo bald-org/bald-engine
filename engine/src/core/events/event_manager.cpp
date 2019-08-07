@@ -4,6 +4,7 @@
 
 #include "event_manager.h"
 #include <future>
+#include "assert.h"
 
 namespace Bald {
 
@@ -22,7 +23,7 @@ namespace Bald {
     bool EventManager::Init() {
         CORE_LOG_INFO("[EventManager] Initializing EventManager...");
         ++m_ReferenceCounter;
-        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        CORE_LOG_INFO("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter));
         return m_ReferenceCounter > 0;
     }
 
@@ -30,7 +31,7 @@ namespace Bald {
         CORE_LOG_INFO("[EventManager] Shutting down EventManager...");
         RemoveAllCallbacks();
         --m_ReferenceCounter;
-        CORE_LOG_INFO(("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter)).c_str());
+        CORE_LOG_INFO("[EventManager] Actual number of EventManagers: " + std::to_string(m_ReferenceCounter));
         if(m_ReferenceCounter == 0) {
             CORE_LOG_INFO("[EventManager] This was last one EventManager");
             CORE_LOG_INFO("[EventManager] Clearing event queue...");
