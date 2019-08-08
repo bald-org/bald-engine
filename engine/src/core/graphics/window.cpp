@@ -15,6 +15,7 @@ namespace Bald::Graphics {
     bool Window::m_GLFWInitialized = false;
 
     Window::Window(const char* title, int width, int height, bool VSync) :
+        m_Window(nullptr),
         m_Title(title),
         m_Width(width),
         m_Height(height),
@@ -36,7 +37,7 @@ namespace Bald::Graphics {
     //       glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
     //       glViewport(0, 0, m_Width, m_Height);
 
-    void Window::WindowSetVSync(bool enabled) noexcept {
+    void Window::SetVSync(bool enabled) noexcept {
         enabled ? glfwSwapInterval(1) : glfwSwapInterval(0);
 
         m_VSync = enabled;

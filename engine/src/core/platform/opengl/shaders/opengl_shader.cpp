@@ -5,8 +5,10 @@
 #include "opengl_shader.h"
 #include <unordered_map>
 #include "file_manager.h"
+#include "glm/gtc/type_ptr.hpp"
 #include "pch.h"
 #include "glad/glad.h"
+
 
 namespace Bald::Platform::Graphics {
 
@@ -87,6 +89,10 @@ namespace Bald::Platform::Graphics {
 
     void OpenGLShader::SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept {
         glUniform4i(GetUniformLocation(uniformName), vec.x, vec.y, vec.z, vec.w);
+    }
+
+    void OpenGLShader::SetUniformMatrix4fv(const char* uniformName, const glm::mat4& mat) const noexcept {
+        glUniformMatrix4fv(GetUniformLocation(uniformName), 1, GL_FALSE, glm::value_ptr(mat));
     }
 
     unsigned OpenGLShader::GetID() const noexcept {
