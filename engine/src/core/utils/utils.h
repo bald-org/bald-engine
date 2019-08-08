@@ -19,6 +19,6 @@ namespace Bald::Utils {
 
 } // END OF NAMESPACE Bald::Utils
 
-#include "type_id.h"
-#include "type_name.h"
+#include "core/utils/rtti/type_id.h"
+#include "core/utils/rtti/type_name.h"
 #include "generate_body.h"

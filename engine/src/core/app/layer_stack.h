@@ -8,7 +8,8 @@
 #include <algorithm>
 
 #include "layer.h"
-#include "core/debug/logger.h"
+#include "core/debug/logger/log_manager.h"
+#include <assert.h>
 
 #include "layer_events.h"
 

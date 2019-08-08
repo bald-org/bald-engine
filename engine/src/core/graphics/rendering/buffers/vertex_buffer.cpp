@@ -7,8 +7,8 @@
 
 namespace Bald::Graphics {
 
-    VertexBuffer* VertexBuffer::Create(float* data, unsigned size) {
-        return new Bald::Platform::Graphics::OpenGLVertexBuffer(data, size);
+    std::shared_ptr<VertexBuffer> VertexBuffer::Create(float* data, unsigned size) {
+        return std::shared_ptr<Bald::Platform::Graphics::OpenGLVertexBuffer>(new Bald::Platform::Graphics::OpenGLVertexBuffer(data, size));
     }
 
     void VertexBuffer::SetLayout(const Bald::Graphics::VertexBufferLayout& layout) noexcept {

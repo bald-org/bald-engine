@@ -19,7 +19,7 @@
 #include "core/app/layer.h"
 #include "core/app/layer_stack.h"
 
-#include "core/debug/logger.h"
+#include "core/debug/logger/log_manager.h"
 
 #include "core/events/event.h"
 #include "core/events/event_manager.h"

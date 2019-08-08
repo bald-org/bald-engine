@@ -5,7 +5,7 @@
 #include "core/pch.h"
 #include "gtest/gtest.h"
 
-#include "utils/type_id.h"
+#include "core/utils/rtti/type_id.h"
 #include "event.h"
 #include "key_events.h"
 

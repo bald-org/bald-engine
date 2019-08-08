@@ -4,6 +4,7 @@
 
 #include "input_manager.h"
 #include "core/pch.h"
+#include "debug/bald_assert.h"
 
 namespace Bald::Input {
 
@@ -26,48 +27,33 @@ namespace Bald::Input {
             m_MouseButtonsTyped[i] = !m_MouseButtonsState[i] && m_MouseButtons[i];
         }
 
-        std::memcpy(m_KeysState.begin(), m_Keys.begin(), MAX_KEYS * sizeof(m_Keys[0]));
-        std::memcpy(m_MouseButtonsState.begin(), m_MouseButtons.begin(), MAX_MOUSE_BUTTONS * sizeof(m_MouseButtons[0]));
+        m_KeysState = m_Keys;
+        m_MouseButtonsState = m_MouseButtons;
     }
 
     void InputManager::EmitKeyPressedEvent(unsigned keycode, bool isRepeated) noexcept {
-        if(keycode >= MAX_KEYS) {
-            CORE_LOG_WARN("[InputManager] Wrong key id");
-            assert(keycode >= MAX_KEYS);
-        }
-        else Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
+        Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
     }
 
     void InputManager::EmitKeyTypedEvent(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) {
-            CORE_LOG_WARN("[InputManager] Wrong key id");
-            assert(keycode >= MAX_KEYS);
-        }
-        else Bald::EventManager::Emit<KeyTypedEvent>(keycode);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
+        Bald::EventManager::Emit<KeyTypedEvent>(keycode);
     }
 
     void InputManager::EmitKeyReleasedEvent(unsigned keycode) noexcept {
-        if(keycode >= MAX_KEYS) {
-            CORE_LOG_WARN("[InputManager] Wrong key id");
-            assert(keycode >= MAX_KEYS);
-        }
-        else Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
+        BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
+        Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
     }
 
     void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) {
-            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-            assert(buttoncode >= MAX_MOUSE_BUTTONS);
-        }
-        else Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
+        BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
+        Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
     }
 
     void InputManager::EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept {
-        if(buttoncode >= MAX_MOUSE_BUTTONS) {
-            CORE_LOG_WARN("[InputManager] Wrong mouse button id");
-            assert(buttoncode >= MAX_MOUSE_BUTTONS);
-        }
-        else Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
+        BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
+        Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
     }
 
 } // END OF NAMESPACE Bald::Input

@@ -7,8 +7,8 @@
 
 namespace Bald::Graphics {
 
-    VertexArray* VertexArray::Create() {
-        return new Bald::Platform::Graphics::OpenGLVertexArray();
+    std::shared_ptr<VertexArray> VertexArray::Create() {
+        return std::shared_ptr<Bald::Platform::Graphics::OpenGLVertexArray>(new Bald::Platform::Graphics::OpenGLVertexArray);
     }
 
 } // END OF NAMESPACE Bald::Graphics

@@ -14,7 +14,8 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLIndexBuffer : public Bald::Graphics::IndexBuffer {
-    public:
+    friend class IndexBuffer;
+    private:
 
         /**
          * @fn OpenGLIndexBuffer
@@ -25,6 +26,7 @@ namespace Bald::Platform::Graphics {
 
         OpenGLIndexBuffer(unsigned* data, unsigned size) noexcept;
 
+    public:
         /**
          * @fn ~OpenGLIndexBuffer
          * @brief Destructor of OpenGLIndexBuffer.

@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include <memory>
+
 namespace Bald::Graphics {
 
     /**
@@ -22,7 +24,31 @@ namespace Bald::Graphics {
         * @return [IndexBuffer*] Pointer to the index buffer object.
         */
 
-        static IndexBuffer* Create(unsigned* data, unsigned size);
+        static std::shared_ptr<IndexBuffer> Create(unsigned* data, unsigned size);
+
+        /**
+         * @fn IndexBuffer
+         * @brief Default constructor.
+         */
+
+        IndexBuffer() = default;
+
+        /**
+         * @fn IndexBuffer
+         * @brief Deleted copy constructor.
+         * @param [const IndexBuffer&]
+         */
+
+        IndexBuffer(const IndexBuffer&) = delete;
+
+        /**
+         * @fn operator=
+         * @brief Deleted operator=.
+         * @param [const IndexBuffer&]
+         * @return IndexBuffer&
+         */
+
+        IndexBuffer& operator=(const IndexBuffer&) = delete;
 
         /**
          * @fn ~IndexBuffer
