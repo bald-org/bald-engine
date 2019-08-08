@@ -4,6 +4,8 @@
 
 #pragma once
 
+#include "utils/image.h"
+
 #include "pch.h"
 #include <memory>
 
@@ -26,10 +28,11 @@ namespace Bald::Graphics {
     };
 
     class Texture {
+    protected:
+        explicit Texture(std::string filepath) : m_Image(std::move(filepath)) {}
+
     public:
         static std::shared_ptr<Texture> Create(const std::string& filepath);
-
-        explicit Texture(std::string filepath) : m_Filepath(std::move(filepath)) {}
 
         virtual ~Texture() = default;
 
@@ -39,20 +42,16 @@ namespace Bald::Graphics {
         virtual void SetWrapping(TextureCoordinate texCoord, TextureWrapMode wrappingMode) = 0;
         virtual void SetFiltering(TextureFilterMode filterMode, TextureFilterMethod filterMethod) = 0;
 
-        [[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Filepath; }
+        [[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Image.GetFilepath(); }
 
-        [[nodiscard]] inline int32_t GetWidth() const noexcept { return m_Width; }
+        [[nodiscard]] inline int32_t GetWidth() const noexcept { return m_Image.GetWidth(); }
 
-        [[nodiscard]] inline int32_t GetHeight() const noexcept { return m_Height; }
+        [[nodiscard]] inline int32_t GetHeight() const noexcept { return m_Image.GetHeight(); }
 
-        [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_NrChannels; }
+        [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
 
     protected:
-        const std::string m_Filepath;
-        int32_t m_Width = 0;
-        int32_t m_Height = 0;
-        int32_t m_NrChannels = 0;
-        u_char* m_Data = nullptr;
+        Utils::Image m_Image;
 
     }; // END OF CLASS Texture
 

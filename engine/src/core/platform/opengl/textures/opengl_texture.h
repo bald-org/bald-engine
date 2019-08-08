@@ -9,10 +9,13 @@
 
 namespace Bald::Platform::Graphics {
 
-    class OpenGLTexture : public Bald::Graphics::Texture {
+class OpenGLTexture : public Bald::Graphics::Texture {
+    friend class Texture;
+    private:
+        explicit OpenGLTexture(std::string filepath);
+
     public:
         OpenGLTexture() = delete;
-        explicit OpenGLTexture(std::string filepath);
 
         ~OpenGLTexture() override;
 
