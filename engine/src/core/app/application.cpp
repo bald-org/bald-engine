@@ -34,6 +34,7 @@ namespace Bald {
 
             // TRIANGLE
             m_Shader->Bind();
+            m_Texture->Bind();
             m_TriangleVAO->Bind();
             glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
             // END TRIANGLE
@@ -95,12 +96,12 @@ namespace Bald {
 
         // TRIANGLE
         float vertices[] = {
-            //layout(location = 0)       layout(location = 1)
-            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,
-            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,
-             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,
-             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f
-        };
+           //layout(location = 0)        layout(location = 1)             layout(location = 2)
+            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
+            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
+             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
+             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
+        };//
 
         unsigned indices[] = {
             0, 1, 2, // first triangle
@@ -109,7 +110,8 @@ namespace Bald {
 
         Graphics::VertexBufferLayout layout = {
             {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"}
+            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
+            {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
         m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
@@ -122,6 +124,8 @@ namespace Bald {
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
         m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
+
+        m_Texture = Graphics::Texture::Create("../engine/res/textures/lena.jpg");
         // END OF TRIANGLE
 
         return true;

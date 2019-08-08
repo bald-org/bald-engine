@@ -10,3 +10,6 @@
 [submodule "engine/vendor/imgui"]
 	path = engine/vendor/imgui
 	url = https://github.com/bald-org/imgui
+[submodule "engine/vendor/stb"]
+	path = engine/vendor/stb
+	url = https://github.com/bald-org/stb
