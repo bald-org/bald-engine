@@ -5,6 +5,7 @@
 #pragma once
 
 #include "pch.h"
+#include <memory>
 
 namespace Bald::Graphics {
 
@@ -26,7 +27,7 @@ namespace Bald::Graphics {
 
     class Texture {
     public:
-        static Texture* Create(const std::string& filepath);
+        static std::shared_ptr<Texture> Create(const std::string& filepath);
 
         explicit Texture(std::string filepath) : m_Filepath(std::move(filepath)) {}
 
@@ -37,7 +38,6 @@ namespace Bald::Graphics {
         virtual void Activate(uint8_t index) const noexcept = 0;
         virtual void SetWrapping(TextureCoordinate texCoord, TextureWrapMode wrappingMode) = 0;
         virtual void SetFiltering(TextureFilterMode filterMode, TextureFilterMethod filterMethod) = 0;
-
 
         [[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Filepath; }
 
@@ -52,7 +52,7 @@ namespace Bald::Graphics {
         int32_t m_Width = 0;
         int32_t m_Height = 0;
         int32_t m_NrChannels = 0;
-        unsigned char* m_Data = nullptr;
+        u_char* m_Data = nullptr;
 
     }; // END OF CLASS Texture
 

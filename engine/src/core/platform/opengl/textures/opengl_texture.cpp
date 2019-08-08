@@ -3,18 +3,14 @@
 //
 
 #include "opengl_texture.h"
+#include "utils/asset_manager.h"
 #include "bald_assert.h"
 #include "glad/glad.h"
-
-extern "C" unsigned char* stbi_load(char const *filename, int *x, int *y, int *channels_in_file, int desired_channels);
-extern "C" void stbi_image_free(void* retval_from_stbi_load);
-extern "C" void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip);
 
 namespace Bald::Platform::Graphics {
 
     OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
-        stbi_set_flip_vertically_on_load(true);
-        m_Data = stbi_load(m_Filepath.c_str(), &m_Width, &m_Height, &m_NrChannels, 0);
+        m_Data = Utils::AssetManager::LoadTexture(m_Filepath, &m_Width, &m_Height, &m_NrChannels);
         if(m_Data) {
             uint32_t format = 0;
             switch(m_NrChannels) {
@@ -52,7 +48,7 @@ namespace Bald::Platform::Graphics {
 
     OpenGLTexture::~OpenGLTexture() {
         glDeleteTextures(1, &m_ID);
-        stbi_image_free(m_Data);
+        Utils::AssetManager::FreeTexture(m_Data);
     }
 
     void OpenGLTexture::Bind() const noexcept {
@@ -64,11 +60,8 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::Activate(uint8_t index) const noexcept {
-        if(index < 16) {
-            glActiveTexture(GL_TEXTURE0 + index);
-        } else {
-            BALD_ASSERT(false, "OpenGLTexture", "OpenGL only guarantees to support 16 textures per shader!", index);
-        }
+        BALD_ASSERT(index < 16, "OpenGLTexture", "OpenGL only guarantees to support 16 textures per shader!", index);
+        glActiveTexture(GL_TEXTURE0 + index);
     }
 
     void OpenGLTexture::SetWrapping(Bald::Graphics::TextureCoordinate texCoord, Bald::Graphics::TextureWrapMode wrappingMode) {

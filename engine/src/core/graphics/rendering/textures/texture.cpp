@@ -8,8 +8,8 @@
 
 namespace Bald::Graphics {
 
-    Texture* Texture::Create(const std::string& filepath) {
-        return new Bald::Platform::Graphics::OpenGLTexture(filepath);
+    std::shared_ptr<Texture> Texture::Create(const std::string& filepath) {
+        return std::shared_ptr<Texture>(new Bald::Platform::Graphics::OpenGLTexture(filepath));
     }
 
 } // END OF NAMESPACE Bald::Graphics

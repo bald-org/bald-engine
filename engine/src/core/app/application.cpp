@@ -114,18 +114,18 @@ namespace Bald {
             {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
-        m_TriangleVBO.reset(Graphics::VertexBuffer::Create(vertices, sizeof(vertices)));
+        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
         m_TriangleVBO->SetLayout(layout);
 
-        m_TriangleIBO.reset(Graphics::IndexBuffer::Create(indices, sizeof(indices)));
+        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
 
-        m_TriangleVAO.reset(Graphics::VertexArray::Create());
+        m_TriangleVAO = Graphics::VertexArray::Create();
         m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
-        m_Shader.reset(Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag"));
+        m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
 
-        m_Texture.reset(Graphics::Texture::Create("../engine/res/textures/lena.jpg"));
+        m_Texture = Graphics::Texture::Create("../engine/res/textures/lena.jpg");
         // END OF TRIANGLE
 
         return true;

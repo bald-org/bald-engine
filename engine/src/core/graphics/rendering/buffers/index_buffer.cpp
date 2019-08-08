@@ -4,7 +4,6 @@
 
 #include "index_buffer.h"
 #include "platform/opengl/buffers/opengl_index_buffer.h"
-#include <memory>
 
 namespace Bald::Graphics {
 
