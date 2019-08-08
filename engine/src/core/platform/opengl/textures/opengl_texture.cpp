@@ -9,43 +9,12 @@
 namespace Bald::Platform::Graphics {
 
     OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
-        if(m_Image.GetData()) {
-            uint32_t format = 0;
-            switch(m_Image.GetNrChannels()) {
-                case 1 :
-                    format = GL_RED;
-                    break;
-                case 3 :
-                    format = GL_RGB;
-                    break;
-                case 4 :
-                    format = GL_RGBA;
-                    break;
-                default:
-                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", m_Image.GetNrChannels());
-                    break;
-            }
-
-            glGenTextures(1, &m_ID);
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D, m_ID);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), m_Image.GetWidth(), m_Image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, m_Image.GetData());
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            glBindTexture(GL_TEXTURE_2D, 0);
-        } else {
-            CORE_LOG_ERROR("[OpenGLTexture] Failed to load texture!");
-        }
+        [[maybe_unused]] bool state = Init();
+        BALD_ASSERT(state, "Application", "Failed to initialized application", state);
     }
 
     OpenGLTexture::~OpenGLTexture() {
-        glDeleteTextures(1, &m_ID);
+        Shutdown();
     }
 
     void OpenGLTexture::Bind() const noexcept {
@@ -101,6 +70,48 @@ namespace Bald::Platform::Graphics {
             case Bald::Graphics::TextureFilterMode::Mag: setFilterMethod(GL_TEXTURE_MAG_FILTER); break;
             default: CORE_LOG_ERROR("[OpenGLTexture] Unknown texture filter mode!");
         }
+    }
+
+    bool OpenGLTexture::Init() noexcept {
+        if(m_Image.GetData()) {
+            uint32_t format = 0;
+            switch(m_Image.GetNrChannels()) {
+                case 1 :
+                    format = GL_RED;
+                    break;
+                case 3 :
+                    format = GL_RGB;
+                    break;
+                case 4 :
+                    format = GL_RGBA;
+                    break;
+                default:
+                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", m_Image.GetNrChannels());
+                    break;
+            }
+
+            glGenTextures(1, &m_ID);
+            glActiveTexture(GL_TEXTURE0);
+            glBindTexture(GL_TEXTURE_2D, m_ID);
+
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), m_Image.GetWidth(), m_Image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, m_Image.GetData());
+            glGenerateMipmap(GL_TEXTURE_2D);
+
+            glBindTexture(GL_TEXTURE_2D, 0);
+            return true;
+        } else {
+            CORE_LOG_ERROR("[OpenGLTexture] Failed to load texture!");
+            return false;
+        }
+    }
+
+    void OpenGLTexture::Shutdown() {
+        glDeleteTextures(1, &m_ID);
     }
 
 } // END OF NAMESPACE Bald::Platform::Graphics
