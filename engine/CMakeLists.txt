@@ -14,6 +14,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
 
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -85,12 +86,15 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/shaders/shader.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/textures/texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_array.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/shaders/opengl_shader.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/textures/opengl_texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp )
 
 if (APPLE)
@@ -99,12 +103,13 @@ if (APPLE)
             glfw
             glm
             imgui
+            stb
             "-framework Cocoa"
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine pthread glad glfw glm imgui GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m  dl)
+    target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -141,6 +146,8 @@ target_link_libraries(runUnitTests bald_engine)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/lena.jpg res/textures/lena.jpg COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
