@@ -209,6 +209,14 @@ namespace Bald::Graphics {
         virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept = 0;
 
         /**
+         * @fn SetUniformMatrix4fv
+         * @brief Sets uniform of type mat4 with name uniformName with given values.
+         * @param const char* Name of uniform we want to set.
+         * @param const glm::mat4& Matrix.
+         */
+        virtual void SetUniformMatrix4fv(const char* uniformName, const glm::mat4& mat) const noexcept = 0;
+
+        /**
          * @fn GetID
          * @brief Returns shader's ID.
          * @return unsigned Shader ID.
