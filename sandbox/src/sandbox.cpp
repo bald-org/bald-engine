@@ -13,42 +13,7 @@ public:
 
     ~GameLayer() override = default;
 
-    void OnAttach() noexcept override {
-        // TRIANGLE
-        float vertices[] = {
-            //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
-        };//
-
-        unsigned indices[] = {
-            0, 1, 2, // first triangle
-            0, 2, 3  // second triangle
-        };
-
-        Bald::Graphics::VertexBufferLayout layout = {
-            {0, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
-        };
-
-        m_TriangleVBO = Bald::Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
-        m_TriangleVBO->SetLayout(layout);
-
-        m_TriangleIBO = Bald::Graphics::IndexBuffer::Create(indices, sizeof(indices));
-
-        m_TriangleVAO = Bald::Graphics::VertexArray::Create();
-        m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
-        m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
-
-        m_Shader = Bald::Graphics::Shader::Create("../engine/res/shaders/basic.vert",
-                                                  "../engine/res/shaders/basic.frag");
-
-        m_Texture = Bald::Graphics::Texture::Create("../engine/res/textures/lena.jpg");
-        // END OF TRIANGLE
-    }
+    void OnAttach() noexcept override {}
 
     void OnDetach() noexcept override {}
 
@@ -60,33 +25,39 @@ public:
         }
 
         if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_W)) {
-            m_Position.y += m_CameraSpeed;
+            m_Position.y  += m_CameraSpeed;
         } else if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_S)) {
             m_Position.y -= m_CameraSpeed;
         }
-
-        // TRIANGLE
         m_Camera.SetPosition(m_Position);
-        m_Shader->SetUniformMatrix4fv("u_ProjectionView", m_Camera.GetProjectionViewMatrix());
-        m_Shader->Bind();
-        m_Texture->Bind();
-        m_TriangleVAO->Bind();
-        glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT,
-                       nullptr);
-        // END TRIANGLE
+
+        const auto& spritePos = m_Sprite.GetPosition();
+        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
+            m_Sprite.SetPosition({spritePos.x - m_CameraSpeed, spritePos.y});
+        } else if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
+            m_Sprite.SetPosition({spritePos.x + m_CameraSpeed, spritePos.y});
+        }
+
+        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_UP)) {
+            m_Sprite.SetPosition({spritePos.x, spritePos.y + m_CameraSpeed});
+        } else if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
+            m_Sprite.SetPosition({spritePos.x, spritePos.y - m_CameraSpeed});
+        }
+
+        // Begin sprite rendering
+        m_Renderer2D.Begin(m_Camera);
+        m_Renderer2D.Submit(m_Sprite);
+        m_Renderer2D.End();
+        // End sprite rendering
     }
 
     void OnRender() noexcept override {}
 
 private:
 private:
-    std::shared_ptr<Bald::Graphics::VertexArray> m_TriangleVAO = nullptr;
-    std::shared_ptr<Bald::Graphics::VertexBuffer> m_TriangleVBO = nullptr;
-    std::shared_ptr<Bald::Graphics::IndexBuffer> m_TriangleIBO = nullptr;
-    std::shared_ptr<Bald::Graphics::Shader> m_Shader = nullptr;
-    std::shared_ptr<Bald::Graphics::Texture> m_Texture = nullptr;
-
-    Bald::Graphics::Camera2D m_Camera;
+    Bald::Graphics::Renderer2D m_Renderer2D;
+    Bald::Graphics::Camera2D m_Camera{glm::ortho(-1.6f, 1.6f, -0.9f, 0.9f)};
+    Bald::Graphics::Sprite m_Sprite{Bald::Graphics::Texture::Create("../engine/res/textures/lena.jpg")};
     float m_CameraSpeed = 0.005f;
     glm::vec2 m_Position{0.0f};
 };

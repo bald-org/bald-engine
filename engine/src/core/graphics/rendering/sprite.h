@@ -20,6 +20,14 @@ namespace Bald::Graphics {
         explicit Sprite(std::shared_ptr<Texture> texture);
 
         /**
+         * @fn SetRotation
+         * @brief Sets rotation of the sprite.
+         * @param float Rotation in angles.
+         */
+
+        inline void SetRotation(float rotation) noexcept { m_Rotation = rotation; }
+
+        /**
          * @fn SetPosition
          * @brief Sets position of the sprite.
          * @param const glm::vec2& Position.
@@ -52,6 +60,14 @@ namespace Bald::Graphics {
         inline void SetTexture(std::shared_ptr<Texture> texture ) noexcept { m_Texture = std::move(texture); }
 
         /**
+         * @fn GetRotation
+         * @brief Rotation getter.
+         * @return float Rotation in angles.
+         */
+
+        [[nodiscard]] inline float GetRotation() const noexcept { return m_Rotation; }
+
+        /**
          * @fn GetPosition
          * @brief Position getter.
          * @return const glm::vec2& Position.
@@ -81,7 +97,7 @@ namespace Bald::Graphics {
          * @return std::weak_ptr<Texture> Texture.
          */
 
-        [[nodiscard]] inline std::weak_ptr<Texture> GetTexture() const noexcept { return m_Texture; }
+        [[nodiscard]] inline const std::shared_ptr<Texture>& GetTexture() const noexcept { return m_Texture; }
 
     private:
         float m_Rotation; /**< Rotation around Z axis. */

@@ -83,6 +83,7 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/camera_2d.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/sprite.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_array.cpp
@@ -148,6 +149,8 @@ target_link_libraries(runUnitTests bald_engine)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/sprite.vert res/shaders/sprite.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/sprite.frag res/shaders/sprite.frag COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/lena.jpg res/textures/lena.jpg COPYONLY)
 
