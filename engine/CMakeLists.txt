@@ -3,11 +3,14 @@ project(bald_engine)
 
 #### LIBRARIES
 
+SET(OpenGL_GL_PREFERENCE GLVND)
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
 
 set(GLM_TEST_ENABLE_CXX_17 ON CACHE BOOL "Enable C++ 17" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "Build shared library" FORCE)
 set(GLM_TEST_ENABLE OFF CACHE BOOL "Build unit tests" FORCE)
+
 
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/google/googletest/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
@@ -15,6 +18,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/)
 
 set(${PROJECT_NAME}_include_dirs
     ${CMAKE_CURRENT_SOURCE_DIR}
@@ -95,7 +99,7 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/textures/opengl_texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp )
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp src/core/graphics/rendering/mesh/mesh.cpp src/core/graphics/rendering/mesh/mesh.h)
 
 if (APPLE)
     target_link_libraries(bald_engine
