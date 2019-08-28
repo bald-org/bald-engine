@@ -32,7 +32,7 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventHandler(F fun, Args&& ... args) :
+        explicit EventHandler(F&& fun, Args&& ... args) :
                 EventHandlerInterface() {
             if (this->m_ID != 0) {
                 if constexpr (std::is_member_function_pointer<F>::value){

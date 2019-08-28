@@ -27,7 +27,7 @@ namespace Bald::Graphics {
         m_VAO->AddIndexBuffer(m_EBO);
     }
 
-    void Mesh::Draw(const Shader& shader) {
+    void Mesh::Draw([[maybe_unused]]const Shader& shader) {
 
     }
 }
