@@ -99,8 +99,10 @@ namespace Bald::Platform::Graphics {
         unsigned int vertexShader;
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-        std::string vertexShaderSource = Utils::FileManager::ReadFile(m_VertexPath,
-                                                                      Utils::FileManager::Size::SMALL_FILE);
+        auto vertex_data = Utils::FileManager::ReadFile(m_VertexPath,
+                                                 Utils::FileManager::Size::SMALL_FILE);
+        if (!vertex_data) { return 0; } //TODO: do something smarter xd
+        const std::string& vertexShaderSource = vertex_data.value();
         const char* vertexData = vertexShaderSource.c_str();
 
         glShaderSource(vertexShader, 1, &vertexData, nullptr);
@@ -124,9 +126,10 @@ namespace Bald::Platform::Graphics {
 
         unsigned int fragmentShader;
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-
-        std::string fragmentShaderSource = Utils::FileManager::ReadFile(m_FragmentPath,
-                                                                        Utils::FileManager::Size::SMALL_FILE);
+        auto fragment_data = Utils::FileManager::ReadFile(m_FragmentPath,
+                                                          Utils::FileManager::Size::SMALL_FILE);
+        if(!fragment_data) { return 0; } //TODO: do something smarter
+        const std::string& fragmentShaderSource = fragment_data.value();
         const char* fragmentData = fragmentShaderSource.c_str();
 
         glShaderSource(fragmentShader, 1, &fragmentData, nullptr);

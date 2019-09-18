@@ -5,6 +5,7 @@
 #pragma once
 
 #include <string>
+#include "error/expected.h"
 
 namespace Bald::Utils {
 
@@ -44,7 +45,7 @@ namespace Bald::Utils {
          * @return string
          */
 
-        [[nodiscard]] static std::string ReadFile(const char* filePath, Size size);
+        [[nodiscard]] static expected<std::string, std::string> ReadFile(const char* filePath, Size size);
     private:
 
         /**
@@ -53,7 +54,7 @@ namespace Bald::Utils {
          * @param filePath          Path to file
          * @return string
          */
-        [[nodiscard]] static std::string ReadSmallFile(const char* filePath);
+        [[nodiscard]] static expected<std::string, std::string> ReadSmallFile(const char* filePath);
 
         /**
          * @fn ReadBigFile
@@ -61,7 +62,7 @@ namespace Bald::Utils {
          * @param filePath          Path to file
          * @return string
          */
-        [[nodiscard]] static std::string ReadBigFile(const char* filePath);
+        [[nodiscard]] static expected<std::string, std::string> ReadBigFile(const char* filePath);
     };
 
 } // END OF NAMESPACE Bald::Utils

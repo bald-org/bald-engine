@@ -6,7 +6,8 @@
 namespace Bald {
     template <typename T>
     struct unexpected {
-        explicit unexpected(const T& val): value(val) { }
+        constexpr explicit unexpected(const T& val): value(val) { }
+        constexpr operator T() const noexcept { return value; }
         T value;
     };
 }

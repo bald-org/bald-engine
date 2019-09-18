@@ -47,7 +47,7 @@ namespace Bald {
 
         [[nodiscard]] constexpr E& value() const & { return valid; }
         [[nodiscard]] E& value() & { return valid; }
-        [[nodiscard]] E&& value() && { return valid; }
+        [[nodiscard]] E&& value() && { return std::move(valid); }
     };
 }
 
