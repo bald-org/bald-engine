@@ -99,7 +99,10 @@ add_library(bald_engine
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/textures/opengl_texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp src/core/graphics/rendering/mesh/mesh.cpp src/core/graphics/rendering/mesh/mesh.h)
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/mesh/mesh.h ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/mesh/mesh.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/model/model.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/model/model.h
+        )
 
 if (APPLE)
     target_link_libraries(bald_engine

@@ -121,7 +121,8 @@ namespace Bald::Graphics {
 
     protected:
         Utils::Image m_Image; /**< Texture bitmap. >*/
-
+    public:
+        std::string type;
     }; // END OF CLASS Texture
 
 } // END OF NAMESPACE Bald::Graphics
