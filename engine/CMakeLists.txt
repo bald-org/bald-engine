@@ -62,7 +62,7 @@ if(LINUX_BUILD)
     add_definitions(-DLINUX)
 endif()
 
-set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g) #-Wconversion -Werror
+set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g -Wconversion -Werror)
 set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 
 #### END DEFINITIONS/FLAGS
@@ -118,7 +118,7 @@ if (APPLE)
             "-framework IOKit"
             "-framework CoreVideo")
 else ()
-    target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl assimp)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
@@ -135,7 +135,7 @@ endif()
 
 if(DEFINE_DEBUG)
     set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall  -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g") #-Werror -Wconversion -Wextra
+    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall  -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Werror -Wconversion -Wextra -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g") #
 elseif(DEFINE_RELEASE)
     set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
     set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
