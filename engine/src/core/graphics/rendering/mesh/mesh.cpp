@@ -7,7 +7,7 @@
 namespace Bald::Graphics {
 
 
-    Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, const std::vector<Texture*>& textures)
+    Mesh::Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, const std::vector<std::shared_ptr<Texture>>& textures)
             :
             m_vertices(vertices), m_indices(indices), m_textures(textures),
             m_VBO(VertexBuffer::Create(&( m_vertices[0].Pos.x ), static_cast<unsigned int>(m_vertices.size()) * 8)),
@@ -16,7 +16,7 @@ namespace Bald::Graphics {
         Init();
     }
 
-    Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<uint32_t>&& indices, std::vector<Texture*>&& textures)
+    Mesh::Mesh(std::vector<Vertex>&& vertices, std::vector<uint32_t>&& indices, std::vector<std::shared_ptr<Texture>>&& textures)
             :
             m_vertices(std::move(vertices)), m_indices(std::move(indices)), m_textures(std::move(textures)),
             m_VBO(VertexBuffer::Create(&( m_vertices[0].Pos.x ), static_cast<unsigned int>(m_vertices.size()) * 8)),
@@ -48,7 +48,7 @@ namespace Bald::Graphics {
             else if (name == "texture_specular")
                 number = std::to_string(specularNr++);
 
-            shader.SetUniform1f((( "material." + name ).append(number)).c_str(), i);
+            shader.SetUniform1f((( "material." + name ).append(number)).c_str(), static_cast<float>(i));
             m_textures[i]->Bind();
         }
         glActiveTexture(GL_TEXTURE0);

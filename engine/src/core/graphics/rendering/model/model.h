@@ -33,7 +33,7 @@ namespace Bald::Graphics {
 
         Mesh processMesh(aiMesh* mesh, const aiScene* scene);
 
-        std::vector<Texture*> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
-                                                  std::string typeName);
+        std::vector<std::shared_ptr<Texture>> loadMaterialTextures(aiMaterial* mat, aiTextureType type,
+                                                                   const std::string& typeName);
     };
 }

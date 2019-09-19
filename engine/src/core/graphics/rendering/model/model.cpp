@@ -47,7 +47,7 @@ namespace Bald::Graphics {
     Mesh Model::processMesh(aiMesh* mesh, const aiScene* scene) {
         std::vector<Mesh::Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<Texture*> textures;
+        std::vector<std::shared_ptr<Texture>> textures;
 
         for (unsigned int i = 0; i < mesh->mNumVertices; i++) {
             Mesh::Vertex vertex;
@@ -71,7 +71,7 @@ namespace Bald::Graphics {
             vertices.push_back(vertex);
         }
 
-        if (mesh->mMaterialIndex >= 0) {
+        if (mesh->mMaterialIndex > 0) {
             for (unsigned int i = 0; i < mesh->mNumFaces; i++) {
                 aiFace face = mesh->mFaces[i];
                 for (unsigned int j = 0; j < face.mNumIndices; j++)
@@ -79,22 +79,20 @@ namespace Bald::Graphics {
             }
         }
 
-        if(mesh->mMaterialIndex >= 0)
+        if(mesh->mMaterialIndex > 0)
         {
             aiMaterial *material = scene->mMaterials[mesh->mMaterialIndex];
-            std::vector<Texture*> diffuseMaps = loadMaterialTextures(material,
-                                                               aiTextureType_DIFFUSE, "texture_diffuse");
+            auto diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
             textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
-            std::vector<Texture*> specularMaps = loadMaterialTextures(material,
-                                                                aiTextureType_SPECULAR, "texture_specular");
+            auto specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
             textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
         }
 
         return Mesh(std::move(vertices), std::move(indices), std::move(textures));
     }
 
-    std::vector<Texture*> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, std::string typeName) {
-        std::vector<Texture*> textures;
+    std::vector<std::shared_ptr<Texture>> Model::loadMaterialTextures(aiMaterial* mat, aiTextureType type, const std::string& typeName) {
+        std::vector<std::shared_ptr<Texture>> textures;
         for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
         {
             aiString str;
@@ -103,6 +101,6 @@ namespace Bald::Graphics {
             texture->type = typeName;
             textures.push_back(texture);
         }
-        return std::move(textures);
+        return textures;
     }
 }

@@ -17,6 +17,7 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
 
 set(${PROJECT_NAME}_include_dirs
@@ -41,6 +42,7 @@ set(${PROJECT_NAME}_include_dirs
 
 include_directories(${bald_engine_include_dirs})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include/)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/vendor/assimp/include/)
 
 #### END-LIBRARIES
 
@@ -60,7 +62,7 @@ if(LINUX_BUILD)
     add_definitions(-DLINUX)
 endif()
 
-set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
+set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g) #-Wconversion -Werror
 set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 
 #### END DEFINITIONS/FLAGS
@@ -133,7 +135,7 @@ endif()
 
 if(DEFINE_DEBUG)
     set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
+    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall  -Wnon-virtual-dtor  -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic  -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g") #-Werror -Wconversion -Wextra
 elseif(DEFINE_RELEASE)
     set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
     set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")

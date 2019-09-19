@@ -23,11 +23,11 @@ namespace Bald::Graphics {
         };
         std::vector<Vertex> m_vertices;
         std::vector<uint32_t> m_indices;
-        std::vector<Texture*> m_textures;
+        std::vector<std::shared_ptr<Texture>> m_textures;
 
-        Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, const std::vector<Texture*>& textures);
+        Mesh(const std::vector<Vertex>& vertices, const std::vector<uint32_t>& indices, const std::vector<std::shared_ptr<Texture>>& textures);
 
-        Mesh(std::vector<Vertex>&& vertices, std::vector<uint32_t>&& indices, std::vector<Texture*>&& textures);
+        Mesh(std::vector<Vertex>&& vertices, std::vector<uint32_t>&& indices, std::vector<std::shared_ptr<Texture>>&& textures);
 
         void Draw(const Shader& shader);
 
