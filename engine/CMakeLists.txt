@@ -18,29 +18,29 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
-add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/)
 
 set(${PROJECT_NAME}_include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/math
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/
-    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/
+        CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${bald_engine_include_dirs})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include/)
 
 #### END-LIBRARIES
 
