@@ -22,7 +22,7 @@ namespace Bald::Utils {
     }
 
     expected<std::string, std::string> FileManager::ReadSmallFile(const char* filePath) {
-        FILE* file = fopen(filePath, "r");
+        FILE* file = fopen(filePath, "rb");
 
         if (!file) {
             CORE_LOG_WARN("[FileManager] Couldn't open the file at path: " + static_cast<std::string>(filePath));
