@@ -108,8 +108,10 @@ if (APPLE)
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
-else ()
+elif (LINUX_BUILD)
     target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+else ()
+	target_link_libraries(bald_engine glad glfw glm imgui stb)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)

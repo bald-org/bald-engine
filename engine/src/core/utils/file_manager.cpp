@@ -77,10 +77,10 @@ namespace Bald::Utils {
         return result;
     }
 
-#elif WINDOWS
+#else
     std::string FileManager::ReadBigFile(const char *filePath) {
         CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
-        ReadSmallFile(filePath);
+        return ReadSmallFile(filePath);
     }
 #endif
 

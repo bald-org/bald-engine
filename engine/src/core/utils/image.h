@@ -6,6 +6,10 @@
 
 #include <string>
 
+#ifndef LINUX
+	#include <winsock.h>
+#endif
+
 namespace Bald::Utils {
 
     class Image {
