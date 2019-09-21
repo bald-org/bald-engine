@@ -8,7 +8,7 @@
 #include "logger/logger.h"
 #include "glad/glad.h"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace Bald::Graphics {
 

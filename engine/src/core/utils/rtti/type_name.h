@@ -54,7 +54,7 @@ namespace Bald::Utils {
 
 #else
 
-namespace Bald {
+namespace Bald::Utils {
 
     /**
      * @fn type_name

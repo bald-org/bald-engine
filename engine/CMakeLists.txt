@@ -56,8 +56,14 @@ if(LINUX_BUILD)
     add_definitions(-DLINUX)
 endif()
 
-set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
-set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
+if(WINDOWS_BUILD)
+	add_definitions(-DWINDOWS)
+endif()
+
+if(LINUX_BUILD)
+	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
+	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
+endif()
 
 #### END DEFINITIONS/FLAGS
 
@@ -68,7 +74,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_library(bald_engine
+add_library(bald_engine STATIC 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
@@ -125,13 +131,14 @@ endif()
 #### END CONFIG
 
 #### PCH
-
-if(DEFINE_DEBUG)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
-elseif(DEFINE_RELEASE)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+if(LINUX_BUILD)
+	if(DEFINE_DEBUG)
+		#set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		#set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
+	elseif(DEFINE_RELEASE)
+		#set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		#set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+	endif()
 endif()
 
 #### END PCH

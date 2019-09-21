@@ -97,7 +97,13 @@ namespace Bald::Debug {
  * @brief Instruction that emits SIGTRAP signal.
  */
 
+#ifdef LINUX
 #define BALD_BREAKPOINT std::raise(SIGTRAP)
+#else
+ inline void nothing() {}
+#define BALD_BREAKPOINT nothing()
+//TODO: create breakpoint
+#endif
 
 /**
  * @def BALD_SOURCE_INFO

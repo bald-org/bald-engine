@@ -10,7 +10,7 @@ set(RELEASE_COMPILE_FLAGS -Ofast -Werror)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-add_library(glad src/glad.c)
+add_library(glad STATIC src/glad.c)
 
 if(DEFINE_DEBUG)
     target_compile_options(glad INTERFACE ${DEBUG_COMPILE_FLAGS})
