@@ -32,6 +32,7 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR
+  - cat engine\vendor\imgui\CMakeLists.txt
   - mkdir build_debug && cd build_debug
   - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
   - ninja
