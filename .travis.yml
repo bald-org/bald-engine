@@ -35,7 +35,8 @@ script:
   - cd engine
   - cd vendor
   - cd imgui
-  - cat CMakeLists.txt
+  - git checkout master
+  - git pull
   - cd $TRAVIS_BUILD_DIR
   - mkdir build_debug && cd build_debug
   - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
