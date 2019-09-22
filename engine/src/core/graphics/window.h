@@ -18,7 +18,7 @@ namespace Bald::Graphics {
      */
 
     class Window {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
     public:
 
         /**

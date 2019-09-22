@@ -17,6 +17,8 @@
 
 #define BASE IS_BASE
 
+#define NORMAL IS_NORMAL
+
 /*
  * @def DEF_CLASS_TYPE
  * @brief A macro definition. It defines other macro depending on the argument
@@ -46,7 +48,7 @@
 * @brief A macro definition. It defines function/functions which ordinary class needs.
 */
 
-#define DEF_CLASS_TYPE_ public: \
+#define DEF_CLASS_TYPE_IS_NORMAL public: \
                       [[nodiscard]] inline unsigned GetType() const noexcept { return Bald::Utils::get_type_id(*this); }
 
 /*

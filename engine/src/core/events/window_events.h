@@ -86,7 +86,7 @@ namespace Bald {
      */
 
     class WindowClosedEvent : public WindowEvent {
-        GENERATE_BODY()
+        GENERATE_BODY(DERIVED)
         friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
 
     protected:

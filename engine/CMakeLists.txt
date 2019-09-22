@@ -60,7 +60,7 @@ if(WINDOWS_BUILD)
 	add_definitions(-DWINDOWS)
 endif()
 
-if(LINUX_BUILD)
+if(NOT WINDOWS_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 endif()
@@ -122,22 +122,23 @@ endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-if(DEFINE_DEBUG)
-    target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
-elseif(DEFINE_RELEASE)
-    target_compile_options(bald_engine PUBLIC ${RELEASE_COMPILE_FLAGS})
+if(NOT WINDOWS_BUILD)
+	if(DEFINE_DEBUG)
+		target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
+	elseif(DEFINE_RELEASE)
+		target_compile_options(bald_engine PUBLIC ${RELEASE_COMPILE_FLAGS})
+	endif()
 endif()
-
 #### END CONFIG
 
 #### PCH
-if(LINUX_BUILD)
+if(NOT WINDOWS_BUILD)
 	if(DEFINE_DEBUG)
-		#set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-		#set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
 	elseif(DEFINE_RELEASE)
-		#set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-		#set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
 	endif()
 endif()
 
