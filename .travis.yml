@@ -35,6 +35,9 @@ before_install:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.0/cmake-3.15.0-Linux-x86_64.sh; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then chmod +x cmake-3.15.0-Linux-x86_64.sh ; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3.15.3-win64-x64.msi; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then chmod +x cmake-3.15.3-win64-x64.msi ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ./cmake-3.15.3-win64-x64.msi --prefix=$HOME/usr --exclude-subdir --skip-license ; fi
 
 before_script:
   - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9
