@@ -38,7 +38,7 @@ before_install:
   - export PATH="$HOME/usr/bin:$PATH"
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.0/cmake-3.15.0-Linux-x86_64.sh; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then chmod +x cmake-3.15.0-Linux-x86_64.sh ; fi
-  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license  > download_out_put.txt; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then travis_retry wget https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3.15.3-win32-x86.zip; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then unzip cmake-3.15.3-win32-x86.zip > cmake_out_put.txt ; fi
    
@@ -55,6 +55,7 @@ script:
   - git checkout master
   - git pull
   - cd $TRAVIS_BUILD_DIR
+  - cat engine/CMakeLists.txt
   - mkdir build_debug && cd build_debug
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../ ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ../cmake-3.15.3-win32-x86/bin/cmake.exe -DDEFINE_DEBUG=ON -DWINDOWS_BUILD=ON -DTRAVIS_BUILD=ON ../ ; fi
