@@ -20,9 +20,7 @@ endif()
 
 if(LINUX_BUILD)
     add_definitions(-DLINUX)
-endif()
-
-if(WINDOWS_BUILD)
+elseif(WINDOWS_BUILD)
 	add_definitions(-DWINDOWS)
 endif()
 
