@@ -29,6 +29,10 @@ addons:
 services:
   - xvfb
 
+
+env: 
+  - MSBUILD_PATH="/C/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
+
 before_install:
   - mkdir $HOME/usr
   - export PATH="$HOME/usr/bin:$PATH"
@@ -50,6 +54,8 @@ script:
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd 'C:/Program Files (x86)/MSBuild/15.0' ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then export PATH=$MSBUILD_PATH:$PATH ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then MSBuild.exe -help ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then & 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe' bald.sln /t:Build /m ; fi
   - cd bin
   - ./../../scripts/travis/run_examples.sh
