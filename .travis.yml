@@ -48,15 +48,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ../cmake-3.15.3-win32-x86/bin/cmake.exe -DDEFINE_DEBUG=ON -DWINDOWS_BUILD=ON -DTRAVIS_BUILD=ON ../ ; fi
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ninja ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd C: ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd "Program Files (x86)" ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd "Microsoft Visual Studio" ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd 2017 ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
-  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd Enterprise ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then cd 'C:/Program Files (x86)/Microsoft Visual Studio/2017' ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ls ; fi
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then & 'C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe' bald.sln /t:Build /m ; fi
   - cd bin
