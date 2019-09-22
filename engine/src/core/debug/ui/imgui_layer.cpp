@@ -5,11 +5,8 @@
 #include "imgui_layer.h"
 #include "imgui.h"
 
-#ifdef TRAVIS
-#include "vendor/imgui/examples/imgui_impl_opengl2.h"
-#else
+
 #include "vendor/imgui/examples/imgui_impl_opengl3.h"
-#endif
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
 #include "application.h"
