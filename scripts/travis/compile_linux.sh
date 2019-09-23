@@ -3,7 +3,9 @@
 mkdir build_debug && cd build_debug
 cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
 ninja
+ls
 cd bin
+ls
 ./../../scripts/travis/run_examples.sh
 cd $TRAVIS_BUILD_DIR
 mkdir build_release && cd build_release
