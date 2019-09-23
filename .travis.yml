@@ -4,10 +4,6 @@ os:
   - linux
   - windows
 
-matrix:
-  allow_failures:
-    - os: windows
-
 compiler: gcc
 dist: xenial
 
