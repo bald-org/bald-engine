@@ -5,6 +5,7 @@ cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
 ninja
 cd bin
 ./../../scripts/travis/run_examples.sh
+cd $TRAVIS_BUILD_DIR
 mkdir build_release && cd build_release
 cmake -GNinja -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
 ninja
