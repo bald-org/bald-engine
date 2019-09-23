@@ -80,7 +80,8 @@ namespace Bald::Utils {
 #ifdef LINUX
         auto time = std::localtime(&now_c);
 #else
-		tm* time = nullptr;
+		tm t;
+		tm* time = &t;
 		::localtime_s(time, &now_c);
 #endif
         return Time(time->tm_hour, time->tm_min, time->tm_sec);
