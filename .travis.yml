@@ -51,6 +51,7 @@ script:
   - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./scripts/travis/compile_linux.sh ; fi
   - cd $TRAVIS_BUILD_DIR
   - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ./scripts/travis/compile_windows.sh ; fi
+  - cat output.txt
 
 
   
