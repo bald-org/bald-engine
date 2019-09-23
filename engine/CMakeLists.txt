@@ -64,7 +64,7 @@ if(LINUX_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 elseif(WINDOWS_BUILD)
-	message(STATUS ${CMAKE_CXX_FLAGS_DEBUG})
+	#TODO: Add warning and optimization flags
 endif()
 
 #### END DEFINITIONS/FLAGS

@@ -100,9 +100,7 @@ namespace Bald::Debug {
 #ifdef LINUX
 #define BALD_BREAKPOINT std::raise(SIGTRAP)
 #else
- inline void nothing() {}
-#define BALD_BREAKPOINT nothing()
-//TODO: create breakpoint
+#define BALD_BREAKPOINT __debugbreak()
 #endif
 
 /**

@@ -79,7 +79,7 @@ namespace Bald::Utils {
         auto now_c = std::chrono::system_clock::to_time_t(now);
 #ifdef LINUX
         auto time = std::localtime(&now_c);
-#else
+#elif WINDOWS
 		tm t;
 		tm* time = &t;
 		::localtime_s(time, &now_c);
