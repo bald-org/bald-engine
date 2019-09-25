@@ -137,7 +137,7 @@ namespace Bald {
     private:
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksSync; /**< Unordered map of events' type indexes and associated functions which will be called synchronously */
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksAsync; /**< Unordered map of events' type indexes and associated functions which will be called asynchronously */
-        static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
+        static std::vector<Event*> m_EventQueue; /**< Basically an event queue */
         static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
 
     }; // END OF CLASS EventManager

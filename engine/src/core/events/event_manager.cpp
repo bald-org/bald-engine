@@ -8,7 +8,7 @@
 
 namespace Bald {
 
-    std::deque<Event*> EventManager::m_EventQueue;
+    std::vector<Event*> EventManager::m_EventQueue;
     int EventManager::m_ReferenceCounter = 0;
 
     EventManager::EventManager() {
