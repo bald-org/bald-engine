@@ -50,7 +50,7 @@ namespace Bald {
                 continue;
             }
             std::vector<std::future<void>> ft;
-            if (async_callbacks != m_CallbacksAsync.end()) {
+            if (async_callbacks != m_CallbacksAsync.end()) { //TODO: investigate impact of resizing std::vector -> ft to correct size inside this if
                 for (const auto& fun : async_callbacks->second) {
                     ft.emplace_back(std::async(std::launch::async, [&it, &fun]() {
                         fun->Run(*it);
