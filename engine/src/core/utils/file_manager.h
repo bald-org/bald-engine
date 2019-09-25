@@ -19,8 +19,14 @@ namespace Bald::Utils {
         /**
          * ENUM which determines size of file and therefor methods, which will be used to read it
          */
-        enum class Size : char {
+        enum class Size : uint8_t {
             SMALL_FILE, BIG_FILE
+        };
+
+        enum class Error : uint8_t {
+            Fail,
+            CantOpenFile,
+            TooBigFile
         };
     public:
 
@@ -45,7 +51,7 @@ namespace Bald::Utils {
          * @return string
          */
 
-        [[nodiscard]] static expected<std::string, std::string> ReadFile(const char* filePath, Size size);
+        [[nodiscard]] static expected<std::string, Error> ReadFile(const char* filePath, Size size);
     private:
 
         /**
@@ -54,7 +60,7 @@ namespace Bald::Utils {
          * @param filePath          Path to file
          * @return string
          */
-        [[nodiscard]] static expected<std::string, std::string> ReadSmallFile(const char* filePath);
+        [[nodiscard]] static expected<std::string, Error> ReadSmallFile(const char* filePath);
 
         /**
          * @fn ReadBigFile
@@ -62,7 +68,7 @@ namespace Bald::Utils {
          * @param filePath          Path to file
          * @return string
          */
-        [[nodiscard]] static expected<std::string, std::string> ReadBigFile(const char* filePath);
+        [[nodiscard]] static expected<std::string, Error> ReadBigFile(const char* filePath);
     };
 
 } // END OF NAMESPACE Bald::Utils

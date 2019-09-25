@@ -101,7 +101,12 @@ namespace Bald::Platform::Graphics {
 
         auto vertex_data = Utils::FileManager::ReadFile(m_VertexPath,
                                                  Utils::FileManager::Size::SMALL_FILE);
-        if (!vertex_data) { return 0; } //TODO: do something smarter xd
+        if (!vertex_data) {
+            CORE_LOG_ERROR("Could't open shader: " + std::string(m_VertexPath));
+            CORE_LOG_WARN("Compiling default shader instead");
+            //TODO: implement default shader
+            return 0;
+        } //TODO: do something smarter xd
         const std::string& vertexShaderSource = vertex_data.value();
         const char* vertexData = vertexShaderSource.c_str();
 
