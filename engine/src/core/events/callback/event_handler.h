@@ -32,11 +32,11 @@ namespace Bald {
         */
 
         template<class F, class... Args>
-        explicit EventHandler(F fun, Args&& ... args) :
+        explicit EventHandler(F&& fun, Args&& ... args) :
                 EventHandlerInterface() {
             if (this->m_ID != 0) {
                 if constexpr (std::is_member_function_pointer<F>::value){
-                    Unpack(fun, args...);
+                    Unpack(std::forward<F>(fun), args...);
                 } else {
                     m_Function = [=](const E& ev) {
                         fun(ev, args...);
@@ -74,11 +74,11 @@ namespace Bald {
         void Unpack(F&& fun, O& obj, Args&& ...args) {
             if constexpr (std::is_pointer<O>::value){
                 m_Function = [fun, obj, args...](const E& ev) {
-                    ((*obj).*fun)(ev, args...);
+                    std::invoke(fun, obj, ev, args...);
                 };
             } else {
                 m_Function = [fun, &obj, args...](const E& ev) {
-                    (obj.*fun)(ev, args...);
+                    std::invoke(fun, obj, ev, args...);
                 };
             }
 
