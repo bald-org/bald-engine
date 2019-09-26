@@ -6,6 +6,7 @@
 
 #include <utility>
 #include "unexpected.h"
+#include "bald_assert.h"
 
 
 namespace Bald {
@@ -67,20 +68,38 @@ namespace Bald {
 
         constexpr operator bool() const noexcept { return _isOk; }
 
-        [[nodiscard]] constexpr U& error() const& { return invalid; }
+        [[nodiscard]] constexpr U& error() const& {
+            BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
+            return invalid;
+        }
 
-        [[nodiscard]] U& error()& { return invalid; }
+        [[nodiscard]] U& error()& {
+            BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
+            return invalid;
+        }
 
-        [[nodiscard]] U&& error()&& { return std::move(invalid); }
+        [[nodiscard]] U&& error()&& {
+            BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
+            return std::move(invalid);
+        }
 
-        [[nodiscard]] constexpr E& value() const& { return valid; }
+        [[nodiscard]] constexpr E& value() const& {
+            BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
+            return valid;
+        }
 
-        [[nodiscard]] E& value()& { return valid; }
+        [[nodiscard]] E& value()& {
+            BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
+            return valid;
+        }
 
-        [[nodiscard]] E&& value()&& { return std::move(valid); }
+        [[nodiscard]] E&& value()&& {
+            BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
+            return std::move(valid);
+        }
 
     private:
-        void dtor() const {
+        void dtor() const noexcept {
             if (_isOk) valid.~E();
             else invalid.~U();
         }
