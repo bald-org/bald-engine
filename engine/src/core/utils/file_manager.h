@@ -51,7 +51,7 @@ namespace Bald::Utils {
          * @return string
          */
 
-        [[nodiscard]] static expected<std::string, Error> ReadFile(const char* filePath, Size size);
+        [[nodiscard]] static expected<std::string, Error> ReadFile(const char* filePath, Size size = Size::SMALL_FILE);
     private:
 
         /**

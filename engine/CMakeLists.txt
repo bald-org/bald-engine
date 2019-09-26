@@ -149,6 +149,8 @@ target_link_libraries(runUnitTests bald_engine)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/default.vert res/shaders/default.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/default.frag res/shaders/default.frag COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/lena.jpg res/textures/lena.jpg COPYONLY)
 
