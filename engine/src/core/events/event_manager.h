@@ -110,8 +110,6 @@ namespace Bald {
         /**
         * @fn Flush
         * @brief This function runs callbacks for all events that are currently in an event queue
-        * @param [int] n -> Number of events you want to proceed. If n == -1 (or argumeter left blank)
-        *                             this will iterate through whole queue
         */
 
         void Flush() noexcept;
