@@ -32,11 +32,6 @@ before_script:
 
 script:
   - cd $TRAVIS_BUILD_DIR
-  - cd engine/vendor/assimp
-  - git checkout master
-  - git pull
-  - cd $TRAVIS_BUILD_DIR
-  - ls
   - mkdir build_debug && cd build_debug
   - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
   - ninja
