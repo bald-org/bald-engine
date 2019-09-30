@@ -89,6 +89,10 @@ namespace Bald::Platform::Graphics {
         glUniform4i(GetUniformLocation(uniformName), vec.x, vec.y, vec.z, vec.w);
     }
 
+    void OpenGLShader::SetUniformMat4f(const char* uniformName, const glm::mat4& mat) const noexcept {
+        glUniformMatrix4fv(GetUniformLocation(uniformName), 1, GL_FALSE, &mat[0][0]);
+    }
+
     unsigned OpenGLShader::GetID() const noexcept {
         return m_ShaderID;
     }

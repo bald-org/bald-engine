@@ -208,6 +208,8 @@ namespace Bald::Graphics {
          */
         virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept = 0;
 
+        virtual void SetUniformMat4f(const char* uniformName, const glm::mat4& mat) const noexcept = 0;
+
         /**
          * @fn GetID
          * @brief Returns shader's ID.

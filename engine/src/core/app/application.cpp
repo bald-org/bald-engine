@@ -32,13 +32,6 @@ namespace Bald {
         while(m_Running) {
             m_Window->Clear();
 
-            // TRIANGLE
-            m_Shader->Bind();
-            m_Texture->Bind();
-            m_TriangleVAO->Bind();
-            glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
-            // END TRIANGLE
-
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0){
                 EventManager::Emit<WindowClosedEvent>();
@@ -93,40 +86,6 @@ namespace Bald {
         PushOverlayImmediately<Debug::ImGuiLayer>();
 
         CORE_LOG_INFO("[Application] Initialization was successful");
-
-        // TRIANGLE
-        float vertices[] = {
-           //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
-            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
-             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
-             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
-        };//
-
-        unsigned indices[] = {
-            0, 1, 2, // first triangle
-            0, 2, 3  // second triangle
-        };
-
-        Graphics::VertexBufferLayout layout = {
-            {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
-        };
-
-        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
-        m_TriangleVBO->SetLayout(layout);
-
-        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
-
-        m_TriangleVAO = Graphics::VertexArray::Create();
-        m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
-        m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
-
-        m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
-
-        m_Texture = Graphics::Texture::Create("../engine/res/textures/lena.jpg");
-        // END OF TRIANGLE
 
         return true;
     }

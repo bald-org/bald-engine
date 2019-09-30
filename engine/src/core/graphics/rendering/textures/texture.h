@@ -119,6 +119,8 @@ namespace Bald::Graphics {
 
         [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
 
+        [[nodiscard]] inline const std::string& GetFilePath() const { return m_Image.GetFilepath(); }
+
     protected:
         Utils::Image m_Image; /**< Texture bitmap. >*/
     public:
