@@ -150,7 +150,7 @@ namespace Bald {
                 if(m_CallbacksSync.find(Utils::get_type_id<T>()) == m_CallbacksSync.end()) {
                     m_CallbacksSync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
-                m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), args...));
+                m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), std::forward<Args>(args)...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksSync[Utils::get_type_id<T>()].back()->GetID();
             }
@@ -158,7 +158,7 @@ namespace Bald {
                 if(m_CallbacksAsync.find(Utils::get_type_id<T>()) == m_CallbacksAsync.end()) {
                     m_CallbacksAsync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
-                m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), args...));
+                m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), std::forward<Args>(args)...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksAsync[Utils::get_type_id<T>()].back()->GetID();
             }
