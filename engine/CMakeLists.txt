@@ -53,11 +53,13 @@ if(TRAVIS_BUILD)
 endif()
 
 if(LINUX_BUILD)
-    add_definitions(-DLINUX)
+	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
+	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
+	add_definitions(-DLINUX)
+elseif(WINDOWS_BUILD)
+	add_definitions(-DWINDOWS)
+	#TODO: Add warning and optimization flags
 endif()
-
-set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
-set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 
 #### END DEFINITIONS/FLAGS
 
@@ -68,7 +70,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_library(bald_engine
+add_library(bald_engine STATIC 
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
@@ -111,28 +113,32 @@ if (APPLE)
             "-framework OpenGL"
             "-framework IOKit"
             "-framework CoreVideo")
-else ()
+elseif (LINUX_BUILD)
     target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+else ()
+	target_link_libraries(bald_engine glad glfw glm imgui stb)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
+
 if(DEFINE_DEBUG)
-    target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
+	target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
 elseif(DEFINE_RELEASE)
-    target_compile_options(bald_engine PUBLIC ${RELEASE_COMPILE_FLAGS})
+	target_compile_options(bald_engine PUBLIC ${RELEASE_COMPILE_FLAGS})
 endif()
 
 #### END CONFIG
 
 #### PCH
-
-if(DEFINE_DEBUG)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
-elseif(DEFINE_RELEASE)
-    set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
-    set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+if(LINUX_BUILD)
+	if(DEFINE_DEBUG)
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
+	elseif(DEFINE_RELEASE)
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+	endif()
 endif()
 
 #### END PCH

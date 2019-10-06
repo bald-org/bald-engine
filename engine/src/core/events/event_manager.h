@@ -28,7 +28,7 @@ namespace Bald {
      */
 
     class EventManager {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
     public:
 
         /**
