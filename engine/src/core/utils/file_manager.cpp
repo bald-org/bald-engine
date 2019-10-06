@@ -22,7 +22,6 @@ namespace Bald::Utils {
     }
 
     expected<std::string, FileManager::Error> FileManager::ReadSmallFile(const char* filePath) {
-    std::string FileManager::ReadSmallFile(const char* filePath) {
 #ifdef WINDOWS
 		FILE* file;
 		fopen_s(&file, filePath, "rb");
