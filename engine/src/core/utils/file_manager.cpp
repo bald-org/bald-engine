@@ -22,7 +22,12 @@ namespace Bald::Utils {
     }
 
     std::string FileManager::ReadSmallFile(const char* filePath) {
+#ifdef WINDOWS
+		FILE* file;
+		fopen_s(&file, filePath, "r");
+#else
         FILE* file = fopen(filePath, "r");
+#endif
 
         if (!file) {
             CORE_LOG_WARN("[FileManager] Couldn't open the file at path: " + static_cast<std::string>(filePath));
@@ -77,10 +82,10 @@ namespace Bald::Utils {
         return result;
     }
 
-#elif WINDOWS
+#else
     std::string FileManager::ReadBigFile(const char *filePath) {
         CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
-        ReadSmallFile(filePath);
+        return ReadSmallFile(filePath);
     }
 #endif
 
