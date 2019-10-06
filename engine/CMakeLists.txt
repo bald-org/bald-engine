@@ -128,7 +128,7 @@ endif()
 #### END CONFIG
 
 #### PCH
-if(LINUX_BUILD)
+if(LINUX_BUILD OR APPLE_BUILD)
 	if(DEFINE_DEBUG)
 		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
