@@ -8,8 +8,6 @@
  * This is the engine's entry point.
  */
 
-#ifdef LINUX
-
 int main() {
     Bald::Debug::LogManager::Init();
 
@@ -20,16 +18,3 @@ int main() {
     delete application;
 }
 
-#else
-
-int main() {
-    Bald::Logger::Init();
-
-    auto* application = Bald::Application::Create();
-
-    application->Run();
-
-    delete application;
-}
-
-#endif

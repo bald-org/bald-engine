@@ -11,11 +11,18 @@
 #define DERIVED IS_DERIVED
 
 /*
- * @def DERIVED
+ * @def BASE
  * @brief A macro definition. It is used as a flag to mark that the class is a base for another ones.
  */
 
 #define BASE IS_BASE
+
+ /*
+  * @def NORMAL
+  * @brief A macro definition. It is used as a flag to mark that the class isn't a base for any another.
+  */
+
+#define NORMAL IS_NORMAL
 
 /*
  * @def DEF_CLASS_TYPE
@@ -42,11 +49,11 @@
                              [[nodiscard]] virtual unsigned GetType() const noexcept = 0;
 
 /*
-* @def DEF_CLASS_TYPE_
+* @def DEF_CLASS_TYPE_IS_NORMAL
 * @brief A macro definition. It defines function/functions which ordinary class needs.
 */
 
-#define DEF_CLASS_TYPE_ public: \
+#define DEF_CLASS_TYPE_IS_NORMAL public: \
                       [[nodiscard]] inline unsigned GetType() const noexcept { return Bald::Utils::get_type_id(*this); }
 
 /*

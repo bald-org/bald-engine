@@ -14,7 +14,7 @@ namespace Bald::Platform::Graphics {
      */
 
     class OpenGLIndexBuffer : public Bald::Graphics::IndexBuffer {
-    friend class IndexBuffer;
+    friend class ::Bald::Graphics::IndexBuffer;
     private:
 
         /**
