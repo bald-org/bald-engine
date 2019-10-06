@@ -30,7 +30,7 @@ namespace Bald::Utils {
 
         m_IsRunning ? endTime = std::chrono::system_clock::now() : endTime = m_EndTime;
 
-        return std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count();
+        return static_cast<long>(std::chrono::duration_cast<std::chrono::milliseconds>(endTime - m_StartTime).count());
     }
 
     bool Timer::IsRunning() const noexcept {
