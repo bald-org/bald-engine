@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 mkdir build_debug && cd build_debug
-$HOME/cmake-3.15.4-Darwin-x86_64/CMake.app/Contents/bin/cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-$HOME/cmake-3.15.4-Darwin-x86_64/CMake.app/Contents/bin/cmake --build . --config Debug
+$HOME/cmake/CMake.app/Contents/bin/cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
+$HOME/cmake/CMake.app/Contents/bin/cmake --build . --config Debug
 cd bin
 ./../../scripts/travis/run_examples.sh
 exit_code=$?
