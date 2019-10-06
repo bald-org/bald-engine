@@ -30,7 +30,6 @@ namespace Bald::Graphics {
          * @fn Shader
          * @brief Default constructor.
          */
-
         Shader() = default;
 
         /**
@@ -38,7 +37,6 @@ namespace Bald::Graphics {
          * @brief Deleted copy constructor.
          * @param [const Shader&]
          */
-
         Shader(const Shader&) = delete;
 
         /**
@@ -47,7 +45,6 @@ namespace Bald::Graphics {
          * @param const Shader&
          * @return Shader&
          */
-
         Shader& operator=(const Shader&) = delete;
 
         /**
