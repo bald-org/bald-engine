@@ -99,7 +99,7 @@ add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp )
 
-if (APPLE)
+if (APPLE_BUILD)
     target_link_libraries(bald_engine
             glad
             glfw
