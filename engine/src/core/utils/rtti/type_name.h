@@ -5,6 +5,7 @@
 #pragma once
 
 #include <cstdlib>
+#include <string>
 
 #ifdef __GNUG__
 
@@ -53,7 +54,7 @@ namespace Bald::Utils {
 
 #else
 
-namespace Bald {
+namespace Bald::Utils {
 
     /**
      * @fn type_name

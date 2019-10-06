@@ -28,7 +28,7 @@ namespace Bald::Input {
      */
 
     class InputManager {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
