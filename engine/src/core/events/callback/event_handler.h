@@ -72,16 +72,16 @@ namespace Bald {
 
         template <class F, class O, class ...Args>
         void Unpack(F&& fun, O& obj, Args&& ...args) {
-            if constexpr (std::is_pointer<O>::value){
-                m_Function = [fun, obj, args...](const E& ev) {
-                    std::invoke(fun, obj, ev, args...);
-                };
-            } else {
-                m_Function = [fun, &obj, args...](const E& ev) {
-                    std::invoke(fun, obj, ev, args...);
-                };
-            }
+            m_Function = [fun, &obj, &args...](const E& ev) {
+                std::invoke(fun, obj, ev, std::forward<Args>(args)...);
+            };
+        }
 
+        template <class F, class O, class ...Args>
+        void Unpack(F&& fun, O&& obj, Args&& ...args) {
+            m_Function = [fun, obj, &args...](const E& ev) {
+                std::invoke(fun, obj, ev, std::forward<Args>(args)...);
+            };
         }
 
     protected:
