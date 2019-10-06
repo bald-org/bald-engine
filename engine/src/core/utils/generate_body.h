@@ -19,7 +19,7 @@
 
  /*
   * @def NORMAL
-  * @brief A macro definition. It is used as a flag to mark that the class is't a base for any another.
+  * @brief A macro definition. It is used as a flag to mark that the class isn't a base for any another.
   */
 
 #define NORMAL IS_NORMAL
