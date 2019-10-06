@@ -35,7 +35,7 @@ namespace Bald {
         explicit EventHandler(F&& fun, Args&& ... args) :
                 EventHandlerInterface() {
             if (this->m_ID != 0) {
-                if constexpr (std::is_member_function_pointer<F>::value){
+                if constexpr (std::is_member_function_pointer_v<F>){
                     Unpack(std::forward<F>(fun), std::forward<Args>(args)...);
                 } else {
                     m_Function = [=](const E& ev) {
