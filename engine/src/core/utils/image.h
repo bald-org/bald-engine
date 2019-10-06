@@ -10,6 +10,10 @@
 	#include <winsock.h>
 #endif
 
+#ifdef __APPLE__
+    #include <sys/types.h>
+#endif
+
 namespace Bald::Utils {
 
     class Image {
