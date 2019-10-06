@@ -11,7 +11,7 @@ namespace Bald::Graphics {
         : m_Rotation(0.0f),
           m_Position(0.0f),
           m_Size(1.0f),
-          m_Color(0.0f),
+          m_Color(1.0f),
           m_Texture(std::move(texture)) {}
           
 } // END OF NAMESPACE Bald::Graphics

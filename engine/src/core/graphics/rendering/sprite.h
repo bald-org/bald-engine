@@ -49,7 +49,7 @@ namespace Bald::Graphics {
          * @param std::shared_ptr<Texture> Texture.
          */
 
-        inline void SetTexture(std::shared_ptr<Texture> texture ) noexcept { m_Texture = std::move(texture); }
+        inline void SetTexture(std::shared_ptr<Texture> texture) noexcept { m_Texture = std::move(texture); }
 
         /**
          * @fn GetPosition
