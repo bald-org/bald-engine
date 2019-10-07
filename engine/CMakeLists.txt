@@ -53,12 +53,15 @@ if(TRAVIS_BUILD)
 endif()
 
 if(LINUX_BUILD)
-	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g)
+	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 	add_definitions(-DLINUX)
 elseif(WINDOWS_BUILD)
 	add_definitions(-DWINDOWS)
 	#TODO: Add warning and optimization flags
+elseif(APPLE_BUILD)
+	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
+	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 endif()
 
 #### END DEFINITIONS/FLAGS
@@ -128,10 +131,18 @@ endif()
 #### END CONFIG
 
 #### PCH
-if(LINUX_BUILD OR APPLE_BUILD)
+if(LINUX_BUILD)
 	if(DEFINE_DEBUG)
 		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
+	elseif(DEFINE_RELEASE)
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
+	endif()
+elseif(APPLE_BUILD)
+	if(DEFINE_DEBUG)
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g")
 	elseif(DEFINE_RELEASE)
 		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
