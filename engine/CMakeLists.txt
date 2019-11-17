@@ -62,6 +62,7 @@ elseif(WINDOWS_BUILD)
 elseif(APPLE_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
+	add_definitions(-DAPPLE)
 endif()
 
 #### END DEFINITIONS/FLAGS

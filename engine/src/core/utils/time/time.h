@@ -77,9 +77,7 @@ namespace Bald::Utils {
     Time Time::GetCurrentTime() noexcept {
         auto now = std::chrono::system_clock::now();
         auto now_c = std::chrono::system_clock::to_time_t(now);
-#ifdef LINUX
-        auto time = std::localtime(&now_c);
-#elif __APPLE__
+#if defined(LINUX) || defined(APPLE)
         auto time = std::localtime(&now_c);
 #elif WINDOWS
 		tm t;
