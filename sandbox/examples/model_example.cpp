@@ -23,22 +23,23 @@ public:
     void OnAttach() noexcept override {}
 
     void OnDetach() noexcept override {}
-
+    float  x = 45.0f;
     void OnUpdate() noexcept override {
         m_Shader->Bind();
         glm::vec3 pos = glm::vec3(0.0f, 0.0f, 0.0f);
         glm::vec3 front = glm::vec3(0.0f, 0.0f, -1.0f);
         glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-        // view/projection transformations
-        glm::mat4 projection = glm::perspective(glm::radians(45.0f), Application::GetApplication().GetWindow()->GetAspectRatio(), 0.1f, 100.0f);
+        x += 1.0f / 3600;
+        glm::mat4 projection = glm::perspective(glm::radians(45.0f), Application::GetApplication().GetWindow()->GetAspectRatio(), 0.1f, 1000.0f);
         glm::mat4 view = glm::lookAt(pos, pos + front, up);
         m_Shader->SetUniformMat4f("projection", projection);
         m_Shader->SetUniformMat4f("view", view);
 
         // render the loaded model
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, glm::vec3(0.0f, -1.75f, 0.0f)); // translate it down so it's at the center of the scene
+        model = glm::translate(model, glm::vec3(0.0f, -1.75f, -5.0f)); // translate it down so it's at the center of the scene
         model = glm::scale(model, glm::vec3(0.2f, 0.2f, 0.2f));	// it's a bit too big for our scene, so scale it down
+        model = glm::rotate(model, x, up);
         m_Shader->SetUniformMat4f("model", model);
 
         m_Nano.Draw(*m_Shader);
