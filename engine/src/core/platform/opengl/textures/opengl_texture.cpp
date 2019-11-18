@@ -73,9 +73,10 @@ namespace Bald::Platform::Graphics {
     }
 
     bool OpenGLTexture::Init() noexcept {
-        if(m_Image.GetData()) {
+        Utils::Image image(path);
+        if(image.GetData()) {
             uint32_t format = 0;
-            switch(m_Image.GetNrChannels()) {
+            switch(image.GetNrChannels()) {
                 case 1 :
                     format = GL_RED;
                     break;
@@ -86,7 +87,7 @@ namespace Bald::Platform::Graphics {
                     format = GL_RGBA;
                     break;
                 default:
-                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", m_Image.GetNrChannels());
+                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", image.GetNrChannels());
                     break;
             }
 
@@ -99,7 +100,7 @@ namespace Bald::Platform::Graphics {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), m_Image.GetWidth(), m_Image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, m_Image.GetData());
+            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), image.GetWidth(), image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, image.GetData());
             glGenerateMipmap(GL_TEXTURE_2D);
 
             glBindTexture(GL_TEXTURE_2D, 0);
