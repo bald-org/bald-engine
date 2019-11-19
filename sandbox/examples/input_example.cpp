@@ -21,16 +21,16 @@ public:
     void OnUpdate() noexcept override {
         static glm::vec2 position{0.0f, 0.0f};
 
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_W)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
             position.y += 0.5f;
         }
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_A)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
             position.x -= 0.5f;
         }
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_S)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
             position.y -= 0.5f;
         }
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_D)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
             position.x += 0.5f;
         }
 
