@@ -190,14 +190,16 @@ class OpenGLShader : public Bald::Graphics::Shader {
          */
         void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept override;
 
+        void SetUniformMat4f(const char* uniformName, const glm::mat4& mat) const noexcept override;
+
         /**
          * @fn GetID
          * @brief Returns shader's ID.
          * @return [unsigned] Shader ID.
          */
         unsigned GetID() const noexcept override;
+private:
 
-    private:
         /**
          * @fn CreateShader
          * @brief Creates and compiles both Vertex and Fragment Shaders, then returns Shader Program.

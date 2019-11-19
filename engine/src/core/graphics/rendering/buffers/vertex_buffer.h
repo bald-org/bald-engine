@@ -67,6 +67,8 @@ namespace Bald::Graphics {
 
         void SetLayout(const VertexBufferLayout& layout) noexcept;
 
+        void SetLayout(VertexBufferLayout&& layout) noexcept;
+
         /**
          * @fn GetLayout
          * @brief Vertex buffer layout getter

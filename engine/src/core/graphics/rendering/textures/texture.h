@@ -36,7 +36,7 @@ namespace Bald::Graphics {
         * @param std::string Filepath.
         */
 
-        explicit Texture(std::string filepath) : m_Image(std::move(filepath)) {}
+        explicit Texture(std::string filepath) : path(std::move(filepath)) {}
 
     public:
 
@@ -96,32 +96,36 @@ namespace Bald::Graphics {
         * @brief Filepath getter.
         */
 
-        [[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Image.GetFilepath(); }
+        //[[nodiscard]] inline const std::string& GetFilepath() const noexcept { return m_Image.GetFilepath(); }
 
         /**
         * @fn GetWidth
         * @brief Width getter.
         */
 
-        [[nodiscard]] inline int32_t GetWidth() const noexcept { return m_Image.GetWidth(); }
+        //[[nodiscard]] inline int32_t GetWidth() const noexcept { return m_Image.GetWidth(); }
 
         /**
         * @fn GetHeight
         * @brief Height getter.
         */
 
-        [[nodiscard]] inline int32_t GetHeight() const noexcept { return m_Image.GetHeight(); }
+        //[[nodiscard]] inline int32_t GetHeight() const noexcept { return m_Image.GetHeight(); }
 
         /**
         * @fn GetNrChannels
         * @brief Number of channels getter.
         */
 
-        [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
+        //[[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
+
+        [[nodiscard]] inline const std::string& GetFilePath() const { return path; }
 
     protected:
-        Utils::Image m_Image; /**< Texture bitmap. >*/
-
+        //Utils::Image m_Image; /**< Texture bitmap. >*/
+    public:
+        std::string path;
+        std::string type;
     }; // END OF CLASS Texture
 
 } // END OF NAMESPACE Bald::Graphics

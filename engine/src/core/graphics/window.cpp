@@ -87,6 +87,8 @@ namespace Bald::Graphics {
             exit(1);
         }
 
+        glEnable(GL_DEPTH_TEST);
+
         if(!m_Window) {
             glfwDestroyWindow(m_Window);
             CORE_LOG_ERROR("[Window] Failed to create a Window!");

@@ -2,6 +2,74 @@ cmake_minimum_required(VERSION 3.14)
 project(bald_engine)
 
 #### LIBRARIES
+SET(OpenGL_GL_PREFERENCE GLVND)
+
+set(ASSIMP_BUILD_TESTS OFF)
+
+set(ASSIMP_BUILD_AMF_IMPORTER FALSE)
+set(ASSIMP_BUILD_3DS_IMPORTER FALSE)
+set(ASSIMP_BUILD_AC_IMPORTER FALSE)
+set(ASSIMP_BUILD_ASE_IMPORTER FALSE)
+set(ASSIMP_BUILD_ASSBIN_IMPORTER FALSE)
+set(ASSIMP_BUILD_BVH_IMPORTER FALSE)
+set(ASSIMP_BUILD_COLLADA_IMPORTER FALSE)
+set(ASSIMP_BUILD_DXF_IMPORTER FALSE)
+set(ASSIMP_BUILD_CSM_IMPORTER FALSE)
+set(ASSIMP_BUILD_HMP_IMPORTER FALSE)
+set(ASSIMP_BUILD_IRRMESH_IMPORTER FALSE)
+set(ASSIMP_BUILD_IRR_IMPORTER FALSE)
+set(ASSIMP_BUILD_LWO_IMPORTER FALSE)
+set(ASSIMP_BUILD_LWS_IMPORTER FALSE)
+set(ASSIMP_BUILD_MD2_IMPORTER FALSE)
+set(ASSIMP_BUILD_MD3_IMPORTER FALSE)
+set(ASSIMP_BUILD_MD5_IMPORTER FALSE)
+set(ASSIMP_BUILD_MDC_IMPORTER FALSE)
+set(ASSIMP_BUILD_MDL_IMPORTER FALSE)
+set(ASSIMP_BUILD_NFF_IMPORTER FALSE)
+set(ASSIMP_BUILD_NDO_IMPORTER FALSE)
+set(ASSIMP_BUILD_OFF_IMPORTER FALSE)
+set(ASSIMP_BUILD_OBJ_IMPORTER TRUE)
+set(ASSIMP_BUILD_OGRE_IMPORTER FALSE)
+set(ASSIMP_BUILD_OPENGEX_IMPORTER FALSE)
+set(ASSIMP_BUILD_PLY_IMPORTER FALSE)
+set(ASSIMP_BUILD_MS3D_IMPORTER FALSE)
+set(ASSIMP_BUILD_COB_IMPORTER FALSE)
+set(ASSIMP_BUILD_BLEND_IMPORTER TRUE)
+set(ASSIMP_BUILD_IFC_IMPORTER FALSE)
+set(ASSIMP_BUILD_XGL_IMPORTER FALSE)
+set(ASSIMP_BUILD_FBX_IMPORTER FALSE)
+set(ASSIMP_BUILD_Q3D_IMPORTER FALSE)
+set(ASSIMP_BUILD_Q3BSP_IMPORTER FALSE)
+set(ASSIMP_BUILD_RAW_IMPORTER FALSE)
+set(ASSIMP_BUILD_SIB_IMPORTER FALSE)
+set(ASSIMP_BUILD_SMD_IMPORTER FALSE)
+set(ASSIMP_BUILD_STL_IMPORTER FALSE)
+set(ASSIMP_BUILD_TERRAGEN_IMPORTER FALSE)
+set(ASSIMP_BUILD_3D_IMPORTER FALSE)
+set(ASSIMP_BUILD_X_IMPORTER FALSE)
+set(ASSIMP_BUILD_X3D_IMPORTER FALSE)
+set(ASSIMP_BUILD_GLTF_IMPORTER FALSE)
+set(ASSIMP_BUILD_3MF_IMPORTER FALSE)
+set(ASSIMP_BUILD_MMD_IMPORTER FALSE)
+set(ASSIMP_BUILD_STEP_IMPORTER FALSE)
+set(ASSIMP_BUILD_B3D_IMPORTER FALSE)
+
+
+set(ASSIMP_BUILD_3DS_EXPORTER FALSE)
+set(ASSIMP_BUILD_ASSBIN_EXPORTER FALSE)
+set(ASSIMP_BUILD_ASSXML_EXPORTER FALSE)
+set(ASSIMP_BUILD_COLLADA_EXPORTER FALSE)
+set(ASSIMP_BUILD_OBJ_EXPORTER FALSE)
+set(ASSIMP_BUILD_OPENGEX_EXPORTER FALSE)
+set(ASSIMP_BUILD_PLY_EXPORTER FALSE)
+set(ASSIMP_BUILD_FBX_EXPORTER FALSE)
+set(ASSIMP_BUILD_STL_EXPORTER FALSE)
+set(ASSIMP_BUILD_X_EXPORTER FALSE)
+set(ASSIMP_BUILD_X3D_EXPORTER FALSE)
+set(ASSIMP_BUILD_GLTF_EXPORTER FALSE)
+set(ASSIMP_BUILD_3MF_EXPORTER FALSE)
+set(ASSIMP_BUILD_ASSJSON_EXPORTER FALSE)
+set(ASSIMP_BUILD_STEP_EXPORTER FALSE)
 
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/vendor/cotire/CMake/)
 
@@ -14,29 +82,32 @@ add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/)
+add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp)
 add_subdirectory(${CMAKE_CURRENT_SOURCE_DIR}/vendor/stb/)
 
 set(${PROJECT_NAME}_include_dirs
-    ${CMAKE_CURRENT_SOURCE_DIR}
-    ${CMAKE_CURRENT_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
-    ${CMAKE_CURRENT_SOURCE_DIR}/src/math
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
-    ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/
-    CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
+        ${CMAKE_CURRENT_SOURCE_DIR}
+        ${CMAKE_CURRENT_SOURCE_DIR}/src
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/math
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glfw/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glad/include/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/glm/
+        ${CMAKE_CURRENT_SOURCE_DIR}/vendor/imgui/
+        CACHE INTERNAL "${PROJECT_NAME}: Include Directories" FORCE)
 
 include_directories(${bald_engine_include_dirs})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/vendor/assimp/include/)
+include_directories(${CMAKE_CURRENT_BINARY_DIR}/vendor/assimp/include/)
 
 #### END-LIBRARIES
 
@@ -74,7 +145,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
-add_library(bald_engine STATIC 
+add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
@@ -101,7 +172,10 @@ add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/textures/opengl_texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp )
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/mesh/mesh.h ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/mesh/mesh.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/model/model.cpp ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/model/model.h
+        )
 
 if (APPLE_BUILD)
     target_link_libraries(bald_engine
@@ -115,13 +189,12 @@ if (APPLE_BUILD)
             "-framework IOKit"
             "-framework CoreVideo")
 elseif (LINUX_BUILD)
-    target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl)
+    target_link_libraries(bald_engine glad glfw glm imgui stb GL X11 Xi Xrandr Xxf86vm Xinerama Xcursor rt m pthread dl assimp)
 else ()
-	target_link_libraries(bald_engine glad glfw glm imgui stb)
+	target_link_libraries(bald_engine glad glfw glm imgui stb assimp)
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 
 if(DEFINE_DEBUG)
 	target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})

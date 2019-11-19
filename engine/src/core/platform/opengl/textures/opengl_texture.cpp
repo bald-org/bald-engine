@@ -8,8 +8,9 @@
 
 namespace Bald::Platform::Graphics {
 
-    OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
+    OpenGLTexture::OpenGLTexture(std::string filepath, std::string type) : Texture(std::move(filepath)), m_ID(0) {
         [[maybe_unused]] bool state = Init();
+        this->type = std::move(type);
         BALD_ASSERT(state, "Application", "Failed to initialized application", state);
     }
 
@@ -26,7 +27,7 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::Activate(uint8_t index) const noexcept {
-        BALD_ASSERT(index < 16, "OpenGLTexture", "OpenGL only guarantees to support 16 textures per shader!", index);
+        //BALD_ASSERT(index < 32, "OpenGLTexture", "OpenGL only guarantees to support 32 textures per shader!", index);
         glActiveTexture(GL_TEXTURE0 + index);
     }
 
@@ -73,9 +74,10 @@ namespace Bald::Platform::Graphics {
     }
 
     bool OpenGLTexture::Init() noexcept {
-        if(m_Image.GetData()) {
+        Utils::Image image(path);
+        if(image.GetData()) {
             uint32_t format = 0;
-            switch(m_Image.GetNrChannels()) {
+            switch(image.GetNrChannels()) {
                 case 1 :
                     format = GL_RED;
                     break;
@@ -86,7 +88,7 @@ namespace Bald::Platform::Graphics {
                     format = GL_RGBA;
                     break;
                 default:
-                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", m_Image.GetNrChannels());
+                    BALD_ASSERT(false, "OpenGLTexture", "Texture format (number of channels) is unknown!", image.GetNrChannels());
                     break;
             }
 
@@ -99,7 +101,7 @@ namespace Bald::Platform::Graphics {
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
             glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
-            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), m_Image.GetWidth(), m_Image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, m_Image.GetData());
+            glTexImage2D(GL_TEXTURE_2D, 0, static_cast<int32_t>(format), image.GetWidth(), image.GetHeight(), 0, format, GL_UNSIGNED_BYTE, image.GetData());
             glGenerateMipmap(GL_TEXTURE_2D);
 
             glBindTexture(GL_TEXTURE_2D, 0);
@@ -111,7 +113,7 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::Shutdown() {
-        glDeleteTextures(1, &m_ID);
+        //glDeleteTextures(1, &m_ID);
     }
 
 } // END OF NAMESPACE Bald::Platform::Graphics

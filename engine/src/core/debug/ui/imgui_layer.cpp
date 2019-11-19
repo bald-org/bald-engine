@@ -38,9 +38,9 @@ namespace Bald::Debug {
         }
 
         Application& app = Application::GetApplication();
-        if(auto window = app.GetWindow().lock()) {
-            ImGui_ImplGlfw_InitForOpenGL(window->GetWindow(), true);
-        }
+        auto window = app.GetWindow();
+        ImGui_ImplGlfw_InitForOpenGL(window->GetWindow(), true);
+
 
         ImGui_ImplOpenGL3_Init("#version 330");
     }
@@ -90,9 +90,9 @@ namespace Bald::Debug {
     void ImGuiLayer::End() noexcept {
         Application& app = Application::GetApplication();
         ImGuiIO& io = ImGui::GetIO();
-        if(auto window = app.GetWindow().lock()) {
-            io.DisplaySize = ImVec2(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight()));
-        }
+        auto window = app.GetWindow();
+        io.DisplaySize = ImVec2(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight()));
+
 
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
