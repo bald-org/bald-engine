@@ -30,7 +30,6 @@ namespace Bald::Graphics {
          * @fn Shader
          * @brief Default constructor.
          */
-
         Shader() = default;
 
         /**
@@ -38,7 +37,6 @@ namespace Bald::Graphics {
          * @brief Deleted copy constructor.
          * @param [const Shader&]
          */
-
         Shader(const Shader&) = delete;
 
         /**
@@ -47,7 +45,6 @@ namespace Bald::Graphics {
          * @param const Shader&
          * @return Shader&
          */
-
         Shader& operator=(const Shader&) = delete;
 
         /**
@@ -207,6 +204,14 @@ namespace Bald::Graphics {
          * @param const glm::tvec4<int>& Vector of values.
          */
         virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept = 0;
+
+        /**
+         * @fn SetUniformMatrix4fv
+         * @brief Sets uniform of type mat4 with name uniformName with given values.
+         * @param const char* Name of uniform we want to set.
+         * @param const glm::mat4& Matrix.
+         */
+        virtual void SetUniformMatrix4fv(const char* uniformName, const glm::mat4& mat) const noexcept = 0;
 
         /**
          * @fn GetID

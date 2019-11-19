@@ -15,6 +15,8 @@
 #include "graphics/rendering/buffers/index_buffer.h"
 #include "graphics/rendering/shaders/shader.h"
 #include "graphics/rendering/textures/texture.h"
+
+#include "graphics/rendering/camera_2d.h"
 // END TRIANGLE
 
 namespace Bald {
@@ -184,13 +186,6 @@ namespace Bald {
 
     private:
         static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */
-
-    private:
-        std::shared_ptr<Graphics::VertexArray> m_TriangleVAO = nullptr;
-        std::shared_ptr<Graphics::VertexBuffer> m_TriangleVBO = nullptr;
-        std::shared_ptr<Graphics::IndexBuffer> m_TriangleIBO = nullptr;
-        std::shared_ptr<Graphics::Shader> m_Shader = nullptr;
-        std::shared_ptr<Graphics::Texture> m_Texture = nullptr;
 
     }; // END OF CLASS Application
 
