@@ -8,6 +8,9 @@ if(LINUX_BUILD)
 	set(RELEASE_COMPILE_FLAGS -Ofast -Werror)
 elseif(WINDOWS_BUILD)
 #TODO: opt and warning flags
+elseif(APPLE_BUILD)
+	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
+	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 endif()
 
 if(DEFINE_DEBUG)
