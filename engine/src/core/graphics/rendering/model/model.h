@@ -27,14 +27,14 @@ struct aiMesh;
 struct aiMaterial;
 
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
     unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
 
     class Model
     {
     public:
         /*  Model Data */
-        std::vector<Mesh::Texture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
+        std::vector<OpenGLTexture> textures_loaded;	// stores all the textures loaded so far, optimization to make sure textures aren't loaded more than once.
         std::vector<Mesh> meshes;
         std::string directory;
         bool gammaCorrection;
@@ -47,7 +47,7 @@ namespace Bald::Graphics {
         }
 
         // draws the model, and thus all its meshes
-        void Draw(Shader& shader)
+        void Draw(Bald::Graphics::Shader& shader)
         {
             for(unsigned int i = 0; i < meshes.size(); i++)
                 meshes[i].Draw(shader);
@@ -98,7 +98,7 @@ namespace Bald::Graphics {
             // data to fill
             std::vector<Mesh::Vertex> vertices;
             std::vector<unsigned int> indices;
-            std::vector<Mesh::Texture> textures;
+            std::vector<OpenGLTexture> textures;
 
             // Walk through each of the mesh's vertices
             for(unsigned int i = 0; i < mesh->mNumVertices; i++)
@@ -128,15 +128,25 @@ namespace Bald::Graphics {
                 else
                     vertex.TexCoords = glm::vec2(0.0f, 0.0f);
                 // tangent
-                vector.x = mesh->mTangents[i].x;
-                vector.y = mesh->mTangents[i].y;
-                vector.z = mesh->mTangents[i].z;
-                vertex.Tangent = vector;
+                if(mesh->mTangents){
+                    vector.x = mesh->mTangents[i].x;
+                    vector.y = mesh->mTangents[i].y;
+                    vector.z = mesh->mTangents[i].z;
+                    vertex.Tangent = vector;
+                } else {
+                    vertex.Tangent = glm::vec3(0.0f, 0.0f, 0.0f);
+                }
+
                 // bitangent
-                vector.x = mesh->mBitangents[i].x;
-                vector.y = mesh->mBitangents[i].y;
-                vector.z = mesh->mBitangents[i].z;
-                vertex.Bitangent = vector;
+                if(mesh->mBitangents){
+                    vector.x = mesh->mBitangents[i].x;
+                    vector.y = mesh->mBitangents[i].y;
+                    vector.z = mesh->mBitangents[i].z;
+                    vertex.Bitangent = vector;
+                } else {
+                    vertex.Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
+                }
+
                 vertices.push_back(vertex);
             }
             // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
@@ -157,27 +167,27 @@ namespace Bald::Graphics {
             // normal: texture_normalN
 
             // 1. diffuse maps
-            std::vector<Mesh::Texture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+            std::vector<OpenGLTexture> diffuseMaps = loadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
             textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
             // 2. specular maps
-            std::vector<Mesh::Texture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+            std::vector<OpenGLTexture> specularMaps = loadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
             textures.insert(textures.end(), specularMaps.begin(), specularMaps.end());
             // 3. normal maps
-            std::vector<Mesh::Texture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
+            std::vector<OpenGLTexture> normalMaps = loadMaterialTextures(material, aiTextureType_HEIGHT, "texture_normal");
             textures.insert(textures.end(), normalMaps.begin(), normalMaps.end());
             // 4. height maps
-            std::vector<Mesh::Texture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
+            std::vector<OpenGLTexture> heightMaps = loadMaterialTextures(material, aiTextureType_AMBIENT, "texture_height");
             textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
             // return a mesh object created from the extracted mesh data
-            return Mesh(vertices, indices, textures);
+            return Mesh(std::move(vertices), std::move(indices), std::move(textures));
         }
 
         // checks all material textures of a given type and loads the textures if they're not loaded yet.
         // the required info is returned as a Mesh::Texture struct.
-        std::vector<Mesh::Texture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
+        std::vector<OpenGLTexture> loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName)
         {
-            std::vector<Mesh::Texture> textures;
+            std::vector<OpenGLTexture> textures;
             for(unsigned int i = 0; i < mat->GetTextureCount(type); i++)
             {
                 aiString str;
@@ -195,12 +205,12 @@ namespace Bald::Graphics {
                 }
                 if(!skip)
                 {   // if texture hasn't been loaded already, load it
-                    Mesh::Texture texture;
-                    texture.id = TextureFromFile(str.C_Str(), this->directory);
-                    texture.type = typeName;
-                    texture.path = str.C_Str();
-                    textures.push_back(texture);
-                    textures_loaded.push_back(texture);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
+//                    Mesh::Texture texture;
+//                    texture.id = TextureFromFile(str.C_Str(), this->directory);
+//                    texture.type = typeName;
+//                    texture.path = str.C_Str();
+                    textures.emplace_back(str.C_Str(), typeName);
+                    textures_loaded.emplace_back(str.C_Str(), typeName);  // store it as texture loaded for entire model, to ensure we won't unnecesery load duplicate textures.
                 }
             }
             return textures;

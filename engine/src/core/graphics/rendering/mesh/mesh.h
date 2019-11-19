@@ -24,8 +24,9 @@
 #include <sstream>
 #include <iostream>
 #include <vector>
+#include <src/core/platform/opengl/textures/opengl_texture.h>
 
-namespace Bald::Graphics {
+namespace Bald::Platform::Graphics {
 
     class Mesh {
     public:
@@ -43,31 +44,28 @@ namespace Bald::Graphics {
             glm::vec3 Bitangent;
         };
 
-        struct Texture {
-            unsigned int id;
-            std::string type;
-            std::string path;
-        };
+//        struct Texture {
+//            unsigned int id;
+//            std::string type;
+//            std::string path;
+//        };
         /*  Mesh Data  */
         std::vector<Vertex> vertices;
         std::vector<unsigned int> indices;
-        std::vector<Texture> textures;
+        std::vector<OpenGLTexture> textures;
         unsigned int VAO;
 
         /*  Functions  */
         // constructor
-        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture> textures)
+        Mesh(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<OpenGLTexture> textures)
+         : vertices(std::move(vertices)), indices(std::move(indices)), textures(std::move(textures))
         {
-            this->vertices = vertices;
-            this->indices = indices;
-            this->textures = textures;
-
             // now that we have all the required data, set the vertex buffers and its attribute pointers.
             setupMesh();
         }
 
         // render the mesh
-        void Draw(Shader& shader)
+        void Draw(Bald::Graphics::Shader& shader)
         {
             // bind appropriate textures
             unsigned int diffuseNr  = 1;
@@ -92,7 +90,7 @@ namespace Bald::Graphics {
                 // now set the sampler to the correct texture unit
                 glUniform1i(glGetUniformLocation(shader.GetID(), (name + number).c_str()), i);
                 // and finally bind the texture
-                glBindTexture(GL_TEXTURE_2D, textures[i].id);
+                glBindTexture(GL_TEXTURE_2D, textures[i].GetID());
             }
 
             // draw mesh

@@ -8,8 +8,9 @@
 
 namespace Bald::Platform::Graphics {
 
-    OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
+    OpenGLTexture::OpenGLTexture(std::string filepath, std::string type) : Texture(std::move(filepath)), m_ID(0) {
         [[maybe_unused]] bool state = Init();
+        this->type = std::move(type);
         BALD_ASSERT(state, "Application", "Failed to initialized application", state);
     }
 
@@ -112,7 +113,7 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::Shutdown() {
-        glDeleteTextures(1, &m_ID);
+        //glDeleteTextures(1, &m_ID);
     }
 
 } // END OF NAMESPACE Bald::Platform::Graphics

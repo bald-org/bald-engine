@@ -11,8 +11,9 @@ namespace Bald::Platform::Graphics {
 
 class OpenGLTexture : public Bald::Graphics::Texture {
     friend class ::Bald::Graphics::Texture;
-    private:
-        explicit OpenGLTexture(std::string filepath);
+
+public:
+        explicit OpenGLTexture(std::string filepath, std::string type = "");
 
     public:
 
@@ -64,6 +65,8 @@ class OpenGLTexture : public Bald::Graphics::Texture {
         */
 
         void SetFiltering(Bald::Graphics::TextureFilterMode filterMode, Bald::Graphics::TextureFilterMethod filterMethod) override;
+
+        [[nodiscard]] int GetID() const { return m_ID; }
 
 private:
 
