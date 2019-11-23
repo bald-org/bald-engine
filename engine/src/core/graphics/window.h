@@ -33,7 +33,7 @@ namespace Bald::Graphics {
         explicit Window(const char* title = "Window",
                         int width = 800,
                         int height = 600,
-                        bool VSync = false);
+                        bool VSync = true);
 
         /**
          * @fn ~Window
@@ -62,19 +62,19 @@ namespace Bald::Graphics {
         /**
          * @fn SetVSync
          * @brief Enables/disables VSync.
-         * @param [bool] enabled -> true/false.
+         * @param bool true/false.
          */
 
-        void WindowSetVSync(bool enabled) noexcept;
+        void SetVSync(bool enabled) noexcept;
 
 
         /**
          * @fn ShouldClose
-         * @brief Sets VSync.
-         * @return [int] glfwWindowShouldClose(m_Window).
+         * @brief Checks whether or not window should be closed.
+         * @return int glfwWindowShouldClose(m_Window).
          */
 
-        int ShouldClose() const noexcept;
+        [[nodiscard]] int ShouldClose() const noexcept;
 
         /**
          * @fn GetWindow
