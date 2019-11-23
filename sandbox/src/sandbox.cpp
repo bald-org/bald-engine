@@ -9,17 +9,21 @@ using namespace Bald;
 
 class GameLayer : public Bald::Layer {
 GENERATE_BODY(DERIVED)
+
 public:
 
-    GameLayer() {
+    GameLayer() = default;
 
+    ~GameLayer() override = default;
+
+    void OnAttach() noexcept override {
         // TRIANGLE
         float vertices[] = {
             //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f, 0.0f,          1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
-            -0.5f,  0.5f, 0.0f,          0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
-             0.5f,  0.5f, 0.0f,          0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
-             0.5f, -0.5f, 0.0f,          1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
+            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
         };//
 
         unsigned indices[] = {
@@ -27,30 +31,27 @@ public:
             0, 2, 3  // second triangle
         };
 
-        Graphics::VertexBufferLayout layout = {
-            {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
+        Bald::Graphics::VertexBufferLayout layout = {
+            {0, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
+            {1, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
+            {2, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
-        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
+        m_TriangleVBO = Bald::Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
         m_TriangleVBO->SetLayout(layout);
 
-        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
+        m_TriangleIBO = Bald::Graphics::IndexBuffer::Create(indices, sizeof(indices));
 
-        m_TriangleVAO = Graphics::VertexArray::Create();
+        m_TriangleVAO = Bald::Graphics::VertexArray::Create();
         m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
         m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
 
-        m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert", "../engine/res/shaders/basic.frag");
+        m_Shader = Bald::Graphics::Shader::Create("../engine/res/shaders/basic.vert",
+                                                  "../engine/res/shaders/basic.frag");
 
-        m_Texture = Graphics::Texture::Create("../engine/res/textures/lena.jpg");
+        m_Texture = Bald::Graphics::Texture::Create("../engine/res/textures/lena.jpg");
         // END OF TRIANGLE
     }
-
-    ~GameLayer() override = default;
-
-    void OnAttach() noexcept override {}
 
     void OnDetach() noexcept override {}
 
@@ -75,6 +76,7 @@ private:
 
 class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
+
 public:
 
     Sandbox() {

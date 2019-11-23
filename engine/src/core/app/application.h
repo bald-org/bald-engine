@@ -15,6 +15,8 @@
 #include "graphics/rendering/buffers/index_buffer.h"
 #include "graphics/rendering/shaders/shader.h"
 #include "graphics/rendering/textures/texture.h"
+
+#include "graphics/rendering/camera_2d.h"
 // END TRIANGLE
 
 namespace Bald {
