@@ -54,6 +54,10 @@ namespace Bald::Graphics {
     bool Window::Init() noexcept {
         CORE_LOG_INFO("[Window] Initializing window...");
 
+        glfwSetErrorCallback([](int error, const char* desc) {
+            CORE_LOG_ERROR("[Window]" + std::to_string(error) + std::string(desc));
+        });
+
         if(!m_GLFWInitialized) {
             int success = glfwInit();
 
@@ -67,8 +71,14 @@ namespace Bald::Graphics {
 
         glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
         glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, 1);
+        glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+#ifndef __APPLE__
+        glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
+
 
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);

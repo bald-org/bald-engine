@@ -4,18 +4,17 @@
 
 #pragma once
 
-#include <array>
-
-#include <GLFW/glfw3.h>
-
 #include "events/event.h"
 #include "events/event_manager.h"
 #include "events/event_manager.h"
 #include "events/key_events.h"
 #include "events/mouse_events.h"
+#include "key_codes.h"
 
 #include "core.h"
 #include "pch.h"
+
+struct GLFWwindow;
 
 namespace Bald::Input {
 
@@ -28,7 +27,7 @@ namespace Bald::Input {
      */
 
     class InputManager {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
 
         friend inline void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods);
 
@@ -67,7 +66,7 @@ namespace Bald::Input {
         /**
          * @fn IsKeyPressed
          * @brief function that checks if key was pressed.
-         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE.
+         * @param keycode [int]  BALD macro e.g. BALD_KEY_SPACE.
          * @return [bool] true if key was pressed otherwise false.
          */
 
@@ -76,7 +75,7 @@ namespace Bald::Input {
         /**
          * @fn IsKeyTyped
          * @brief function that checks if key was typed.
-         * @param keycode [int]  GLFW macro e.g. GLfW_KEY_SPACE.
+         * @param keycode [int]  BALD macro e.g. BALD_KEY_SPACE.
          * @return [bool] true if key was typed otherwise false.
          */
 
@@ -85,7 +84,7 @@ namespace Bald::Input {
         /**
          * @fn IsMouseButtonPressed
          * @brief function that checks if mouse button was pressed.
-         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1.
+         * @param buttoncode [int]  BALD macro e.g. BALD_MOUSE_BUTTON_1.
          * @return [bool] true if button was pressed otherwise false.
          */
 
@@ -94,7 +93,7 @@ namespace Bald::Input {
         /**
          * @fn IsMouseButtonTyped
          * @brief function that checks if mouse button was typed.
-         * @param buttoncode [int]  GLFW macro e.g. GLFW_MOUSE_BUTTON_1.
+         * @param buttoncode [int]  BALD macro e.g. BALD_MOUSE_BUTTON_1.
          * @return [bool] true if button was typed otherwise false.
          */
 
@@ -119,7 +118,7 @@ namespace Bald::Input {
         /**
          * @fn EmitKeyPressedEvent
          * @brief Emits KeyPressedEvent.
-         * @param [int] keycode -> GLFW key id.
+         * @param [int] keycode -> BALD key id.
          */
 
         static void EmitKeyPressedEvent(unsigned keycode, bool isRepeated = false) noexcept;
@@ -127,7 +126,7 @@ namespace Bald::Input {
         /**
          * @fn EmitKeyTypedEvent
          * @brief Emits KeyTypedEvent.
-         * @param [int] keycode -> GLFW key id.
+         * @param [int] keycode -> BALD key id.
          */
 
         static void EmitKeyTypedEvent(unsigned keycode) noexcept;
@@ -135,7 +134,7 @@ namespace Bald::Input {
         /**
          * @fn EmitKeyReleasedEvent
          * @brief Emits KeyRelasedEvent.
-         * @param [int] keycode -> GLFW key id.
+         * @param [int] keycode -> BALD key id.
          */
 
         static void EmitKeyReleasedEvent(unsigned keycode) noexcept;
@@ -143,7 +142,7 @@ namespace Bald::Input {
         /**
          * @fn EmitMouseButtonPressedEvent
          * @brief Emits MouseButtonPressedEvent.
-         * @param [int] buttoncode -> GLFW key id.
+         * @param [int] buttoncode -> BALD key id.
          * @param [bool] isRepeated -> true - Key is being pressed repeatedly.
          *                             false - Key is not being pressed repeatedly.
          */
@@ -171,18 +170,18 @@ namespace Bald::Input {
     };
 
     inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
-        Bald::Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != GLFW_RELEASE;
+        Bald::Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != BALD_RELEASE;
 
         switch (action) {
-            case GLFW_PRESS: {
+            case BALD_PRESS: {
                 InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key));
                 break;
             }
-            case GLFW_RELEASE: {
+            case BALD_RELEASE: {
                 InputManager::EmitKeyReleasedEvent(static_cast<unsigned>(key));
                 break;
             }
-            case GLFW_REPEAT: {
+            case BALD_REPEAT: {
                 InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key), true);
                 break;
             }
@@ -197,18 +196,18 @@ namespace Bald::Input {
     }
 
     inline void mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
-        Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != GLFW_RELEASE;
+        Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != BALD_RELEASE;
 
         switch (action) {
-            case GLFW_PRESS: {
+            case BALD_PRESS: {
                 InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button));
                 break;
             }
-            case GLFW_RELEASE: {
+            case BALD_RELEASE: {
                 InputManager::EmitMouseButtonReleasedEvent(static_cast<unsigned>(button));
                 break;
             }
-            case GLFW_REPEAT: {
+            case BALD_REPEAT: {
                 InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button), true);
                 break;
             }

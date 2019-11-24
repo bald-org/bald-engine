@@ -8,6 +8,7 @@
 #include "events/layer_events.h"
 #include "utils/time/timer.h"
 #include "debug/ui/imgui_layer.h"
+#include <GLFW/glfw3.h>
 
 namespace Bald {
 

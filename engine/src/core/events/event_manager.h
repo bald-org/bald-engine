@@ -28,7 +28,7 @@ namespace Bald {
      */
 
     class EventManager {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
     public:
 
         /**
@@ -110,8 +110,6 @@ namespace Bald {
         /**
         * @fn Flush
         * @brief This function runs callbacks for all events that are currently in an event queue
-        * @param [int] n -> Number of events you want to proceed. If n == -1 (or argumeter left blank)
-        *                             this will iterate through whole queue
         */
 
         void Flush() noexcept;
@@ -137,7 +135,7 @@ namespace Bald {
     private:
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksSync; /**< Unordered map of events' type indexes and associated functions which will be called synchronously */
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksAsync; /**< Unordered map of events' type indexes and associated functions which will be called asynchronously */
-        static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
+        static std::vector<Event*> m_EventQueue; /**< Basically an event queue */ //TODO: consider std::basic_string but we need real game example in order to be sure what is faster.
         static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
 
     }; // END OF CLASS EventManager
@@ -152,7 +150,7 @@ namespace Bald {
                 if(m_CallbacksSync.find(Utils::get_type_id<T>()) == m_CallbacksSync.end()) {
                     m_CallbacksSync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
-                m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
+                m_CallbacksSync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), std::forward<Args>(args)...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksSync[Utils::get_type_id<T>()].back()->GetID();
             }
@@ -160,7 +158,7 @@ namespace Bald {
                 if(m_CallbacksAsync.find(Utils::get_type_id<T>()) == m_CallbacksAsync.end()) {
                     m_CallbacksAsync[Utils::get_type_id<T>()] = std::vector<EventHandlerInterface*>{};
                 }
-                m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(callback, args...));
+                m_CallbacksAsync[Utils::get_type_id<T>()].emplace_back(new EventFunctionHandler<T>(std::forward<F>(callback), std::forward<Args>(args)...));
                 CORE_LOG_INFO("[EventManager] Subscribe was successful...");
                 return m_CallbacksAsync[Utils::get_type_id<T>()].back()->GetID();
             }

@@ -8,7 +8,7 @@
 #include "logger/logger.h"
 #include "glad/glad.h"
 
-class GLFWwindow;
+struct GLFWwindow;
 
 namespace Bald::Graphics {
 
@@ -18,7 +18,7 @@ namespace Bald::Graphics {
      */
 
     class Window {
-    GENERATE_BODY()
+    GENERATE_BODY(NORMAL)
     public:
 
         /**

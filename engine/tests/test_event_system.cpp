@@ -31,7 +31,7 @@ TEST(Event_system, is_method_called_on_correct_object) {
     bool result = false;
     A a;
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::IsTheSame, a, std::reference_wrapper(result), std::reference_wrapper(a));
-    EventManager::Emit<KeyEvent>(static_cast<unsigned >(GLFW_KEY_0));
+    EventManager::Emit<KeyEvent>(static_cast<unsigned >(BALD_KEY_0));
     em.Flush();
     EventManager::ClearEventQueue();
     EXPECT_TRUE(result);

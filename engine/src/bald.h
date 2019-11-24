@@ -39,6 +39,7 @@
 #include "core/graphics/rendering/textures/texture.h"
 
 #include "core/input/input_manager.h"
+#include "core/input/key_codes.h"
 
 // GLM
 #include "glm/glm.hpp"

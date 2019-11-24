@@ -1,4 +1,10 @@
 language: cpp
+
+os:
+  - linux
+  - windows
+  - osx
+
 compiler: gcc
 dist: xenial
 
@@ -20,26 +26,32 @@ addons:
 services:
   - xvfb
 
+
+env: 
+  - MSBUILD_PATH="/C/Program Files (x86)/Microsoft Visual Studio/2017/BuildTools/MSBuild/15.0/Bin"
+
 before_install:
   - mkdir $HOME/usr
   - export PATH="$HOME/usr/bin:$PATH"
-  - travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.0/cmake-3.15.0-Linux-x86_64.sh
-  - chmod +x cmake-3.15.0-Linux-x86_64.sh
-  - ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.0/cmake-3.15.0-Linux-x86_64.sh; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then chmod +x cmake-3.15.0-Linux-x86_64.sh ; fi
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./cmake-3.15.0-Linux-x86_64.sh --prefix=$HOME/usr --exclude-subdir --skip-license  > download_out_put.txt; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then travis_retry wget --no-check-certificate https://github.com/Kitware/CMake/releases/download/v3.15.4/cmake-3.15.4-Darwin-x86_64.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then tar -xf cmake-3.15.4-Darwin-x86_64.tar.gz; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then travis_retry wget https://github.com/Kitware/CMake/releases/download/v3.15.3/cmake-3.15.3-win32-x86.zip; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then unzip cmake-3.15.3-win32-x86.zip > cmake_out_put.txt ; fi
 
 before_script:
   - CXX=/usr/bin/g++-9 CC=/usr/bin/gcc-9
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then brew update && brew install ninja; CC=/usr/bin/gcc && CXX=/usr/bin/g++; fi
 
 script:
   - cd $TRAVIS_BUILD_DIR
-  - mkdir build_debug && cd build_debug
-  - cmake -GNinja -DDEFINE_DEBUG=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-  - ninja
-  - cd bin
-  - ./../../scripts/travis/run_examples.sh
-  - cd ../../
-  - mkdir build_release && cd build_release
-  - cmake -GNinja -DDEFINE_RELEASE=ON -DLINUX_BUILD=ON -DTRAVIS_BUILD=ON ../
-  - ninja
-  - cd bin
-  - ./../../scripts/travis/run_examples.sh
+  - chmod +x scripts/travis/*
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then ./scripts/travis/compile_linux.sh ; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then ./scripts/travis/compile_windows.sh ; fi
+  - if [ "$TRAVIS_OS_NAME" = "osx" ]; then ./scripts/travis/compile_osx.sh ; fi
+
+
+
+  

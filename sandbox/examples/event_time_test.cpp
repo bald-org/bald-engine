@@ -33,6 +33,7 @@ int main() {
     int x = 0;
     A a;
     em.Subscribe<KeyEvent>(HandleType::SYNC, sub, std::reference_wrapper(x));
+    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, a);
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
 
     Utils::Timer timer;
@@ -40,7 +41,7 @@ int main() {
 
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < E; j++) {
-            EventManager::Emit<KeyEvent>(static_cast<unsigned >(GLFW_KEY_0));
+            EventManager::Emit<KeyEvent>(static_cast<unsigned >(BALD_KEY_0));
         }
         em.Flush();
         EventManager::ClearEventQueue();
