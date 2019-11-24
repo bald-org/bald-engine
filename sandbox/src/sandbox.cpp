@@ -53,15 +53,15 @@ public:
     void OnDetach() noexcept override {}
 
     void OnUpdate() noexcept override {
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_A)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
             m_Position.x -= m_CameraSpeed;
-        } else if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_D)) {
+        } else if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
             m_Position.x += m_CameraSpeed;
         }
 
-        if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_W)) {
+        if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
             m_Position.y += m_CameraSpeed;
-        } else if(Bald::Input::InputManager::IsKeyPressed(GLFW_KEY_S)) {
+        } else if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
             m_Position.y -= m_CameraSpeed;
         }
 
