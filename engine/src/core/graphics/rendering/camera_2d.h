@@ -12,9 +12,10 @@ namespace Bald::Graphics {
     public:
         explicit Camera2D(const glm::mat4& orthoProjection = glm::mat4(1.0f));
 
-        inline void SetPosition(const glm::vec2 position) { m_Position = position; CalculateProjectionViewMatrix(); }
+        inline void SetPosition(const glm::vec2 position) { SetPosition({position.x, position.y, 0.0f}); }
+        inline void SetPosition(const glm::vec3 position) { m_Position = position; CalculateProjectionViewMatrix(); }
 
-        [[nodiscard]] const glm::vec2& GetPosition() const noexcept { return m_Position; }
+        [[nodiscard]] const glm::vec3& GetPosition() const noexcept { return m_Position; }
         [[nodiscard]] const glm::mat4& GetProjectionMatrix() const noexcept { return m_Projection; }
         [[nodiscard]] const glm::mat4& GetViewMatrix() const noexcept { return m_View; }
         [[nodiscard]] const glm::mat4& GetProjectionViewMatrix() const noexcept { return m_ProjectionView; }
@@ -23,7 +24,7 @@ namespace Bald::Graphics {
         void CalculateProjectionViewMatrix();
 
     private:
-        glm::vec2 m_Position;
+        glm::vec3 m_Position;
         glm::mat4 m_Projection;
         glm::mat4 m_View;
         glm::mat4 m_ProjectionView;

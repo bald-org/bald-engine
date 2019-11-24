@@ -7,9 +7,11 @@
 
 namespace Bald::Graphics {
     static constexpr uint32_t MAX_SPRITES = 10000;
-    static constexpr uint32_t SPRITE_SIZE = 4 * sizeof(SpriteVertexData);
+    static constexpr uint32_t SPRITE_VERTEX_DATA_SIZE = sizeof(SpriteVertexData);
+    static constexpr uint32_t SPRITE_SIZE = 4 * SPRITE_VERTEX_DATA_SIZE;
+    static constexpr uint32_t INDICES_SIZE = 6;
     static constexpr uint32_t MAX_VERTICES = SPRITE_SIZE * MAX_SPRITES;
-    static constexpr uint32_t MAX_INDICES = 6 * MAX_SPRITES;
+    static constexpr uint32_t MAX_INDICES = INDICES_SIZE * MAX_SPRITES;
 
     Batch2D::Batch2D() :
         m_MaxVertices(MAX_VERTICES),
@@ -19,13 +21,12 @@ namespace Bald::Graphics {
         m_QuadVAO(nullptr),
         m_QuadVBO(nullptr) {
         VertexBufferLayout layout = {
-            {0, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_Position"},
+            {0, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec3, "in_Position"},
             {1, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec4, "in_Color"},
             {2, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
-        m_QuadVBO = VertexBuffer::Create(nullptr,
-                                         m_MaxVertices * 2 * static_cast<uint32_t>(ShaderBuiltInTypeSize::Vec2));
+        m_QuadVBO = VertexBuffer::Create(nullptr, m_MaxVertices);
         m_QuadVBO->SetLayout(layout);
 
         std::array<uint32_t, MAX_INDICES> indices = {0};
@@ -50,31 +51,33 @@ namespace Bald::Graphics {
     }
 
     void Batch2D::Submit(const Sprite& sprite) {
+        if(m_UsedVertices + SPRITE_SIZE > MAX_VERTICES) return; // TODO: Error handling using expected!
         const auto& position = sprite.GetPosition();
         const auto& size = sprite.GetSize();
         const auto& color = sprite.GetColor();
 
-        m_MappedBuffer->m_Position = {position.x, position.y};
+        m_MappedBuffer->m_Position = {position.x, position.y, position.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TexCoord = {0.0f, 0.0f};
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x, position.y + size.y};
+        m_MappedBuffer->m_Position = {position.x, position.y + size.y, position.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TexCoord = {0.0f, 1.0f};
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x + size.x, position.y + size.y};
+        m_MappedBuffer->m_Position = {position.x + size.x, position.y + size.y, position.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TexCoord = {1.0f, 1.0f};
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x + size.x, position.y};
+        m_MappedBuffer->m_Position = {position.x + size.x, position.y, position.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TexCoord = {1.0f, 0.0f};
         ++m_MappedBuffer;
 
-        m_UsedIndices += 6;
+        m_UsedVertices += SPRITE_SIZE;
+        m_UsedIndices += INDICES_SIZE;
     }
 
     void Batch2D::Map() noexcept {
@@ -92,6 +95,7 @@ namespace Bald::Graphics {
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_UsedIndices), GL_UNSIGNED_INT, nullptr);
         m_QuadVAO->Unbind();
 
+        m_UsedVertices = 0;
         m_UsedIndices = 0;
     }
 }

@@ -6,6 +6,7 @@
 
 #include <memory>
 #include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
 #include "graphics/rendering/buffers/vertex_buffer_layout.h"
@@ -17,7 +18,7 @@ namespace Bald::Graphics {
     class Sprite;
 
     struct SpriteVertexData {
-        glm::vec2 m_Position;
+        glm::vec3 m_Position;
         glm::vec4 m_Color;
         glm::vec2 m_TexCoord;
     };

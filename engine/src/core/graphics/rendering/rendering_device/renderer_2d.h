@@ -17,9 +17,7 @@ namespace Bald::Graphics {
     class Camera2D;
 
     struct Renderer2DData {
-        static inline std::shared_ptr<VertexArray> m_QuadVAO = nullptr;
-        static inline std::shared_ptr<VertexBuffer> m_QuadVBO = nullptr;
-        static inline std::shared_ptr<IndexBuffer> m_QuadIBO = nullptr;
+        using TEXTURE_ID = uint32_t;
         static inline std::shared_ptr<Shader> m_QuadShader = nullptr;
         static inline std::shared_ptr<Batch2D> m_Batch = nullptr;
     };

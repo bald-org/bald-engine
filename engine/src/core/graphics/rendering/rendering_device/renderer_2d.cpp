@@ -12,44 +12,14 @@
 #include "graphics/rendering/camera_2d.h"
 
 #include "glm/glm.hpp"
-#include "glm/gtc/matrix_transform.hpp"
 
 namespace Bald::Graphics {
 
     void Renderer2D::Init() noexcept {
-        float vertices[] = {
-            //layout(location = 0)      //layout(location = 1)      layout(location = 2)
-            -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
-        };//
-
-        unsigned indices[] = {
-            0, 1, 2, // first triangle
-            2, 3, 0  // second triangle
-        };
-
-        VertexBufferLayout layout = {
-            {0, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_Position"},
-            {1, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
-        };
-
-        Renderer2DData::m_QuadVBO = VertexBuffer::Create(vertices, sizeof(vertices));
-        Renderer2DData::m_QuadVBO->SetLayout(layout);
-
-        Renderer2DData::m_QuadIBO = IndexBuffer::Create(indices, sizeof(indices));
-
-        Renderer2DData::m_QuadVAO = VertexArray::Create();
-        Renderer2DData::m_QuadVAO->AddVertexBuffer(Renderer2DData::m_QuadVBO);
-        Renderer2DData::m_QuadVAO->AddIndexBuffer(Renderer2DData::m_QuadIBO);
-
         Renderer2DData::m_QuadShader = Shader::Create("../engine/res/shaders/sprite.vert",
                                                       "../engine/res/shaders/sprite.frag");
 
         Renderer2DData::m_Batch = std::make_shared<Batch2D>();
-
     }
 
     void Renderer2D::Shutdown() noexcept {

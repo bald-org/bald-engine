@@ -19,7 +19,7 @@ public:
 
     void OnAttach() noexcept override {
         Graphics::Renderer2D::Init();
-        m_Sprite.SetSize({10.0f, 10.0f});
+        m_Sprite.SetSize({100.0f, 100.0f});
     }
 
     void OnDetach() noexcept override {
@@ -38,29 +38,16 @@ public:
         } else if(Input::InputManager::IsKeyPressed(GLFW_KEY_S)) {
             m_Position.y -= m_CameraSpeed;
         }
-        m_Camera.SetPosition(m_Position);
 
-        const auto& spritePos = m_Sprite.GetPosition();
-        if(Input::InputManager::IsKeyPressed(GLFW_KEY_LEFT)) {
-            m_Sprite.SetPosition({spritePos.x - m_CameraSpeed, spritePos.y});
-        } else if(Input::InputManager::IsKeyPressed(GLFW_KEY_RIGHT)) {
-            m_Sprite.SetPosition({spritePos.x + m_CameraSpeed, spritePos.y});
-        }
-
-        if(Input::InputManager::IsKeyPressed(GLFW_KEY_UP)) {
-            m_Sprite.SetPosition({spritePos.x, spritePos.y + m_CameraSpeed});
-        } else if(Input::InputManager::IsKeyPressed(GLFW_KEY_DOWN)) {
-            m_Sprite.SetPosition({spritePos.x, spritePos.y - m_CameraSpeed});
-        }
-
+        m_Camera.SetPosition({m_Position.x, m_Position.y});
 
         // Begin sprite rendering
         m_Sprite.GetTexture()->Bind();
         Graphics::Renderer2D::Begin(m_Camera);
         for(std::size_t i = 0; i < 100; i++) {
             for(std::size_t j = 0; j < 100; j++) {
-                m_Sprite.SetPosition({i * 10, j * 10});
-                 Graphics::Renderer2D::Submit(m_Sprite);
+                m_Sprite.SetPosition({i * 100, j * 100});
+                Graphics::Renderer2D::Submit(m_Sprite);
             }
         }
         Graphics::Renderer2D::Draw();

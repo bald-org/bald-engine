@@ -102,12 +102,19 @@ namespace Bald::Input {
 
         /**
          * @fn GetMousePos
-         * @brief sets two variables on current mouse position.
-         * @param xpos [double] x-coordinate.
-         * @param ypos [double] y-coordinate.
+         * @brief Returns current mouse position.
+         * @return [std::pair<double, double>] Current mouse position.
          */
 
-        inline static void GetMousePos(double& xpos, double& ypos) noexcept;
+        inline static std::pair<double, double> GetMousePos() noexcept;
+
+        /**
+         * @fn GetMouseScrollOffset
+         * @brief Returns current mouse scroll offset.
+         * @return [std::pair<double, double>] Current mouse scroll offset.
+         */
+
+        inline static std::pair<double, double> GetMouseScrollOffset() noexcept;
 
         /**
          * @fn EmitKeyPressedEvent
@@ -243,9 +250,11 @@ namespace Bald::Input {
         return m_MouseButtonsTyped[buttoncode];
     }
 
-    void InputManager::GetMousePos(double& xpos, double& ypos) noexcept {
-        xpos = InputManager::m_MousePos.first;
-        ypos = InputManager::m_MousePos.second;
+    std::pair<double, double> InputManager::GetMousePos() noexcept {
+        return m_MousePos;
     }
 
+    std::pair<double, double> InputManager::GetMouseScrollOffset() noexcept {
+        return m_MouseOff;
+    }
 } // END OF NAMESPACE Bald::Input

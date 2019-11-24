@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "glm/glm.hpp"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 #include "graphics/rendering/textures/texture.h"
 
 namespace Bald::Graphics {
@@ -33,7 +35,15 @@ namespace Bald::Graphics {
          * @param const glm::vec2& Position.
          */
 
-        inline void SetPosition(const glm::vec2& position) noexcept { m_Position = position; }
+        inline void SetPosition(const glm::vec2& position) noexcept { SetPosition({position.x, position.y, 0.0f}); }
+
+        /**
+         * @fn SetPosition
+         * @brief Sets position of the sprite.
+         * @param const glm::vec3& Position.
+         */
+
+        inline void SetPosition(const glm::vec3& position) noexcept { m_Position = position; }
 
         /**
          * @fn SetSize
@@ -73,7 +83,7 @@ namespace Bald::Graphics {
          * @return const glm::vec2& Position.
          */
 
-        [[nodiscard]] inline const glm::vec2& GetPosition() const noexcept { return m_Position; }
+        [[nodiscard]] inline const glm::vec3& GetPosition() const noexcept { return m_Position; }
 
         /**
          * @fn GetSize
@@ -101,7 +111,7 @@ namespace Bald::Graphics {
 
     private:
         float m_Rotation; /**< Rotation around Z axis. */
-        glm::vec2 m_Position; /**< Position */
+        glm::vec3 m_Position; /**< Position */
         glm::vec2 m_Size; /**< Size */
         glm::vec4 m_Color; /**< Color */
         std::shared_ptr<Texture> m_Texture; /**< Texture */
