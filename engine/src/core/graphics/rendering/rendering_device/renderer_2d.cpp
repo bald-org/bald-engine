@@ -16,61 +16,67 @@
 
 namespace Bald::Graphics {
 
-    Renderer2D::Renderer2D() {
+    void Renderer2D::Init() noexcept {
         float vertices[] = {
-            //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f,                 1.0f, 0.0f, 0.0f, 1.0f,          0.0f, 0.0f,
-            -0.5f,  0.5f,                 0.0f, 1.0f, 0.0f, 1.0f,          0.0f, 1.0f,
-             0.5f,  0.5f,                 0.0f, 0.0f, 1.0f, 1.0f,          1.0f, 1.0f,
-             0.5f, -0.5f,                 1.0f, 1.0f, 1.0f, 1.0f,          1.0f, 0.0f
+            //layout(location = 0)      //layout(location = 1)      layout(location = 2)
+            -0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 0.0f,
+            -0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f, 1.0f,
+            0.5f, 0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f,
+            0.5f, -0.5f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
         };//
 
         unsigned indices[] = {
             0, 1, 2, // first triangle
-            0, 2, 3  // second triangle
+            2, 3, 0  // second triangle
         };
 
-        Bald::Graphics::VertexBufferLayout layout = {
-            {0, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec2, "in_Position"},
-            {1, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, Bald::Graphics::ShaderBuiltInType::Float, Bald::Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
+        VertexBufferLayout layout = {
+            {0, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_Position"},
+            {1, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec4, "in_Color"},
+            {2, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
         };
 
-        m_QuadVBO = VertexBuffer::Create(vertices, sizeof(vertices));
-        m_QuadVBO->SetLayout(layout);
+        Renderer2DData::m_QuadVBO = VertexBuffer::Create(vertices, sizeof(vertices));
+        Renderer2DData::m_QuadVBO->SetLayout(layout);
 
-        m_QuadIBO = IndexBuffer::Create(indices, sizeof(indices));
+        Renderer2DData::m_QuadIBO = IndexBuffer::Create(indices, sizeof(indices));
 
-        m_QuadVAO = VertexArray::Create();
-        m_QuadVAO->AddVertexBuffer(m_QuadVBO);
-        m_QuadVAO->AddIndexBuffer(m_QuadIBO);
+        Renderer2DData::m_QuadVAO = VertexArray::Create();
+        Renderer2DData::m_QuadVAO->AddVertexBuffer(Renderer2DData::m_QuadVBO);
+        Renderer2DData::m_QuadVAO->AddIndexBuffer(Renderer2DData::m_QuadIBO);
 
-        m_QuadShader = Shader::Create("../engine/res/shaders/sprite.vert", "../engine/res/shaders/sprite.frag");
+        Renderer2DData::m_QuadShader = Shader::Create("../engine/res/shaders/sprite.vert",
+                                                      "../engine/res/shaders/sprite.frag");
+
+        Renderer2DData::m_Batch = std::make_shared<Batch2D>();
+
+    }
+
+    void Renderer2D::Shutdown() noexcept {
+
     }
 
     void Renderer2D::Begin(const Camera2D& camera) noexcept {
-        m_QuadShader->Bind();
-        m_QuadShader->SetUniformMatrix4fv("u_ProjectionView", camera.GetProjectionViewMatrix());
+        Renderer2DData::m_QuadShader->Bind();
+        Renderer2DData::m_QuadShader->SetUniformMatrix4fv("u_ProjectionView", camera.GetProjectionViewMatrix());
+        Renderer2DData::m_QuadShader->Unbind();
+
+        Renderer2DData::m_Batch->Map();
     }
 
     void Renderer2D::Submit(const Sprite& sprite) noexcept {
-        m_QuadShader->Bind();
-        sprite.GetTexture()->Bind();
-        m_QuadVAO->Bind();
+        Renderer2DData::m_Batch->Submit(sprite);
+    }
 
-        const glm::vec2& pos = sprite.GetPosition();
-        const glm::vec2& scale = sprite.GetSize();
-        glm::mat4 model = glm::translate(glm::mat4(1.0f), {pos.x, pos.y, 0.0f}) *
-                          glm::scale(glm::mat4(1.0f), {scale.x, scale.y, 0.0f}) *
-                          glm::rotate(glm::mat4(1.0f), glm::radians(sprite.GetRotation()), {0.0f, 0.0f, 1.0f});
+    void Renderer2D::Draw() noexcept {
+        Renderer2DData::m_Batch->Unmap();
 
-        m_QuadShader->SetUniformMatrix4fv("u_Model", model);
+        Renderer2DData::m_QuadShader->Bind();
+        Renderer2DData::m_QuadShader->SetUniformMatrix4fv("u_Model", glm::mat4(1.0f));
 
-        glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_QuadVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT, nullptr);
+        Renderer2DData::m_Batch->Draw();
 
-        m_QuadShader->Unbind();
-        sprite.GetTexture()->Unbind();
-        m_QuadVAO->Unbind();
+        Renderer2DData::m_QuadShader->Unbind();
     }
 
     void Renderer2D::End() noexcept {

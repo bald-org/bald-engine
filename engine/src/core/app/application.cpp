@@ -68,7 +68,7 @@ namespace Bald {
         m_Instance = this;
 
         m_EventManager = std::make_unique<EventManager>();
-        m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720);
+        m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720, false);
 
         m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this](const WindowClosedEvent&) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
