@@ -30,15 +30,26 @@ namespace Bald::Graphics {
          * @param position -> New position of the camera.
          */
 
-        inline void SetPosition(const glm::vec2& position) { m_Position = position; CalculateProjectionViewMatrix(); }
+        inline void SetPosition(const glm::vec2 position) { SetPosition({position.x, position.y, 0.0f}); }
+
+        /**
+         * @fn SetPosition
+         * @brief Sets camera position and recalculates projection view matrix.
+         * @param position -> New position of the camera.
+         */
+
+        inline void SetPosition(const glm::vec3 position) {
+            m_Position = position;
+            CalculateProjectionViewMatrix();
+        }
 
         /**
          * @fn GetPosition
          * @brief Camera's position getter.
-         * @return const glm::vec2& Position.
+         * @return const glm::vec3& Position.
          */
 
-        [[nodiscard]] const glm::vec2& GetPosition() const noexcept { return m_Position; }
+        [[nodiscard]] const glm::vec3& GetPosition() const noexcept { return m_Position; }
 
         /**
          * @fn GetProjectionMatrix
@@ -71,24 +82,6 @@ namespace Bald::Graphics {
          * @brief Recalculates projection view matrix.
          */
 
-        void CalculateProjectionViewMatrix();
-
-    private:
-        glm::vec2 m_Position; /**< Camera position. >*/
-        glm::mat4 m_Projection; /**< Camera projection matrix. >*/
-        glm::mat4 m_View; /**< Camera view matrix. >*/
-        glm::mat4 m_ProjectionView; /**< Camera projection view matrix. >*/
-        explicit Camera2D(const glm::mat4& orthoProjection = glm::mat4(1.0f));
-
-        inline void SetPosition(const glm::vec2 position) { SetPosition({position.x, position.y, 0.0f}); }
-        inline void SetPosition(const glm::vec3 position) { m_Position = position; CalculateProjectionViewMatrix(); }
-
-        [[nodiscard]] const glm::vec3& GetPosition() const noexcept { return m_Position; }
-        [[nodiscard]] const glm::mat4& GetProjectionMatrix() const noexcept { return m_Projection; }
-        [[nodiscard]] const glm::mat4& GetViewMatrix() const noexcept { return m_View; }
-        [[nodiscard]] const glm::mat4& GetProjectionViewMatrix() const noexcept { return m_ProjectionView; }
-
-    private:
         void CalculateProjectionViewMatrix();
 
     private:

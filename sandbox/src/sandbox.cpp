@@ -27,15 +27,15 @@ public:
     }
 
     void OnUpdate() noexcept override {
-        if(Input::InputManager::IsKeyPressed(GLFW_KEY_A)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
             m_Position.x -= m_CameraSpeed;
-        } else if(Input::InputManager::IsKeyPressed(GLFW_KEY_D)) {
+        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
             m_Position.x += m_CameraSpeed;
         }
 
-        if(Input::InputManager::IsKeyPressed(GLFW_KEY_W)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
             m_Position.y += m_CameraSpeed;
-        } else if(Input::InputManager::IsKeyPressed(GLFW_KEY_S)) {
+        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
             m_Position.y -= m_CameraSpeed;
         }
 
