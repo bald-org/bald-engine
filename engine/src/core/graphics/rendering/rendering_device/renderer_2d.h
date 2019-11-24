@@ -17,7 +17,6 @@ namespace Bald::Graphics {
     class Camera2D;
 
     struct Renderer2DData {
-        using TEXTURE_ID = uint32_t;
         static inline std::shared_ptr<Shader> m_QuadShader = nullptr;
         static inline std::shared_ptr<Batch2D> m_Batch = nullptr;
     };
