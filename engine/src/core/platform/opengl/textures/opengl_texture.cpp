@@ -26,7 +26,7 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLTexture::Activate(uint8_t index) const noexcept {
-        BALD_ASSERT(index < 16, "OpenGLTexture", "OpenGL only guarantees to support 16 textures per shader!", index);
+        BALD_ASSERT(index < 32, "OpenGLTexture", "OpenGL only guarantees to support 32 textures per shader!", index);
         glActiveTexture(GL_TEXTURE0 + index);
     }
 

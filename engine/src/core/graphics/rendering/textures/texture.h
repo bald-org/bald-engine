@@ -119,6 +119,13 @@ namespace Bald::Graphics {
 
         [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
 
+        /**
+        * @fn GetID
+        * @brief Returns texture's ID.
+        * @return int32_t texture ID.
+        */
+        [[nodiscard]] virtual int32_t GetID() const noexcept = 0;
+
     protected:
         Utils::Image m_Image; /**< Texture bitmap. >*/
 

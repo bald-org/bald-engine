@@ -3,7 +3,9 @@
 //
 
 #include "batch_2d.h"
+#include "graphics/rendering/camera_2d.h"
 #include "graphics/rendering/sprite.h"
+#include <cstring>
 
 namespace Bald::Graphics {
     static constexpr uint32_t MAX_SPRITES = 10000;
@@ -23,7 +25,8 @@ namespace Bald::Graphics {
         VertexBufferLayout layout = {
             {0, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec3, "in_Position"},
             {1, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
+            {2, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec2, "in_TextureCoord"},
+            {3, ShaderBuiltInType::Float, ShaderBuiltInTypeSize::Vec1, "in_TextureId"}
         };
 
         m_QuadVBO = VertexBuffer::Create(nullptr, m_MaxVertices);
@@ -48,54 +51,104 @@ namespace Bald::Graphics {
         m_QuadVAO = VertexArray::Create();
         m_QuadVAO->AddVertexBuffer(m_QuadVBO);
         m_QuadVAO->AddIndexBuffer(m_QuadIBO);
+
+        m_QuadShader = Shader::Create("../engine/res/shaders/sprite.vert",
+                                      "../engine/res/shaders/sprite.frag");
     }
 
-    void Batch2D::Submit(const Sprite& sprite) {
-        if(m_UsedVertices + SPRITE_SIZE > MAX_VERTICES) return; // TODO: Error handling using expected!
+    bool Batch2D::Submit(const Sprite& sprite) {
+        if(m_UsedVertices + SPRITE_SIZE > MAX_VERTICES) return false; // TODO: Error handling using expected!
+
+        const auto textureID = sprite.GetTexture()->GetID();
+
+        float textureSlot = 0.0f;
+        if(textureID > 0) {
+            bool found = false;
+            for(std::size_t i = 0; i < m_Textures.size(); i++) {
+                if(m_Textures[i] == textureID) {
+                    found = true;
+                    textureSlot = static_cast<float>(i);
+                    break;
+                }
+            }
+
+            if(!found) {
+                if(m_Textures.size() >= MAX_TEXTURES_PER_SHADER) {
+                    return false;
+                }
+                m_Textures.push_back(textureID);
+                textureSlot = static_cast<float>(m_Textures.size() - 1);
+            }
+        }
+
         const auto& position = sprite.GetPosition();
         const auto& size = sprite.GetSize();
         const auto& color = sprite.GetColor();
 
         m_MappedBuffer->m_Position = {position.x, position.y, position.z};
         m_MappedBuffer->m_Color = color;
-        m_MappedBuffer->m_TexCoord = {0.0f, 0.0f};
+        m_MappedBuffer->m_TextureCoord = {0.0f, 0.0f};
+        m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
         m_MappedBuffer->m_Position = {position.x, position.y + size.y, position.z};
         m_MappedBuffer->m_Color = color;
-        m_MappedBuffer->m_TexCoord = {0.0f, 1.0f};
+        m_MappedBuffer->m_TextureCoord = {0.0f, 1.0f};
+        m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
         m_MappedBuffer->m_Position = {position.x + size.x, position.y + size.y, position.z};
         m_MappedBuffer->m_Color = color;
-        m_MappedBuffer->m_TexCoord = {1.0f, 1.0f};
+        m_MappedBuffer->m_TextureCoord = {1.0f, 1.0f};
+        m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
         m_MappedBuffer->m_Position = {position.x + size.x, position.y, position.z};
         m_MappedBuffer->m_Color = color;
-        m_MappedBuffer->m_TexCoord = {1.0f, 0.0f};
+        m_MappedBuffer->m_TextureCoord = {1.0f, 0.0f};
+        m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
         m_UsedVertices += SPRITE_SIZE;
         m_UsedIndices += INDICES_SIZE;
+
+        return true;
     }
 
-    void Batch2D::Map() noexcept {
+    void Batch2D::Begin(const Camera2D& camera) noexcept {
+        m_QuadShader->Bind();
+        m_QuadShader->SetUniformMatrix4fv("u_ProjectionView", camera.GetProjectionViewMatrix());
+        m_QuadShader->Unbind();
+
         m_QuadVBO->Bind();
         m_MappedBuffer = reinterpret_cast<SpriteVertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
     }
 
-    void Batch2D::Unmap() const noexcept {
+    void Batch2D::End() const noexcept {
         glUnmapBuffer(GL_ARRAY_BUFFER);
         m_QuadVBO->Unbind();
     }
 
     void Batch2D::Draw() noexcept {
         m_QuadVAO->Bind();
+        m_QuadShader->Bind();
+        m_QuadShader->SetUniformMatrix4fv("u_Model", glm::mat4(1.0f));
+        for(std::size_t i = 0; i < m_Textures.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + static_cast<uint32_t>(i + 1));
+            glBindTexture(GL_TEXTURE_2D, static_cast<uint32_t>(m_Textures[i]));
+        }
+
+        m_QuadShader->SetUniform1iv("u_Textures", m_Textures.size(), m_Textures.data());
+
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_UsedIndices), GL_UNSIGNED_INT, nullptr);
+
+        m_QuadShader->Unbind();
         m_QuadVAO->Unbind();
 
         m_UsedVertices = 0;
         m_UsedIndices = 0;
+
+        m_Textures.clear();
     }
+
 }

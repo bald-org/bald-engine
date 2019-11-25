@@ -173,6 +173,7 @@ configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/sprite.vert res/shaders/s
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/sprite.frag res/shaders/sprite.frag COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/lena.jpg res/textures/lena.jpg COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/checkerboard.jpg res/textures/checkerboard.jpg COPYONLY)
 
 add_test(UnitTests runUnitTests)
 
