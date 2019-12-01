@@ -46,7 +46,7 @@ namespace Bald::Graphics {
             offset += 4;
         }
 
-        for(std::size_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
+        for(int32_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
             m_TextureUnits.push_back(i);
         }
 

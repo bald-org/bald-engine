@@ -10,7 +10,7 @@
 namespace Bald::Graphics {
 
     void Renderer2D::Init() noexcept {
-        Renderer2DData::m_Batch = std::make_shared<Batch2D>();
+        Renderer2DData::m_Batch = std::make_unique<Batch2D>();
     }
 
     void Renderer2D::Shutdown() noexcept {}

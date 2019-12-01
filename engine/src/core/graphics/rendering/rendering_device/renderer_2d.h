@@ -17,7 +17,7 @@ namespace Bald::Graphics {
     class Camera2D;
 
     struct Renderer2DData {
-        static inline std::shared_ptr<Batch2D> m_Batch = nullptr;
+        static inline std::unique_ptr<Batch2D> m_Batch = nullptr;
         static inline const Camera2D* m_Camera = nullptr;
     };
 
