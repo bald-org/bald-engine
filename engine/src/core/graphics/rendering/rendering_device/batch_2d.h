@@ -16,9 +16,10 @@
 #include "graphics/rendering/shaders/shader.h"
 
 namespace Bald::Graphics {
-    static constexpr int32_t MAX_TEXTURES_PER_SHADER = 32;
+    static constexpr int32_t MAX_TEXTURES_PER_SHADER = 16;
 
     class Sprite;
+
     class Camera2D;
 
     struct SpriteVertexData {
@@ -53,6 +54,7 @@ namespace Bald::Graphics {
         std::shared_ptr<IndexBuffer> m_QuadIBO;
         std::shared_ptr<Shader> m_QuadShader;
         std::vector<TEXTURE_ID> m_Textures;
+        std::vector<int32_t> m_TextureUnits;
     }; // END OF CLASS Batch
 } // END OF NAMESPACE Bald::Graphics
 

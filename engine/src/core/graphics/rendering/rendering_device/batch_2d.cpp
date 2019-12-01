@@ -46,6 +46,10 @@ namespace Bald::Graphics {
             offset += 4;
         }
 
+        for(std::size_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
+            m_TextureUnits.push_back(i);
+        }
+
         m_QuadIBO = IndexBuffer::Create(indices.data(), sizeof(indices));
 
         m_QuadVAO = VertexArray::Create();
@@ -134,11 +138,11 @@ namespace Bald::Graphics {
         m_QuadShader->Bind();
         m_QuadShader->SetUniformMatrix4fv("u_Model", glm::mat4(1.0f));
         for(std::size_t i = 0; i < m_Textures.size(); i++) {
-            glActiveTexture(GL_TEXTURE0 + static_cast<uint32_t>(i + 1));
+            glActiveTexture(GL_TEXTURE0 + static_cast<uint32_t>(i));
             glBindTexture(GL_TEXTURE_2D, static_cast<uint32_t>(m_Textures[i]));
         }
 
-        m_QuadShader->SetUniform1iv("u_Textures", m_Textures.size(), m_Textures.data());
+        m_QuadShader->SetUniform1iv("u_Textures", m_Textures.size(), m_TextureUnits.data());
 
         glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_UsedIndices), GL_UNSIGNED_INT, nullptr);
 

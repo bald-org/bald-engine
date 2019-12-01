@@ -31,8 +31,9 @@ namespace Bald::Graphics {
 
         static void Begin(const Camera2D& camera) noexcept;
         static void Submit(const Sprite& sprite) noexcept;
-        static void Draw() noexcept;
         static void End() noexcept;
+    private:
+        static void Draw() noexcept;
     }; // END OF CLASS Renderer2D
 
 } // END OF NAMESPACE Bald::Graphics

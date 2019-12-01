@@ -13,9 +13,7 @@ namespace Bald::Graphics {
         Renderer2DData::m_Batch = std::make_shared<Batch2D>();
     }
 
-    void Renderer2D::Shutdown() noexcept {
-
-    }
+    void Renderer2D::Shutdown() noexcept {}
 
     void Renderer2D::Begin(const Camera2D& camera) noexcept {
         Renderer2DData::m_Camera = &camera;
@@ -23,11 +21,12 @@ namespace Bald::Graphics {
     }
 
     void Renderer2D::Submit(const Sprite& sprite) noexcept {
-        Renderer2DData::m_Batch->Submit(sprite);
-//        if(!success) {
-//            Draw();
-//            Begin(*Renderer2DData::m_Camera);
-//        }
+        const bool success = Renderer2DData::m_Batch->Submit(sprite);
+        if(!success) {
+            Draw();
+            Begin(*Renderer2DData::m_Camera);
+            Submit(sprite);
+        }
     }
 
     void Renderer2D::Draw() noexcept {
@@ -36,7 +35,7 @@ namespace Bald::Graphics {
     }
 
     void Renderer2D::End() noexcept {
-
+        Draw();
     }
 
 } // END OF NAMESPACE Bald::Graphics
