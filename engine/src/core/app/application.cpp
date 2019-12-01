@@ -39,12 +39,6 @@ namespace Bald {
             }
 #endif
 
-            Debug::ImGuiLayer::Begin();
-            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
-                m_LayerStack[i]->OnRender();
-            }
-            Debug::ImGuiLayer::End();
-
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate();
             }
@@ -52,6 +46,12 @@ namespace Bald {
             for(size_t i = m_LayerStack.GetSize(); i != 0; --i) {
                 m_LayerStack[i - 1]->RunEvents();
             }
+
+            Debug::ImGuiLayer::Begin();
+            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
+                m_LayerStack[i]->OnRender();
+            }
+            Debug::ImGuiLayer::End();
 
             m_EventManager->Flush();
             EventManager::ClearEventQueue();
