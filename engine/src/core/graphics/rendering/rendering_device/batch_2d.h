@@ -16,7 +16,7 @@
 #include "graphics/rendering/shaders/shader.h"
 
 namespace Bald::Graphics {
-    static constexpr int32_t MAX_TEXTURES_PER_SHADER = 16;
+    static constexpr int32_t MAX_TEXTURES_PER_SHADER = 32;
 
     class Sprite;
 
