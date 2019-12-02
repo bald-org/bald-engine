@@ -16,6 +16,14 @@ namespace Bald::Graphics {
         /**
          * @fn Sprite
          * @brief Constructor.
+         * @param glm::vec4 RGBA color.
+         */
+
+        explicit Sprite(const glm::vec4& color);
+
+        /**
+         * @fn Sprite
+         * @brief Constructor.
          * @param std::shared_ptr<Texture> Texture to be used with sprite.
          */
 

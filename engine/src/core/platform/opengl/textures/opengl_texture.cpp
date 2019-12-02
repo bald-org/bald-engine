@@ -8,6 +8,11 @@
 
 namespace Bald::Platform::Graphics {
 
+    OpenGLTexture::OpenGLTexture(int32_t width, int32_t height) : Texture(width, height), m_ID(0) {
+        [[maybe_unused]] bool state = Init();
+        BALD_ASSERT(state, "Application", "Failed to initialized application", state);
+    }
+
     OpenGLTexture::OpenGLTexture(std::string filepath) : Texture(std::move(filepath)), m_ID(0) {
         [[maybe_unused]] bool state = Init();
         BALD_ASSERT(state, "Application", "Failed to initialized application", state);

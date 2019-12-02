@@ -54,6 +54,7 @@ public:
         m_Sprite32.SetSize({50.0f, 50.0f});
         m_Sprite33.SetSize({50.0f, 50.0f});
         m_Sprite34.SetSize({50.0f, 50.0f});
+        m_SpriteRed.SetSize({50.0f, 50.0f});
     }
 
     void OnDetach() noexcept override {
@@ -113,6 +114,7 @@ public:
             m_Sprite32.SetPosition({31 * 50, i * 50});
             m_Sprite33.SetPosition({32 * 50, i * 50});
             m_Sprite34.SetPosition({33 * 50, i * 50});
+            m_SpriteRed.SetPosition({34 * 50, i * 50});
 
             Renderer2D::Submit(m_Sprite1);
             Renderer2D::Submit(m_Sprite2);
@@ -148,6 +150,7 @@ public:
             Renderer2D::Submit(m_Sprite32);
             Renderer2D::Submit(m_Sprite33);
             Renderer2D::Submit(m_Sprite34);
+            Renderer2D::Submit(m_SpriteRed);
         }
 
         Renderer2D::End();
@@ -192,6 +195,7 @@ private:
     Sprite m_Sprite32{Texture::Create("../engine/res/textures/pixel_textures/Rocks/LAVAROCKS.png")};
     Sprite m_Sprite33{Texture::Create("../engine/res/textures/pixel_textures/Rocks/PATHROCKS.png")};
     Sprite m_Sprite34{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
+    Sprite m_SpriteRed{{0.8f, 0.2f, 0.2f, 1.0f}};
 
     float m_CameraSpeed = 0.5f;
     glm::vec2 m_Position{0.0f};
