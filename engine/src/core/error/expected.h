@@ -23,7 +23,7 @@ namespace Bald {
         constexpr expected(E&& rhs) { new(&m_Valid) E(std::move(rhs)); }
 
         constexpr expected(unexpected<U>&& rhs) :
-                _isOk(false) { new(&m_Invalid) U(std::move(rhs.value)); }
+                _isOk(false) { new(&m_Invalid) U(std::move(rhs.m_Value)); }
 
         constexpr expected(const expected<E, U>& rhs) :
                 _isOk(rhs._isOk) {
@@ -38,6 +38,7 @@ namespace Bald {
         }
 
         constexpr expected<E, U>& operator=(const expected<E, U>& rhs) {
+            if(this == &rhs) return *this;
             dtor();
             _isOk = rhs._isOk;
             if (_isOk) new(&m_Valid) E(rhs.m_Valid);
@@ -46,6 +47,7 @@ namespace Bald {
         }
 
         constexpr expected<E, U>& operator=(expected<E, U>&& rhs) noexcept {
+            if(this == &rhs) return *this;
             dtor();
             _isOk = rhs._isOk;
             if (_isOk) new(&m_Valid) E(std::move(rhs.m_Valid));
@@ -57,36 +59,52 @@ namespace Bald {
             dtor();
         }
 
-        [[nodiscard]] constexpr bool isValid() const noexcept { return _isOk; }
+        [[nodiscard]] constexpr bool isValid() const noexcept {
+#ifdef DEBUG
+            m_WasChecked = true;
+#endif
+            return _isOk;
+        }
 
-        constexpr operator bool() const noexcept { return _isOk; }
+        constexpr operator bool() const noexcept {
+#ifdef DEBUG
+            m_WasChecked = true;
+#endif
+            return _isOk;
+        }
 
         [[nodiscard]] constexpr U& error() const& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
             return m_Invalid;
         }
 
         [[nodiscard]] U& error()& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
             return m_Invalid;
         }
 
         [[nodiscard]] U&& error()&& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(!_isOk, "expected", "attempt to access invalid value after success", _isOk);
             return std::move(m_Invalid);
         }
 
         [[nodiscard]] constexpr E& value() const& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
             return m_Valid;
         }
 
         [[nodiscard]] E& value()& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
             return m_Valid;
         }
 
         [[nodiscard]] E&& value()&& {
+            BALD_ASSERT(m_WasChecked, "expected", "attempt to access value without calling isValid method", m_WasChecked);
             BALD_ASSERT(_isOk, "expected", "attempt to access valid value after failure", _isOk);
             return std::move(m_Valid);
         }
@@ -102,6 +120,9 @@ namespace Bald {
             E m_Valid;
             U m_Invalid;
         };
+#ifdef DEBUG
+        mutable bool m_WasChecked = false;
+#endif
         bool _isOk = true;
     };
 }
