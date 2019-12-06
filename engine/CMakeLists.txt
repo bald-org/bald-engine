@@ -102,7 +102,10 @@ add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/textures/opengl_texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/image.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp )
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/error/expected.h
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/error/unexpected.h
+        )
 
 if (APPLE_BUILD)
     target_link_libraries(bald_engine
@@ -165,6 +168,8 @@ target_link_libraries(runUnitTests bald_engine)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/tests/test_file_manager.txt test_file_manager.txt COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.vert res/shaders/basic.vert COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/basic.frag res/shaders/basic.frag COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/default.vert res/shaders/default.vert COPYONLY)
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/shaders/default.frag res/shaders/default.frag COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/fabric.jpg res/textures/fabric.jpg COPYONLY)
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/res/textures/lena.jpg res/textures/lena.jpg COPYONLY)
 

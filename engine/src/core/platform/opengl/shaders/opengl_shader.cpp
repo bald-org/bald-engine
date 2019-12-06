@@ -13,7 +13,8 @@
 namespace Bald::Platform::Graphics {
 
     OpenGLShader::OpenGLShader(const char* vertexPath, const char* fragmentPath)
-        : m_VertexPath(vertexPath), m_FragmentPath(fragmentPath), m_ShaderID(CreateShader()) {}
+            :
+            m_VertexPath(vertexPath), m_FragmentPath(fragmentPath), m_ShaderID(CreateShader()) { }
 
     OpenGLShader::~OpenGLShader() {
         glDeleteProgram(m_ShaderID);
@@ -68,7 +69,7 @@ namespace Bald::Platform::Graphics {
     }
 
     void OpenGLShader::SetUniform2i(const char* uniformName, int v0, int v1) const noexcept {
-        glUniform2i(GetUniformLocation(uniformName), v0,v1);
+        glUniform2i(GetUniformLocation(uniformName), v0, v1);
     }
 
     void OpenGLShader::SetUniform2i(const char* uniformName, const glm::tvec2<int>& vec) const noexcept {
@@ -101,19 +102,28 @@ namespace Bald::Platform::Graphics {
 
     unsigned OpenGLShader::CreateShader() const noexcept {
         int success = 0;
-
+        using namespace Utils;
         unsigned int vertexShader;
         vertexShader = glCreateShader(GL_VERTEX_SHADER);
 
-        std::string vertexShaderSource = Utils::FileManager::ReadFile(m_VertexPath,
-                                                                      Utils::FileManager::Size::SMALL_FILE);
+        auto vertex_data = FileManager::ReadFile(m_VertexPath);
+        if (!vertex_data) {
+            CORE_LOG_WARN("Could't open shader: " + std::string(m_VertexPath));
+            CORE_LOG_WARN("Compiling default shader instead");
+            vertex_data = FileManager::ReadFile("../engine/res/shaders/default.vert");
+            if(!vertex_data) {
+                CORE_LOG_ERROR("Could't open default shader");
+                return 0;
+            }
+        }
+        const std::string& vertexShaderSource = vertex_data.value();
         const char* vertexData = vertexShaderSource.c_str();
 
         glShaderSource(vertexShader, 1, &vertexData, nullptr);
         glCompileShader(vertexShader);
 
         glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-        if(success == GL_FALSE) {
+        if (success == GL_FALSE) {
             int length = 0;
             glGetShaderiv(vertexShader, GL_INFO_LOG_LENGTH, &length);
 
@@ -130,16 +140,26 @@ namespace Bald::Platform::Graphics {
 
         unsigned int fragmentShader;
         fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+        auto fragment_data = FileManager::ReadFile(m_FragmentPath);
 
-        std::string fragmentShaderSource = Utils::FileManager::ReadFile(m_FragmentPath,
-                                                                        Utils::FileManager::Size::SMALL_FILE);
+        if (!fragment_data) {
+            CORE_LOG_WARN("Could't open shader: " + std::string(m_FragmentPath));
+            CORE_LOG_WARN("Compiling default shader instead");
+            fragment_data = FileManager::ReadFile("../engine/res/default.frag");
+            if(!fragment_data) {
+                CORE_LOG_ERROR("Could't open default shader");
+                return 0;
+            }
+        }
+
+        const std::string& fragmentShaderSource = fragment_data.value();
         const char* fragmentData = fragmentShaderSource.c_str();
 
         glShaderSource(fragmentShader, 1, &fragmentData, nullptr);
         glCompileShader(fragmentShader);
 
         glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-        if(success == GL_FALSE) {
+        if (success == GL_FALSE) {
             int length = 0;
             glGetShaderiv(fragmentShader, GL_INFO_LOG_LENGTH, &length);
 
@@ -161,7 +181,7 @@ namespace Bald::Platform::Graphics {
         glLinkProgram(id);
 
         glGetProgramiv(id, GL_LINK_STATUS, &success);
-        if(success == GL_FALSE) {
+        if (success == GL_FALSE) {
             int length = 0;
 
             glGetProgramiv(id, GL_INFO_LOG_LENGTH, &length);
@@ -190,7 +210,7 @@ namespace Bald::Platform::Graphics {
     int OpenGLShader::GetUniformLocation(const char* uniformName) const noexcept {
         auto iter = m_UniformLocationCache.find(uniformName);
 
-        if(iter != m_UniformLocationCache.end()) {
+        if (iter != m_UniformLocationCache.end()) {
             return iter->second;
         }
 
