@@ -110,8 +110,6 @@ namespace Bald {
         /**
         * @fn Flush
         * @brief This function runs callbacks for all events that are currently in an event queue
-        * @param [int] n -> Number of events you want to proceed. If n == -1 (or argumeter left blank)
-        *                             this will iterate through whole queue
         */
 
         void Flush() noexcept;
@@ -137,7 +135,7 @@ namespace Bald {
     private:
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksSync; /**< Unordered map of events' type indexes and associated functions which will be called synchronously */
         std::unordered_map<unsigned, std::vector<EventHandlerInterface*>> m_CallbacksAsync; /**< Unordered map of events' type indexes and associated functions which will be called asynchronously */
-        static std::deque<Event*> m_EventQueue; /**< Basically an event queue */
+        static std::vector<Event*> m_EventQueue; /**< Basically an event queue */ //TODO: consider std::basic_string but we need real game example in order to be sure what is faster.
         static int m_ReferenceCounter; /**< Number of existing EventManagers >*/
 
     }; // END OF CLASS EventManager

@@ -33,6 +33,7 @@ int main() {
     int x = 0;
     A a;
     em.Subscribe<KeyEvent>(HandleType::SYNC, sub, std::reference_wrapper(x));
+    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, a);
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
 
     Utils::Timer timer;
