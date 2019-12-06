@@ -22,7 +22,7 @@ namespace Bald::Utils {
     }
 
     expected<std::string, FileManager::Error> FileManager::ReadSmallFile(const char* filePath) {
-#ifdef WINDOWS
+#if defined(WINDOWS) || defined(APPLE)
 		FILE* file;
 		fopen_s(&file, filePath, "rb");
 #else
@@ -76,7 +76,7 @@ namespace Bald::Utils {
         return result;
     }
 
-#elif WINDOWS
+#if defined(WINDOWS) || defined(APPLE)
     expected<std::string, FileManager::Error> FileManager::ReadBigFile(const char *filePath) {
         CORE_LOG_INFO("[FILE_MANAGER] Error: Windows implementation is not done yet! Using slower reading method!");
         return ReadSmallFile(filePath);
