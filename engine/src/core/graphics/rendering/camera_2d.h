@@ -30,7 +30,7 @@ namespace Bald::Graphics {
          * @param position -> New position of the camera.
          */
 
-        inline void SetPosition(const glm::vec2 position) { SetPosition({position.x, position.y, 0.0f}); }
+        inline void SetPosition(const glm::vec2& position) { SetPosition({position.x, position.y, 0.0f}); }
 
         /**
          * @fn SetPosition
@@ -38,7 +38,7 @@ namespace Bald::Graphics {
          * @param position -> New position of the camera.
          */
 
-        inline void SetPosition(const glm::vec3 position) {
+        inline void SetPosition(const glm::vec3& position) {
             m_Position = position;
             CalculateProjectionViewMatrix();
         }

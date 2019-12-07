@@ -8,6 +8,7 @@
 #include <cstring>
 
 namespace Bald::Graphics {
+    static constexpr uint32_t MAX_TEXTURES_PER_SHADER = 32;
     static constexpr uint32_t MAX_SPRITES = 10000;
     static constexpr uint32_t SPRITE_VERTEX_DATA_SIZE = sizeof(SpriteVertexData);
     static constexpr uint32_t SPRITE_SIZE = 4 * SPRITE_VERTEX_DATA_SIZE;
@@ -34,7 +35,7 @@ namespace Bald::Graphics {
 
         std::array<uint32_t, MAX_INDICES> indices = {0};
         uint32_t offset = 0;
-        for(uint32_t i = 0; i < MAX_INDICES; i += 6) {
+        for(std::size_t i = 0; i < MAX_INDICES; i += 6) {
             indices[i] = offset + 0;
             indices[i + 1] = offset + 1;
             indices[i + 2] = offset + 2;
@@ -46,8 +47,8 @@ namespace Bald::Graphics {
             offset += 4;
         }
 
-        for(int32_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
-            m_TextureUnits.push_back(i);
+        for(std::size_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
+            m_TextureUnits.push_back(static_cast<TEXTURE_ID>(i));
         }
 
         m_QuadIBO = IndexBuffer::Create(indices.data(), sizeof(indices));
@@ -63,7 +64,7 @@ namespace Bald::Graphics {
     bool Batch2D::Submit(const Sprite& sprite) {
         if(m_UsedVertices + SPRITE_SIZE > MAX_VERTICES) return false; // TODO: Error handling using expected!
 
-        const auto textureID = sprite.GetTexture()->GetID();
+        const auto textureID = static_cast<uint32_t>(sprite.GetTexture()->GetID());
 
         float textureSlot = 0.0f;
         if(textureID > 0) {
@@ -85,9 +86,9 @@ namespace Bald::Graphics {
             }
         }
 
-        const auto& position = sprite.GetPosition();
-        const auto& size = sprite.GetSize();
-        const auto& color = sprite.GetColor();
+        const glm::vec3& position = sprite.GetPosition();
+        const glm::vec2& size = sprite.GetSize();
+        const glm::vec4& color = sprite.GetColor();
 
         m_MappedBuffer->m_Position = {position.x, position.y, position.z};
         m_MappedBuffer->m_Color = color;
@@ -137,14 +138,14 @@ namespace Bald::Graphics {
         m_QuadVAO->Bind();
         m_QuadShader->Bind();
         m_QuadShader->SetUniformMatrix4fv("u_Model", glm::mat4(1.0f));
-        for(std::size_t i = 0; i < m_Textures.size(); i++) {
-            glActiveTexture(GL_TEXTURE0 + static_cast<uint32_t>(i));
-            glBindTexture(GL_TEXTURE_2D, static_cast<uint32_t>(m_Textures[i]));
+        for(uint32_t i = 0; i < m_Textures.size(); i++) {
+            glActiveTexture(GL_TEXTURE0 + i);
+            glBindTexture(GL_TEXTURE_2D, m_Textures[i]);
         }
 
         m_QuadShader->SetUniform1iv("u_Textures", m_Textures.size(), m_TextureUnits.data());
 
-        glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_UsedIndices), GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, m_UsedIndices, GL_UNSIGNED_INT, nullptr);
 
         m_QuadShader->Unbind();
         m_QuadVAO->Unbind();

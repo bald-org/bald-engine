@@ -16,8 +16,6 @@
 #include "graphics/rendering/shaders/shader.h"
 
 namespace Bald::Graphics {
-    static constexpr int32_t MAX_TEXTURES_PER_SHADER = 32;
-
     class Sprite;
 
     class Camera2D;
@@ -30,7 +28,7 @@ namespace Bald::Graphics {
     };
 
     class Batch2D {
-        using TEXTURE_ID = int32_t;
+        using TEXTURE_ID = uint32_t;
 
     public:
         Batch2D();
