@@ -19,7 +19,6 @@ public:
     ~GameLayer() override = default;
 
     void OnAttach() noexcept override {
-        Renderer2D::Init();
         m_Sprite1.SetSize({50.0f, 50.0f});
         m_Sprite2.SetSize({50.0f, 50.0f});
         m_Sprite3.SetSize({50.0f, 50.0f});

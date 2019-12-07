@@ -85,10 +85,10 @@ namespace Bald::Graphics {
         void CalculateProjectionViewMatrix();
 
     private:
-        glm::vec3 m_Position;
-        glm::mat4 m_Projection;
-        glm::mat4 m_View;
-        glm::mat4 m_ProjectionView;
+        glm::vec3 m_Position; /**< Camera position >*/
+        glm::mat4 m_Projection; /**< Projection matrix >*/
+        glm::mat4 m_View; /**< View matrix >*/
+        glm::mat4 m_ProjectionView; /**< Projection view matrix >*/
 
     }; // END OF CLASS Camera2D
 

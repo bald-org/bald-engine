@@ -8,6 +8,7 @@
 #include "events/layer_events.h"
 #include "utils/time/timer.h"
 #include "debug/ui/imgui_layer.h"
+#include "graphics/rendering/rendering_device/renderer_2d.h"
 #include <GLFW/glfw3.h>
 
 namespace Bald {
@@ -86,6 +87,8 @@ namespace Bald {
 
         PushOverlayImmediately<Debug::ImGuiLayer>();
 
+        Graphics::Renderer2D::Init();
+
         CORE_LOG_INFO("[Application] Initialization was successful");
 
         return true;
@@ -93,6 +96,7 @@ namespace Bald {
 
     void Application::Shutdown() {
         CORE_LOG_INFO("[Application] Shutting down application...");
+        Graphics::Renderer2D::Shutdown();
         CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 

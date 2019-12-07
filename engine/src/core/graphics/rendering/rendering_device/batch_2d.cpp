@@ -48,7 +48,7 @@ namespace Bald::Graphics {
         }
 
         for(std::size_t i = 0; i < MAX_TEXTURES_PER_SHADER; i++) {
-            m_TextureUnits.push_back(static_cast<TEXTURE_ID>(i));
+            m_TextureUnits.push_back(static_cast<int32_t>(i));
         }
 
         m_QuadIBO = IndexBuffer::Create(indices.data(), sizeof(indices));
@@ -59,6 +59,14 @@ namespace Bald::Graphics {
 
         m_QuadShader = Shader::Create("../engine/res/shaders/sprite.vert",
                                       "../engine/res/shaders/sprite.frag");
+    }
+
+    Batch2D::~Batch2D() {
+        if(m_MappedBuffer != nullptr) {
+            m_QuadVBO->Bind();
+            glUnmapBuffer(GL_ARRAY_BUFFER);
+            m_QuadVBO->Unbind();
+        }
     }
 
     bool Batch2D::Submit(const Sprite& sprite) {
@@ -129,9 +137,10 @@ namespace Bald::Graphics {
         m_MappedBuffer = reinterpret_cast<SpriteVertexData*>(glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY));
     }
 
-    void Batch2D::End() const noexcept {
+    void Batch2D::End() noexcept {
         glUnmapBuffer(GL_ARRAY_BUFFER);
         m_QuadVBO->Unbind();
+        m_MappedBuffer = nullptr;
     }
 
     void Batch2D::Draw() noexcept {
@@ -145,7 +154,7 @@ namespace Bald::Graphics {
 
         m_QuadShader->SetUniform1iv("u_Textures", m_Textures.size(), m_TextureUnits.data());
 
-        glDrawElements(GL_TRIANGLES, m_UsedIndices, GL_UNSIGNED_INT, nullptr);
+        glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_UsedIndices), GL_UNSIGNED_INT, nullptr);
 
         m_QuadShader->Unbind();
         m_QuadVAO->Unbind();
