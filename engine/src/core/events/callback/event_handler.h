@@ -73,15 +73,9 @@ namespace Bald {
          */
 
         template<class F, class O, class ...Args>
-        void Unpack(F&& fun, O& obj, Args&& ...args) {
-            m_Function = [fun = std::forward<F>(fun), obj, args ...](const E& ev) {
-                std::invoke(fun, obj, ev, args ...);
-            };
-        }
-
-        template<class F, class O, class ...Args>
         void Unpack(F&& fun, O&& obj, Args&& ...args) {
-            m_Function = [fun = std::forward<F>(fun), obj, args...](const E& ev) {
+            // TODO: Once we employ C++20 use ... args = std::forward<Args>(args)
+            m_Function = [fun = std::forward<F>(fun), obj = std::forward<O>(obj), args...](const E& ev) {
                 std::invoke(fun, obj, ev, args...);
             };
         }
