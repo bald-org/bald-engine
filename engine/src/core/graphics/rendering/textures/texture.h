@@ -33,12 +33,31 @@ namespace Bald::Graphics {
         /**
         * @fn Texture
         * @brief Constructor
+        * @param int32_t Width.
+        * @param int32_t Height.
+        */
+
+        explicit Texture(int32_t width, int32_t height) : m_Image(width, height) {}
+
+        /**
+        * @fn Texture
+        * @brief Constructor
         * @param std::string Filepath.
         */
 
         explicit Texture(std::string filepath) : m_Image(std::move(filepath)) {}
 
     public:
+
+        /**
+        * @fn Create
+        * @brief Creates texture based on currently chosen rendering API.
+        * @param int32_t Width.
+        * @param int32_t Height.
+        * @return std::shared_ptr<Texture> Pointer to the texture object.
+        */
+
+        static std::shared_ptr<Texture> Create(int32_t width, int32_t height);
 
         /**
         * @fn Create
@@ -118,6 +137,13 @@ namespace Bald::Graphics {
         */
 
         [[nodiscard]] inline int32_t GetNrChannels() const noexcept { return m_Image.GetNrChannels(); }
+
+        /**
+        * @fn GetID
+        * @brief Returns texture's ID.
+        * @return int32_t texture ID.
+        */
+        [[nodiscard]] virtual int32_t GetID() const noexcept = 0;
 
     protected:
         Utils::Image m_Image; /**< Texture bitmap. >*/

@@ -4,7 +4,10 @@
 
 #include "bald.h"
 
+#include "graphics/rendering/rendering_device/batch_2d.h"
+
 using namespace Bald;
+using namespace Graphics;
 
 class GameLayer : public Layer {
 GENERATE_BODY(DERIVED)
@@ -16,43 +19,14 @@ public:
     ~GameLayer() override = default;
 
     void OnAttach() noexcept override {
-        // TRIANGLE
-        float vertices[] = {
-            //layout(location = 0)        layout(location = 1)             layout(location = 2)
-            -0.5f, -0.5f, 0.0f, 1.0f, 0.0f, 0.0f, 1.0f, 0.0f, 0.0f,
-            -0.5f, 0.5f, 0.0f, 0.0f, 1.0f, 0.0f, 1.0f, 0.0f, 1.0f,
-            0.5f, 0.5f, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f,
-            0.5f, -0.5f, 0.0f, 1.0f, 1.0f, 1.0f, 1.0f, 1.0f, 0.0f
-        };//
-
-        unsigned indices[] = {
-            0, 1, 2, // first triangle
-            0, 2, 3  // second triangle
-        };
-
-        Graphics::VertexBufferLayout layout = {
-            {0, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec3, "in_Position"},
-            {1, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec4, "in_Color"},
-            {2, Graphics::ShaderBuiltInType::Float, Graphics::ShaderBuiltInTypeSize::Vec2, "in_TexCoord"}
-        };
-
-        m_TriangleVBO = Graphics::VertexBuffer::Create(vertices, sizeof(vertices));
-        m_TriangleVBO->SetLayout(layout);
-
-        m_TriangleIBO = Graphics::IndexBuffer::Create(indices, sizeof(indices));
-
-        m_TriangleVAO = Graphics::VertexArray::Create();
-        m_TriangleVAO->AddVertexBuffer(m_TriangleVBO);
-        m_TriangleVAO->AddIndexBuffer(m_TriangleIBO);
-
-        m_Shader = Graphics::Shader::Create("../engine/res/shaders/basic.vert",
-                                                  "../engine/res/shaders/basic.frag");
-
-        m_Texture = Graphics::Texture::Create("../engine/res/textures/lena.jpg");
-        // END OF TRIANGLE
+        m_Sprite1.SetSize({50.0f, 50.0f});
+        m_Sprite2.SetSize({50.0f, 50.0f});
+        m_Sprite3.SetSize({50.0f, 50.0f});
     }
 
-    void OnDetach() noexcept override {}
+    void OnDetach() noexcept override {
+        Renderer2D::Shutdown();
+    }
 
     void OnUpdate() noexcept override {
         if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
@@ -67,32 +41,38 @@ public:
             m_Position.y -= m_CameraSpeed;
         }
 
-        // TRIANGLE
-        m_Camera.SetPosition(m_Position);
-        m_Shader->SetUniformMatrix4fv("u_ProjectionView", m_Camera.GetProjectionViewMatrix());
-        m_Shader->Bind();
-        m_Texture->Bind();
-        m_TriangleVAO->Bind();
-        glDrawElements(GL_TRIANGLES, static_cast<int32_t>(m_TriangleVAO->GetIndexBuffer()->GetCount()), GL_UNSIGNED_INT,
-                       nullptr);
-        // END TRIANGLE
+        m_Camera.SetPosition({m_Position.x, m_Position.y});
+
+        // Begin sprite rendering
+        Renderer2D::Begin(m_Camera);
+
+        for(std::size_t i = 0; i < 20; i++) {
+            m_Sprite1.SetPosition({0, i * 50});
+            m_Sprite2.SetPosition({50, i * 50});
+            m_Sprite3.SetPosition({2 * 50, i * 50});
+
+            Renderer2D::Submit(m_Sprite1);
+            Renderer2D::Submit(m_Sprite2);
+            Renderer2D::Submit(m_Sprite3);
+        }
+
+        Renderer2D::End();
+        // End sprite rendering
     }
 
     void OnRender() noexcept override {}
 
 private:
-    std::shared_ptr<Graphics::VertexArray> m_TriangleVAO = nullptr;
-    std::shared_ptr<Graphics::VertexBuffer> m_TriangleVBO = nullptr;
-    std::shared_ptr<Graphics::IndexBuffer> m_TriangleIBO = nullptr;
-    std::shared_ptr<Graphics::Shader> m_Shader = nullptr;
-    std::shared_ptr<Graphics::Texture> m_Texture = nullptr;
+    Camera2D m_Camera{glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f)};
+    Sprite m_Sprite1{Texture::Create("../engine/res/textures/lena.jpg")};
+    Sprite m_Sprite2{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
+    Sprite m_Sprite3{{0.8f, 0.2f, 0.2f, 1.0f}};
 
-    Graphics::Camera2D m_Camera;
-    float m_CameraSpeed = 0.005f;
+    float m_CameraSpeed = 0.5f;
     glm::vec2 m_Position{0.0f};
 };
 
-class Sandbox : public Application {
+class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
 
 public:

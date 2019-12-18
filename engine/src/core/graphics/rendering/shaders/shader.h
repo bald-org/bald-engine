@@ -206,6 +206,15 @@ namespace Bald::Graphics {
         virtual void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept = 0;
 
         /**
+         * @fn SetUniform1iv
+         * @brief Sets uniform of type vec1* with name uniformName with given values.
+         * @param const char* Name of uniform we want to set.
+         * @param std::size_t* Number of elements
+         * @param int Value.
+         */
+        virtual void SetUniform1iv(const char* uniformName, std::size_t count, int* value) const noexcept = 0;
+
+        /**
          * @fn SetUniformMatrix4fv
          * @brief Sets uniform of type mat4 with name uniformName with given values.
          * @param const char* Name of uniform we want to set.

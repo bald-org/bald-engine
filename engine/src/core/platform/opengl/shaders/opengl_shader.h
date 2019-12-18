@@ -16,7 +16,7 @@ namespace Bald::Platform::Graphics {
      * @brief Simple OpenGL shader implementation.
      */
 
-class OpenGLShader : public Bald::Graphics::Shader {
+    class OpenGLShader : public Bald::Graphics::Shader {
     public:
         /**
          * @fn OpenGLShader
@@ -189,6 +189,15 @@ class OpenGLShader : public Bald::Graphics::Shader {
          * @param [glm::tvec4<int>] vec4 -> Vector of values.
          */
         void SetUniform4i(const char* uniformName, const glm::tvec4<int>& vec) const noexcept override;
+
+        /**
+        * @fn SetUniform1iv
+        * @brief Sets uniform of type vec1* with name uniformName with given values.
+        * @param const char* Name of uniform we want to set.
+        * @param std::size_t* Number of elements
+        * @param int Value.
+        */
+        void SetUniform1iv(const char* uniformName, std::size_t count, int* value) const noexcept override;
 
         /**
         * @fn SetUniformMatrix4fv

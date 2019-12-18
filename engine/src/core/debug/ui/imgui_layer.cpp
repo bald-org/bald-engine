@@ -5,7 +5,6 @@
 #include "imgui_layer.h"
 #include "imgui.h"
 
-
 #include "vendor/imgui/examples/imgui_impl_opengl3.h"
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
@@ -90,10 +89,12 @@ namespace Bald::Debug {
     void ImGuiLayer::End() noexcept {
         Application& app = Application::GetApplication();
         ImGuiIO& io = ImGui::GetIO();
-        if(auto window = app.GetWindow().lock()) {
+        auto window = app.GetWindow().lock();
+        if(window) {
             io.DisplaySize = ImVec2(static_cast<float>(window->GetWidth()), static_cast<float>(window->GetHeight()));
         }
 
+        ImGui::EndFrame();
         ImGui::Render();
         ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 

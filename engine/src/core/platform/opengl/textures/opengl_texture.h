@@ -12,6 +12,7 @@ namespace Bald::Platform::Graphics {
 class OpenGLTexture : public Bald::Graphics::Texture {
     friend class ::Bald::Graphics::Texture;
     private:
+        explicit OpenGLTexture(int32_t width, int32_t height);
         explicit OpenGLTexture(std::string filepath);
 
     public:
@@ -64,6 +65,13 @@ class OpenGLTexture : public Bald::Graphics::Texture {
         */
 
         void SetFiltering(Bald::Graphics::TextureFilterMode filterMode, Bald::Graphics::TextureFilterMethod filterMethod) override;
+
+        /**
+        * @fn GetID
+        * @brief Returns texture's ID.
+        * @return int32_t texture ID.
+        */
+        [[nodiscard]] int32_t GetID() const noexcept override { return static_cast<int32_t>(m_ID); };
 
 private:
 

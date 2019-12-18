@@ -78,8 +78,6 @@ namespace Bald::Graphics {
         glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 #endif
 
-
-
         m_Window = glfwCreateWindow(m_Width, m_Height, m_Title, nullptr, nullptr);
         glfwMakeContextCurrent(m_Window);
         glfwSetWindowUserPointer(m_Window, this);
@@ -99,6 +97,8 @@ namespace Bald::Graphics {
 
             win.m_Width = width;
             win.m_Height = height;
+
+            glViewport(0, 0, win.m_Width, win.m_Height);
 
             EventManager::Emit<WindowResizedEvent>(win.m_Width, win.m_Height);
         });

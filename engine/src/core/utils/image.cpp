@@ -11,14 +11,37 @@ extern "C" void stbi_set_flip_vertically_on_load(int flag_true_if_should_flip);
 
 namespace Bald::Utils {
 
+    Image::Image(const int32_t width, const int32_t height)
+        : m_Filepath{""},
+          m_Width{width},
+          m_Height{height},
+          m_NrChannels(4),
+          m_Data{nullptr} {
+        u_char whitePixel[4] = {0xFF, 0xFF, 0xFF, 0xFF};
+        SetData(whitePixel, sizeof(uint32_t));
+    }
+
     Image::Image(std::string filepath)
-        : m_Filepath(std::move(filepath)) {
+        : m_Filepath{std::move(filepath)} {
         [[maybe_unused]] bool state = Init();
         BALD_ASSERT(state, "Image", "Failed to load image", state);
     }
 
     Image::~Image() {
         Shutdown();
+    }
+
+    void Image::SetData(u_char* data, std::size_t size) noexcept {
+        stbi_image_free(m_Data);
+        const auto currentSize = m_Width * m_Height * m_NrChannels;
+
+        BALD_ASSERT(size == static_cast<std::size_t>(currentSize),
+            "Image",
+            "Size of array passed to texture must be the same as the previous texture size",
+            size == static_cast<std::size_t>(currentSize));
+
+        m_Data = static_cast<u_char*>(malloc(size)); // Must be malloc, because we are using stbi that calls free on pointers.
+        std::copy(data, data + size, m_Data);
     }
 
     u_char* Image::LoadImage() {

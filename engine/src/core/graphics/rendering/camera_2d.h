@@ -30,15 +30,26 @@ namespace Bald::Graphics {
          * @param position -> New position of the camera.
          */
 
-        inline void SetPosition(const glm::vec2& position) { m_Position = position; CalculateProjectionViewMatrix(); }
+        inline void SetPosition(const glm::vec2& position) { SetPosition({position.x, position.y, 0.0f}); }
+
+        /**
+         * @fn SetPosition
+         * @brief Sets camera position and recalculates projection view matrix.
+         * @param position -> New position of the camera.
+         */
+
+        inline void SetPosition(const glm::vec3& position) {
+            m_Position = position;
+            CalculateProjectionViewMatrix();
+        }
 
         /**
          * @fn GetPosition
          * @brief Camera's position getter.
-         * @return const glm::vec2& Position.
+         * @return const glm::vec3& Position.
          */
 
-        [[nodiscard]] const glm::vec2& GetPosition() const noexcept { return m_Position; }
+        [[nodiscard]] const glm::vec3& GetPosition() const noexcept { return m_Position; }
 
         /**
          * @fn GetProjectionMatrix
@@ -74,10 +85,10 @@ namespace Bald::Graphics {
         void CalculateProjectionViewMatrix();
 
     private:
-        glm::vec2 m_Position; /**< Camera position. >*/
-        glm::mat4 m_Projection; /**< Camera projection matrix. >*/
-        glm::mat4 m_View; /**< Camera view matrix. >*/
-        glm::mat4 m_ProjectionView; /**< Camera projection view matrix. >*/
+        glm::vec3 m_Position; /**< Camera position >*/
+        glm::mat4 m_Projection; /**< Projection matrix >*/
+        glm::mat4 m_View; /**< View matrix >*/
+        glm::mat4 m_ProjectionView; /**< Projection view matrix >*/
 
     }; // END OF CLASS Camera2D
 

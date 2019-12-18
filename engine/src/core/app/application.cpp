@@ -8,6 +8,7 @@
 #include "events/layer_events.h"
 #include "utils/time/timer.h"
 #include "debug/ui/imgui_layer.h"
+#include "graphics/rendering/rendering_device/renderer_2d.h"
 #include <GLFW/glfw3.h>
 
 namespace Bald {
@@ -39,12 +40,6 @@ namespace Bald {
             }
 #endif
 
-            Debug::ImGuiLayer::Begin();
-            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
-                m_LayerStack[i]->OnRender();
-            }
-            Debug::ImGuiLayer::End();
-
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate();
             }
@@ -52,6 +47,12 @@ namespace Bald {
             for(size_t i = m_LayerStack.GetSize(); i != 0; --i) {
                 m_LayerStack[i - 1]->RunEvents();
             }
+
+            Debug::ImGuiLayer::Begin();
+            for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
+                m_LayerStack[i]->OnRender();
+            }
+            Debug::ImGuiLayer::End();
 
             m_EventManager->Flush();
             EventManager::ClearEventQueue();
@@ -69,7 +70,7 @@ namespace Bald {
         m_Instance = this;
 
         m_EventManager = std::make_unique<EventManager>();
-        m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720);
+        m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720, false);
 
         m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this](const WindowClosedEvent&) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
@@ -86,6 +87,8 @@ namespace Bald {
 
         PushOverlayImmediately<Debug::ImGuiLayer>();
 
+        Graphics::Renderer2D::Init();
+
         CORE_LOG_INFO("[Application] Initialization was successful");
 
         return true;
@@ -93,6 +96,7 @@ namespace Bald {
 
     void Application::Shutdown() {
         CORE_LOG_INFO("[Application] Shutting down application...");
+        Graphics::Renderer2D::Shutdown();
         CORE_LOG_INFO("[Application] Shutdown was successful");
     }
 

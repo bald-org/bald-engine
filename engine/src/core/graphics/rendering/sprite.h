@@ -4,7 +4,9 @@
 
 #pragma once
 
-#include "glm/glm.hpp"
+#include <glm/vec2.hpp>
+#include <glm/vec3.hpp>
+#include <glm/vec4.hpp>
 #include "graphics/rendering/textures/texture.h"
 
 namespace Bald::Graphics {
@@ -14,10 +16,26 @@ namespace Bald::Graphics {
         /**
          * @fn Sprite
          * @brief Constructor.
+         * @param glm::vec4 RGBA color.
+         */
+
+        explicit Sprite(const glm::vec4& color);
+
+        /**
+         * @fn Sprite
+         * @brief Constructor.
          * @param std::shared_ptr<Texture> Texture to be used with sprite.
          */
 
         explicit Sprite(std::shared_ptr<Texture> texture);
+
+        /**
+         * @fn SetRotation
+         * @brief Sets rotation of the sprite.
+         * @param float Rotation in angles.
+         */
+
+        inline void SetRotation(float rotation) noexcept { m_Rotation = rotation; }
 
         /**
          * @fn SetPosition
@@ -25,7 +43,15 @@ namespace Bald::Graphics {
          * @param const glm::vec2& Position.
          */
 
-        inline void SetPosition(const glm::vec2& position) noexcept { m_Position = position; }
+        inline void SetPosition(const glm::vec2& position) noexcept { SetPosition({position.x, position.y, 0.0f}); }
+
+        /**
+         * @fn SetPosition
+         * @brief Sets position of the sprite.
+         * @param const glm::vec3& Position.
+         */
+
+        inline void SetPosition(const glm::vec3& position) noexcept { m_Position = position; }
 
         /**
          * @fn SetSize
@@ -49,7 +75,15 @@ namespace Bald::Graphics {
          * @param std::shared_ptr<Texture> Texture.
          */
 
-        inline void SetTexture(std::shared_ptr<Texture> texture) noexcept { m_Texture = std::move(texture); }
+        inline void SetTexture(std::shared_ptr<Texture> texture ) noexcept { m_Texture = std::move(texture); }
+
+        /**
+         * @fn GetRotation
+         * @brief Rotation getter.
+         * @return float Rotation in angles.
+         */
+
+        [[nodiscard]] inline float GetRotation() const noexcept { return m_Rotation; }
 
         /**
          * @fn GetPosition
@@ -57,7 +91,7 @@ namespace Bald::Graphics {
          * @return const glm::vec2& Position.
          */
 
-        [[nodiscard]] inline const glm::vec2& GetPosition() const noexcept { return m_Position; }
+        [[nodiscard]] inline const glm::vec3& GetPosition() const noexcept { return m_Position; }
 
         /**
          * @fn GetSize
@@ -81,11 +115,11 @@ namespace Bald::Graphics {
          * @return std::weak_ptr<Texture> Texture.
          */
 
-        [[nodiscard]] inline std::weak_ptr<Texture> GetTexture() const noexcept { return m_Texture; }
+        [[nodiscard]] inline const std::shared_ptr<Texture>& GetTexture() const noexcept { return m_Texture; }
 
     private:
         float m_Rotation; /**< Rotation around Z axis. */
-        glm::vec2 m_Position; /**< Position */
+        glm::vec3 m_Position; /**< Position */
         glm::vec2 m_Size; /**< Size */
         glm::vec4 m_Color; /**< Color */
         std::shared_ptr<Texture> m_Texture; /**< Texture */
