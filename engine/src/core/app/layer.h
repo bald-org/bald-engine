@@ -52,9 +52,10 @@ namespace Bald {
          * @fn OnUpdate
          * @brief A pure virtual method which must be implemented on the client's side.
          *        It is updated in every iteration of the core engine loop.
+         * @param deltaTime -> Time elapsed since last frame.
          */
 
-        virtual void OnUpdate() noexcept = 0;
+        virtual void OnUpdate(float deltaTime) noexcept = 0;
 
         /**
          * @fn OnRender

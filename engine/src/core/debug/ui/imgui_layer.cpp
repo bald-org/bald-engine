@@ -50,7 +50,7 @@ namespace Bald::Debug {
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate() noexcept {}
+    void ImGuiLayer::OnUpdate([[maybe_unused]] float deltaTime) noexcept {}
 
     void ImGuiLayer::OnRender() noexcept {
         static bool show = true;

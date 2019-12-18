@@ -7,17 +7,7 @@
 #include <memory>
 #include "layer_stack.h"
 #include "graphics/window.h"
-
-// TRIANGLE
-#include "graphics/rendering/buffers/vertex_buffer_layout.h"
-#include "graphics/rendering/buffers/vertex_array.h"
-#include "graphics/rendering/buffers/vertex_buffer.h"
-#include "graphics/rendering/buffers/index_buffer.h"
-#include "graphics/rendering/shaders/shader.h"
-#include "graphics/rendering/textures/texture.h"
-
-#include "graphics/rendering/camera_2d.h"
-// END TRIANGLE
+#include "controllers/time_controller.hpp"
 
 namespace Bald {
 
@@ -183,6 +173,7 @@ namespace Bald {
         std::unique_ptr<EventManager> m_EventManager; /** < Pointer to Main Event Manager >*/
         std::shared_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
         LayerStack m_LayerStack; /**< Main layer stack */
+        Controllers::TimeController m_TimeController; /**< Primary controller that is responsible for handling delta time */
 
     private:
         static Application* m_Instance; /**< Application is a singleton, meaning only one instance of it can occur in a running program */

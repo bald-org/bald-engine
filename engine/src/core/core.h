@@ -6,5 +6,3 @@
 
 #include "utils.h"
 #include "math_utils.h"
-
-// Entry Point

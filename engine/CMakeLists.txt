@@ -77,7 +77,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/time/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp

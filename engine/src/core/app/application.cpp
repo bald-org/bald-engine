@@ -6,7 +6,6 @@
 #include "input/input_manager.h"
 #include "events/window_events.h"
 #include "events/layer_events.h"
-#include "utils/time/timer.h"
 #include "debug/ui/imgui_layer.h"
 #include "graphics/rendering/rendering_device/renderer_2d.h"
 #include <GLFW/glfw3.h>
@@ -33,6 +32,8 @@ namespace Bald {
 
         while(m_Running) {
             m_Window->Clear();
+            float deltaTime = m_TimeController.GetDeltaTimeInMicroseconds();
+            CORE_LOG_TRACE(std::to_string(deltaTime));
 
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0){
@@ -41,7 +42,7 @@ namespace Bald {
 #endif
 
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
-                m_LayerStack[i]->OnUpdate();
+                m_LayerStack[i]->OnUpdate(deltaTime);
             }
 
             for(size_t i = m_LayerStack.GetSize(); i != 0; --i) {

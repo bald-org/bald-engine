@@ -62,10 +62,18 @@ namespace Bald::Utils {
         /**
          * @fn ElapsedMilliseconds
          * @brief A method which returns the amount of elapsed milliseconds since the start of the timer.
-         * @return [double] Amount of milliseconds as long.
+         * @return [long] Amount of milliseconds as long.
          */
 
         [[nodiscard]] long ElapsedMilliseconds() const noexcept;
+
+        /**
+         * @fn ElapsedMicroseconds
+         * @brief A method which returns the amount of elapsed microseconds since the start of the timer.
+         * @return [long] Amount of microseconds as long.
+         */
+
+        [[nodiscard]] long ElapsedMicroseconds() const noexcept;
 
         /**
          * @fn IsRunning
