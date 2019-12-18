@@ -22,6 +22,7 @@ namespace Bald {
     template<typename E>
     class EventHandler : public EventHandlerInterface {
     GENERATE_BODY(DERIVED)
+
     public:
 
         /**
@@ -33,9 +34,9 @@ namespace Bald {
 
         template<class F, class... Args>
         explicit EventHandler(F&& fun, Args&& ... args) :
-                EventHandlerInterface() {
-            if (this->m_ID != 0) {
-                if constexpr (std::is_member_function_pointer_v<F>){
+            EventHandlerInterface() {
+            if(this->m_ID != 0) {
+                if constexpr (std::is_member_function_pointer_v<F>) {
                     Unpack(std::forward<F>(fun), std::forward<Args>(args)...);
                 } else {
                     m_Function = [=](const E& ev) {
@@ -44,7 +45,8 @@ namespace Bald {
                 }
 
             } else {
-                CORE_LOG_WARN("[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
+                CORE_LOG_WARN(
+                    "[EventHandler] Could not create EventHandler object because maximum number of ID's was reached");
             }
         }
 
@@ -70,17 +72,17 @@ namespace Bald {
          * @param args -> Arguments that will be bound to the method.
          */
 
-        template <class F, class O, class ...Args>
+        template<class F, class O, class ...Args>
         void Unpack(F&& fun, O& obj, Args&& ...args) {
-            m_Function = [fun, &obj, &args...](const E& ev) {
-                std::invoke(fun, obj, ev, std::forward<Args>(args)...);
+            m_Function = [fun = std::forward<F>(fun), obj, args ...](const E& ev) {
+                std::invoke(fun, obj, ev, args ...);
             };
         }
 
-        template <class F, class O, class ...Args>
+        template<class F, class O, class ...Args>
         void Unpack(F&& fun, O&& obj, Args&& ...args) {
-            m_Function = [fun, obj, &args...](const E& ev) {
-                std::invoke(fun, obj, ev, std::forward<Args>(args)...);
+            m_Function = [fun = std::forward<F>(fun), obj, args...](const E& ev) {
+                std::invoke(fun, obj, ev, args...);
             };
         }
 
