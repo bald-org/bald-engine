@@ -41,7 +41,7 @@ int main() {
 
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < E; j++) {
-            EventManager::Emit<KeyEvent>(static_cast<unsigned >(GLFW_KEY_0));
+            EventManager::Emit<KeyEvent>(static_cast<unsigned >(BALD_KEY_0));
         }
         em.Flush();
         EventManager::ClearEventQueue();

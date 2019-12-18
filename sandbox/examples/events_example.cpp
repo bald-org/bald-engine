@@ -19,15 +19,15 @@ public:
 
         m_EventManager.Subscribe<Bald::KeyPressedEvent>(Bald::HandleType::SYNC, [&](const Bald::KeyPressedEvent& e) {
 
-            if(e.GetKeyCode() == GLFW_KEY_W) {
+            if(e.GetKeyCode() == BALD_KEY_W) {
                 position.y += 0.5f;
-            } else if(e.GetKeyCode() == GLFW_KEY_A) {
+            } else if(e.GetKeyCode() == BALD_KEY_A) {
                 position.x -= 0.5f;
-            } else if(e.GetKeyCode() == GLFW_KEY_S) {
+            } else if(e.GetKeyCode() == BALD_KEY_S) {
                 position.y -= 0.5f;
-            } else if(e.GetKeyCode() == GLFW_KEY_D) {
+            } else if(e.GetKeyCode() == BALD_KEY_D) {
                 position.x += 0.5f;
-            } else if(e.GetKeyCode() == GLFW_KEY_ESCAPE) {
+            } else if(e.GetKeyCode() == BALD_KEY_ESCAPE) {
                 Bald::EventManager::Emit<Bald::WindowClosedEvent>();
             }
 
