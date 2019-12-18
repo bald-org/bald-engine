@@ -200,7 +200,7 @@ private:
     glm::vec2 m_Position{0.0f};
 };
 
-class Sandbox : public Application {
+class Sandbox : public Bald::Application {
 GENERATE_BODY(DERIVED)
 
 public:
