@@ -18,7 +18,7 @@ public:
 
     void OnDetach() noexcept override {}
 
-    void OnUpdate() noexcept override {
+    void OnUpdate([[maybe_unused]] float deltaTime) noexcept override {
         static glm::vec2 position{0.0f, 0.0f};
 
         if(Bald::Input::InputManager::IsKeyPressed(BALD_KEY_W)) {

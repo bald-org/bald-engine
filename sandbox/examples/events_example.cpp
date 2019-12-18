@@ -42,7 +42,7 @@ public:
 
     void OnDetach() noexcept override {}
 
-    void OnUpdate() noexcept override {}
+    void OnUpdate([[maybe_unused]] float deltaTime) noexcept override {}
 
     void OnRender() noexcept override {}
 
