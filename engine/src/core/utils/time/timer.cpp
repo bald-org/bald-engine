@@ -21,20 +21,20 @@ namespace Bald::Utils {
         m_IsRunning = true;
     }
 
-    double Timer::ElapsedSeconds() const noexcept {
-        return static_cast<double>(ElapsedMilliseconds()) / 1000.0;
+    float Timer::ElapsedSeconds() const noexcept {
+        return static_cast<float>(ElapsedMilliseconds()) / 1000.0f;
     }
 
-    long Timer::ElapsedMilliseconds() const noexcept {
+    uint32_t Timer::ElapsedMilliseconds() const noexcept {
         return ElapsedMicroseconds() / 1000;
     }
 
-    long Timer::ElapsedMicroseconds() const noexcept {
+    uint32_t Timer::ElapsedMicroseconds() const noexcept {
         std::chrono::time_point<std::chrono::system_clock> endTime;
 
         m_IsRunning ? endTime = std::chrono::system_clock::now() : endTime = m_EndTime;
 
-        return static_cast<long>(std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_StartTime).count());
+        return static_cast<uint32_t>(std::chrono::duration_cast<std::chrono::microseconds>(endTime - m_StartTime).count());
     }
 
     bool Timer::IsRunning() const noexcept {

@@ -8,56 +8,123 @@
 
 namespace Bald::Controllers {
 
+    /**
+     * @class TimeController
+     * @brief This class is responsible for handling a Timer.
+     */
+
     class TimeController {
     public:
 
+        /**
+         * @fn TimeController
+         * @brief Starts the timer.
+         */
+
         inline TimeController();
 
-        [[nodiscard]] inline double GetDeltaTimeInSeconds() noexcept;
+        /**
+         * @fn ~TimeController
+         * @brief Starts the timer.
+         */
+
+        inline ~TimeController();
+
+        /**
+         * @fn GetDeltaTimeInSeconds
+         * @brief Delta time getter.
+         * @return float Delta time.
+         */
+
+        [[nodiscard]] inline float GetDeltaTimeInSeconds() noexcept;
+
+        /**
+         * @fn GetDeltaTimeInMilliseconds
+         * @brief Delta time getter.
+         * @return float Delta time.
+         */
 
         [[nodiscard]] inline float GetDeltaTimeInMilliseconds() noexcept;
+
+        /**
+         * @fn GetDeltaTimeInMicroseconds
+         * @brief Delta time getter.
+         * @return float Delta time.
+         */
 
         [[nodiscard]] inline float GetDeltaTimeInMicroseconds() noexcept;
 
     private:
-        inline void StartTimer();
 
-        inline void StopTimer();
+        /**
+         * @fn StartTimer
+         * @brief Starts the timer.
+         */
+
+        inline void StartTimer() noexcept;
+
+        /**
+         * @fn StopTimer
+         * @brief Stops the timer.
+         */
+
+        inline void StopTimer() noexcept;
+
+        /**
+         * @fn ResetTimer
+         * @brief Resets the timer.
+         */
 
         inline void ResetTimer() noexcept;
 
+        /**
+         * @fn IsTimerRunning
+         * @brief Checks whether or not the timer is currently running.
+         * @return bool true -> timer is currently running.
+         *              false -> timer is currently not running.
+         */
+
         [[nodiscard]] inline bool IsTimerRunning() const noexcept;
 
-        [[nodiscard]] inline long GetElapsedMicroseconds() noexcept;
+        /**
+         * @fn GetElapsedMicroseconds
+         * @brief Helper method that retrieves elapsed time in microseconds.
+         * @return uint32_t Elapsed microseconds since start of the timer or last reset.
+         */
+
+        [[nodiscard]] inline uint32_t GetElapsedMicroseconds() noexcept;
 
     private:
-        Utils::Timer m_Timer;
+        Utils::Timer m_Timer; /**< Timer managed by this controller. */
     }; // END OF CLASS TimeController
 
-    TimeController::TimeController() {
+    inline TimeController::TimeController() {
         StartTimer();
     }
 
-    inline double TimeController::GetDeltaTimeInSeconds() noexcept {
-        return static_cast<double>(GetDeltaTimeInMilliseconds()) / 1000.0;
+    inline TimeController::~TimeController() {
+        StopTimer();
     }
 
-    float TimeController::GetDeltaTimeInMilliseconds() noexcept {
+    inline float TimeController::GetDeltaTimeInSeconds() noexcept {
+        return GetDeltaTimeInMilliseconds() / 1000.0f;
+    }
+
+    inline float TimeController::GetDeltaTimeInMilliseconds() noexcept {
         return GetDeltaTimeInMicroseconds() / 1000.0f;
     }
 
-    float TimeController::GetDeltaTimeInMicroseconds() noexcept {
-        StopTimer();
+    inline float TimeController::GetDeltaTimeInMicroseconds() noexcept {
         auto deltaTime = static_cast<float>(GetElapsedMicroseconds());
         ResetTimer();
         return deltaTime;
     }
 
-    inline void TimeController::StartTimer() {
+    inline void TimeController::StartTimer() noexcept {
         m_Timer.Start();
     }
 
-    inline void TimeController::StopTimer() {
+    inline void TimeController::StopTimer() noexcept {
         m_Timer.Stop();
     }
 
@@ -69,7 +136,7 @@ namespace Bald::Controllers {
         return m_Timer.IsRunning();
     }
 
-    inline long TimeController::GetElapsedMicroseconds() noexcept {
+    inline uint32_t TimeController::GetElapsedMicroseconds() noexcept {
         return m_Timer.ElapsedMicroseconds();
     }
 

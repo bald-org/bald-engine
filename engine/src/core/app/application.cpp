@@ -32,8 +32,6 @@ namespace Bald {
 
         while(m_Running) {
             m_Window->Clear();
-            float deltaTime = m_TimeController.GetDeltaTimeInMicroseconds();
-            CORE_LOG_TRACE(std::to_string(deltaTime));
 
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0){
@@ -41,6 +39,7 @@ namespace Bald {
             }
 #endif
 
+            float deltaTime = m_TimeController.GetDeltaTimeInMicroseconds();
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnUpdate(deltaTime);
             }
