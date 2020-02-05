@@ -132,7 +132,6 @@ endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-
 if(DEFINE_DEBUG)
 	target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})
 elseif(DEFINE_RELEASE)
