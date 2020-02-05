@@ -1,6 +1,27 @@
 cmake_minimum_required(VERSION 3.14)
 project(sandbox)
 
+### DEFINITIONS/FLAGS
+
+if(DEFINE_DEBUG)
+	add_definitions(-DDEBUG)
+elseif(DEFINE_RELEASE)
+	add_definitions(-DRELEASE)
+endif()
+
+if(TRAVIS_BUILD)
+	add_definitions(-DTRAVIS)
+endif()
+
+if(LINUX_BUILD)
+	add_definitions(-DLINUX)
+elseif(APPLE_BUILD)
+	add_definitions(-DLINUX)
+	add_definitions(-DAPPLE)
+elseif(WINDOWS_BUILD)
+	add_definitions(-DWINDOWS)
+endif()
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 if(LINUX_BUILD)
@@ -13,27 +34,16 @@ elseif(APPLE_BUILD)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
 endif()
 
-if(DEFINE_DEBUG)
-    add_definitions(-DDEBUG)
-elseif(DEFINE_RELEASE)
-    add_definitions(-DRELEASE)
-endif()
+#### END DEFINITIONS/FLAGS
 
-if(TRAVIS_BUILD)
-    add_definitions(-DTRAVIS)
-endif()
-
-if(LINUX_BUILD)
-    add_definitions(-DLINUX)
-elseif(WINDOWS_BUILD)
-	add_definitions(-DWINDOWS)
-endif()
-
+#### CONFIG
 
 include_directories(${bald_engine_include_dirs})
 
 add_executable(sandbox src/sandbox.cpp)
 target_link_libraries(sandbox PUBLIC bald_engine)
+
+#### END CONFIG
 
 #### EXAMPLES
 

@@ -43,26 +43,32 @@ include_directories(${bald_engine_include_dirs})
 ### DEFINITIONS/FLAGS
 
 if(DEFINE_DEBUG)
-    add_definitions(-DDEBUG)
+	add_definitions(-DDEBUG)
 elseif(DEFINE_RELEASE)
-    add_definitions(-DRELEASE)
+	add_definitions(-DRELEASE)
 endif()
 
 if(TRAVIS_BUILD)
-    add_definitions(-DTRAVIS)
+	add_definitions(-DTRAVIS)
+endif()
+
+if(LINUX_BUILD)
+	add_definitions(-DLINUX)
+elseif(APPLE_BUILD)
+	add_definitions(-DLINUX)
+	add_definitions(-DAPPLE)
+elseif(WINDOWS_BUILD)
+	add_definitions(-DWINDOWS)
 endif()
 
 if(LINUX_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
-	add_definitions(-DLINUX)
 elseif(WINDOWS_BUILD)
-	add_definitions(-DWINDOWS)
 	#TODO: Add warning and optimization flags
 elseif(APPLE_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
-	add_definitions(-DAPPLE)
 endif()
 
 #### END DEFINITIONS/FLAGS
