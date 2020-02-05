@@ -6,7 +6,7 @@
 
 #include <chrono>
 
-namespace Bald::Utils {
+namespace Bald::Models {
 
     /**
      * @class Timer
@@ -91,4 +91,4 @@ namespace Bald::Utils {
 
     }; // END OF CLASS Timer
 
-} // END OF NAMESPACE Bald::Utils
+} // END OF NAMESPACE Bald::Models

@@ -4,7 +4,7 @@
 
 #include "timer.h"
 
-namespace Bald::Utils {
+namespace Bald::Models {
 
     void Timer::Start() noexcept {
         m_StartTime = std::chrono::system_clock::now();
@@ -41,4 +41,4 @@ namespace Bald::Utils {
         return m_IsRunning;
     }
 
-} // END OF NAMESPACE Bald::Utils
+} // END OF NAMESPACE Bald::Models

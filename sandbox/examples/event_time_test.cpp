@@ -5,7 +5,7 @@
 #include "events/event_manager.h"
 #include "events/key_events.h"
 #include "input/input_manager.h"
-#include "core/utils/time/timer.h"
+#include "src/core/models/timer.h"
 #include "core/debug/logger/log_manager.h"
 
 #include <iostream>
@@ -35,7 +35,7 @@ int main() {
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, a);
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
 
-    Utils::Timer timer;
+    Models::Timer timer;
     timer.Start();
 
     for(int i = 0; i < N; i++) {

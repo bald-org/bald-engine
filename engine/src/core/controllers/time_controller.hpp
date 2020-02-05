@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "utils/time/timer.h"
+#include "src/core/models/timer.h"
 
 namespace Bald::Controllers {
 
@@ -95,7 +95,7 @@ namespace Bald::Controllers {
         [[nodiscard]] inline uint32_t GetElapsedMicroseconds() noexcept;
 
     private:
-        Utils::Timer m_Timer; /**< Timer managed by this controller. */
+        Models::Timer m_Timer; /**< Timer managed by this controller. */
     }; // END OF CLASS TimeController
 
     inline TimeController::TimeController() {

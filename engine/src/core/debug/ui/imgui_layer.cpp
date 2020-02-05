@@ -9,7 +9,7 @@
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
 #include "application.h"
-#include "utils/time/timer.h"
+#include "src/core/models/timer.h"
 
 #include "GLFW/glfw3.h"
 
@@ -55,7 +55,7 @@ namespace Bald::Debug {
     void ImGuiLayer::OnRender() noexcept {
         static bool show = true;
 
-        static Utils::Timer timer;
+        static Models::Timer timer;
         static bool init = true;
         static float frameCounter = 0;
         static float fps = 0;
