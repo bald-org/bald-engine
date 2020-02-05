@@ -76,14 +76,7 @@ namespace Bald {
         void Unpack(F&& fun, O&& obj, Args&& ...args) {
             // TODO: Once we employ C++20 use ... args = std::forward<Args>(args)
             m_Function = [function = std::forward<F>(fun), object = std::forward<O>(obj), args...](const E& ev) {
-                if constexpr(std::is_pointer_v<decltype(object)>) {
-                    // TODO: This seems to be a bit too tricky :)
-                    using type = std::remove_pointer_t<std::remove_const_t<std::remove_cv_t<decltype(object)>>>;
-                    auto ref = const_cast<type&>(*object);
-                    (ref.*function)(ev, args...);
-                } else {
-                    std::invoke(function, static_cast<std::remove_cv_t<decltype(object)>>(object), ev, args...);
-                }
+                std::invoke(function, object, ev, args...);
             };
         }
 
