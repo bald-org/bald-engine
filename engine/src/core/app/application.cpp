@@ -34,7 +34,7 @@ namespace Bald {
             m_Window->Clear();
 
 #ifdef TRAVIS
-            if(timer.ElapsedSeconds() > 1.0){
+            if(timer.ElapsedSeconds() > 1.0f){
                 EventManager::Emit<WindowClosedEvent>();
             }
 #endif

@@ -18,8 +18,8 @@ void sub(const Bald::Event&, int& i) {
 }
 
 struct A {
-    void met(const Bald::Event&) { i++; };
-    int i = 0;
+    void met(const Bald::Event&) const { i++; };
+    mutable int i = 0;
 };
 
 int main() {
