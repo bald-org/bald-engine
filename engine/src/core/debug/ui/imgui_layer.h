@@ -53,9 +53,10 @@ namespace Bald::Debug {
         /**
          * @fn OnUpdate
          * @brief Currently it is an empty method.
+         * @param deltaTime -> Time elapsed since last frame.
          */
 
-        void OnUpdate() noexcept override;
+        void OnUpdate(float deltaTime) noexcept override;
 
         /**
          * @fn OnRender

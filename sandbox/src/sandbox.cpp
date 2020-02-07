@@ -4,8 +4,6 @@
 
 #include "bald.h"
 
-#include "graphics/rendering/rendering_device/batch_2d.h"
-
 using namespace Bald;
 using namespace Graphics;
 
@@ -28,17 +26,17 @@ public:
         Renderer2D::Shutdown();
     }
 
-    void OnUpdate() noexcept override {
+    void OnUpdate(float deltaTime) noexcept override {
         if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
-            m_Position.x -= m_CameraSpeed;
+            m_Position.x -= m_CameraSpeed * deltaTime;
         } else if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
-            m_Position.x += m_CameraSpeed;
+            m_Position.x += m_CameraSpeed * deltaTime;
         }
 
         if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
-            m_Position.y += m_CameraSpeed;
+            m_Position.y += m_CameraSpeed * deltaTime;
         } else if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
-            m_Position.y -= m_CameraSpeed;
+            m_Position.y -= m_CameraSpeed * deltaTime;
         }
 
         m_Camera.SetPosition({m_Position.x, m_Position.y});
@@ -68,7 +66,7 @@ private:
     Sprite m_Sprite2{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
     Sprite m_Sprite3{{0.8f, 0.2f, 0.2f, 1.0f}};
 
-    float m_CameraSpeed = 0.5f;
+    float m_CameraSpeed = 0.0005f;
     glm::vec2 m_Position{0.0f};
 };
 

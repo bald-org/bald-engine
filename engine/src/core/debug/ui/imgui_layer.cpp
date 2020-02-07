@@ -9,7 +9,7 @@
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
 #include "application.h"
-#include "utils/time/timer.h"
+#include "src/core/models/timer.h"
 
 #include "GLFW/glfw3.h"
 
@@ -50,15 +50,15 @@ namespace Bald::Debug {
         ImGui::DestroyContext();
     }
 
-    void ImGuiLayer::OnUpdate() noexcept {}
+    void ImGuiLayer::OnUpdate([[maybe_unused]] float deltaTime) noexcept {}
 
     void ImGuiLayer::OnRender() noexcept {
         static bool show = true;
 
-        static Utils::Timer timer;
+        static Models::Timer timer;
         static bool init = true;
-        static unsigned frameCounter = 0;
-        static unsigned fps = 0;
+        static float frameCounter = 0;
+        static float fps = 0;
 
         if(init)
         {
@@ -69,12 +69,16 @@ namespace Bald::Debug {
         ImGui::ShowDemoWindow(&show);
 
         ImGui::BeginChild("FPS");
-        if(timer.ElapsedSeconds() >= 1.0) {
-            fps = static_cast<unsigned>(frameCounter/timer.ElapsedSeconds());
+
+        float elapsedSeconds = timer.ElapsedSeconds();
+
+        if(elapsedSeconds >= 1.0f) {
+            fps = frameCounter/elapsedSeconds;
             frameCounter = 0;
             timer.Reset();
         }
-        ImGui::Text("FPS: %d", fps);
+
+        ImGui::Text("FPS: %.1f", static_cast<double>(fps));
         ImGui::EndChild();
 
         ++frameCounter;

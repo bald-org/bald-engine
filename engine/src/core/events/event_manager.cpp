@@ -42,9 +42,9 @@ namespace Bald {
     }
 
     void EventManager::Flush() noexcept {
-        for (auto & it : m_EventQueue) {
-            const auto& async_callbacks = m_CallbacksAsync.find(it->GetType());
-            const auto& sync_callbacks = m_CallbacksSync.find(it->GetType());
+        for (Event*& event : m_EventQueue) {
+            const auto& async_callbacks = m_CallbacksAsync.find(event->GetType());
+            const auto& sync_callbacks = m_CallbacksSync.find(event->GetType());
 
             if (async_callbacks == m_CallbacksAsync.end() && sync_callbacks == m_CallbacksSync.end()) {
                 continue;
@@ -52,22 +52,22 @@ namespace Bald {
             std::vector<std::future<void>> ft;
             if (async_callbacks != m_CallbacksAsync.end()) { //TODO: investigate impact of resizing std::vector -> ft to correct size inside this if
                 for (const auto& fun : async_callbacks->second) {
-                    ft.emplace_back(std::async(std::launch::async, [&it, &fun]() {
-                        fun->Run(*it);
+                    ft.emplace_back(std::async(std::launch::async, [event, &fun]() {
+                        fun->Run(*event);
                     }));
                 }
             }
 
             if (sync_callbacks != m_CallbacksSync.end()) {
-                for (const auto& fun : sync_callbacks->second) fun->Run(*it);
+                for (const auto& fun : sync_callbacks->second) fun->Run(*event);
             }
 
             for (const auto& f : ft) {
                 f.wait();
             }
 
-            delete it;
-            it = nullptr;
+            delete event;
+            event = nullptr;
         }
         m_EventQueue.erase(std::remove(m_EventQueue.begin(), m_EventQueue.end(), nullptr), m_EventQueue.end());
     }
@@ -87,8 +87,8 @@ namespace Bald {
     }
 
     void EventManager::ClearEventQueue() noexcept {
-        for (const auto& elem : m_EventQueue)
-            delete elem;
+        for (auto* event : m_EventQueue)
+            delete event;
         m_EventQueue.clear();
     }
 

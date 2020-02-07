@@ -30,7 +30,7 @@ TEST(Event_system, is_method_called_on_correct_object) {
     EventManager em;
     bool result = false;
     A a;
-    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::IsTheSame, a, std::reference_wrapper(result), std::reference_wrapper(a));
+    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::IsTheSame, std::reference_wrapper(a), std::reference_wrapper(result), std::reference_wrapper(a));
     EventManager::Emit<KeyEvent>(static_cast<unsigned >(BALD_KEY_0));
     em.Flush();
     EventManager::ClearEventQueue();

@@ -6,7 +6,7 @@
 
 #include <chrono>
 
-namespace Bald::Utils {
+namespace Bald::Models {
 
     /**
      * @class Timer
@@ -54,18 +54,26 @@ namespace Bald::Utils {
         /**
          * @fn ElapsedSeconds
          * @brief A method which returns the amount of elapsed seconds since the start of the timer.
-         * @return [double] Amount of seconds as double.
+         * @return [float] Amount of seconds as double.
          */
 
-        [[nodiscard]] double ElapsedSeconds() const noexcept;
+        [[nodiscard]] float ElapsedSeconds() const noexcept;
 
         /**
          * @fn ElapsedMilliseconds
          * @brief A method which returns the amount of elapsed milliseconds since the start of the timer.
-         * @return [double] Amount of milliseconds as long.
+         * @return [uint32_t] Amount of milliseconds as long.
          */
 
-        [[nodiscard]] long ElapsedMilliseconds() const noexcept;
+        [[nodiscard]] uint32_t ElapsedMilliseconds() const noexcept;
+
+        /**
+         * @fn ElapsedMicroseconds
+         * @brief A method which returns the amount of elapsed microseconds since the start of the timer.
+         * @return [uint32_t] Amount of microseconds as long.
+         */
+
+        [[nodiscard]] uint32_t ElapsedMicroseconds() const noexcept;
 
         /**
          * @fn IsRunning
@@ -83,4 +91,4 @@ namespace Bald::Utils {
 
     }; // END OF CLASS Timer
 
-} // END OF NAMESPACE Bald::Utils
+} // END OF NAMESPACE Bald::Models

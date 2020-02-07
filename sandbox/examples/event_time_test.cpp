@@ -4,9 +4,8 @@
 
 #include "events/event_manager.h"
 #include "events/key_events.h"
-#include "events/window_events.h"
 #include "input/input_manager.h"
-#include "core/utils/time/timer.h"
+#include "src/core/models/timer.h"
 #include "core/debug/logger/log_manager.h"
 
 #include <iostream>
@@ -19,8 +18,8 @@ void sub(const Bald::Event&, int& i) {
 }
 
 struct A {
-    void met(const Bald::Event&) { i++; };
-    int i = 0;
+    void met(const Bald::Event&) const { i++; };
+    mutable int i = 0;
 };
 
 int main() {
@@ -31,12 +30,12 @@ int main() {
 
     EventManager em;
     int x = 0;
-    A a;
+    const A a;
     em.Subscribe<KeyEvent>(HandleType::SYNC, sub, std::reference_wrapper(x));
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, a);
     em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
 
-    Utils::Timer timer;
+    Models::Timer timer;
     timer.Start();
 
     for(int i = 0; i < N; i++) {
@@ -49,6 +48,7 @@ int main() {
 
     timer.Stop();
 
-    std::cout << std::to_string(N) << " events -> " << std::to_string(2 * E) << " times took: " << timer.ElapsedSeconds()
+    std::cout << std::to_string(N) << " events -> " << std::to_string(2 * E) << " times took: "
+              << timer.ElapsedSeconds()
               << " s\n";
 }

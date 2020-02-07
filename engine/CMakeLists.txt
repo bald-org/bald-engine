@@ -43,26 +43,32 @@ include_directories(${bald_engine_include_dirs})
 ### DEFINITIONS/FLAGS
 
 if(DEFINE_DEBUG)
-    add_definitions(-DDEBUG)
+	add_definitions(-DDEBUG)
 elseif(DEFINE_RELEASE)
-    add_definitions(-DRELEASE)
+	add_definitions(-DRELEASE)
 endif()
 
 if(TRAVIS_BUILD)
-    add_definitions(-DTRAVIS)
+	add_definitions(-DTRAVIS)
+endif()
+
+if(LINUX_BUILD)
+	add_definitions(-DLINUX)
+elseif(APPLE_BUILD)
+	add_definitions(-DLINUX)
+	add_definitions(-DAPPLE)
+elseif(WINDOWS_BUILD)
+	add_definitions(-DWINDOWS)
 endif()
 
 if(LINUX_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
-	add_definitions(-DLINUX)
 elseif(WINDOWS_BUILD)
-	add_definitions(-DWINDOWS)
 	#TODO: Add warning and optimization flags
 elseif(APPLE_BUILD)
 	set(DEBUG_COMPILE_FLAGS -fPIC -std=c++17 -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g)
 	set(RELEASE_COMPILE_FLAGS -std=c++17 -Ofast -Werror)
-	add_definitions(-DAPPLE)
 endif()
 
 #### END DEFINITIONS/FLAGS
@@ -77,11 +83,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/file_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/split_string.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/utils/time/timer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
@@ -98,6 +100,7 @@ add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/shaders/shader.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/textures/texture.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/input/input_manager.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/models/timer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_index_buffer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/platform/opengl/buffers/opengl_vertex_array.cpp
@@ -125,7 +128,6 @@ else ()
 endif ()
 
 target_include_directories(bald_engine INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
 
 if(DEFINE_DEBUG)
 	target_compile_options(bald_engine PUBLIC ${DEBUG_COMPILE_FLAGS})

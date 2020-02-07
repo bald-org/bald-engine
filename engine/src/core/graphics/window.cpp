@@ -33,10 +33,6 @@ namespace Bald::Graphics {
         glfwSwapBuffers(m_Window);
     }
 
-    // TODO: Once we start rendering we will have to deal with:
-    //       glfwGetFramebufferSize(m_Window, &m_Width, &m_Height);
-    //       glViewport(0, 0, m_Width, m_Height);
-
     void Window::SetVSync(bool enabled) noexcept {
         enabled ? glfwSwapInterval(1) : glfwSwapInterval(0);
 
