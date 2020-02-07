@@ -83,7 +83,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
