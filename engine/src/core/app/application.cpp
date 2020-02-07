@@ -26,7 +26,7 @@ namespace Bald {
     void Application::Run() {
 
 #ifdef TRAVIS
-        Utils::Timer timer;
+        Models::Timer timer;
         timer.Start();
 #endif
 
