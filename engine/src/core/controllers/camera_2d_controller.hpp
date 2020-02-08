@@ -9,8 +9,19 @@
 
 namespace Bald::Controllers {
 
+    /**
+     * @class Camera2DController
+     * @brief This class is responsible for handling a Camera2D.
+     */
+
     class Camera2DController {
     public:
+
+        /**
+         * @fn Camera2DController
+         * @brief Takes ownership of certain Camera2D.
+         */
+
         explicit Camera2DController(std::unique_ptr<Graphics::Camera2D> camera);
 
         Camera2DController(const Camera2DController&) = delete;
@@ -21,14 +32,26 @@ namespace Bald::Controllers {
 
         Camera2DController& operator=(Camera2DController&&) = delete;
 
+        /**
+         * @fn GetCamera
+         * @brief Getter.
+         * @return const Graphics::Camera2D& Camera.
+         */
+
         [[nodiscard]] const Graphics::Camera2D& GetCamera() const noexcept { return *m_Camera; }
+
+        /**
+         * @fn GetCamera
+         * @brief This method is called once every frame.
+         * @param deltaTime -> Time elapsed since last frame.
+         */
 
         void OnUpdate(float deltaTime) noexcept;
 
     private:
-        std::unique_ptr<Graphics::Camera2D> m_Camera;
-        glm::vec2 m_Position{0.0f};
-        float m_CameraSpeed = 0.0005f;
+        std::unique_ptr<Graphics::Camera2D> m_Camera; /**< Camera2D managed by this controller. */
+        glm::vec2 m_Position; /**< Current camera position. */
+        float m_CameraSpeed; /**< Current camera speed. */
     }; // END OF CLASS Camera2DController
 
 } // END OF NAMESPACE Bald::Controllers

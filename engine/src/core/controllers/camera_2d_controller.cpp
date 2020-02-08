@@ -9,18 +9,24 @@
 namespace Bald::Controllers {
 
     Camera2DController::Camera2DController(std::unique_ptr<Graphics::Camera2D> camera)
-        : m_Camera(std::move(camera)) {}
+        : m_Camera(std::move(camera))
+        , m_Position{0.0}
+        , m_CameraSpeed{0.0005f} {}
 
     void Camera2DController::OnUpdate(float deltaTime) noexcept {
         if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
             m_Position.x -= m_CameraSpeed * deltaTime;
-        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
+        }
+
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
             m_Position.x += m_CameraSpeed * deltaTime;
         }
 
         if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
             m_Position.y += m_CameraSpeed * deltaTime;
-        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
+        }
+
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
             m_Position.y -= m_CameraSpeed * deltaTime;
         }
 

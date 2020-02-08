@@ -28,7 +28,6 @@ public:
     }
 
     void OnUpdate(float deltaTime) noexcept override {
-        // Begin sprite rendering
         m_CameraController.OnUpdate(deltaTime);
 
         Renderer2D::Begin(m_CameraController.GetCamera());
@@ -44,7 +43,6 @@ public:
         }
 
         Renderer2D::End();
-        // End sprite rendering
     }
 
     void OnRender() noexcept override {}
