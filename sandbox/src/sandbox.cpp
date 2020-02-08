@@ -32,7 +32,19 @@ public:
 
         Renderer2D::Begin(m_CameraController.GetCamera());
 
+        Renderer2D::Submit(m_Sprite1);
+
         for(std::size_t i = 0; i < 20; i++) {
+            float rotation = m_Sprite1.GetRotation();
+            if(Input::InputManager::IsKeyPressed(BALD_KEY_E)) {
+                rotation += 0.005f * deltaTime;
+            }
+
+            if(Input::InputManager::IsKeyPressed(BALD_KEY_Q)) {
+                rotation -= 0.005f * deltaTime;
+            }
+
+            m_Sprite1.SetRotation(rotation);
             m_Sprite1.SetPosition({0, i * 50});
             m_Sprite2.SetPosition({50, i * 50});
             m_Sprite3.SetPosition({2 * 50, i * 50});

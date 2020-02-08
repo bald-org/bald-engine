@@ -9,7 +9,7 @@ namespace Bald::Graphics {
     Sprite::Sprite(const glm::vec4& color)
         : m_Rotation(0.0f),
           m_Position(0.0f),
-          m_Size(1.0f) {
+          m_Size(100.0f) {
 
         MaterialProps materialProps = {
             glm::vec4{0.2f, 0.2f, 0.2f, 1.0f},
@@ -26,7 +26,7 @@ namespace Bald::Graphics {
     Sprite::Sprite(std::shared_ptr<Texture> texture)
         : m_Rotation(0.0f),
           m_Position(0.0f),
-          m_Size(1.0f) {
+          m_Size(100.0f) {
 
         MaterialProps materialProps = {
             glm::vec4{0.2f, 0.2f, 0.2f, 1.0f},

@@ -13,7 +13,7 @@ out vec2 v_TexCoord;
 out float v_TextureId;
 
 void main() {
-    gl_Position = u_ProjectionView * u_Model * vec4(in_Position.xyz, 1.0f);
+    gl_Position = u_ProjectionView * u_Model * vec4(in_Position, 1.0);
     v_Color = in_Color;
     v_TexCoord = in_TextureCoord;
     v_TextureId = in_TextureId;
