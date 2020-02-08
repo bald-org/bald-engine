@@ -45,9 +45,12 @@ public:
             }
 
             m_Sprite1.SetRotation(rotation);
+
             m_Sprite1.SetPosition({0, i * 50});
             m_Sprite2.SetPosition({50, i * 50});
             m_Sprite3.SetPosition({2 * 50, i * 50});
+
+            m_Sprite3.SetColor(m_SpriteColor);
 
             Renderer2D::Submit(m_Sprite1);
             Renderer2D::Submit(m_Sprite2);
@@ -57,13 +60,56 @@ public:
         Renderer2D::End();
     }
 
-    void OnRender() noexcept override {}
+    void OnRender() noexcept override {
+        static bool init = true;
+        static bool my_tool_active = true;
+        static Models::Timer timer;
+        static float frameCounter = 0;
+        static float fps = 0;
+        static std::vector<float> my_values(10);
+        static std::size_t i = 0;
+
+        if(init) {
+            timer.Start();
+            init = false;
+        }
+
+        float elapsedSeconds = timer.ElapsedSeconds();
+        if(elapsedSeconds >= 1.0f) {
+            fps = frameCounter / elapsedSeconds;
+            my_values.push_back(fps);
+            my_values.erase(my_values.begin());
+            frameCounter = 0;
+            timer.Reset();
+        }
+
+        ImGui::Begin("Debug Menu", &my_tool_active, ImGuiWindowFlags_MenuBar);
+
+        if(ImGui::BeginMenuBar()) {
+            if(ImGui::BeginMenu("File")) {
+                if(ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+                if(ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
+                if(ImGui::MenuItem("Close", "Ctrl+W")) { my_tool_active = false; }
+                ImGui::EndMenu();
+            }
+            ImGui::EndMenuBar();
+        }
+
+        ImGui::ColorEdit4("Color", glm::value_ptr(m_SpriteColor));
+        ImGui::PlotLines("FPS Over Time", my_values.data(), my_values.size());
+        ImGui::Text("FPS: %.1f", static_cast<double>(fps));
+
+        ImGui::End();
+
+        ++frameCounter;
+    }
 
 private:
     Camera2DController m_CameraController{std::make_unique<Camera2D>(glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f))};
     Sprite m_Sprite1{Texture::Create("../engine/res/textures/lena.jpg")};
     Sprite m_Sprite2{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
     Sprite m_Sprite3{{0.8f, 0.2f, 0.2f, 1.0f}};
+    glm::vec4 m_SpriteColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
 };
 
 class Sandbox : public Bald::Application {
