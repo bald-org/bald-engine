@@ -21,6 +21,12 @@ public:
         m_Sprite1.SetSize({50.0f, 50.0f});
         m_Sprite2.SetSize({50.0f, 50.0f});
         m_Sprite3.SetSize({50.0f, 50.0f});
+
+        m_EventManager.Subscribe<KeyPressedEvent>(HandleType::SYNC, [this](const KeyPressedEvent& e) {
+            if(e.GetKeyCode() == BALD_KEY_ESCAPE) {
+                isMenuActive = !isMenuActive;
+            }
+        });
     }
 
     void OnDetach() noexcept override {
@@ -62,12 +68,10 @@ public:
 
     void OnRender() noexcept override {
         static bool init = true;
-        static bool my_tool_active = true;
         static Models::Timer timer;
         static float frameCounter = 0;
         static float fps = 0;
         static std::vector<float> my_values(10);
-        static std::size_t i = 0;
 
         if(init) {
             timer.Start();
@@ -83,23 +87,26 @@ public:
             timer.Reset();
         }
 
-        ImGui::Begin("Debug Menu", &my_tool_active, ImGuiWindowFlags_MenuBar);
+        if(isMenuActive) {
+            ImGui::Begin("Debug Menu", &isMenuActive, ImGuiWindowFlags_MenuBar);
 
-        if(ImGui::BeginMenuBar()) {
-            if(ImGui::BeginMenu("File")) {
-                if(ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
-                if(ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
-                if(ImGui::MenuItem("Close", "Ctrl+W")) { my_tool_active = false; }
-                ImGui::EndMenu();
+            if(ImGui::BeginMenuBar()) {
+                if(ImGui::BeginMenu("File")) {
+                    if(ImGui::MenuItem("Open..", "Ctrl+O")) { /* Do stuff */ }
+                    if(ImGui::MenuItem("Save", "Ctrl+S")) { /* Do stuff */ }
+                    if(ImGui::MenuItem("Close", "Ctrl+W")) { isMenuActive = false; }
+                    ImGui::EndMenu();
+                }
+                ImGui::EndMenuBar();
             }
-            ImGui::EndMenuBar();
+
+            ImGui::ColorEdit4("Color", glm::value_ptr(m_SpriteColor));
+            ImGui::PlotLines("FPS Over Time", my_values.data(), static_cast<int32_t>(my_values.size()));
+            ImGui::Text("FPS: %.1f", static_cast<double>(fps));
+
+            ImGui::End();
         }
 
-        ImGui::ColorEdit4("Color", glm::value_ptr(m_SpriteColor));
-        ImGui::PlotLines("FPS Over Time", my_values.data(), my_values.size());
-        ImGui::Text("FPS: %.1f", static_cast<double>(fps));
-
-        ImGui::End();
 
         ++frameCounter;
     }
@@ -110,6 +117,7 @@ private:
     Sprite m_Sprite2{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
     Sprite m_Sprite3{{0.8f, 0.2f, 0.2f, 1.0f}};
     glm::vec4 m_SpriteColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+    bool isMenuActive = true;
 };
 
 class Sandbox : public Bald::Application {
