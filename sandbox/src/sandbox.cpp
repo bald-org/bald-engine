@@ -6,6 +6,7 @@
 
 using namespace Bald;
 using namespace Graphics;
+using namespace Controllers;
 
 class GameLayer : public Layer {
 GENERATE_BODY(DERIVED)
@@ -27,22 +28,9 @@ public:
     }
 
     void OnUpdate(float deltaTime) noexcept override {
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
-            m_Position.x -= m_CameraSpeed * deltaTime;
-        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
-            m_Position.x += m_CameraSpeed * deltaTime;
-        }
+        m_CameraController.OnUpdate(deltaTime);
 
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
-            m_Position.y += m_CameraSpeed * deltaTime;
-        } else if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
-            m_Position.y -= m_CameraSpeed * deltaTime;
-        }
-
-        m_Camera.SetPosition({m_Position.x, m_Position.y});
-
-        // Begin sprite rendering
-        Renderer2D::Begin(m_Camera);
+        Renderer2D::Begin(m_CameraController.GetCamera());
 
         for(std::size_t i = 0; i < 20; i++) {
             m_Sprite1.SetPosition({0, i * 50});
@@ -55,19 +43,15 @@ public:
         }
 
         Renderer2D::End();
-        // End sprite rendering
     }
 
     void OnRender() noexcept override {}
 
 private:
-    Camera2D m_Camera{glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f)};
+    Camera2DController m_CameraController{std::make_unique<Camera2D>(glm::ortho(0.0f, 1920.0f, 0.0f, 1080.0f))};
     Sprite m_Sprite1{Texture::Create("../engine/res/textures/lena.jpg")};
     Sprite m_Sprite2{Texture::Create("../engine/res/textures/pixel_textures/Rocks/SLIMROCKS.png")};
     Sprite m_Sprite3{{0.8f, 0.2f, 0.2f, 1.0f}};
-
-    float m_CameraSpeed = 0.0005f;
-    glm::vec2 m_Position{0.0f};
 };
 
 class Sandbox : public Bald::Application {

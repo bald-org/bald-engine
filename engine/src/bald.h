@@ -19,6 +19,8 @@
 #include "core/app/layer.h"
 #include "core/app/layer_stack.h"
 
+#include "core/controllers/camera_2d_controller.hpp"
+
 #include "core/debug/logger/log_manager.h"
 
 #include "core/events/event.h"
@@ -28,7 +30,6 @@
 #include "core/events/mouse_events.h"
 #include "core/events/window_events.h"
 
-#include "core/graphics/rendering/camera_2d.h"
 #include "core/graphics/rendering/sprite.h"
 #include "core/graphics/rendering/buffers/vertex_array.h"
 #include "core/graphics/rendering/buffers/vertex_buffer.h"
