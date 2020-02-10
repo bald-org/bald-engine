@@ -28,9 +28,7 @@ public:
         });
     }
 
-    void OnDetach() noexcept override {
-        Renderer2D::Shutdown();
-    }
+    void OnDetach() noexcept override {}
 
     void OnUpdate(float deltaTime) noexcept override {
         m_CameraController.OnUpdate(deltaTime);
@@ -52,7 +50,7 @@ public:
         }
 
         if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
-            m_Offset.y += 0.0005f * deltaTime;
+            m_Offset.y -= 0.0005f * deltaTime;
         }
 
         if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {

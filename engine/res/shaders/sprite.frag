@@ -11,6 +11,6 @@ uniform sampler2D u_Textures[32];
 out vec4 FragColor;
 
 void main() {
-    float intensity = 25.0 / length(u_lightPos - v_Position.xy);
+    float intensity = 50.0 / length(u_lightPos - v_Position.xy);
     FragColor = intensity * v_Color * texture(u_Textures[int(v_TextureId + 0.5f)], v_TexCoord);
 }

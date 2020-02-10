@@ -142,7 +142,6 @@ namespace Bald::Graphics {
     void Batch2D::Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept {
         m_QuadShader->Bind();
         m_QuadShader->SetUniformMatrix4fv("u_ProjectionView", camera.GetProjectionViewMatrix());
-        CORE_LOG_TRACE(std::to_string(mousePos.first) + ", " + std::to_string(mousePos.second));
         m_QuadShader->SetUniform2f("u_lightPos", glm::vec2{mousePos.first, mousePos.second});
         m_QuadShader->Unbind();
 
