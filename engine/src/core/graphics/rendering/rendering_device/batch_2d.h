@@ -77,7 +77,7 @@ namespace Bald::Graphics {
          * @param camera -> Current scene's camera.
          */
 
-        void Begin(const Camera2D& camera) noexcept;
+        void Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept;
 
         /**
          * @fn Submit

@@ -21,16 +21,17 @@ namespace Bald::Graphics {
         CORE_LOG_INFO("[Renderer2D] Shutdown was successful");
     }
 
-    void Renderer2D::Begin(const Camera2D& camera) noexcept {
+    void Renderer2D::Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept {
         Renderer2DStorage::m_Camera = &camera;
-        Renderer2DStorage::m_Batch->Begin(camera);
+        Renderer2DStorage::m_MousePos = mousePos;
+        Renderer2DStorage::m_Batch->Begin(camera, mousePos);
     }
 
     void Renderer2D::Submit(const Sprite& sprite) noexcept {
         const bool success = Renderer2DStorage::m_Batch->Submit(sprite);
         if(!success) {
             Draw();
-            Begin(*Renderer2DStorage::m_Camera);
+            Begin(*Renderer2DStorage::m_Camera, Renderer2DStorage::m_MousePos);
             Submit(sprite);
         }
     }

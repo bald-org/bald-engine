@@ -14,19 +14,19 @@ namespace Bald::Controllers {
         , m_CameraSpeed{0.0005f} {}
 
     void Camera2DController::OnUpdate(float deltaTime) noexcept {
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_J)) {
             m_Position.x -= m_CameraSpeed * deltaTime;
         }
 
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_L)) {
             m_Position.x += m_CameraSpeed * deltaTime;
         }
 
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_I)) {
             m_Position.y += m_CameraSpeed * deltaTime;
         }
 
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
+        if(Input::InputManager::IsKeyPressed(BALD_KEY_K)) {
             m_Position.y -= m_CameraSpeed * deltaTime;
         }
 
