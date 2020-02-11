@@ -25,7 +25,7 @@ namespace Bald::Graphics {
 
     public:
 
-        static std::unique_ptr<Material> Create(const MaterialProps& materialProps);
+        [[nodiscard]] static std::unique_ptr<Material> Create(const MaterialProps& materialProps);
 
         void SetAmbient(const glm::vec4& ambient) { m_Ambient = ambient; }
 
@@ -47,9 +47,9 @@ namespace Bald::Graphics {
 
         [[nodiscard]] float GetShininess() const noexcept { return m_Shininess; }
 
-        [[nodiscard]] const std::shared_ptr<Texture>& GetDiffuseMap() { return m_DiffuseMap; }
+        [[nodiscard]] const std::shared_ptr<Texture>& GetDiffuseMap() const noexcept { return m_DiffuseMap; }
 
-        [[nodiscard]] const std::shared_ptr<Texture>& GetSpecularMap() { return m_SpecularMap; }
+        [[nodiscard]] const std::shared_ptr<Texture>& GetSpecularMap() const noexcept { return m_SpecularMap; }
 
     private:
         glm::vec4 m_Ambient = glm::vec4{0.2f, 0.2f, 0.2f, 1.0f};
