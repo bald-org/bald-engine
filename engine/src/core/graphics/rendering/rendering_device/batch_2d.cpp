@@ -5,7 +5,7 @@
 #include "batch_2d.h"
 #include "graphics/rendering/camera_2d.h"
 #include "graphics/rendering/sprite.h"
-#include <cstring>
+#include "glm/gtc/matrix_transform.hpp"
 
 namespace Bald::Graphics {
     static constexpr uint32_t MAX_TEXTURES_PER_SHADER = 32;
@@ -97,26 +97,37 @@ namespace Bald::Graphics {
         const glm::vec3& position = sprite.GetPosition();
         const glm::vec2& size = sprite.GetSize();
         const glm::vec4& color = sprite.GetColor();
+        const float rotation = glm::radians(sprite.GetRotation());
 
-        m_MappedBuffer->m_Position = {position.x, position.y, position.z};
+        glm::mat4 model = glm::mat4(1.0f);
+        model = glm::translate(model, position);
+        model = glm::scale(model, glm::vec3{size, 1.0f});
+        model = glm::rotate(model, glm::radians(rotation), glm::vec3(0.0, 0.0, 1.0));
+
+        const glm::vec4& result0 = model * SpriteVertexPositions::vertex1;
+        const glm::vec4& result1 = model * SpriteVertexPositions::vertex2;
+        const glm::vec4& result2 = model * SpriteVertexPositions::vertex3;
+        const glm::vec4& result3 = model * SpriteVertexPositions::vertex4;
+
+        m_MappedBuffer->m_Position = {result0.x, result0.y, result0.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TextureCoord = {0.0f, 0.0f};
         m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x, position.y + size.y, position.z};
+        m_MappedBuffer->m_Position = {result1.x, result1.y, result1.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TextureCoord = {0.0f, 1.0f};
         m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x + size.x, position.y + size.y, position.z};
+        m_MappedBuffer->m_Position = {result2.x, result2.y, result2.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TextureCoord = {1.0f, 1.0f};
         m_MappedBuffer->m_TextureId = textureSlot;
         ++m_MappedBuffer;
 
-        m_MappedBuffer->m_Position = {position.x + size.x, position.y, position.z};
+        m_MappedBuffer->m_Position = {result3.x, result3.y, result3.z};
         m_MappedBuffer->m_Color = color;
         m_MappedBuffer->m_TextureCoord = {1.0f, 0.0f};
         m_MappedBuffer->m_TextureId = textureSlot;
@@ -128,9 +139,10 @@ namespace Bald::Graphics {
         return true;
     }
 
-    void Batch2D::Begin(const Camera2D& camera) noexcept {
+    void Batch2D::Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept {
         m_QuadShader->Bind();
         m_QuadShader->SetUniformMatrix4fv("u_ProjectionView", camera.GetProjectionViewMatrix());
+        m_QuadShader->SetUniform2f("u_lightPos", glm::vec2{mousePos.first, mousePos.second});
         m_QuadShader->Unbind();
 
         m_QuadVBO->Bind();

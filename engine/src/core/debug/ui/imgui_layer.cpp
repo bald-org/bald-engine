@@ -52,37 +52,7 @@ namespace Bald::Debug {
 
     void ImGuiLayer::OnUpdate([[maybe_unused]] float deltaTime) noexcept {}
 
-    void ImGuiLayer::OnRender() noexcept {
-        static bool show = true;
-
-        static Models::Timer timer;
-        static bool init = true;
-        static float frameCounter = 0;
-        static float fps = 0;
-
-        if(init)
-        {
-            timer.Start();
-            init = false;
-        }
-
-        ImGui::ShowDemoWindow(&show);
-
-        ImGui::BeginChild("FPS");
-
-        float elapsedSeconds = timer.ElapsedSeconds();
-
-        if(elapsedSeconds >= 1.0f) {
-            fps = frameCounter/elapsedSeconds;
-            frameCounter = 0;
-            timer.Reset();
-        }
-
-        ImGui::Text("FPS: %.1f", static_cast<double>(fps));
-        ImGui::EndChild();
-
-        ++frameCounter;
-    }
+    void ImGuiLayer::OnRender() noexcept {}
 
     void ImGuiLayer::Begin() noexcept {
         ImGui_ImplOpenGL3_NewFrame();

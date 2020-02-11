@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include <glm/vec2.hpp>
-#include <glm/vec3.hpp>
-#include <glm/vec4.hpp>
-#include "graphics/rendering/textures/texture.h"
+#include "glm/vec2.hpp"
+#include "glm/vec3.hpp"
+#include "glm/vec4.hpp"
+#include "graphics/rendering/materials/material.hpp"
 
 namespace Bald::Graphics {
 
@@ -67,7 +67,7 @@ namespace Bald::Graphics {
          * @param const glm::vec2& Color.
          */
 
-        inline void SetColor(const glm::vec4& color) noexcept { m_Color = color; }
+        inline void SetColor(const glm::vec4& color) noexcept { m_Material->SetDiffuse(color); }
 
         /**
          * @fn SetTexture
@@ -75,7 +75,7 @@ namespace Bald::Graphics {
          * @param std::shared_ptr<Texture> Texture.
          */
 
-        inline void SetTexture(std::shared_ptr<Texture> texture ) noexcept { m_Texture = std::move(texture); }
+        inline void SetTexture(const std::shared_ptr<Texture>& texture) noexcept { m_Material->SetDiffuseMap(texture); }
 
         /**
          * @fn GetRotation
@@ -107,22 +107,21 @@ namespace Bald::Graphics {
          * @return const glm::vec4& Color.
          */
 
-        [[nodiscard]] inline const glm::vec4& GetColor() const noexcept { return m_Color; }
+        [[nodiscard]] inline const glm::vec4& GetColor() const noexcept { return m_Material->GetDiffuse(); }
 
         /**
          * @fn GetTexture
          * @brief Texture getter.
-         * @return std::weak_ptr<Texture> Texture.
+         * @return std::shared_ptr<Texture> Texture.
          */
 
-        [[nodiscard]] inline const std::shared_ptr<Texture>& GetTexture() const noexcept { return m_Texture; }
+        [[nodiscard]] inline const std::shared_ptr<Texture>& GetTexture() const noexcept { return m_Material->GetDiffuseMap(); }
 
     private:
         float m_Rotation; /**< Rotation around Z axis. */
         glm::vec3 m_Position; /**< Position */
         glm::vec2 m_Size; /**< Size */
-        glm::vec4 m_Color; /**< Color */
-        std::shared_ptr<Texture> m_Texture; /**< Texture */
+        std::unique_ptr<Material> m_Material; /**< Material */
     }; // END OF CLASS Sprite
 
 

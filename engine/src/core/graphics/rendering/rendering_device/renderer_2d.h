@@ -29,6 +29,7 @@ namespace Bald::Graphics {
     struct Renderer2DStorage {
         static inline std::unique_ptr<Batch2D> m_Batch = nullptr; /**< Batch to be rendered >*/
         static inline const Camera2D* m_Camera = nullptr; /**< Current camera >*/
+        static inline std::pair<double, double> m_MousePos;
     };
 
     /**
@@ -69,7 +70,7 @@ namespace Bald::Graphics {
          * @param camera -> Current scene's camera.
          */
 
-        static void Begin(const Camera2D& camera) noexcept;
+        static void Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept;
 
         /**
          * @fn Submit

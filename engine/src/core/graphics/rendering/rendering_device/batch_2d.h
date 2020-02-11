@@ -32,6 +32,13 @@ namespace Bald::Graphics {
         float m_TextureId;
     };
 
+    struct SpriteVertexPositions {
+        static constexpr glm::vec4 vertex1 = glm::vec4{0.0f, 0.0f, 0.0f, 1.0f};
+        static constexpr glm::vec4 vertex2 = glm::vec4{0.0f, 1.0f, 0.0f, 1.0f};
+        static constexpr glm::vec4 vertex3 = glm::vec4{1.0f, 1.0f, 0.0f, 1.0f};
+        static constexpr glm::vec4 vertex4 = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
+    };
+
     /**
      * @class Batch2D
      * @brief Abstraction representing single renderable batch of sprites.
@@ -70,7 +77,7 @@ namespace Bald::Graphics {
          * @param camera -> Current scene's camera.
          */
 
-        void Begin(const Camera2D& camera) noexcept;
+        void Begin(const Camera2D& camera, const std::pair<double, double>& mousePos) noexcept;
 
         /**
          * @fn Submit
