@@ -2,13 +2,13 @@
 // Created by blinku on 28.05.19.
 //
 
-#include "pch.h"
+#include "pch.hpp"
 #include "gtest/gtest.h"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
 
-#include "src/core/graphics/rendering/shaders/shader.h"
+#include "src/core/graphics/rendering/shaders/shader.hpp"
 
 TEST(Shader, ShaderInitialization) { //NOLINT
 

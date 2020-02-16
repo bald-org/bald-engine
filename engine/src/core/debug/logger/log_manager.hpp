@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "logger.h"
+#include "logger.hpp"
 #include <memory>
 
 namespace Bald::Debug {

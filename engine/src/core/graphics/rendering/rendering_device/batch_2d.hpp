@@ -9,11 +9,11 @@
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
 
-#include "graphics/rendering/buffers/vertex_buffer_layout.h"
-#include "graphics/rendering/buffers/vertex_array.h"
-#include "graphics/rendering/buffers/vertex_buffer.h"
-#include "graphics/rendering/buffers/index_buffer.h"
-#include "graphics/rendering/shaders/shader.h"
+#include "graphics/rendering/buffers/vertex_buffer_layout.hpp"
+#include "graphics/rendering/buffers/vertex_array.hpp"
+#include "graphics/rendering/buffers/vertex_buffer.hpp"
+#include "graphics/rendering/buffers/index_buffer.hpp"
+#include "graphics/rendering/shaders/shader.hpp"
 
 namespace Bald::Graphics {
     class Sprite;

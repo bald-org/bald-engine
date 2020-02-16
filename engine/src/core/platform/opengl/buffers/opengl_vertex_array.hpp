@@ -5,9 +5,9 @@
 #pragma once
 
 #include <vector>
-#include "graphics/rendering/buffers/vertex_array.h"
-#include "graphics/rendering/buffers/vertex_buffer.h"
-#include "graphics/rendering/buffers/index_buffer.h"
+#include "graphics/rendering/buffers/vertex_array.hpp"
+#include "graphics/rendering/buffers/vertex_buffer.hpp"
+#include "graphics/rendering/buffers/index_buffer.hpp"
 
 namespace Bald::Platform::Graphics {
 

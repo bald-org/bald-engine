@@ -6,7 +6,7 @@
 
 #include "event_handler.h"
 
-namespace Bald {
+namespace Bald::Events {
     class Event;
     /**
      * @class FunctionHandler

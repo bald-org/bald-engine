@@ -4,15 +4,14 @@
 
 #pragma once
 
-#include "events/event.h"
-#include "events/event_manager.h"
-#include "events/event_manager.h"
-#include "events/key_events.h"
-#include "events/mouse_events.h"
-#include "key_codes.h"
+#include "core.hpp"
+#include "pch.hpp"
 
-#include "core.h"
-#include "pch.h"
+#include "events/event.hpp"
+#include "events/key_events.hpp"
+#include "events/mouse_events.hpp"
+#include "events/event_bus.hpp"
+#include "key_codes.hpp"
 
 struct GLFWwindow;
 
@@ -47,14 +46,6 @@ namespace Bald::Input {
          */
 
         InputManager() = delete;
-
-        /**
-         * @fn Init
-         * @brief Initialize InputManager
-         * @param [EventManager&] ev -> reference on main event manager
-         */
-
-        static void Init(EventManager& ev);
 
         /**
          * @fn Update
@@ -169,10 +160,11 @@ namespace Bald::Input {
         static std::array<bool, MAX_MOUSE_BUTTONS> m_MouseButtonsTyped; /**< mouse buttons witch were typed*/
     };
 
-    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action, [[maybe_unused]] int mods) {
-        Bald::Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != BALD_RELEASE;
+    inline void key_callback([[maybe_unused]] GLFWwindow* window, int key, [[maybe_unused]] int scancode, int action,
+                             [[maybe_unused]] int mods) {
+        Input::InputManager::m_Keys[static_cast<unsigned >(key)] = action != BALD_RELEASE;
 
-        switch (action) {
+        switch(action) {
             case BALD_PRESS: {
                 InputManager::EmitKeyPressedEvent(static_cast<unsigned>(key));
                 break;
@@ -195,10 +187,11 @@ namespace Bald::Input {
         InputManager::EmitKeyTypedEvent(character);
     }
 
-    inline void mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
-        Bald::Input::InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != BALD_RELEASE;
+    inline void
+    mouse_button_callback([[maybe_unused]] GLFWwindow* window, int button, int action, [[maybe_unused]] int mods) {
+        InputManager::m_MouseButtons[static_cast<unsigned >(button)] = action != BALD_RELEASE;
 
-        switch (action) {
+        switch(action) {
             case BALD_PRESS: {
                 InputManager::EmitMouseButtonPressedEvent(static_cast<unsigned>(button));
                 break;
@@ -218,34 +211,34 @@ namespace Bald::Input {
     }
 
     inline void cursor_position_callback([[maybe_unused]]GLFWwindow* window, double xpos, double ypos) {
-        Bald::Input::InputManager::m_MousePos.first = xpos;
-        Bald::Input::InputManager::m_MousePos.second = ypos;
-        Bald::EventManager::Emit<MouseMovedEvent>(static_cast<int>(xpos), static_cast<int>(ypos));
+        InputManager::m_MousePos.first = xpos;
+        InputManager::m_MousePos.second = ypos;
+        Events::EventBus::Emit<Events::MouseMovedEvent>(static_cast<int>(xpos), static_cast<int>(ypos));
     }
 
     inline void scroll_callback([[maybe_unused]] GLFWwindow* window, double xoffset, double yoffset) {
-        Bald::Input::InputManager::m_MouseOff.first = xoffset;
-        Bald::Input::InputManager::m_MouseOff.second = yoffset;
-        Bald::EventManager::Emit<MouseScrolledEvent>(xoffset, yoffset);
+        InputManager::m_MouseOff.first = xoffset;
+        InputManager::m_MouseOff.second = yoffset;
+        Events::EventBus::Emit<Events::MouseScrolledEvent>(xoffset, yoffset);
     }
 
     bool InputManager::IsKeyPressed(unsigned keycode) noexcept {
-        if (keycode >= MAX_KEYS) return false;
+        if(keycode >= MAX_KEYS) return false;
         return m_Keys[keycode];
     }
 
     bool InputManager::IsKeyTyped(unsigned keycode) noexcept {
-        if (keycode >= MAX_KEYS) return false;
+        if(keycode >= MAX_KEYS) return false;
         return m_KeysTyped[keycode];
     }
 
     bool InputManager::IsMouseButtonPressed(unsigned buttoncode) noexcept {
-        if (buttoncode >= MAX_MOUSE_BUTTONS) return false;
+        if(buttoncode >= MAX_MOUSE_BUTTONS) return false;
         return m_MouseButtons[buttoncode];
     }
 
     bool InputManager::IsMouseButtonTyped(unsigned buttoncode) noexcept {
-        if (buttoncode >= MAX_MOUSE_BUTTONS) return false;
+        if(buttoncode >= MAX_MOUSE_BUTTONS) return false;
         return m_MouseButtonsTyped[buttoncode];
     }
 

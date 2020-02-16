@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "core.h"
-#include "event.h"
+#include "core.hpp"
+#include "event.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class KeyEvent
@@ -15,10 +15,7 @@ namespace Bald {
      */
 
     class KeyEvent : public Event {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    protected:
+    GENERATE_BODY(DERIVED)
 
         /**
         * @fn KeyEvent
@@ -28,8 +25,6 @@ namespace Bald {
 
         explicit KeyEvent(unsigned keycode)
             : m_KeyCode{keycode} {}
-
-    public:
 
         /**
         * @fn GetKeyCode
@@ -48,10 +43,9 @@ namespace Bald {
      */
 
     class KeyPressedEvent : public KeyEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn KeyPressedEvent
@@ -61,8 +55,6 @@ namespace Bald {
 
         explicit KeyPressedEvent(unsigned keycode, bool isRepeated = false)
             : KeyEvent{keycode}, m_IsRepeated{isRepeated} {}
-
-    public:
 
         /**
         * @fn IsRepeated
@@ -83,11 +75,9 @@ namespace Bald {
      */
 
     class KeyReleasedEvent : public KeyEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
-
+    public:
         /**
         * @fn KeyReleasedEvent
         * @brief Constructor.
@@ -106,10 +96,9 @@ namespace Bald {
      */
 
     class KeyTypedEvent : public KeyEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn KeyTypedEvent
@@ -123,4 +112,4 @@ namespace Bald {
 
     }; // END OF CLASS KeyTypedEvent
 
-} // END OF NAMESPACE Bald
+} // END OF NAMESPACE Bald::Events

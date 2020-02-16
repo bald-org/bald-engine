@@ -2,7 +2,7 @@
 // Created by blinku on 07.05.19.
 //
 
-#include "bald.h"
+#include "bald.hpp"
 
 #include "glm/glm.hpp"
 

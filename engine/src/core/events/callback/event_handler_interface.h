@@ -6,9 +6,9 @@
 
 #include <vector>
 
-#include "event.h"
+#include "event.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class EventHandlerInterface

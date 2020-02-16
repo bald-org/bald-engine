@@ -2,7 +2,7 @@
 // Created by grzegorz on 16.12.18.
 //
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 #include "gtest/gtest.h"
 
 #include "glad/glad.h"

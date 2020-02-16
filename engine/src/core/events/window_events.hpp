@@ -5,9 +5,9 @@
 #pragma once
 
 #include <utility>
-#include "event.h"
+#include "event.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class WindowEvent
@@ -15,10 +15,9 @@ namespace Bald {
      */
 
     class WindowEvent : public Event {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn WindowEvent
@@ -35,10 +34,9 @@ namespace Bald {
      */
 
     class WindowResizedEvent : public WindowEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn WindowResizedEvent
@@ -49,8 +47,6 @@ namespace Bald {
 
         explicit WindowResizedEvent(int windowWidth, int windowHeight)
             : m_WindowSize{windowWidth, windowHeight} {}
-
-    public:
 
         /**
         * @fn GetWidth
@@ -86,10 +82,9 @@ namespace Bald {
      */
 
     class WindowClosedEvent : public WindowEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn WindowClosedEvent
@@ -100,4 +95,4 @@ namespace Bald {
 
     }; // END OF CLASS WindowClosedEvent
 
-} // END OF NAMESPACE Bald
+} // END OF NAMESPACE Bald::Events

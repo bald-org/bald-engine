@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "pch.h"
-#include "graphics/rendering/textures/texture.h"
+#include "pch.hpp"
+#include "graphics/rendering/textures/texture.hpp"
 
 namespace Bald::Platform::Graphics {
 

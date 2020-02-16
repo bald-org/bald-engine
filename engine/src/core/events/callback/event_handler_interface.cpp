@@ -3,7 +3,7 @@
 //
 #include "event_handler_interface.h"
 
-namespace Bald {
+namespace Bald::Events {
 
     std::vector<bool> EventHandlerInterface::m_TakenID;
 

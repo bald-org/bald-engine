@@ -2,11 +2,11 @@
 // Created by blinku on 28.05.19.
 //
 
-#include "opengl_shader.h"
+#include "opengl_shader.hpp"
 #include <unordered_map>
-#include "file_manager.h"
+#include "file_manager.hpp"
 #include "glm/gtc/type_ptr.hpp"
-#include "pch.h"
+#include "pch.hpp"
 #include "glad/glad.h"
 
 

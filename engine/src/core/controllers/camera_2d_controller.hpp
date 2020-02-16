@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "graphics/rendering/camera_2d.h"
+#include "graphics/rendering/camera_2d.hpp"
 
 namespace Bald::Controllers {
 

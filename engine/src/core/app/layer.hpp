@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "event_manager.h"
+#include "event_bus.hpp"
 
 namespace Bald {
 
@@ -66,13 +66,6 @@ namespace Bald {
         virtual void OnRender() noexcept = 0;
 
         /**
-         * @fn RunEvents
-         * @brief A method that flushes layer's event manager.
-         */
-
-        inline void RunEvents() noexcept { m_EventManager.Flush(); }
-
-        /**
          * @fn Enable
          * @brief A method that enables a layer.
          */
@@ -94,9 +87,6 @@ namespace Bald {
          */
 
         [[nodiscard]] inline bool IsEnabled() const noexcept { return m_IsEnabled; };
-
-    protected:
-        EventManager m_EventManager; /**< Layer-specific EventManager*/
 
     private:
         bool m_IsEnabled = true; /**< State of the layer */

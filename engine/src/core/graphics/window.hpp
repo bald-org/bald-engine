@@ -4,8 +4,8 @@
 
 #pragma once
 
-#include "core.h"
-#include "logger/logger.h"
+#include "core.hpp"
+#include "logger/logger.hpp"
 #include "glad/glad.h"
 
 struct GLFWwindow;

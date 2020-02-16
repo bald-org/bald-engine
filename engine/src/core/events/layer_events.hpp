@@ -4,10 +4,10 @@
 
 #pragma once
 
-#include "core.h"
-#include "event.h"
+#include "core.hpp"
+#include "event.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class LayerPushedEvent
@@ -15,10 +15,9 @@ namespace Bald {
      */
 
     class LayerPushedEvent : public Event {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn LayerPushedEvent
@@ -35,10 +34,9 @@ namespace Bald {
      */
 
     class LayerPoppedEvent : public Event {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn LayerPoppedEvent
@@ -49,4 +47,4 @@ namespace Bald {
 
     }; // END OF CLASS LayerPoppedEvent
 
-} // END OF NAMESPACE Bald
+} // END OF NAMESPACE Bald::Events

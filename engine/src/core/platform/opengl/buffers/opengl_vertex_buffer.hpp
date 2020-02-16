@@ -6,8 +6,8 @@
 
 #include <vector>
 
-#include "graphics/rendering/buffers/vertex_buffer_layout.h"
-#include "graphics/rendering/buffers/vertex_buffer.h"
+#include "graphics/rendering/buffers/vertex_buffer_layout.hpp"
+#include "graphics/rendering/buffers/vertex_buffer.hpp"
 
 namespace Bald::Platform::Graphics {
 

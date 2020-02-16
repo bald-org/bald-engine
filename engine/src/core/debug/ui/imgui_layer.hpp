@@ -4,12 +4,12 @@
 
 #pragma once
 
-#include "core.h"
+#include "core.hpp"
 
-#include "app/layer.h"
-#include "events/window_events.h"
-#include "events/key_events.h"
-#include "events/mouse_events.h"
+#include "app/layer.hpp"
+#include "events/window_events.hpp"
+#include "events/key_events.hpp"
+#include "events/mouse_events.hpp"
 
 namespace Bald::Debug {
 

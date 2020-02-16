@@ -8,8 +8,8 @@
 #include <vector>
 #include <string>
 #include <algorithm>
-#include "utils/types.h"
-#include "debug/bald_assert.h"
+#include "utils/types.hpp"
+#include "debug/bald_assert.hpp"
 #include "glad/glad.h"
 
 namespace Bald::Graphics {

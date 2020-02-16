@@ -3,10 +3,10 @@
 //
 
 #include "events/event_manager.h"
-#include "events/key_events.h"
-#include "input/input_manager.h"
-#include "src/core/models/timer.h"
-#include "core/debug/logger/log_manager.h"
+#include "events/key_events.hpp"
+#include "input/input_manager.hpp"
+#include "src/core/models/timer.hpp"
+#include "core/debug/logger/log_manager.hpp"
 
 #include <iostream>
 

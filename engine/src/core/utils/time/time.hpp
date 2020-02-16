@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "src/core/models/timer.h"
+#include "src/core/models/timer.hpp"
 #include <string>
 
 namespace Bald::Utils {

@@ -6,7 +6,7 @@
 
 #include <vector>
 #include <memory>
-#include "vertex_buffer_layout.h"
+#include "vertex_buffer_layout.hpp"
 
 namespace Bald::Graphics {
 

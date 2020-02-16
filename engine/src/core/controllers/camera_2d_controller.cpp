@@ -4,7 +4,7 @@
 
 #include "camera_2d_controller.hpp"
 
-#include "input/input_manager.h"
+#include "input/input_manager.hpp"
 
 namespace Bald::Controllers {
 

@@ -7,11 +7,11 @@
 #include <vector>
 #include <algorithm>
 
-#include "layer.h"
-#include "core/debug/logger/log_manager.h"
+#include "layer.hpp"
+#include "core/debug/logger/log_manager.hpp"
 #include <assert.h>
 
-#include "layer_events.h"
+#include "layer_events.hpp"
 
 namespace Bald {
 
@@ -229,28 +229,28 @@ namespace Bald {
         BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace(m_ForAddition.begin() + m_ForAdditionAmount, new L{args ...});
         ++m_ForAdditionAmount;
-        EventManager::Emit<LayerPushedEvent>();
+        Events::EventBus::Emit<Events::LayerPushedEvent>();
     }
 
     template<typename L, typename ... Args>
     void LayerStack::PushOverlay(Args&& ... args) {
         BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForAddition.emplace_back(new L{args ...});
-        EventManager::Emit<LayerPushedEvent>();
+        Events::EventBus::Emit<Events::LayerPushedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopLayer() {
         BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
-        EventManager::Emit<LayerPoppedEvent>();
+        Events::EventBus::Emit<Events::LayerPoppedEvent>();
     }
 
     template<typename L>
     void LayerStack::PopOverlay() {
         BALD_STATIC_ASSERT(std::is_base_of<Layer, L>::value, "Layer is not the base of L");
         m_ForRemoval.emplace_back(Utils::get_type_id<L>());
-        EventManager::Emit<LayerPoppedEvent>();
+        Events::EventBus::Emit<Events::LayerPoppedEvent>();
     }
 
     template<typename L, typename ... Args>

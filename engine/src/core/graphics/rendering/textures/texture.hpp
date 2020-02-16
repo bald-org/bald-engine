@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "utils/image.h"
+#include "utils/image.hpp"
 
-#include "pch.h"
+#include "pch.hpp"
 #include <memory>
 
 namespace Bald::Graphics {

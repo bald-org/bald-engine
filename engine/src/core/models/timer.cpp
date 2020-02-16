@@ -2,7 +2,7 @@
 // Created by blinku on 22.05.19.
 //
 
-#include "timer.h"
+#include "timer.hpp"
 
 namespace Bald::Models {
 

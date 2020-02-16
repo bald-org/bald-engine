@@ -6,12 +6,12 @@
 
 #include <vector>
 #include <functional>
-#include "core/debug/logger/log_manager.h"
+#include "core/debug/logger/log_manager.hpp"
 #include <type_traits>
-#include "core/debug/logger/logger.h"
+#include "core/debug/logger/logger.hpp"
 #include "event_handler_interface.h"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class EventHandler

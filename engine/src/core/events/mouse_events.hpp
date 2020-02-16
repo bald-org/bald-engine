@@ -5,10 +5,10 @@
 #pragma once
 
 #include <utility>
-#include "core.h"
-#include "event.h"
+#include "core.hpp"
+#include "event.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class MouseEvent
@@ -16,9 +16,9 @@ namespace Bald {
      */
 
     class MouseEvent : public Event {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-    protected:
+    GENERATE_BODY(DERIVED)
+
+    public:
 
         /**
         * @fn MouseEvent
@@ -35,10 +35,9 @@ namespace Bald {
      */
 
     class MouseMovedEvent : public MouseEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn MouseMovedEvent
@@ -49,8 +48,6 @@ namespace Bald {
 
         explicit MouseMovedEvent(int mouseX, int mouseY)
             : m_MousePos{mouseX, mouseY} {}
-
-    public:
 
         /**
         * @fn GetX
@@ -77,7 +74,6 @@ namespace Bald {
         [[nodiscard]] inline const std::pair<int, int> GetMousePosition() const noexcept { return m_MousePos; }
 
 
-
     private:
         const std::pair<int, int> m_MousePos; /* < Mouse x, y coordinate. */
     }; // END OF CLASS MouseMovedEvent
@@ -88,10 +84,9 @@ namespace Bald {
      */
 
     class MouseScrolledEvent : public MouseEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn MouseScrolledEvent
@@ -103,7 +98,6 @@ namespace Bald {
         explicit MouseScrolledEvent(double xoffset, double yoffset)
             : m_MouseOff{xoffset, yoffset} {}
 
-    public:
 
         /**
         * @fn GetOffsetX
@@ -139,10 +133,9 @@ namespace Bald {
      */
 
     class MouseButtonPressedEvent : public MouseEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
+    GENERATE_BODY(DERIVED)
 
-    protected:
+    public:
 
         /**
         * @fn MouseButtonPressedEvent
@@ -152,8 +145,6 @@ namespace Bald {
 
         explicit MouseButtonPressedEvent(unsigned buttoncode, bool isRepeated = false)
             : m_ButtonCode{buttoncode}, m_IsRepeated(isRepeated) {}
-
-    public:
 
         /**
         * @fn GetButtonCode
@@ -183,10 +174,7 @@ namespace Bald {
      */
 
     class MouseButtonReleasedEvent : public MouseEvent {
-        GENERATE_BODY(DERIVED)
-        friend class EventManager; /* < EVERY event which is NOT an abstract class MUST be a friend of the EventManager! */
-
-    protected:
+    GENERATE_BODY(DERIVED)
 
         /**
         * @fn MouseButtonReleasedEvent
@@ -196,8 +184,6 @@ namespace Bald {
 
         explicit MouseButtonReleasedEvent(unsigned buttoncode)
             : m_ButtonCode{buttoncode} {}
-
-    public:
 
         /**
         * @fn GetButtonCode
@@ -211,4 +197,4 @@ namespace Bald {
         const unsigned m_ButtonCode; /* < We save key code simply as an integer. */
     }; // END OF CLASS MouseButtonReleasedEvent
 
-} // END OF NAMESPACE Bald
+} // END OF NAMESPACE Bald::Events

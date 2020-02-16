@@ -2,8 +2,8 @@
 // Created by blinku on 28.05.19.
 //
 
-#include "shader.h"
-#include "src/core/platform/opengl/shaders/opengl_shader.h"
+#include "shader.hpp"
+#include "src/core/platform/opengl/shaders/opengl_shader.hpp"
 
 
 namespace Bald::Graphics {

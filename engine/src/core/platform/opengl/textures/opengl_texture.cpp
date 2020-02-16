@@ -2,8 +2,8 @@
 // Created by blinku on 29.07.2019.
 //
 
-#include "opengl_texture.h"
-#include "bald_assert.h"
+#include "opengl_texture.hpp"
+#include "bald_assert.hpp"
 #include "glad/glad.h"
 
 namespace Bald::Platform::Graphics {

@@ -2,10 +2,10 @@
 // Created by blinku on 07.08.2019.
 //
 
-#include "renderer_2d.h"
-#include "graphics/rendering/buffers/vertex_array.h"
-#include "graphics/rendering/sprite.h"
-#include "graphics/rendering/camera_2d.h"
+#include "renderer_2d.hpp"
+#include "graphics/rendering/buffers/vertex_array.hpp"
+#include "graphics/rendering/sprite.hpp"
+#include "graphics/rendering/camera_2d.hpp"
 
 namespace Bald::Graphics {
 

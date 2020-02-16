@@ -2,8 +2,8 @@
 // Created by blinku on 08.05.19.
 //
 
-#include "index_buffer.h"
-#include "platform/opengl/buffers/opengl_index_buffer.h"
+#include "index_buffer.hpp"
+#include "platform/opengl/buffers/opengl_index_buffer.hpp"
 
 namespace Bald::Graphics {
 

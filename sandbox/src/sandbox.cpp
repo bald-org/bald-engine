@@ -2,7 +2,8 @@
 // Created by blinku on 07.05.19.
 //
 
-#include "bald.h"
+#include <src/core/app/scene.hpp>
+#include "bald.hpp"
 
 using namespace Bald;
 using namespace Graphics;
@@ -18,10 +19,24 @@ public:
     ~GameLayer() override = default;
 
     void OnAttach() noexcept override {
-        m_Lena.SetSize({50.0f, 50.0f});
-        m_Square.SetSize({50.0f, 50.0f});
+        auto texture = Texture::Create("../engine/res/textures/lena.jpg");
+        for(std::size_t i = 0; i < 10; i++) {
+            for(std::size_t j = 0; j < 10; j++) {
+                if(j % 2 == 0) {
+                    Sprite sprite = Sprite{{1.0f, 0.0f, 0.0f, 1.0f}};
+                    sprite.SetSize({50.0f, 50.0f});
+                    sprite.SetPosition({static_cast<float>(j) * 50.0f, static_cast<float>(i) * 50.0f});
+                    m_Scene.AddSprite(std::move(sprite));
+                } else {
+                    Sprite sprite = Sprite{texture};
+                    sprite.SetSize({50.0f, 50.0f});
+                    sprite.SetPosition({static_cast<float>(j) * 50.0f, static_cast<float>(i) * 50.0f});
+                    m_Scene.AddSprite(std::move(sprite));
+                }
+            }
+        }
 
-        m_EventManager.Subscribe<KeyPressedEvent>(HandleType::SYNC, [this](const KeyPressedEvent& e) {
+        Events::EventBus::Subscribe<Events::KeyPressedEvent>([this](const Events::KeyPressedEvent& e) {
             if(e.GetKeyCode() == BALD_KEY_ESCAPE) {
                 isMenuActive = !isMenuActive;
             }
@@ -31,48 +46,8 @@ public:
     void OnDetach() noexcept override {}
 
     void OnUpdate(float deltaTime) noexcept override {
-        m_CameraController.OnUpdate(deltaTime);
-
-        auto&&[x, y] = Input::InputManager::GetMousePos();
-
-        Renderer2D::Begin(m_CameraController.GetCamera(), std::make_pair(x, 720.0 - y));
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_E)) {
-            m_Rotation += 0.005f * deltaTime;
-        }
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_Q)) {
-            m_Rotation -= 0.005f * deltaTime;
-        }
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_W)) {
-            m_Offset.y += 0.0005f * deltaTime;
-        }
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_S)) {
-            m_Offset.y -= 0.0005f * deltaTime;
-        }
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_A)) {
-            m_Offset.x -= 0.0005f * deltaTime;
-        }
-
-        if(Input::InputManager::IsKeyPressed(BALD_KEY_D)) {
-            m_Offset.x += 0.0005f * deltaTime;
-        }
-
-        for(float i = 0; i < 20.0f; i++) {
-            m_Lena.SetRotation(m_Rotation);
-            m_Lena.SetPosition({m_Offset.x, i * 50.0f +  m_Offset.y});
-
-            m_Square.SetPosition({1 * 50, i * 50});
-            m_Square.SetColor(m_SpriteColor);
-
-            Renderer2D::Submit(m_Lena);
-            Renderer2D::Submit(m_Square);
-        }
-
-        Renderer2D::End();
+        m_Scene.OnUpdate(deltaTime);
+        m_Scene.Render();
     }
 
     void OnRender() noexcept override {
@@ -109,27 +84,17 @@ public:
                 ImGui::EndMenuBar();
             }
 
-            ImGui::ColorEdit4("Color", glm::value_ptr(m_SpriteColor));
             ImGui::PlotLines("FPS Over Time", my_values.data(), static_cast<int32_t>(my_values.size()));
             ImGui::Text("FPS: %.1f", static_cast<double>(fps));
 
             ImGui::End();
         }
 
-
         ++frameCounter;
     }
 
 private:
-    Camera2DController m_CameraController{std::make_unique<Camera2D>(glm::ortho(0.0f, 1280.0f, 0.0f, 720.0f))};
-
-    glm::vec2 m_Offset = glm::vec2{0.0f, 0.0f};
-    float m_Rotation = 0.0f;
-    Sprite m_Lena{Texture::Create("../engine/res/textures/lena.jpg")};
-
-    glm::vec4 m_SpriteColor = glm::vec4{1.0f, 0.0f, 0.0f, 1.0f};
-    Sprite m_Square{m_SpriteColor};
-
+    Scene2D m_Scene;
     bool isMenuActive = true;
 };
 

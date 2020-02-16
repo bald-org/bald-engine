@@ -2,8 +2,8 @@
 // Created by blinku on 08.08.2019.
 //
 
-#include "image.h"
-#include "debug/bald_assert.h"
+#include "image.hpp"
+#include "debug/bald_assert.hpp"
 
 extern "C" unsigned char* stbi_load(char const* filename, int* x, int* y, int* channels_in_file, int desired_channels);
 extern "C" void stbi_image_free(void* retval_from_stbi_load);

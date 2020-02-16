@@ -2,11 +2,11 @@
 // Created by grzegorz on 17.12.18.
 //
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
 
-#include "input_manager.h"
+#include "input_manager.hpp"
 
 #include <GLFW/glfw3.h>
 

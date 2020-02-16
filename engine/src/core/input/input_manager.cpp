@@ -2,9 +2,9 @@
 // Created by grzegorz on 17.12.18.
 //
 
-#include "input_manager.h"
-#include "core/pch.h"
-#include "debug/bald_assert.h"
+#include "input/input_manager.hpp"
+#include "core/pch.hpp"
+#include "debug/bald_assert.hpp"
 
 namespace Bald::Input {
 
@@ -33,27 +33,27 @@ namespace Bald::Input {
 
     void InputManager::EmitKeyPressedEvent(unsigned keycode, bool isRepeated) noexcept {
         BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
-        Bald::EventManager::Emit<KeyPressedEvent>(keycode, isRepeated);
+        Events::EventBus::Emit<Events::KeyPressedEvent>(keycode, isRepeated);
     }
 
     void InputManager::EmitKeyTypedEvent(unsigned keycode) noexcept {
         BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
-        Bald::EventManager::Emit<KeyTypedEvent>(keycode);
+        Events::EventBus::Emit<Events::KeyTypedEvent>(keycode);
     }
 
     void InputManager::EmitKeyReleasedEvent(unsigned keycode) noexcept {
         BALD_ASSERT(keycode < MAX_KEYS, "InputManager", "Wrong key id", keycode < MAX_KEYS);
-        Bald::EventManager::Emit<KeyReleasedEvent>(keycode);
+        Events::EventBus::Emit<Events::KeyReleasedEvent>(keycode);
     }
 
     void InputManager::EmitMouseButtonPressedEvent(unsigned buttoncode, bool isRepeated) noexcept {
         BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
-        Bald::EventManager::Emit<MouseButtonPressedEvent>(buttoncode, isRepeated);
+        Events::EventBus::Emit<Events::MouseButtonPressedEvent>(buttoncode, isRepeated);
     }
 
     void InputManager::EmitMouseButtonReleasedEvent(unsigned buttoncode) noexcept {
         BALD_ASSERT(buttoncode < MAX_MOUSE_BUTTONS, "InputManager", "Wrong button id", buttoncode < MAX_MOUSE_BUTTONS);
-        Bald::EventManager::Emit<MouseButtonReleasedEvent>(buttoncode);
+        Events::EventBus::Emit<Events::MouseButtonReleasedEvent>(buttoncode);
     }
 
 } // END OF NAMESPACE Bald::Input

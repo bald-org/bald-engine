@@ -5,8 +5,8 @@
 #pragma once
 
 #include <memory>
-#include "layer_stack.h"
-#include "graphics/window.h"
+#include "layer_stack.hpp"
+#include "graphics/window.hpp"
 #include "controllers/time_controller.hpp"
 
 namespace Bald {
@@ -170,7 +170,6 @@ namespace Bald {
 
     private:
         bool m_Running; /**< State of the application */
-        std::unique_ptr<EventManager> m_EventManager; /** < Pointer to Main Event Manager >*/
         std::shared_ptr<Graphics::Window> m_Window; /**< Unique pointer to window provided by the Bald Engine. Currently our application  can use only one window */
         LayerStack m_LayerStack; /**< Main layer stack */
         Controllers::TimeController m_TimeController; /**< Primary controller that is responsible for handling delta time */

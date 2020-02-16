@@ -4,9 +4,9 @@
 
 #pragma once
 
-#include "core.h"
+#include "core.hpp"
 
-namespace Bald {
+namespace Bald::Events {
 
     /**
      * @class Event
@@ -15,7 +15,8 @@ namespace Bald {
 
     class Event {
     GENERATE_BODY(BASE)
-    protected:
+
+    public:
 
         /**
         * @fn       Event
@@ -23,8 +24,6 @@ namespace Bald {
         */
 
         Event() = default;
-
-    public:
 
         /**
         * @fn       ~Event
@@ -35,4 +34,4 @@ namespace Bald {
 
     }; //END OF CLASS Event
 
-} //END OF NAMESPACE Bald
+} //END OF NAMESPACE Bald::Events

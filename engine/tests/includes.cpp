@@ -2,7 +2,7 @@
 // Created by Piotr Moszkowicz on 2018-12-16.
 //
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 #include "gtest/gtest.h"
 
 int main(int argc, char** argv) {

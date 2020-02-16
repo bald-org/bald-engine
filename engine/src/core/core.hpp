@@ -4,5 +4,5 @@
 
 #pragma once
 
-#include "utils.h"
-#include "math_utils.h"
+#include "utils.hpp"
+#include "math_utils.hpp"

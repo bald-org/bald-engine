@@ -5,7 +5,7 @@
 #pragma once
 
 #include <memory>
-#include "batch_2d.h"
+#include "batch_2d.hpp"
 
 namespace Bald::Graphics {
 

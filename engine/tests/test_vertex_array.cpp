@@ -4,8 +4,8 @@
 
 #include "gtest/gtest.h"
 
-#include "graphics/rendering/buffers/vertex_buffer.h"
-#include "graphics/rendering/buffers/vertex_array.h"
+#include "graphics/rendering/buffers/vertex_buffer.hpp"
+#include "graphics/rendering/buffers/vertex_array.hpp"
 
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"

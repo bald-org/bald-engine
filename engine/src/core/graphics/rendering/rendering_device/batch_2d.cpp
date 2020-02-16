@@ -2,9 +2,9 @@
 // Created by blinku on 23.11.2019.
 //
 
-#include "batch_2d.h"
-#include "graphics/rendering/camera_2d.h"
-#include "graphics/rendering/sprite.h"
+#include "batch_2d.hpp"
+#include "graphics/rendering/camera_2d.hpp"
+#include "graphics/rendering/sprite.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Bald::Graphics {
@@ -73,7 +73,7 @@ namespace Bald::Graphics {
         if(m_UsedVertices + SPRITE_SIZE > MAX_VERTICES) return false; // TODO: Error handling using expected!
 
         const auto textureID = static_cast<uint32_t>(sprite.GetTexture()->GetID());
-
+        CORE_LOG_TRACE(std::to_string(textureID));
         float textureSlot = 0.0f;
         if(textureID > 0) {
             bool found = false;
