@@ -2,8 +2,8 @@
 // Created by blinku on 08.05.19.
 //
 
-#include "vertex_array.h"
-#include "platform/opengl/buffers/opengl_vertex_array.h"
+#include "vertex_array.hpp"
+#include "platform/opengl/buffers/opengl_vertex_array.hpp"
 
 namespace Bald::Graphics {
 

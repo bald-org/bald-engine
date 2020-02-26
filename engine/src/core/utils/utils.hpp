@@ -1,0 +1,24 @@
+//
+// Created by blinku on 09.02.19.
+//
+
+#pragma once
+
+namespace Bald::Utils {
+
+    template<typename T>
+    constexpr void ConstexprSwap(T& first, T& second) {
+        T copy = first;
+        first = second;
+        second = copy;
+    }
+
+    constexpr bool ConstexprStringCmp(const char* lhs, const char* rhs) {
+        return *lhs == *rhs && (*lhs == '\0' || ConstexprStringCmp(lhs + 1, rhs + 1));
+    }
+
+} // END OF NAMESPACE Bald::Utils
+
+#include "core/utils/rtti/type_id.hpp"
+#include "core/utils/rtti/type_name.hpp"
+#include "generate_body.hpp"

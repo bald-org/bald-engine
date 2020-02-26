@@ -83,14 +83,12 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/application.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/layer_stack.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/app/scene.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/src/core/controllers/camera_2d_controller.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/logger.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/event_manager.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
+		${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/camera_2d.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/sprite.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_buffer.cpp
@@ -142,18 +140,18 @@ endif()
 #### PCH
 if(LINUX_BUILD)
 	if(DEFINE_DEBUG)
-		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.hpp")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-fsanitize=leak -pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -Wduplicated-cond -Wlogical-op -g")
 	elseif(DEFINE_RELEASE)
-		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.hpp")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
 	endif()
 elseif(APPLE_BUILD)
 	if(DEFINE_DEBUG)
-		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.hpp")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-pedantic -Wall -Wextra -Wnon-virtual-dtor -Werror -Wcast-align -Wunused -Woverloaded-virtual -Wpedantic -Wconversion -Wnull-dereference -Wdouble-promotion -g")
 	elseif(DEFINE_RELEASE)
-		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.h")
+		set_target_properties(bald_engine PROPERTIES COTIRE_CXX_PREFIX_HEADER_INIT "src/core/pch.hpp")
 		set_target_properties(bald_engine PROPERTIES COMPILE_FLAGS "-Ofast -Werror")
 	endif()
 endif()

@@ -2,14 +2,14 @@
 // Created by blinku on 29.05.19.
 //
 
-#include "imgui_layer.h"
+#include "imgui_layer.hpp"
 #include "imgui.h"
 
 #include "vendor/imgui/examples/imgui_impl_opengl3.h"
 #include "vendor/imgui/examples/imgui_impl_glfw.h"
 
-#include "application.h"
-#include "src/core/models/timer.h"
+#include "application.hpp"
+#include "src/core/models/timer.hpp"
 
 #include "GLFW/glfw3.h"
 

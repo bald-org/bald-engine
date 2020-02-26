@@ -4,8 +4,8 @@
 
 #include <cstdio>
 
-#include "logger.h"
-#include "core/utils/time/time.h"
+#include "logger.hpp"
+#include "core/utils/time/time.hpp"
 
 namespace Bald::Debug {
 

@@ -3,10 +3,10 @@
 //
 
 
-#include "window.h"
-#include "input_manager.h"
-#include "event_manager.h"
-#include "window_events.h"
+#include "window.hpp"
+#include "input_manager.hpp"
+#include "event_bus.hpp"
+#include "window_events.hpp"
 
 #include "GLFW/glfw3.h"
 
@@ -96,11 +96,11 @@ namespace Bald::Graphics {
 
             glViewport(0, 0, win.m_Width, win.m_Height);
 
-            EventManager::Emit<WindowResizedEvent>(win.m_Width, win.m_Height);
+            Events::EventBus::Emit<Events::WindowResizedEvent>(win.m_Width, win.m_Height);
         });
 
         glfwSetWindowCloseCallback(m_Window, []([[maybe_unused]] GLFWwindow* window) {
-            EventManager::Emit<WindowClosedEvent>();
+            Events::EventBus::Emit<Events::WindowClosedEvent>();
         });
 
         glfwSetKeyCallback(m_Window, Input::key_callback);

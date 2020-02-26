@@ -2,9 +2,9 @@
 // Created by blinku on 16.12.18.
 //
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 #include "gtest/gtest.h"
-#include "utils/file_manager.h"
+#include "utils/file_manager.hpp"
 
 TEST(FileManager, GoodSmallFileOpening) { //NOLINT
 

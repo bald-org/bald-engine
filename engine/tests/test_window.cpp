@@ -3,7 +3,7 @@
 //
 
 #include "gtest/gtest.h"
-#include "window.h"
+#include "window.hpp"
 
 TEST(Getter, Window_GetTitle) { //NOLINT
 

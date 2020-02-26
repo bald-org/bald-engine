@@ -6,7 +6,7 @@
 
 #include <memory>
 #include "glm/glm.hpp"
-#include "graphics/rendering/textures/texture.h"
+#include "graphics/rendering/textures/texture.hpp"
 
 namespace Bald::Graphics {
 

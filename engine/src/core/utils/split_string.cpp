@@ -2,9 +2,9 @@
 // Created by Piotr Moszkowicz on 2018-12-16.
 //
 
-#include "split_string.h"
+#include "split_string.hpp"
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 
 namespace Bald::Utils {
 

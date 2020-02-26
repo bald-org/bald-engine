@@ -2,7 +2,7 @@
 // Created by blinku on 22.07.19.
 //
 
-#include "opengl_vertex_buffer.h"
+#include "opengl_vertex_buffer.hpp"
 #include "glad/glad.h"
 
 namespace Bald::Platform::Graphics {

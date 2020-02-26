@@ -2,8 +2,8 @@
 // Created by blinku on 29.07.2019.
 //
 
-#include "texture.h"
-#include "platform/opengl/textures/opengl_texture.h"
+#include "texture.hpp"
+#include "platform/opengl/textures/opengl_texture.hpp"
 #include <iostream>
 
 namespace Bald::Graphics {

@@ -2,53 +2,48 @@
 // Created by grzegorz on 10.05.19.
 //
 
-#include "events/event_manager.h"
-#include "events/key_events.h"
-#include "input/input_manager.h"
-#include "src/core/models/timer.h"
-#include "core/debug/logger/log_manager.h"
+#include "core/debug/logger/log_manager.hpp"
+#include "events/event_bus.hpp"
+#include "events/key_events.hpp"
+#include "input/input_manager.hpp"
+#include "src/core/models/timer.hpp"
 
 #include <iostream>
 
 #define N 10000
 #define E 1000
 
-void sub(const Bald::Event&, int& i) {
-    i++;
-}
+void sub(const Bald::Events::Event &, int &i) { i++; }
 
 struct A {
-    void met(const Bald::Event&) const { i++; };
-    mutable int i = 0;
+  void met(const Bald::Events::Event &) const { i++; };
+  mutable int i = 0;
 };
 
 int main() {
 
-    using namespace Bald;
-    using namespace Debug;
-    LogManager::Init();
+  using namespace Bald;
+  using namespace Bald::Events;
+  using namespace Debug;
+  LogManager::Init();
 
-    EventManager em;
-    int x = 0;
-    const A a;
-    em.Subscribe<KeyEvent>(HandleType::SYNC, sub, std::reference_wrapper(x));
-    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, a);
-    em.Subscribe<KeyEvent>(HandleType::SYNC, &A::met, &a);
+  int x = 0;
+  const A a;
+  EventBus::Subscribe<KeyEvent>(sub, std::reference_wrapper(x));
+  EventBus::Subscribe<KeyEvent>(&A::met, a);
+  EventBus::Subscribe<KeyEvent>(&A::met, &a);
 
-    Models::Timer timer;
-    timer.Start();
+  Models::Timer timer;
+  timer.Start();
 
-    for(int i = 0; i < N; i++) {
-        for(int j = 0; j < E; j++) {
-            EventManager::Emit<KeyEvent>(static_cast<unsigned >(BALD_KEY_0));
-        }
-        em.Flush();
-        EventManager::ClearEventQueue();
+  for (int i = 0; i < N; i++) {
+    for (int j = 0; j < E; j++) {
+      EventBus::Emit<KeyEvent>(static_cast<unsigned>(BALD_KEY_0));
     }
+  }
 
-    timer.Stop();
+  timer.Stop();
 
-    std::cout << std::to_string(N) << " events -> " << std::to_string(2 * E) << " times took: "
-              << timer.ElapsedSeconds()
-              << " s\n";
+  std::cout << std::to_string(N) << " events -> " << std::to_string(2 * E)
+            << " times took: " << timer.ElapsedSeconds() << " s\n";
 }

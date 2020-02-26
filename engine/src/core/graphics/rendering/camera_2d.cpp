@@ -2,7 +2,7 @@
 // Created by blinku on 08.08.2019.
 //
 
-#include "camera_2d.h"
+#include "camera_2d.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Bald::Graphics {

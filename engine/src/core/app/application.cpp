@@ -2,12 +2,12 @@
 // Created by blinku on 06.05.19.
 //
 
-#include "application.h"
-#include "input/input_manager.h"
-#include "events/window_events.h"
-#include "events/layer_events.h"
-#include "debug/ui/imgui_layer.h"
-#include "graphics/rendering/rendering_device/renderer_2d.h"
+#include "application.hpp"
+#include "input/input_manager.hpp"
+#include "events/window_events.hpp"
+#include "events/layer_events.hpp"
+#include "debug/ui/imgui_layer.hpp"
+#include "graphics/rendering/rendering_device/renderer_2d.hpp"
 #include <GLFW/glfw3.h>
 
 namespace Bald {
@@ -35,7 +35,7 @@ namespace Bald {
 
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0f){
-                EventManager::Emit<WindowClosedEvent>();
+                Events::EventBus::Emit<Events::WindowClosedEvent>();
             }
 #endif
 
@@ -44,18 +44,11 @@ namespace Bald {
                 m_LayerStack[i]->OnUpdate(deltaTime);
             }
 
-            for(size_t i = m_LayerStack.GetSize(); i != 0; --i) {
-                m_LayerStack[i - 1]->RunEvents();
-            }
-
             Debug::ImGuiLayer::Begin();
             for(size_t i = 0; i < m_LayerStack.GetSize(); ++i) {
                 m_LayerStack[i]->OnRender();
             }
             Debug::ImGuiLayer::End();
-
-            m_EventManager->Flush();
-            EventManager::ClearEventQueue();
 
             Input::InputManager::Update();
             m_Window->Update();
@@ -69,19 +62,18 @@ namespace Bald {
 
         m_Instance = this;
 
-        m_EventManager = std::make_unique<EventManager>();
         m_Window = std::make_unique<Graphics::Window>("Bald Engine", 1280, 720, false);
 
-        m_EventManager->Subscribe<WindowClosedEvent>(HandleType::SYNC, [this](const WindowClosedEvent&) {
+        Events::EventBus::Subscribe<Events::WindowClosedEvent>([this](const Events::WindowClosedEvent&) {
             glfwSetWindowShouldClose(m_Window->GetWindow(), true);
             this->m_Running = false;
         });
 
-        m_EventManager->Subscribe<LayerPushedEvent>(HandleType::SYNC, [this](const LayerPushedEvent&) {
+        Events::EventBus::Subscribe<Events::LayerPushedEvent>([this](const Events::LayerPushedEvent&) {
             m_LayerStack.AttachLayers();
         });
 
-        m_EventManager->Subscribe<LayerPoppedEvent>(HandleType::SYNC, [this](const LayerPoppedEvent&) {
+        Events::EventBus::Subscribe<Events::LayerPoppedEvent>([this](const Events::LayerPoppedEvent&) {
             m_LayerStack.DetachLayers();
         });
 

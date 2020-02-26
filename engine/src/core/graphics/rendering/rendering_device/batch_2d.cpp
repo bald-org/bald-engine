@@ -2,9 +2,9 @@
 // Created by blinku on 23.11.2019.
 //
 
-#include "batch_2d.h"
-#include "graphics/rendering/camera_2d.h"
-#include "graphics/rendering/sprite.h"
+#include "batch_2d.hpp"
+#include "graphics/rendering/camera_2d.hpp"
+#include "graphics/rendering/sprite.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
 namespace Bald::Graphics {

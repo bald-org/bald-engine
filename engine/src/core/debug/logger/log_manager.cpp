@@ -2,7 +2,7 @@
 // Created by grzegorz on 15.12.18.
 //
 
-#include "log_manager.h"
+#include "log_manager.hpp"
 
 namespace Bald::Debug {
 

@@ -2,8 +2,8 @@
 // Created by blinku on 15.12.18.
 //
 
-#include "file_manager.h"
-#include "core/pch.h"
+#include "file_manager.hpp"
+#include "core/pch.hpp"
 #include <fstream>
 
 #ifdef LINUX

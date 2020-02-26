@@ -2,7 +2,7 @@
 // Created by blinku on 09.08.2019.
 //
 
-#include "sprite.h"
+#include "sprite.hpp"
 
 namespace Bald::Graphics {
 
@@ -11,12 +11,14 @@ namespace Bald::Graphics {
           m_Position(0.0f),
           m_Size(100.0f) {
 
+        static auto texture = Texture::Create(1, 1);
+
         MaterialProps materialProps = {
             glm::vec4{0.2f, 0.2f, 0.2f, 1.0f},
             color,
             glm::vec4{0.5f, 0.5f, 0.5f, 1.0f},
             32.0f,
-            Texture::Create(1, 1),
+            texture,
             nullptr
         };
 

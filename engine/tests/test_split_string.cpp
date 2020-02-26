@@ -2,10 +2,10 @@
 // Created by Piotr Moszkowicz on 2018-12-16.
 //
 
-#include "core/pch.h"
+#include "core/pch.hpp"
 #include "gtest/gtest.h"
 #include "gmock/gmock.h"
-#include "utils/split_string.h"
+#include "utils/split_string.hpp"
 
 using testing::ElementsAre;
 
