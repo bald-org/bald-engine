@@ -35,7 +35,7 @@ namespace Bald {
 
 #ifdef TRAVIS
             if(timer.ElapsedSeconds() > 1.0f){
-                EventManager::Emit<WindowClosedEvent>();
+                Events::EventBus::Emit<Events::WindowClosedEvent>();
             }
 #endif
 
