@@ -23,6 +23,11 @@
 
 #include "core/debug/logger/log_manager.h"
 
+#include "core/ecs/entity.hpp"
+#include "core/ecs/component.hpp"
+#include "core/ecs/registry.hpp"
+#include "core/ecs/system.hpp"
+
 #include "core/events/event.h"
 #include "core/events/event_manager.h"
 #include "core/events/key_events.h"

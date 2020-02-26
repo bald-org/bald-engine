@@ -46,6 +46,14 @@
 */
 
 #define DEF_CLASS_TYPE_IS_BASE public: \
+                             [[nodiscard]] virtual unsigned GetType() const noexcept { return Bald::Utils::get_type_id(*this); }
+
+/*
+* @def DEF_CLASS_TYPE_IS_INTERFACE
+* @brief A macro definition. It defines function/functions which interface class needs.
+*/
+
+#define DEF_CLASS_TYPE_IS_INTERFACE public: \
                              [[nodiscard]] virtual unsigned GetType() const noexcept = 0;
 
 /*
