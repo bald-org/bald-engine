@@ -79,8 +79,11 @@ namespace Bald::Events {
         }
 
         template<typename EventType>
-        static inline CallbackContainer<EventType> m_Callbacks;
+        static CallbackContainer<EventType> m_Callbacks;
 
     }; // END OF CLASS EventBus
+
+    template<typename EventType>
+    EventBus::CallbackContainer<EventType> EventBus::m_Callbacks = {};
 
 } // END OF NAMESPACE Bald::Events
