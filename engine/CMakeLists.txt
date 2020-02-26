@@ -89,8 +89,6 @@ add_library(bald_engine STATIC
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/logger/log_manager.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/debug/ui/imgui_layer.cpp
 		${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
-		${CMAKE_CURRENT_SOURCE_DIR}/src/core/events/callback/event_handler_interface.cpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/window.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/camera_2d.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/sprite.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/graphics/rendering/buffers/vertex_buffer.cpp
